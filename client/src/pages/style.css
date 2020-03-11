@@ -1,0 +1,20 @@
+h1,
+button {
+    font-family: "Cormorant SC", "Times New Roman", serif;
+}
+
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+label,
+input,
+span {
+    font-family: "Times New Roman", serif;
+}
+
+.btn {
+    font-size: 21px;
+}

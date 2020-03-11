@@ -1,21 +1,24 @@
-import React, {Component} from "react";
+import React from "react";
+import {BrowserRouter as Router, Route} from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+
+import "../pages/style.css";
 
 import Logo from "./logo/logo";
 import Main from "../pages/main/main";
+import Registration from "../pages/registration/registration";
 
-class App extends Component {
-  render() {
+function App() {
     return (
-        <div className="app">
-            <div className="shadow-sm">
-                <Logo/>
-            </div>
+        <Router>
+            <div className="app mb-5">
+                <div className="shadow-sm"><Logo/></div>
 
-            <Main/>
-        </div>
+                <Route path="/" exact component={Main}/>
+                <Route path="/registration" component={Registration}/>
+            </div>
+        </Router>
     );
-  }
 }
 
 export default App;

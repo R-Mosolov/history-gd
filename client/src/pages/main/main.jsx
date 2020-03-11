@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from "react-router-dom";
 
 import "./main.css";
 
@@ -28,7 +29,9 @@ function Main() {
                 </ul>
 
                 <div className="d-flex justify-content-center">
-                    <button className="btn btn-success mb-5">Зарегистрироваться</button>
+                    <Link to="/registration">
+                        <button className="btn btn-success">Зарегистрироваться</button>
+                    </Link>
                 </div>
             </div>
         </div>
