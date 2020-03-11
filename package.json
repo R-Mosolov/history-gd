@@ -1,0 +1,23 @@
+{
+  "name": "history-gd",
+  "version": "1.0.0",
+  "description": "The repository contains a SPA for keeping scientific manuscripts.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/R-Mosolov/history-gd.git"
+  },
+  "keywords": [
+    "history-gd",
+    "History-of-Genius-Discovery"
+  ],
+  "author": "Roman Mosolov (ITIS KFU)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/R-Mosolov/history-gd/issues"
+  },
+  "homepage": "https://github.com/R-Mosolov/history-gd#readme"
+}
