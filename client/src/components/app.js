@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import Logo from "./logo/logo";
-import Main from "../pages/main";
+import Main from "../pages/main/main";
 
 class App extends Component {
   render() {
