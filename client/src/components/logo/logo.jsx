@@ -6,7 +6,7 @@ import "./logo.css";
 
 function Logo() {
     return (
-        <header className="logo pt-2 pb-2">
+        <header className="logo pt-2 pb-2 shadow-sm">
             <Link to="/">
                 <div className="d-flex">
                     <img className="ml-lg-3 mr-lg-3" src={LogoIcon} style={{height: 50 + "px", width: 50 + "px"}}/>

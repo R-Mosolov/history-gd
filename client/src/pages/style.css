@@ -2,7 +2,6 @@ h1,
 button {
     font-family: "Cormorant SC", "Times New Roman", serif;
 }
-
 h2,
 h3,
 h4,
@@ -15,7 +14,9 @@ input,
 span {
     font-family: "Times New Roman", serif;
 }
-
 .btn {
     font-size: 21px;
+}
+.custom-font {
+    font-family: "Cormorant SC", "Times New Roman", serif;
 }

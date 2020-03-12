@@ -1,6 +1,6 @@
 .main .banner {
     height: 300px;
-    background: linear-gradient(lightblue, lightgrey);
+    background: linear-gradient(lightblue, lightcyan);
 }
 .main .title {
     font-family: "Cormorant SC", "Times New Roman", serif;

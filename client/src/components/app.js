@@ -15,7 +15,7 @@ function App() {
     return (
         <Router>
             <div className="app">
-                <div className="shadow-sm"><Logo/></div>
+                <Logo/>
 
                 <Route path="/" exact component={Main}/>
                 <Route path="/registration" component={Registration}/>
