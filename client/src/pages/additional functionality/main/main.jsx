@@ -5,7 +5,7 @@ import "./main.css";
 
 function Main() {
     return (
-        <div className="main">
+        <div className="main mb-5">
             <div className="banner d-flex justify-content-center align-items-center">
                 <div>
                     <h1 className="title container">История гениального открытия</h1>

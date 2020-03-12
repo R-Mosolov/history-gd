@@ -1,10 +1,10 @@
-import React, {Component} from "react";
+import React from "react";
 
 import "./registration.css";
 
 function Registration() {
     return (
-        <div className="registration mt-5 d-flex justify-content-center container">
+        <div className="registration mt-5 mb-5 d-flex justify-content-center container">
             <div className="w-lg-50">
                 <h1>Регистрация на сайте</h1>
 

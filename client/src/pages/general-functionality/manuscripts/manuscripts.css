@@ -1,0 +1,16 @@
+.manuscripts .left-navigation {
+    height: calc(100vh - 65px);
+    background-color: rgba(0, 0, 0, 0.05);
+}
+.manuscripts .col-lg-3 {
+    padding: 0;
+}
+.manuscripts .left-navigation__item {
+    margin: 5px 20px;
+    font-family: "Cormorant SC", "Times New Roman", serif;
+    font-size: 22px;
+    color: black;
+}
+.manuscripts li:hover {
+    text-underline: black;
+}
