@@ -6,9 +6,10 @@ import "../pages/style.css";
 
 import Logo from "./logo/logo";
 
-import Main from "../pages/additional functionality/main/main";
-import Registration from "../pages/additional functionality/registration/registration";
+import Main from "../pages/additional-functionality/main/main";
+import Registration from "../pages/additional-functionality/registration/registration";
 
+import LeftNavigation from "../components/left-navigation/left-navigation";
 import Manuscripts from "../pages/general-functionality/manuscripts/manuscripts";
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
                 <Route path="/" exact component={Main}/>
                 <Route path="/registration" component={Registration}/>
 
+                <Route path="/left-navigation" component={LeftNavigation}/>
                 <Route path="/manuscripts" component={Manuscripts}/>
             </div>
         </Router>
