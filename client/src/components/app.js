@@ -12,6 +12,7 @@ import Registration from "../pages/additional-functionality/registration/registr
 import LeftNavigation from "../components/left-navigation/left-navigation";
 import Manuscripts from "../pages/general-functionality/manuscripts/manuscripts";
 import Diary from "../pages/general-functionality/diary/diary";
+import Heritage from "../pages/general-functionality/heritage/heritage";
 
 function App() {
     return (
@@ -25,6 +26,7 @@ function App() {
                 <Route path="/left-navigation" component={LeftNavigation}/>
                 <Route path="/manuscripts" component={Manuscripts}/>
                 <Route path="/diary" component={Diary}/>
+                <Route path="/heritage" component={Heritage}/>
             </div>
         </Router>
     );

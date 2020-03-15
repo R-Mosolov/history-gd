@@ -43,7 +43,7 @@ function Registration() {
                     </div>
                     <div className="d-flex flex-column">
                         <label>10. Научно-исследовательские интересы</label>
-                        <input type="text" min="3" max="75" placeholder="Мозаичное дело, изобретение ночезрительных труб"/>
+                        <input type="text" min="3" max="250" placeholder="Мозаичное дело, изобретение ночезрительных труб"/>
                     </div>
                 </div>
 

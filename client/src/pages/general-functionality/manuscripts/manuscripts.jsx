@@ -19,11 +19,11 @@ function Manuscripts() {
                     <ul className="d-flex justify-content-around list-unstyled">
                         <li className="large-manuscripts d-flex align-items-center">
                             <img className="m-2" src={LargeManuscript} style={{height: 150 + "px", width: 150 + "px"}}/>
-                            <span className="custom-font">Крупные работы (монографии, учебники и др.)</span>
+                            <span className="custom-font large-manuscripts__title">Крупные работы (монографии, учебники и др.)</span>
                         </li>
                         <li className="small-manuscripts d-flex align-items-center">
                             <img className="m-2" src={SmallManuscript} style={{height: 200 + "px", width: 200 + "px"}}/>
-                            <span className="custom-font">Малые работы (статьи, тезисы докладов и др.)</span>
+                            <span className="custom-font small-manuscripts__title">Малые работы (статьи, тезисы докладов и др.)</span>
                         </li>
                     </ul>
 

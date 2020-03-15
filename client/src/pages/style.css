@@ -11,8 +11,11 @@ p,
 li,
 label,
 input,
-span {
+span,
+th,
+td {
     font-family: "Times New Roman", serif;
+    font-size: 18px;
 }
 .btn {
     font-size: 21px;

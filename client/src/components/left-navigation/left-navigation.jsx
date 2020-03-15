@@ -11,7 +11,7 @@ function LeftNavigation() {
                     <Link to="/manuscripts"><li className="left-nav__container--item">Список рукописей</li></Link>
                     <Link to="/manuscripts"><li className="left-nav__container--item">Добавить рукопись</li></Link>
                     <Link to="/manuscripts"><li className="left-nav__container--item">Обработка источников</li></Link>
-                    <Link to="/manuscripts"><li className="left-nav__container--item">Наследники рукописей</li></Link>
+                    <Link to="/heritage"><li className="left-nav__container--item">Наследники рукописей</li></Link>
                     <Link to="/manuscripts"><li className="left-nav__container--item">Научное становление</li></Link>
                     <Link to="/manuscripts"><li className="left-nav__container--item">Научная переписка</li></Link>
                     <Link to="/manuscripts"><li className="left-nav__container--item">Рукописи коллег</li></Link>
