@@ -11,6 +11,7 @@ import Registration from "../pages/additional-functionality/registration/registr
 
 import LeftNavigation from "../components/left-navigation/left-navigation";
 import Manuscripts from "../pages/general-functionality/manuscripts/manuscripts";
+import Diary from "../pages/general-functionality/diary/diary";
 
 function App() {
     return (
@@ -23,6 +24,7 @@ function App() {
 
                 <Route path="/left-navigation" component={LeftNavigation}/>
                 <Route path="/manuscripts" component={Manuscripts}/>
+                <Route path="/diary" component={Diary}/>
             </div>
         </Router>
     );
