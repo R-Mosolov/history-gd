@@ -1,5 +1,5 @@
 import React from "react";
-import {BrowserRouter as Router, Route} from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import "../pages/style.css";
@@ -16,22 +16,22 @@ import Diary from "../pages/general-functionality/diary/diary";
 import Heritage from "../pages/general-functionality/heritage/heritage";
 
 function App() {
-    return (
-        <Router>
-            <div className="app">
-                <TopNavigation/>
+  return (
+    <Router>
+      <div className="app">
+        <TopNavigation />
 
-                <Route path="/" exact component={Main}/>
-                <Route path="/registration" component={Registration}/>
+        <Route path="/" exact component={Main} />
+        <Route path="/registration" component={Registration} />
 
-                <Route path="/left-navigation" component={LeftNavigation}/>
-                <Route path="/manuscripts" component={Manuscripts}/>
-                <Route path="/add-manuscript" component={AddManuscript}/>
-                <Route path="/diary" component={Diary}/>
-                <Route path="/heritage" component={Heritage}/>
-            </div>
-        </Router>
-    );
+        <Route path="/left-navigation" component={LeftNavigation} />
+        <Route path="/manuscripts" component={Manuscripts} />
+        <Route path="/add-manuscript" component={AddManuscript} />
+        <Route path="/diary" component={Diary} />
+        <Route path="/heritage" component={Heritage} />
+      </div>
+    </Router>
+  );
 }
 
 export default App;

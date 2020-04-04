@@ -1,6 +1,7 @@
 module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-exec');
+    grunt.loadNpmTasks('grunt-eslint');
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         watch: {
@@ -9,11 +10,7 @@ module.exports = function (grunt) {
         },
         exec: {
             run_tsc: {cmd: 'tsc'}
-        },
-        eslint: {
-            target: ['file.js']
         }
     });
     grunt.registerTask('default', ['watch']);
-    grunt.registerTask('default', ['eslint']);
 };

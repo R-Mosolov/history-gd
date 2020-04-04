@@ -1,30 +1,30 @@
 .manuscripts h2 {
-    font-family: "Cormorant SC", "Times New Roman", serif;
+  font-family: "Cormorant SC", "Times New Roman", serif;
 }
 .manuscripts li:hover {
-    text-underline: black;
-    cursor: pointer;
+  text-underline: black;
+  cursor: pointer;
 }
 .manuscripts .large-manuscripts,
 .manuscripts .small-manuscripts {
-    height: 300px;
-    width: 400px;
-    color: rgba(0, 0, 0, 0.7);
-    border-radius: 10px;
+  height: 300px;
+  width: 400px;
+  color: rgba(0, 0, 0, 0.7);
+  border-radius: 10px;
 }
 .manuscripts .large-manuscripts:hover,
 .manuscripts .small-manuscripts:hover {
-    box-shadow: 10px 10px 20px -20px rgba(0, 0, 0, 0.65);
+  box-shadow: 10px 10px 20px -20px rgba(0, 0, 0, 0.65);
 }
 .manuscripts .large-manuscripts__title {
-    font-size: 26px;
+  font-size: 26px;
 }
-.manuscripts .small-manuscripts__title{
-    font-size: 25px;
+.manuscripts .small-manuscripts__title {
+  font-size: 25px;
 }
 .manuscripts .large-manuscripts {
-    background: linear-gradient(lightcoral, lightcyan);
+  background: linear-gradient(lightcoral, lightcyan);
 }
 .manuscripts .small-manuscripts {
-    background: linear-gradient(lightgreen, lightcyan);
+  background: linear-gradient(lightgreen, lightcyan);
 }
