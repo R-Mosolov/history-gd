@@ -12,7 +12,7 @@ function Manuscripts() {
             <div className="d-flex">
                 <LeftNavigation/>
 
-                <div className="worktable col-lg-9">
+                <div className="work-table col-lg-9">
                     <h1 className="mt-5 mb-5 text-center">Список рукописей</h1>
 
                     <h2 className="mb-4">Выберите, что оставить:</h2>

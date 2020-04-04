@@ -9,7 +9,7 @@ function LeftNavigation() {
             <div className="left-nav__container pt-5 d-flex flex-column col-lg-3">
                 <ul className="list-unstyled">
                     <Link to="/manuscripts"><li className="left-nav__container--item">Список рукописей</li></Link>
-                    <Link to="/manuscripts"><li className="left-nav__container--item">Добавить рукопись</li></Link>
+                    <Link to="/add-manuscript"><li className="left-nav__container--item">Добавить рукопись</li></Link>
                     <Link to="/manuscripts"><li className="left-nav__container--item">Обработка источников</li></Link>
                     <Link to="/heritage"><li className="left-nav__container--item">Наследники рукописей</li></Link>
                     <Link to="/manuscripts"><li className="left-nav__container--item">Научное становление</li></Link>

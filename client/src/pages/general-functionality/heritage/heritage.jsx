@@ -4,11 +4,11 @@ import LeftNavigation from "../../../components/left-navigation/left-navigation"
 
 function Heritage() {
     return (
-        <div className="diary">
+        <div className="heritage">
             <div className="d-flex">
                 <LeftNavigation/>
 
-                <div className="diary__container col-lg-9">
+                <div className="col-lg-9">
                     <h1 className="mt-5 text-center">Наследники рукописей</h1>
 
                     <div className="mt-5 d-flex justify-content-between">
