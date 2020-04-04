@@ -9,7 +9,7 @@ import TopNavigation from "./top-navigation/top-navigation";
 import Main from "../pages/additional-functionality/main/main";
 import Registration from "../pages/additional-functionality/registration/registration";
 
-import LeftNavigation from "../components/left-navigation/left-navigation";
+import LeftNavigation from "./left-navigation/left-navigation";
 import Manuscripts from "../pages/general-functionality/manuscripts/manuscripts";
 import AddManuscript from "../pages/general-functionality/add-manuscript/add-manuscript";
 import Diary from "../pages/general-functionality/diary/diary";
