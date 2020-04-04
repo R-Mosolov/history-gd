@@ -9,7 +9,11 @@ module.exports = function (grunt) {
         },
         exec: {
             run_tsc: {cmd: 'tsc'}
+        },
+        eslint: {
+            target: ['file.js']
         }
     });
     grunt.registerTask('default', ['watch']);
+    grunt.registerTask('default', ['eslint']);
 };
