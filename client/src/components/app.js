@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
+import "./app.css";
 import "../pages/style.css";
 
 import TopNavigation from "./top-navigation/top-navigation";
@@ -11,6 +12,7 @@ import Registration from "../pages/additional-functionality/registration/registr
 
 import LeftNavigation from "./left-navigation/left-navigation";
 import Manuscripts from "../pages/general-functionality/manuscripts/manuscripts";
+import FullManuscript from "./full-manuscript/full-manuscript";
 import AddManuscript from "../pages/general-functionality/add-manuscript/add-manuscript";
 import Diary from "../pages/general-functionality/diary/diary";
 import Heritage from "../pages/general-functionality/heritage/heritage";
@@ -18,17 +20,20 @@ import Heritage from "../pages/general-functionality/heritage/heritage";
 function App() {
   return (
     <Router>
-      <div className="app">
+      <div className="app mb-5">
         <TopNavigation />
 
-        <Route path="/" exact component={Main} />
-        <Route path="/registration" component={Registration} />
+        <div className="header-place">
+          <Route path="/" exact component={Main} />
+          <Route path="/registration" component={Registration} />
 
-        <Route path="/left-navigation" component={LeftNavigation} />
-        <Route path="/manuscripts" component={Manuscripts} />
-        <Route path="/add-manuscript" component={AddManuscript} />
-        <Route path="/diary" component={Diary} />
-        <Route path="/heritage" component={Heritage} />
+          <Route path="/left-navigation" component={LeftNavigation} />
+          <Route path="/manuscripts" component={Manuscripts} />
+          <Route path="/full-manuscript" component={FullManuscript} />
+          <Route path="/add-manuscript" component={AddManuscript} />
+          <Route path="/diary" component={Diary} />
+          <Route path="/heritage" component={Heritage} />
+        </div>
       </div>
     </Router>
   );

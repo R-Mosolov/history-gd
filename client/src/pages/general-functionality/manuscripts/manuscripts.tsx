@@ -5,8 +5,25 @@ import "./manuscripts.css";
 import LargeManuscript from "./img/large-manuscript.svg";
 import SmallManuscript from "./img/small-manuscript.svg";
 import LeftNavigation from "../../../components/left-navigation/left-navigation";
+import worksBase from "../../../data/manuscripts/works-base";
 
 function Manuscripts() {
+  function renderManuscriptList() {
+    let manuscriptsListToRender = [];
+
+    for (let i in worksBase) {
+      manuscriptsListToRender.push(
+        <li>
+          <a href={worksBase[i].linkToDetails}>
+            {worksBase[i].author} {worksBase[i].title}. {worksBase[i].created}
+          </a>
+        </li>
+      );
+    }
+
+    return manuscriptsListToRender;
+  }
+
   return (
     <div className="manuscripts">
       <div className="d-flex">
@@ -41,11 +58,7 @@ function Manuscripts() {
 
           <h2 className="mt-4 mb-4">Список с учётом фильтра:</h2>
           <ul className="list-unstyled">
-            <li>ФИО автора. Название рукописи</li>
-            <li>ФИО автора. Название рукописи</li>
-            <li>ФИО автора. Название рукописи</li>
-            <li>ФИО автора. Название рукописи</li>
-            <li>ФИО автора. Название рукописи</li>
+            <li>{renderManuscriptList()}</li>
           </ul>
         </div>
       </div>
