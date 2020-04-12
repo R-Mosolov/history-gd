@@ -1,4 +1,4 @@
-const worksDetails = [
+const manuscriptsDetails = [
     {
         content: "Милостивые государи!\n" +
             "Для всех, кто признает какой-нибудь смысл в истории человечества, не\n" +
@@ -204,4 +204,4 @@ const worksDetails = [
     }
 ];
 
-export default worksDetails;
+export default manuscriptsDetails;

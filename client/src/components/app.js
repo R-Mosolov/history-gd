@@ -17,6 +17,8 @@ import AddManuscript from "../pages/general-functionality/add-manuscript/add-man
 import Diary from "../pages/general-functionality/diary/diary";
 import Heritage from "../pages/general-functionality/heritage/heritage";
 
+import "../states/index";
+
 function App() {
   return (
     <Router>

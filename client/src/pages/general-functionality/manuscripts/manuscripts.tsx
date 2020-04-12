@@ -5,17 +5,17 @@ import "./manuscripts.css";
 import LargeManuscript from "./img/large-manuscript.svg";
 import SmallManuscript from "./img/small-manuscript.svg";
 import LeftNavigation from "../../../components/left-navigation/left-navigation";
-import worksBase from "../../../data/manuscripts/works-base";
+import manuscriptsBase from "../../../states/manuscripts-data/manuscripts-base";
 
 function Manuscripts() {
   function renderManuscriptList() {
     let manuscriptsListToRender = [];
 
-    for (let i in worksBase) {
+    for (let i in manuscriptsBase) {
       manuscriptsListToRender.push(
         <li>
-          <a href={worksBase[i].linkToDetails}>
-            {worksBase[i].author} {worksBase[i].title}. {worksBase[i].created}
+          <a href={manuscriptsBase[i].linkToDetails}>
+            {manuscriptsBase[i].author} {manuscriptsBase[i].title}. {manuscriptsBase[i].created}
           </a>
         </li>
       );

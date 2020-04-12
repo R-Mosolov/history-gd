@@ -1,4 +1,4 @@
-const worksBase = [
+const manuscriptsBase = [
     {
         author: 'Соловьёв В.С.',
         title: 'Несколько слов о настоящей задаче философии',
@@ -17,4 +17,4 @@ const worksBase = [
     }
 ];
 
-export default worksBase;
+export default manuscriptsBase;
