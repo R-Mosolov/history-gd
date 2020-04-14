@@ -25,7 +25,7 @@ function App() {
       <div className="app mb-5">
         <TopNavigation />
 
-        <div className="header-place">
+        <main className="header-place">
           <Route path="/" exact component={Main} />
           <Route path="/registration" component={Registration} />
 
@@ -35,7 +35,7 @@ function App() {
           <Route path="/add-manuscript" component={AddManuscript} />
           <Route path="/diary" component={Diary} />
           <Route path="/heritage" component={Heritage} />
-        </div>
+        </main>
       </div>
     </Router>
   );
