@@ -6,7 +6,7 @@ function Registration() {
   return (
     <div className="registration mt-5 mb-5 d-flex justify-content-center container">
       <div className="w-lg-50">
-        <h1>Регистрация на сайте</h1>
+        <h1 className="pt-5">Регистрация на сайте</h1>
 
         <div>
           <div className="d-flex flex-column mb-3">
