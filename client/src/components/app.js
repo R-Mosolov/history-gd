@@ -7,15 +7,15 @@ import "../pages/style.css";
 
 import TopNavigation from "./top-navigation/top-navigation";
 
-import Main from "../pages/additional-functionality/main/main";
-import Registration from "../pages/additional-functionality/registration/registration";
+import Main from "../pages/additional-pages/main/main";
+import Registration from "../pages/additional-pages/registration/registration";
 
 import LeftNavigation from "./left-navigation/left-navigation";
-import Manuscripts from "../pages/general-functionality/manuscripts/manuscripts";
+import Manuscripts from "../pages/main-pages/manuscripts/manuscripts";
 import FullManuscript from "./full-manuscript/full-manuscript";
-import AddManuscript from "../pages/general-functionality/add-manuscript/add-manuscript";
-import Diary from "../pages/general-functionality/diary/diary";
-import Heritage from "../pages/general-functionality/heritage/heritage";
+import AddManuscript from "../pages/main-pages/add-manuscript/add-manuscript";
+import Diary from "../pages/main-pages/diary/diary";
+import Heritage from "../pages/main-pages/heritage/heritage";
 
 import "../states/index";
 

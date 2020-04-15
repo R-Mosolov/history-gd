@@ -1,4 +1,4 @@
-const manuscriptsDetails = [
+const manuscriptsDetails: object[] = [
   {
     content:
       "Милостивые государи!\n" +

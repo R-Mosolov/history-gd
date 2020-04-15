@@ -16,6 +16,14 @@
 .manuscripts .small-manuscripts:hover {
   box-shadow: 10px 10px 20px -20px rgba(0, 0, 0, 0.65);
 }
+.manuscripts .large-manuscripts__banner {
+  height: 150px;
+  width: 150px;
+}
+.manuscripts .small-manuscripts__banner {
+  height: 180px;
+  width: 180px;
+}
 .manuscripts .large-manuscripts__title {
   font-size: 24px;
 }
@@ -27,4 +35,7 @@
 }
 .manuscripts .small-manuscripts {
   background: linear-gradient(lightgreen, lightcyan);
+}
+.manuscripts .interactive-th:hover {
+  cursor: pointer;
 }
