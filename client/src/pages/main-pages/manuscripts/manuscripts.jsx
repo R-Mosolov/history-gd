@@ -6,7 +6,6 @@ import LargeManuscript from "./img/large-manuscript.svg";
 import SmallManuscript from "./img/small-manuscript.svg";
 import LeftNavigation from "../../../components/left-navigation/left-navigation";
 import manuscriptsBase from "../../../states/manuscripts-data/manuscripts-base";
-import "../../../services/sort-manuscripts";
 
 class Manuscripts extends Component {
   constructor(props) {
@@ -18,6 +17,27 @@ class Manuscripts extends Component {
       isAuthorSorted: false,
       isCreationDateSorted: false,
     };
+  }
+
+  renderWorkInformation() {
+    let manuscriptsList = [];
+    let counter = 1;
+
+    for (let manuscript in manuscriptsBase) {
+      manuscriptsList.push(
+        <tr>
+          <th scope="row">
+            <p className="m-0 text-center">{counter++}</p>
+          </th>
+          <td>{this.state.manuscriptsList[manuscript].title}</td>
+          <td>{this.state.manuscriptsList[manuscript].author}</td>
+          <td>{this.state.manuscriptsList[manuscript].type}</td>
+          <td>{this.state.manuscriptsList[manuscript].creationDate}</td>
+        </tr>
+      );
+    }
+
+    return manuscriptsList;
   }
 
   sortByTitle() {
@@ -74,6 +94,33 @@ class Manuscripts extends Component {
     });
   }
 
+  sortByType() {
+    this.setState({
+      manuscriptsList: this.state.manuscriptsList.sort((a, b) => {
+        const typeA = a.type.toUpperCase();
+        const typeB = b.type.toUpperCase();
+
+        if (!this.state.isTitleSorted) {
+          this.setState({
+            isTitleSorted: true,
+          });
+          if (typeA < typeB) return -1;
+          else if (typeA > typeB) return 1;
+        }
+
+        if (this.state.isTitleSorted) {
+          this.setState({
+            isTitleSorted: false,
+          });
+          if (typeA < typeB) return 1;
+          else if (typeA > typeB) return -1;
+        }
+
+        return 0;
+      }),
+    });
+  }
+
   sortByCreationDate() {
     this.setState({
       manuscriptsList: this.state.manuscriptsList.sort((a, b) => {
@@ -92,24 +139,11 @@ class Manuscripts extends Component {
     });
   }
 
-  renderWorkInformation() {
-    let manuscriptsList = [];
-    let counter = 1;
-
-    for (let manuscript in manuscriptsBase) {
-      manuscriptsList.push(
-        <tr>
-          <th scope="row">
-            <p className="m-0 text-center">{counter++}</p>
-          </th>
-          <td>{this.state.manuscriptsList[manuscript].title}</td>
-          <td>{this.state.manuscriptsList[manuscript].author}</td>
-          <td>{this.state.manuscriptsList[manuscript].creationDate}</td>
-        </tr>
-      );
-    }
-
-    return manuscriptsList;
+  filterByLargeManuscripts() {
+    this.setState({
+      manuscriptsList: this.state.manuscriptsList
+        .filter(manuscripts => manuscripts.creationDate > 2001),
+    });
   }
 
   render() {
@@ -124,7 +158,12 @@ class Manuscripts extends Component {
 
               <h2 className="mb-4">Какой тип работ оставить?</h2>
               <ul className="d-flex justify-content-between list-unstyled">
-                <li className="large-manuscripts d-flex align-items-center large-manuscripts">
+                <li
+                  className="large-manuscripts d-flex align-items-center large-manuscripts"
+                  onClick={() => {
+                    this.filterByLargeManuscripts();
+                  }}
+                >
                   <img
                     className="m-2 large-manuscripts__banner"
                     src={LargeManuscript}
@@ -171,6 +210,15 @@ class Manuscripts extends Component {
                         }}
                       >
                         Автор
+                      </th>
+                      <th
+                          className="interactive-th"
+                          scope="col"
+                          onClick={() => {
+                            this.sortByType();
+                          }}
+                      >
+                        Тип рукописи
                       </th>
                       <th
                         className="interactive-th"
