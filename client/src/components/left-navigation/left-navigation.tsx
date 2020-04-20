@@ -17,6 +17,9 @@ function LeftNavigation() {
           <Link to="/manuscripts">
             <li className="left-nav__container--item">Обработка источников</li>
           </Link>
+          <Link to="/audio-generator">
+            <li className="left-nav__container--item">Генератор аудиомонографий</li>
+          </Link>
           <Link to="/heritage">
             <li className="left-nav__container--item">Наследники рукописей</li>
           </Link>

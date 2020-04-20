@@ -14,6 +14,7 @@ import LeftNavigation from "./left-navigation/left-navigation";
 import Manuscripts from "../pages/main-pages/manuscripts/manuscripts";
 import FullManuscript from "./full-manuscript/full-manuscript";
 import AddManuscript from "../pages/main-pages/add-manuscript/add-manuscript";
+import AudioGenerator from "../pages/main-pages/audio-generator/audio-generator";
 import Diary from "../pages/main-pages/diary/diary";
 import Heritage from "../pages/main-pages/heritage/heritage";
 
@@ -33,6 +34,7 @@ function App() {
           <Route path="/manuscripts" component={Manuscripts} />
           <Route path="/full-manuscript" component={FullManuscript} />
           <Route path="/add-manuscript" component={AddManuscript} />
+          <Route path="/audio-generator" component={AudioGenerator} />
           <Route path="/diary" component={Diary} />
           <Route path="/heritage" component={Heritage} />
         </main>
