@@ -9,6 +9,7 @@ import TopNavigation from "./top-navigation/top-navigation";
 
 import Main from "../pages/additional-pages/main/main";
 import Registration from "../pages/additional-pages/registration/registration";
+import Login from "../pages/additional-pages/login/login";
 
 import LeftNavigation from "./left-navigation/left-navigation";
 import Manuscripts from "../pages/main-pages/manuscripts/manuscripts";
@@ -29,6 +30,7 @@ function App() {
         <main className="header-place">
           <Route path="/" exact component={Main} />
           <Route path="/registration" component={Registration} />
+          <Route path="/login" component={Login} />
 
           <Route path="/left-navigation" component={LeftNavigation} />
           <Route path="/manuscripts" component={Manuscripts} />

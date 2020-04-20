@@ -141,8 +141,9 @@ class Manuscripts extends Component {
 
   filterByLargeManuscripts() {
     this.setState({
-      manuscriptsList: this.state.manuscriptsList
-        .filter(manuscripts => manuscripts.creationDate > 2001),
+      manuscriptsList: this.state.manuscriptsList.filter(
+        (manuscripts) => manuscripts.creationDate > 2001
+      ),
     });
   }
 
@@ -212,11 +213,11 @@ class Manuscripts extends Component {
                         Автор
                       </th>
                       <th
-                          className="interactive-th"
-                          scope="col"
-                          onClick={() => {
-                            this.sortByType();
-                          }}
+                        className="interactive-th"
+                        scope="col"
+                        onClick={() => {
+                          this.sortByType();
+                        }}
                       >
                         Тип рукописи
                       </th>
