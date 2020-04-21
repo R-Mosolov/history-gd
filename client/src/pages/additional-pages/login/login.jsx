@@ -1,6 +1,7 @@
 import React from "react";
 
 import "./login.css";
+import "../../../lib/reusable-js-components/form-validator/render-error";
 
 function Login() {
   return (
@@ -8,7 +9,7 @@ function Login() {
       <div className="w-50">
         <h1 className="pt-5">Вход в систему</h1>
 
-        <form>
+        <form id="login-form">
           <div className="d-flex flex-column mb-2">
             <label>Email (электронная почта)</label>
             <input
@@ -24,11 +25,9 @@ function Login() {
           </div>
         </form>
 
-        <div className="d-flex justify-content-center">
-          <button className="mt-3 btn btn-success btn-block">
-            Зарегистрироваться
-          </button>
-        </div>
+        <button id="login-button" className="mt-3 btn btn-success btn-block">
+          Войти
+        </button>
       </div>
     </div>
   );

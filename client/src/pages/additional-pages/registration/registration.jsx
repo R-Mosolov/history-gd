@@ -51,7 +51,7 @@ function Registration() {
           <fieldset className="mt-3">
             <legend>Профессиональные сведения</legend>
             <div className="d-flex flex-column mb-3">
-              <label>4. Полное название ВУЗ'а, в котором Вы работаете</label>
+              <label>4. Полное название ВУЗ-а, в котором Вы работаете</label>
               <input
                 id="university"
                 type="text"
@@ -95,7 +95,7 @@ function Registration() {
           <fieldset className="mt-3">
             <legend>Информация для пользования системой</legend>
             <div className="d-flex flex-column mb-3">
-              <label>8. Email (электронная почта)</label>
+              <label>8. Email (электронная почта)*</label>
               <input
                 id="email"
                 type="email"
@@ -105,7 +105,7 @@ function Registration() {
               />
             </div>
             <div className="d-flex flex-column mb-3">
-              <label>9. Моб. телефон</label>
+              <label>9. Моб. телефон*</label>
               <input
                 id="mobile-number"
                 type="number"
@@ -115,7 +115,7 @@ function Registration() {
               />
             </div>
             <div className="d-flex flex-column mb-3">
-              <label>10.1. Пароль</label>
+              <label>10.1. Пароль*</label>
               <input
                 id="password"
                 type="password"
@@ -125,7 +125,7 @@ function Registration() {
               />
             </div>
             <div className="d-flex flex-column mb-3">
-              <label>10.2. Повторите пароль</label>
+              <label>10.2. Повторите пароль*</label>
               <input
                 id="repeated-password"
                 type="password"

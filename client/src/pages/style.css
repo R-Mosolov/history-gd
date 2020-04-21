@@ -15,7 +15,8 @@ input,
 span,
 th,
 td,
-select {
+select,
+.alert {
   font-family: "Times New Roman", serif;
   font-size: 18px;
 }
