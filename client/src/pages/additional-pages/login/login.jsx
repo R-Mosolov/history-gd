@@ -1,7 +1,7 @@
 import React from "react";
 
 import "./login.css";
-import "../../../lib/reusable-js-components/form-validator/render-error";
+import "../../../lib/form-validator/render-error";
 
 function Login() {
   return (
