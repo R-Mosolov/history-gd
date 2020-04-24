@@ -82,11 +82,8 @@ function Registration() {
             </div>
             <div className="d-flex flex-column mb-3">
               <label>7. Научно-исследовательские интересы</label>
-              <input
+              <textarea
                 id="research-interests"
-                type="text"
-                min="3"
-                max="250"
                 placeholder="Мозаичное дело, изобретение ночезрительных труб"
               />
             </div>
@@ -102,16 +99,18 @@ function Registration() {
                 min="3"
                 max="75"
                 placeholder="MV.Lomonosov@msu.ru"
+                required
               />
             </div>
             <div className="d-flex flex-column mb-3">
               <label>9. Моб. телефон*</label>
               <input
-                id="mobile-number"
+                id="phone"
                 type="number"
-                min="10"
+                min="11"
                 max="11"
                 placeholder="+7 (999) 999-99-99"
+                required
               />
             </div>
             <div className="d-flex flex-column mb-3">
@@ -122,6 +121,7 @@ function Registration() {
                 min="8"
                 max="50"
                 placeholder="********"
+                required
               />
             </div>
             <div className="d-flex flex-column mb-3">
@@ -132,6 +132,7 @@ function Registration() {
                 min="8"
                 max="50"
                 placeholder="********"
+                required
               />
             </div>
           </fieldset>

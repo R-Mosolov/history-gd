@@ -1,24 +1,7 @@
 import renderError from "./render-error";
 
 class FormValidator {
-  checkEmptiness(fieldId: string): void | string {
-    const fieldToCheck: string = (<HTMLInputElement>(
-      document.getElementById(`${fieldId}`)
-    )).value;
-    let errorText: string = "";
-
-    if (!fieldToCheck) {
-      errorText = "Поле не должно быть пустым.";
-    }
-
-    if (errorText) {
-      return renderError(fieldId, errorText);
-    }
-
-    return errorText;
-  }
-
-  checkLength(
+  checkStringLength(
     fieldId: string,
     minLength: number,
     maxLength: number
@@ -46,18 +29,18 @@ class FormValidator {
     let errorText: string = "";
     let isNumber = false;
 
-    for (let letter of fieldToCheck) {
+    for (let item of fieldToCheck) {
       if (
-        parseInt(letter, 10) === 0 ||
-        parseInt(letter, 10) === 1 ||
-        parseInt(letter, 10) === 2 ||
-        parseInt(letter, 10) === 3 ||
-        parseInt(letter, 10) === 4 ||
-        parseInt(letter, 10) === 5 ||
-        parseInt(letter, 10) === 6 ||
-        parseInt(letter, 10) === 7 ||
-        parseInt(letter, 10) === 8 ||
-        parseInt(letter, 10) === 9
+        parseInt(item, 10) === 0 ||
+        parseInt(item, 10) === 1 ||
+        parseInt(item, 10) === 2 ||
+        parseInt(item, 10) === 3 ||
+        parseInt(item, 10) === 4 ||
+        parseInt(item, 10) === 5 ||
+        parseInt(item, 10) === 6 ||
+        parseInt(item, 10) === 7 ||
+        parseInt(item, 10) === 8 ||
+        parseInt(item, 10) === 9
       ) {
         isNumber = true;
       }
@@ -74,21 +57,75 @@ class FormValidator {
     return errorText;
   }
 
-  checkWordsQuantity(fieldId: string): void | string {
+  checkWordsCount(
+    fieldId: string,
+    wordsMin: number,
+    wordsMax: number
+  ): void | string {
     const fieldToCheck: string = (<HTMLInputElement>(
       document.getElementById(`${fieldId}`)
     )).value;
     let errorText: string = "";
-    let isBackspace = false;
+    let wordsCount: number = 0;
 
-    for (let letter of fieldToCheck) {
-      if (letter === " ") {
-        isBackspace = true;
+    for (let item of fieldToCheck) {
+      wordsCount++;
+    }
+
+    if (wordsCount < wordsMin || wordsCount > wordsMax) {
+      errorText = `Поле должно содержать от ${wordsMin} до ${wordsMax} слов.`;
+    }
+
+    if (errorText === "Поле должно содержать от 1 до 1 слов.") {
+      errorText = "Поле должно содержать 1 слово.";
+    }
+
+    if (errorText) {
+      return renderError(fieldId, errorText);
+    }
+
+    return errorText;
+  }
+
+  checkSpecialSymbols(
+    fieldId: string,
+    searchedSymbol: string,
+    requirement: string
+  ): void | string {
+    const fieldToCheck: string = (<HTMLInputElement>(
+      document.getElementById(`${fieldId}`)
+    )).value;
+    let errorText: string = "";
+    let isSymbolSpecial = false;
+
+    for (let item of fieldToCheck) {
+      if (item === searchedSymbol) {
+        isSymbolSpecial = true;
       }
     }
 
-    if (isBackspace) {
-      errorText = "Поле не должно содержать несколько слов.";
+    if (!isSymbolSpecial) {
+      errorText = `Поле должно содержать ${requirement}.`;
+    }
+
+    if (errorText) {
+      return renderError(fieldId, errorText);
+    }
+
+    return errorText;
+  }
+
+  checkPhoneNumber(fieldId: string): void | string {
+    const fieldToCheck: string = (<HTMLInputElement>(
+      document.getElementById(`${fieldId}`)
+    )).value;
+    let errorText: string = "";
+    const firstPhoneNumber: string = fieldToCheck.split("")[0];
+
+    if (fieldToCheck.length !== 11) {
+      errorText = `Поле должно содержать телефон из 11 символов.`;
+    } else if (firstPhoneNumber !== "8" && firstPhoneNumber !== "7") {
+      errorText = `Первая цифра должна быть 8 или 7.`;
     }
 
     if (errorText) {

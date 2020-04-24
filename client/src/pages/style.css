@@ -16,6 +16,7 @@ span,
 th,
 td,
 select,
+textarea,
 .alert {
   font-family: "Times New Roman", serif;
   font-size: 18px;
@@ -25,4 +26,8 @@ select,
 }
 .custom-font {
   font-family: "Cormorant SC", "Times New Roman", serif;
+}
+input,
+textarea {
+  padding-left: 7px;
 }
