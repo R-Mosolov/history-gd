@@ -27,7 +27,7 @@ class FormValidator {
       document.getElementById(`${fieldId}`)
     )).value;
     let errorText: string = "";
-    let isNumber = false;
+    let isDigit: boolean = false;
 
     for (let item of fieldToCheck) {
       if (
@@ -42,11 +42,11 @@ class FormValidator {
         parseInt(item, 10) === 8 ||
         parseInt(item, 10) === 9
       ) {
-        isNumber = true;
+        isDigit = true;
       }
     }
 
-    if (isNumber) {
+    if (isDigit) {
       errorText = "Поле не должно содержать чисел.";
     }
 
@@ -120,16 +120,79 @@ class FormValidator {
       document.getElementById(`${fieldId}`)
     )).value;
     let errorText: string = "";
-    const firstPhoneNumber: string = fieldToCheck.split("")[0];
+    const firstPhoneDigit: string = fieldToCheck.split("")[0];
 
     if (fieldToCheck.length !== 11) {
       errorText = `Поле должно содержать телефон из 11 символов.`;
-    } else if (firstPhoneNumber !== "8" && firstPhoneNumber !== "7") {
+    } else if (firstPhoneDigit !== "8" && firstPhoneDigit !== "7") {
       errorText = `Первая цифра должна быть 8 или 7.`;
     }
 
     if (errorText) {
       return renderError(fieldId, errorText);
+    }
+
+    return errorText;
+  }
+
+  checkPasswords(
+    firstPasswordId: string,
+    secondPasswordId: string,
+    minLenght: number
+  ): void | string {
+    // Initializing variables
+    const firstFieldToCheck: string = (<HTMLInputElement>(
+      document.getElementById(`${firstPasswordId}`)
+    )).value;
+    const secondFieldToCheck: string = (<HTMLInputElement>(
+      document.getElementById(`${secondPasswordId}`)
+    )).value;
+    let errorText: string = "";
+    let isDigit: boolean = false;
+
+    // Validating that passwords are not empty
+    if (!firstFieldToCheck || !secondFieldToCheck) {
+      errorText = "Оба поля с паролем должны быть заполнены.";
+    } else {
+      // Validating that passwords are have required symbols length
+      if (
+        firstFieldToCheck.length !== minLenght ||
+        secondFieldToCheck.length !== minLenght
+      ) {
+        errorText = `Пароль должен иметь ${minLenght} или более символов.`;
+      } else {
+        // Validating concurrence of passwords
+        if (firstFieldToCheck !== secondFieldToCheck) {
+          errorText = "Пароли должны совпадать друг с другом.";
+        }
+
+        // Validating that passwords are contain digits
+        for (let item of firstFieldToCheck.split("")) {
+          if (
+            parseInt(item, 10) === 0 ||
+            parseInt(item, 10) === 1 ||
+            parseInt(item, 10) === 2 ||
+            parseInt(item, 10) === 3 ||
+            parseInt(item, 10) === 4 ||
+            parseInt(item, 10) === 5 ||
+            parseInt(item, 10) === 6 ||
+            parseInt(item, 10) === 7 ||
+            parseInt(item, 10) === 8 ||
+            parseInt(item, 10) === 9
+          ) {
+            isDigit = true;
+          }
+        }
+
+        if (!isDigit) {
+          errorText = "Пароль должен содержать минимум одну цифру.";
+        }
+      }
+    }
+
+    // Returning errors
+    if (errorText) {
+      return renderError(firstPasswordId, errorText);
     }
 
     return errorText;

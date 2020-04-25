@@ -48,6 +48,9 @@ window.addEventListener("DOMContentLoaded", () => {
 
       // Validating a phone
       formValidator.checkPhoneNumber("phone");
+
+      // Validating a password
+      formValidator.checkPasswords("password", "repeated-password", 8);
     });
   }
 });
