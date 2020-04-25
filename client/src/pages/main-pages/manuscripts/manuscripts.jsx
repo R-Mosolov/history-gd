@@ -2,8 +2,8 @@ import React, { Component } from "react";
 
 import "./manuscripts.css";
 
-import LargeManuscript from "./img/large-manuscript.svg";
-import SmallManuscript from "./img/small-manuscript.svg";
+import LargeManuscript from "./images/large-manuscript.svg";
+import SmallManuscript from "./images/small-manuscript.svg";
 import LeftNavigation from "../../../components/left-navigation/left-navigation";
 import manuscriptsBase from "../../../states/manuscripts-data/manuscripts-base";
 

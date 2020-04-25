@@ -3,10 +3,11 @@ import React from "react";
 import "./audio-generator.css";
 
 import LeftNavigation from "../../../components/left-navigation/left-navigation";
+import Figure from "./images/figure.jpeg";
 
 function AudioGenerator() {
   return (
-    <div id="body-test" className="audio-generator">
+    <div className="audio-generator">
       <div className="d-flex">
         <LeftNavigation />
 
@@ -24,7 +25,8 @@ function AudioGenerator() {
               паралельно с др. видами деятельности, например, поездкой в
               автомобиле или готовкой ужина. Иными словами, аудиоформат
               монографий позволяет распараллеливать действия,{" "}
-              <b>увеличивая Вашу производительность как учёного</b>!
+              <b>увеличивая Вашу производительность как учёного</b> (см. табл.
+              1)!
             </p>
 
             <textarea id="audio-monograph-input" className="mt-2 w-100" />
@@ -32,6 +34,15 @@ function AudioGenerator() {
               <button id="btn-to-create-audio" className="mt-3 btn btn-success">
                 Создать MP3
               </button>
+            </div>
+
+            <div>
+              <p className="mt-4 text-right font-italic">Таблица 1</p>
+              <p className="text-center font-weight-bold">
+                Сравнение последовательного и параллельного способов выполнения
+                задач
+              </p>
+              <img className="border rounded" src={Figure} />
             </div>
           </div>
         </div>
