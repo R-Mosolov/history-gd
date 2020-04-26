@@ -14,6 +14,9 @@ function LeftNavigation() {
           <Link to="/add-manuscript">
             <li className="left-nav__container--item">Добавить рукопись</li>
           </Link>
+          <Link to="/full-manuscript">
+            <li className="left-nav__container--item">Полная рукопись</li>
+          </Link>
           <Link to="/manuscripts">
             <li className="left-nav__container--item">Обработка источников</li>
           </Link>
