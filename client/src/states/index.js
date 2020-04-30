@@ -5,7 +5,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { createStore } from "redux";
 import reducer from "./reducer";
 import { addNewText, deleteAllText } from "./actions";
-import FullManuscript from "../components/full-manuscript/full-manuscript";
+import FullManuscript from "../pages/main-pages/full-manuscript/full-manuscript";
 
 const store = createStore(reducer);
 

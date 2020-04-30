@@ -13,7 +13,7 @@ import Login from "../pages/additional-pages/login/login";
 
 import LeftNavigation from "./left-navigation/left-navigation";
 import Manuscripts from "../pages/main-pages/manuscripts/manuscripts";
-import FullManuscript from "./full-manuscript/full-manuscript";
+import FullManuscript from "../pages/main-pages/full-manuscript/full-manuscript";
 import AddManuscript from "../pages/main-pages/add-manuscript/add-manuscript";
 import AudioGenerator from "../pages/main-pages/audio-generator/audio-generator";
 import Diary from "../pages/main-pages/diary/diary";

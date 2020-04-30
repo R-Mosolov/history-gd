@@ -1,9 +1,10 @@
 import React from "react";
+import PdfGenerator from "../../../lib/pdf-generator/src/controller/pdf-generator";
 
-import manuscriptsBase from "../../states/manuscripts-data/manuscripts-base";
-import manuscriptsDetails from "../../states/manuscripts-data/manuscripts-details";
+import manuscriptsBase from "../../../states/manuscripts-data/manuscripts-base";
+import manuscriptsDetails from "../../../states/manuscripts-data/manuscripts-details";
 
-import LeftNavigation from "../left-navigation/left-navigation";
+import LeftNavigation from "../../../components/left-navigation/left-navigation";
 
 function FullManuscript({ addNewText, deleteAllText }) {
   return (
@@ -38,7 +39,26 @@ function FullManuscript({ addNewText, deleteAllText }) {
               >
                 Удалить текст
               </button>
+              <button
+                className="mt-3 ml-3 btn btn-warning"
+                id="delete-all-text"
+                onClick={deleteAllText}
+              >
+                Перевести текст в PDF
+              </button>
             </div>
+
+            <form
+              className="container border rounded"
+              method="POST"
+              action="pdfMake\pdf"
+            >
+              <div className="mt-3 mb-4 d-flex justify-content-center">
+                <button className="btn btn-success" type="submit">
+                  Создать файл PDF
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
