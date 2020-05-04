@@ -1,9 +1,13 @@
 # About the SPA
-
 **«History of Genius Discovery»** (shortly «History GD» or «GitHub 
 for Scientists») is the scientific portal that was created to help 
 scientists keeping own manuscripts (e.g., scientific articles, 
 university manuals, and monographs).
+
+## Current GUI
+At current time, GUI looks so as shown below. This GUI presents 
+part of project's worked functionality on 04.05.2020 on the left. 
+![File:GUI on 04.05.2020](client/public/img/GUI-on-04.05.2020.png "GUI on 04.05.2020")
 
 ## List of a Planned the SPA's Functionality
 1) creating manuscripts;
@@ -24,6 +28,13 @@ of scientific discoveries;
 1) Node.js (Express.js);
 2) MongoDB (MongoDB Atlas);
 3) Heroku as a hosting.
+
+## Instruction to run the SPA
+Run following terminal's commands from root directory:
+1. `cd client`
+2. `npm start`
+
+Then open a browser on: http://localhost:3000/
 
 ## Project's Technical Task and Timekeeping in Russian
 More information about project's technical details, planned 
