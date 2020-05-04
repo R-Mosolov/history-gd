@@ -1,6 +1,9 @@
 import React from "react";
 
 import LeftNavigation from "../../../components/left-navigation/left-navigation";
+import EmailSender from "../../../lib/email-sender/email-sender";
+
+const emailSender = new EmailSender();
 
 function Heritage() {
   return (
@@ -127,6 +130,18 @@ function Heritage() {
                   </tbody>
                 </table>
               </ul>
+              <button
+                className="btn btn-success"
+                onClick={() =>
+                  emailSender.send(
+                    "Test Name",
+                    "ChaseErickson5050@yandex.com",
+                    ["R.V.Mosolov@ya.ru"]
+                  )
+                }
+              >
+                Отправить рукопись
+              </button>
             </div>
           </div>
         </div>
