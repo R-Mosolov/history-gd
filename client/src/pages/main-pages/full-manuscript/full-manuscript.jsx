@@ -1,5 +1,4 @@
 import React from "react";
-import PdfGenerator from "../../../lib/pdf-generator/src/controller/pdf-generator";
 
 import manuscriptsBase from "../../../states/manuscripts-data/manuscripts-base";
 import manuscriptsDetails from "../../../states/manuscripts-data/manuscripts-details";

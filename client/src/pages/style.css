@@ -17,6 +17,7 @@ th,
 td,
 select,
 textarea,
+div,
 .alert {
   font-family: "Times New Roman", serif;
   font-size: 18px;

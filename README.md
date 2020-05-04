@@ -1,7 +1,7 @@
 # About the SPA
 
-**«History of Genius Discovery»** (shortly «history-gd» or «GitHub 
-for Scientists») is a scientific portal that was created to help 
+**«History of Genius Discovery»** (shortly «History GD» or «GitHub 
+for Scientists») is the scientific portal that was created to help 
 scientists keeping own manuscripts (e.g., scientific articles, 
 university manuals, and monographs).
 
