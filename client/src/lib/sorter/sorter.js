@@ -1,28 +1,36 @@
-class Sorter {
-  sortByText(dataArray, dataKey, booleanName = false) {
-    this.setState({
-      stateToChange: dataArray.sort((a, b) => {
-        const itemA = a[`${dataKey}`].toUpperCase();
-        const itemB = b[`${dataKey}`].toUpperCase();
+import React, { Component } from "react";
 
-        if (!booleanName) {
-          this.setState({
-            [`${booleanName}`]: true,
-          });
-          if (itemA < itemB) return -1;
-          else if (itemA > itemB) return 1;
-        }
+class Sorter extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isTextSorted: false,
+      isCreationDateSorted: false,
+    };
+  }
 
-        if (booleanName) {
-          this.setState({
-            [`${booleanName}`]: false,
-          });
-          if (itemA < itemB) return 1;
-          else if (itemA > itemB) return -1;
-        }
+  sortByText(dataPath, keyPath) {
+    dataPath.sort((a, b) => {
+      const itemA = a[keyPath].toUpperCase();
+      const itemB = b[keyPath].toUpperCase();
 
-        return 0;
-      }),
+      if (!this.state.isTextSorted) {
+        this.setState({
+          isTextSorted: true,
+        });
+        if (itemA < itemB) return -1;
+        else if (itemA > itemB) return 1;
+      }
+
+      if (this.state.isTextSorted) {
+        this.setState({
+          isTextSorted: false,
+        });
+        if (itemA < itemB) return 1;
+        else if (itemA > itemB) return -1;
+      }
+
+      return 0;
     });
   }
 }

@@ -47,17 +47,17 @@ class Manuscripts extends Component {
         const titleA = a.title.toUpperCase();
         const titleB = b.title.toUpperCase();
 
-        if (!this.state.isTitleSorted) {
+        if (!this.state.isTextSorted) {
           this.setState({
-            isTitleSorted: true,
+            isTextSorted: true,
           });
           if (titleA < titleB) return -1;
           else if (titleA > titleB) return 1;
         }
 
-        if (this.state.isTitleSorted) {
+        if (this.state.isTextSorted) {
           this.setState({
-            isTitleSorted: false,
+            isTextSorted: false,
           });
           if (titleA < titleB) return 1;
           else if (titleA > titleB) return -1;
@@ -101,17 +101,17 @@ class Manuscripts extends Component {
         const typeA = a.type.toUpperCase();
         const typeB = b.type.toUpperCase();
 
-        if (!this.state.isTitleSorted) {
+        if (!this.state.isTextSorted) {
           this.setState({
-            isTitleSorted: true,
+            isTextSorted: true,
           });
           if (typeA < typeB) return -1;
           else if (typeA > typeB) return 1;
         }
 
-        if (this.state.isTitleSorted) {
+        if (this.state.isTextSorted) {
           this.setState({
-            isTitleSorted: false,
+            isTextSorted: false,
           });
           if (typeA < typeB) return 1;
           else if (typeA > typeB) return -1;
