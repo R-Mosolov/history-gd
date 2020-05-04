@@ -28487,7 +28487,7 @@ exports.deflateTune = deflateTune;
           var prevlen = -1; /* last emitted length */
           var curlen; /* length of current code */
 
-          var nextlen = tree[0 * 2 + 1]; /*.Len*/ /* length of next code */
+          var nextlen = tree[0 * 2 + 1]; /* length of next code */ /*.Len*/
 
           var count = 0; /* repeat count of the current code */
           var max_count = 7; /* max repeat count */
@@ -28546,11 +28546,11 @@ exports.deflateTune = deflateTune;
           var prevlen = -1; /* last emitted length */
           var curlen; /* length of current code */
 
-          var nextlen = tree[0 * 2 + 1]; /*.Len*/ /* length of next code */
+          var nextlen = tree[0 * 2 + 1]; /* length of next code */ /*.Len*/
 
           var count = 0; /* repeat count of the current code */
           var max_count = 7; /* max repeat count */
-          var min_count = 4; /* guard already set */ /* min repeat count */
+          var min_count = 4; /* min repeat count */ /* guard already set */
 
           /* tree[max_code+1].Len = -1; */ if (nextlen === 0) {
             max_count = 138;
@@ -70348,7 +70348,8 @@ By Devon Govett
         });
 
         for (
-          var es6Symbols = "hasInstance,isConcatSpreadable,iterator,match,replace,search,species,split,toPrimitive,toStringTag,unscopables".split( // 19.4.2.2, 19.4.2.3, 19.4.2.4, 19.4.2.6, 19.4.2.8, 19.4.2.9, 19.4.2.10, 19.4.2.11, 19.4.2.12, 19.4.2.13, 19.4.2.14
+          var es6Symbols = "hasInstance,isConcatSpreadable,iterator,match,replace,search,species,split,toPrimitive,toStringTag,unscopables".split(
+              // 19.4.2.2, 19.4.2.3, 19.4.2.4, 19.4.2.6, 19.4.2.8, 19.4.2.9, 19.4.2.10, 19.4.2.11, 19.4.2.12, 19.4.2.13, 19.4.2.14
               ","
             ),
             j = 0;

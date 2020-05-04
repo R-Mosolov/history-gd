@@ -6,6 +6,7 @@ import LargeManuscript from "./images/large-manuscript.svg";
 import SmallManuscript from "./images/small-manuscript.svg";
 import LeftNavigation from "../../../components/left-navigation/left-navigation";
 import manuscriptsBase from "../../../states/manuscripts-data/manuscripts-base";
+import Searcher from "../../../lib/searcher/searcher";
 
 class Manuscripts extends Component {
   constructor(props) {
@@ -186,7 +187,10 @@ class Manuscripts extends Component {
                 </li>
               </ul>
 
-              <h2 className="mt-5">Список с учётом фильтра:</h2>
+              <div className="mt-5 d-flex justify-content-between">
+                <h2>Список с учётом фильтра:</h2>
+                <Searcher />
+              </div>
               <ul className="mt-4 list-unstyled">
                 <table className="mt-2 table table-bordered">
                   <thead>

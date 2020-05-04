@@ -1,7 +1,7 @@
 const manuscriptsBase: object[] = [
   {
     author: "Автор 2",
-    title: "Название 3",
+    title: "Название 1",
     type: "Монография",
     creationDate: 2002,
   },
@@ -13,7 +13,7 @@ const manuscriptsBase: object[] = [
   },
   {
     author: "Автор 3",
-    title: "Название 1",
+    title: "Название 3",
     type: "Монография",
     creationDate: 2001,
   },
