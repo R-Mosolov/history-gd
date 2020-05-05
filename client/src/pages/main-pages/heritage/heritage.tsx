@@ -133,7 +133,8 @@ function Heritage() {
               <button
                 className="btn btn-success"
                 onClick={() =>
-                  emailSender.send(
+                  // emailSender.sendBySendmail()
+                  emailSender.sendByNodemailer(
                     "Test Name",
                     "ChaseErickson5050@yandex.com",
                     ["R.V.Mosolov@ya.ru"]
