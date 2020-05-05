@@ -1,7 +1,7 @@
 import React from "react";
 
 import LeftNavigation from "../../../components/left-navigation/left-navigation";
-import EmailSender from "../../../lib/email-sender/email-sender";
+import EmailSender from "../../../lib/email-sender/send-email";
 
 const emailSender = new EmailSender();
 
@@ -133,7 +133,6 @@ function Heritage() {
               <button
                 className="btn btn-success"
                 onClick={() =>
-                  // emailSender.sendBySendmail()
                   emailSender.sendByNodemailer(
                     "Test Name",
                     "ChaseErickson5050@yandex.com",
