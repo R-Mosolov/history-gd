@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/R-Mosolov/history-gd/issues"
   },
-  "homepage": "https://github.com/R-Mosolov/history-gd#readme"
+  "homepage": "https://github.com/R-Mosolov/history-gd#readme",
+  "devDependencies": {
+    "jsdoc": "^3.6.4"
+  }
 }

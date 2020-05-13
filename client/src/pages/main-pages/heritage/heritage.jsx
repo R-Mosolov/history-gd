@@ -2,8 +2,10 @@ import React from "react";
 
 import LeftNavigation from "../../../components/left-navigation/left-navigation";
 import EmailSender from "../../../lib/email-sender/send-email";
+import main from "../../../lib/email-sender/nodemailer";
 
 const emailSender = new EmailSender();
+main();
 
 function Heritage() {
   return (
@@ -132,12 +134,14 @@ function Heritage() {
               </ul>
               <button
                 className="btn btn-success"
-                onClick={() =>
-                  emailSender.sendByNodemailer(
-                    "Test Name",
-                    "ChaseErickson5050@yandex.com",
-                    ["R.V.Mosolov@ya.ru"]
-                  )
+                id="btn-to-send-email"
+                onClick={() => localStorage.setItem("isReadyToSend", "end")
+
+                  // emailSender.sendByNodemailer(
+                  //   "Test Name",
+                  //   "ChaseErickson5050@yandex.com",
+                  //   ["R.V.Mosolov@ya.ru"]
+                  // )
                 }
               >
                 Отправить рукопись
