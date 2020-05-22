@@ -9,7 +9,7 @@ function Logo() {
     <Link to="/">
       <div className="ml-lg-3 mr-lg-3 d-flex">
         <img
-          className=""
+          alt="Logo"
           src={LogoIcon}
           style={{ height: 50 + "px", width: 50 + "px" }}
         />

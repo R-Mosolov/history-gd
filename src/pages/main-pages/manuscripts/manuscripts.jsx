@@ -168,6 +168,7 @@ class Manuscripts extends Component {
                 >
                   <img
                     className="m-2 large-manuscripts__banner"
+                    alt="Manuscript"
                     src={LargeManuscript}
                     style={{ height: 150 + "px", width: 150 + "px" }}
                   />
@@ -178,6 +179,7 @@ class Manuscripts extends Component {
                 <li className="small-manuscripts d-flex align-items-center small-manuscripts">
                   <img
                     className="m-2 small-manuscripts__banner"
+                    alt="Papyrus"
                     src={SmallManuscript}
                     style={{ height: 180 + "px", width: 180 + "px" }}
                   />
