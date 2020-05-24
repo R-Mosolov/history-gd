@@ -20,8 +20,6 @@ import AudioGenerator from "../pages/main-pages/audio-generator/audio-generator"
 import Diary from "../pages/main-pages/diary/diary";
 import Heritage from "../pages/main-pages/heritage/heritage";
 
-import "../states/index";
-
 function App() {
   return (
     <Router>

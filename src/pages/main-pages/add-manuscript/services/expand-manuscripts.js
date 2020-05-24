@@ -1,7 +1,7 @@
 "use strict";
 exports.__esModule = true;
-var manuscripts_base_1 = require("../../../../states/manuscripts-data/manuscripts-base");
-var manuscripts_details_1 = require("../../../../states/manuscripts-data/manuscripts-details");
+var manuscripts_base_1 = require("../../../../data/manuscripts/manuscripts-base");
+var manuscripts_details_1 = require("../../../../data/manuscripts/manuscripts-details");
 function expandManuscripts() {
   // Initializing variables
   var manuscriptType = document.getElementById("manuscript-type").value;

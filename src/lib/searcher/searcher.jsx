@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import manuscriptsBase from "../../states/manuscripts-data/manuscripts-base";
+import manuscriptsBase from "../../data/manuscripts/manuscripts-base";
 
 class Searcher extends Component {
   constructor(props) {

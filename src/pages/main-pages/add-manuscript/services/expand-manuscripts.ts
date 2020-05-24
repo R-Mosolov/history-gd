@@ -1,5 +1,5 @@
-import manuscriptsBase from "../../../../states/manuscripts-data/manuscripts-base";
-import manuscriptsDetails from "../../../../states/manuscripts-data/manuscripts-details";
+import manuscriptsBase from "../../../../data/manuscripts/manuscripts-base";
+import manuscriptsDetails from "../../../../data/manuscripts/manuscripts-details";
 
 function expandManuscripts(): void {
   // Initializing variables

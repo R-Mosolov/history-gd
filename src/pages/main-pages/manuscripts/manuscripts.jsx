@@ -5,7 +5,7 @@ import "./manuscripts.css";
 import LargeManuscript from "./images/large-manuscript.svg";
 import SmallManuscript from "./images/small-manuscript.svg";
 import LeftNavigation from "../../../components/left-navigation/left-navigation";
-import manuscriptsBase from "../../../states/manuscripts-data/manuscripts-base";
+import manuscriptsBase from "../../../data/manuscripts/manuscripts-base";
 import Searcher from "../../../lib/searcher/searcher";
 
 class Manuscripts extends Component {

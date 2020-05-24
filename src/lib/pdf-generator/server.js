@@ -1,7 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const path = require("path");
-const pdfRoute = require("./src/controller/pdf-generator");
+const pdfRoute = require("./src/pdf-generator");
 
 const port = process.env.PORT || 5000;
 const app = express();

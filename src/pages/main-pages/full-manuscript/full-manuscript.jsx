@@ -1,7 +1,7 @@
 import React from "react";
 
-import manuscriptsBase from "../../../states/manuscripts-data/manuscripts-base";
-import manuscriptsDetails from "../../../states/manuscripts-data/manuscripts-details";
+import manuscriptsBase from "../../../data/manuscripts/manuscripts-base";
+import manuscriptsDetails from "../../../data/manuscripts/manuscripts-details";
 
 import LeftNavigation from "../../../components/left-navigation/left-navigation";
 

@@ -135,7 +135,8 @@ function Heritage() {
               <button
                 className="btn btn-success"
                 id="btn-to-send-email"
-                onClick={() => localStorage.setItem("isReadyToSend", "end")
+                onClick={
+                  () => localStorage.setItem("isReadyToSend", "end")
 
                   // emailSender.sendByNodemailer(
                   //   "Test Name",
