@@ -39,9 +39,9 @@ window.addEventListener("DOMContentLoaded", () => {
       formValidator.checkStringLength("research-interests", 3, 300);
 
       // Validating an email
-      formValidator.checkStringLength("email", 4, 75);
+      formValidator.checkStringLength("registration-email", 4, 75);
       formValidator.checkSpecialSymbols(
-        "email",
+        "registration-email",
         "@",
         "email (электронную почту)"
       );
@@ -49,8 +49,8 @@ window.addEventListener("DOMContentLoaded", () => {
       // Validating a phone
       formValidator.checkPhoneNumber("phone");
 
-      // Validating a password
-      formValidator.checkPasswords("password", "repeated-password", 8);
+      // Validating passwords
+      formValidator.checkTwoPasswords("password", "repeated-password", 8);
     });
   }
 });

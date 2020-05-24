@@ -2,6 +2,7 @@ import React from "react";
 
 import "./login.css";
 import "../../../lib/form-validator/render-error";
+import validateForm from "./functions/validate-form";
 
 function Login() {
   return (
@@ -13,19 +14,33 @@ function Login() {
           <div className="d-flex flex-column mb-2">
             <label>Email (электронная почта)</label>
             <input
+              id="login-email"
+              className="form-control"
               type="email"
               min="3"
               max="75"
               placeholder="MV.Lomonosov@msu.ru"
             />
           </div>
+
           <div className="d-flex flex-column">
             <label>Пароль</label>
-            <input type="password" min="8" max="50" placeholder="********" />
+            <input
+              id="login-password"
+              className="form-control"
+              type="password"
+              min="8"
+              max="50"
+              placeholder="********"
+            />
           </div>
         </form>
 
-        <button id="login-button" className="mt-3 btn btn-success btn-block">
+        <button
+          id="login-button"
+          className="mt-3 btn btn-success btn-block"
+          onClick={() => validateForm()}
+        >
           Войти
         </button>
       </div>

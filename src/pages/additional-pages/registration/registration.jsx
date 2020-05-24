@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import "./registration.css";
-import "./services/validate-form";
+import "./functions/validate-form";
 
 function Registration() {
   return (
@@ -17,6 +17,7 @@ function Registration() {
               <label>1. Фамилия*</label>
               <input
                 id="last-name"
+                className="form-control"
                 type="text"
                 min="2"
                 max="75"
@@ -28,6 +29,7 @@ function Registration() {
               <label>2. Имя*</label>
               <input
                 id="first-name"
+                className="form-control"
                 type="text"
                 min="2"
                 max="75"
@@ -39,6 +41,7 @@ function Registration() {
               <label>3. Отчество*</label>
               <input
                 id="middle-name"
+                className="form-control"
                 type="text"
                 min="2"
                 max="75"
@@ -54,6 +57,7 @@ function Registration() {
               <label>4. Полное название ВУЗ-а, в котором Вы работаете</label>
               <input
                 id="university"
+                className="form-control"
                 type="text"
                 min="3"
                 max="75"
@@ -64,6 +68,7 @@ function Registration() {
               <label>5. Учёное звание</label>
               <input
                 id="academic-title"
+                className="form-control"
                 type="text"
                 min="3"
                 max="75"
@@ -74,6 +79,7 @@ function Registration() {
               <label>6. Учёная степень</label>
               <input
                 id="academic-degree"
+                className="form-control"
                 type="text"
                 min="3"
                 max="75"
@@ -84,6 +90,7 @@ function Registration() {
               <label>7. Научно-исследовательские интересы</label>
               <textarea
                 id="research-interests"
+                className="form-control"
                 placeholder="Мозаичное дело, изобретение ночезрительных труб"
               />
             </div>
@@ -94,7 +101,8 @@ function Registration() {
             <div className="d-flex flex-column mb-3">
               <label>8. Email (электронная почта)*</label>
               <input
-                id="email"
+                id="registration-email"
+                className="form-control"
                 type="email"
                 min="3"
                 max="75"
@@ -106,6 +114,7 @@ function Registration() {
               <label>9. Моб. телефон*</label>
               <input
                 id="phone"
+                className="form-control"
                 type="number"
                 min="11"
                 max="11"
@@ -117,6 +126,7 @@ function Registration() {
               <label>10.1. Пароль*</label>
               <input
                 id="password"
+                className="form-control"
                 type="password"
                 min="8"
                 max="50"
@@ -128,6 +138,7 @@ function Registration() {
               <label>10.2. Повторите пароль*</label>
               <input
                 id="repeated-password"
+                className="form-control"
                 type="password"
                 min="8"
                 max="50"

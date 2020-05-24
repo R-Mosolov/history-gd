@@ -12,7 +12,7 @@ class TopNavigation extends Component {
 
     this.state = {
       btnToWorkArea: (
-        <Link to="/manuscripts">
+        <Link to="/login">
           <button
             className="on-work-table mr-lg-4 btn btn-warning"
             onClick={this.checkPageForWorkArea}
