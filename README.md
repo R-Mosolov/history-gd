@@ -7,7 +7,7 @@ university manuals, and monographs).
 ## Current GUI
 At current time, GUI looks so as shown below. This GUI presents 
 part of project's worked functionality on 04.05.2020 on the left. 
-![File:GUI on 04.05.2020](client/public/img/GUI-on-04.05.2020.png "GUI on 04.05.2020")
+![File:GUI on 04.05.2020](public/img/GUI-on-04.05.2020.png "GUI on 04.05.2020")
 
 ## List of a Planned the SPA's Functionality
 1) creating manuscripts;

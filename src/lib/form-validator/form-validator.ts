@@ -1,5 +1,8 @@
+// Importing variables
 import renderError from "./render-error";
+import users from "../../data/users.json";
 
+// Creating the new class
 class FormValidator {
   checkStringLength(
     fieldId: string,
@@ -198,50 +201,31 @@ class FormValidator {
     return errorText;
   }
 
-  checkOnePassword(
-    passwordId: string,
-    minLenght: number,
-    maxLenght: number
-  ): void | string {
+  checkLoginFields(emailId: string, passwordId: string): void | string {
     // Initializing variables
-    const fieldToCheck: string = (<HTMLInputElement>(
+    const email: string = (<HTMLInputElement>(
+      document.getElementById(`${emailId}`)
+    )).value;
+    const password: string = (<HTMLInputElement>(
       document.getElementById(`${passwordId}`)
     )).value;
-    const fieldLength = fieldToCheck.length;
     let errorText: string = "";
-    let isDigit: boolean = false;
 
-    // Validating that passwords are not empty
-    if (fieldToCheck === "") {
-      errorText = "Поле с паролем должно быть заполнено.";
-    } else {
-      // Validating that passwords are have required symbols length
-      if (minLenght > fieldLength || fieldLength > maxLenght) {
-        errorText = `Пароль должен иметь от ${minLenght} до ${maxLenght} символов.`;
+    // Checking email's conformity
+    users.forEach((user) => {
+      const isRegisteredUser =
+        user.email.toString() === email &&
+        user.password.toString() === password;
+      const isRegisteredEmail = user.email.toString() === email;
+
+      if (isRegisteredUser) {
+        errorText = "Отлично! Данный пользователь зарегистрирован в системе.";
+      } else if (!isRegisteredUser && isRegisteredEmail) {
+        errorText = "Проверьте, пожалуйста, введённый пароль.";
       } else {
-        // Validating that passwords are contain digits
-        for (let item of fieldToCheck.split("")) {
-          if (
-            parseInt(item, 10) === 0 ||
-            parseInt(item, 10) === 1 ||
-            parseInt(item, 10) === 2 ||
-            parseInt(item, 10) === 3 ||
-            parseInt(item, 10) === 4 ||
-            parseInt(item, 10) === 5 ||
-            parseInt(item, 10) === 6 ||
-            parseInt(item, 10) === 7 ||
-            parseInt(item, 10) === 8 ||
-            parseInt(item, 10) === 9
-          ) {
-            isDigit = true;
-          }
-        }
-
-        if (!isDigit) {
-          errorText = "Пароль должен содержать минимум одну цифру.";
-        }
+        errorText = "Данный пользователь не зарегистрирован в системе.";
       }
-    }
+    });
 
     // Rendering errors
     if (errorText) {
@@ -250,4 +234,5 @@ class FormValidator {
   }
 }
 
+// Exporting the module
 export default FormValidator;

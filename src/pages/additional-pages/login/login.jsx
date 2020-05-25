@@ -14,7 +14,7 @@ function Login() {
           <div className="d-flex flex-column mb-2">
             <label>Email (электронная почта)</label>
             <input
-              id="login-email"
+              id="login-page__email"
               className="form-control"
               type="email"
               min="3"
@@ -26,7 +26,7 @@ function Login() {
           <div className="d-flex flex-column">
             <label>Пароль</label>
             <input
-              id="login-password"
+              id="login-page__password"
               className="form-control"
               type="password"
               min="8"
