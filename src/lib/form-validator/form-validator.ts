@@ -220,6 +220,10 @@ class FormValidator {
 
       if (isRegisteredUser) {
         errorText = "Отлично! Данный пользователь зарегистрирован в системе.";
+        localStorage.setItem("hasAuthorized", "true");
+        console.log(
+          `form-validator.ts: ${localStorage.getItem("hasAuthorized")}`
+        );
       } else if (!isRegisteredUser && isRegisteredEmail) {
         errorText = "Проверьте, пожалуйста, введённый пароль.";
       } else {

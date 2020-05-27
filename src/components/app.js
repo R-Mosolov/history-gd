@@ -1,12 +1,12 @@
 import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import { Link } from "react-router-dom";
-import "bootstrap/dist/css/bootstrap.min.css";
 
+import "bootstrap/dist/css/bootstrap.min.css";
 import "./app.css";
 import "../pages/style.css";
 
-import TopNavigation from "./top-navigation/top-navigation";
+import setupDefaultAuth from "../pages/additional-pages/error-message/define-page-status/setup-default-auth";
+import definePageStatus from "../pages/additional-pages/error-message/define-page-status/define-page-status";
 
 import Main from "../pages/additional-pages/main/main";
 import Registration from "../pages/additional-pages/registration/registration";
@@ -20,8 +20,12 @@ import AddManuscript from "../pages/main-pages/add-manuscript/add-manuscript";
 import AudioGenerator from "../pages/main-pages/audio-generator/audio-generator";
 import Diary from "../pages/main-pages/diary/diary";
 import Heritage from "../pages/main-pages/heritage/heritage";
+import ErrorMessage from "../pages/additional-pages/error-message/error-message";
 
 function App() {
+  setupDefaultAuth();
+  definePageStatus();
+
   return (
     <Router>
       <div className="app mb-5">
@@ -29,6 +33,7 @@ function App() {
           <Route path="/" exact component={Main} />
           <Route path="/registration" component={Registration} />
           <Route path="/login" component={Login} />
+          <Route path="/error-message" component={ErrorMessage} />
 
           <Route path="/left-navigation" component={LeftNavigation} />
           <Route path="/manuscripts" component={Manuscripts} />

@@ -39,7 +39,15 @@ class Login extends Component {
   render() {
     return (
       <div className="login mt-5 mb-5 d-flex justify-content-center align-items-center container">
-        <TopNavigation />
+        <TopNavigation
+          btnOnWorkArea={
+            <Link to="/manuscripts">
+              <button className="on-work-table mr-lg-4 btn btn-warning">
+                Рабочий стол
+              </button>
+            </Link>
+          }
+        />
 
         <div className="w-50">
           <h1 className="pt-5">Вход в систему</h1>
@@ -73,7 +81,7 @@ class Login extends Component {
           <button
             id="login-button"
             className="mt-3 btn btn-success btn-block"
-            onClick={() => this.checkAuthData()}
+            onClick={() => validateForm()}
           >
             Войти
           </button>
