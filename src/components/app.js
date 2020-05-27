@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import "./app.css";
@@ -24,8 +25,6 @@ function App() {
   return (
     <Router>
       <div className="app mb-5">
-        <TopNavigation />
-
         <main className="header-place">
           <Route path="/" exact component={Main} />
           <Route path="/registration" component={Registration} />

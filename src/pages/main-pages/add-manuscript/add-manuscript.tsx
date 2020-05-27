@@ -4,10 +4,13 @@ import "./add-manuscript.css";
 
 import LeftNavigation from "../../../components/left-navigation/left-navigation";
 import expandManuscripts from "./services/expand-manuscripts";
+import TopNavigation from "../../../components/top-navigation/top-navigation";
 
 function AddManuscript() {
   return (
     <div className="add-manuscript">
+      <TopNavigation />
+
       <div className="d-flex">
         <LeftNavigation />
 

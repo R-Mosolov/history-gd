@@ -4,10 +4,13 @@ import manuscriptsBase from "../../../data/manuscripts/manuscripts-base";
 import manuscriptsDetails from "../../../data/manuscripts/manuscripts-details";
 
 import LeftNavigation from "../../../components/left-navigation/left-navigation";
+import TopNavigation from "../../../components/top-navigation/top-navigation";
 
 function FullManuscript({ addNewText, deleteAllText }) {
   return (
     <div className="full-manuscript">
+      <TopNavigation />
+
       <div className="d-flex">
         <LeftNavigation />
 

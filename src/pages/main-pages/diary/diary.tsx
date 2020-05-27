@@ -1,10 +1,13 @@
 import React from "react";
 
 import LeftNavigation from "../../../components/left-navigation/left-navigation";
+import TopNavigation from "../../../components/top-navigation/top-navigation";
 
 function Diary() {
   return (
     <div className="diary">
+      <TopNavigation />
+
       <div className="d-flex">
         <LeftNavigation />
 

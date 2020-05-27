@@ -7,6 +7,7 @@ import SmallManuscript from "./images/small-manuscript.svg";
 import LeftNavigation from "../../../components/left-navigation/left-navigation";
 import manuscriptsBase from "../../../data/manuscripts/manuscripts-base";
 import Searcher from "../../../lib/searcher/searcher";
+import TopNavigation from "../../../components/top-navigation/top-navigation";
 
 class Manuscripts extends Component {
   constructor(props) {
@@ -151,6 +152,8 @@ class Manuscripts extends Component {
   render() {
     return (
       <div className="manuscripts">
+        <TopNavigation />
+
         <div className="d-flex">
           <LeftNavigation />
 

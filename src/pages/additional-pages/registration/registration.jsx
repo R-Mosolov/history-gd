@@ -3,10 +3,21 @@ import { Link } from "react-router-dom";
 
 import "./registration.css";
 import "./functions/validate-form";
+import TopNavigation from "../../../components/top-navigation/top-navigation";
 
 function Registration() {
   return (
     <div className="registration mt-5 mb-5 d-flex justify-content-center container">
+      <TopNavigation
+        btnOnWorkArea={
+          <Link to="/login">
+            <button className="on-work-table mr-lg-4 btn btn-warning">
+              Рабочий стол
+            </button>
+          </Link>
+        }
+      />
+
       <div className="w-lg-50">
         <h1 className="pt-5">Регистрация на сайте</h1>
 

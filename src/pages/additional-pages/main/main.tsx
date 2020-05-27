@@ -2,10 +2,21 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import "./main.css";
+import TopNavigation from "../../../components/top-navigation/top-navigation";
 
 function Main() {
   return (
     <div className="main mb-5">
+      <TopNavigation
+        btnOnWorkArea={
+          <Link to="/login">
+            <button className="on-work-table mr-lg-4 btn btn-warning">
+              Рабочий стол
+            </button>
+          </Link>
+        }
+      />
+
       <div className="banner d-flex justify-content-center align-items-center">
         <div>
           <h1 className="title container">История гениального открытия</h1>

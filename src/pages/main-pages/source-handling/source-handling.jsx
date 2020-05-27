@@ -1,6 +1,7 @@
 import React from "react";
 
 import LeftNavigation from "../../../components/left-navigation/left-navigation";
+import TopNavigation from "../../../components/top-navigation/top-navigation";
 
 function SourceHandling() {
   const marginTopFour = "mt-4";
@@ -8,6 +9,8 @@ function SourceHandling() {
 
   return (
     <div className="full-manuscript">
+      <TopNavigation />
+
       <div className="d-flex">
         <LeftNavigation />
 

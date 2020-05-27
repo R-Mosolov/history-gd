@@ -4,10 +4,13 @@ import "./audio-generator.css";
 
 import LeftNavigation from "../../../components/left-navigation/left-navigation";
 import Figure from "./images/figure.jpeg";
+import TopNavigation from "../../../components/top-navigation/top-navigation";
 
 function AudioGenerator() {
   return (
     <div className="audio-generator">
+      <TopNavigation />
+
       <div className="d-flex">
         <LeftNavigation />
 
