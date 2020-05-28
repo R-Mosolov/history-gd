@@ -1,4 +1,4 @@
-import FormValidator from "../../../../lib/form-validator/form-validator";
+const FormValidator = require("../../../../lib/form-validator/form-validator");
 
 window.addEventListener("DOMContentLoaded", () => {
   const formValidator = new FormValidator();

@@ -1,4 +1,4 @@
-import FormValidator from "../../../../lib/form-validator/form-validator";
+const FormValidator = require("../../../../lib/form-validator/form-validator");
 
 const formValidator = new FormValidator();
 

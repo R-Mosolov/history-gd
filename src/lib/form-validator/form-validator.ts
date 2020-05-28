@@ -5,13 +5,11 @@ import users from "../../data/users.json";
 // Creating the new class
 class FormValidator {
   checkStringLength(
-    fieldId: string,
+    fieldDom: string,
     minLength: number,
     maxLength: number
   ): void | string {
-    const fieldToCheck: string = (<HTMLInputElement>(
-      document.getElementById(`${fieldId}`)
-    )).value;
+    const fieldToCheck: string = fieldDom;
     let errorText: string = "";
 
     if (fieldToCheck.length < minLength || fieldToCheck.length > maxLength) {
@@ -19,7 +17,7 @@ class FormValidator {
     }
 
     if (errorText) {
-      return renderError(fieldId, errorText);
+      return renderError(fieldDom, errorText);
     }
 
     return errorText;
@@ -239,4 +237,4 @@ class FormValidator {
 }
 
 // Exporting the module
-export default FormValidator;
+module.exports = FormValidator;
