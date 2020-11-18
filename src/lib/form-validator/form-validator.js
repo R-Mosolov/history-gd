@@ -2,7 +2,7 @@
 exports.__esModule = true;
 // Importing variables
 var render_error_1 = require("./render-error");
-var users_json_1 = require("../../data/users.json");
+var users = require("../../data/users.json");
 // Creating the new class
 var FormValidator = /** @class */ (function () {
     function FormValidator() {
@@ -151,7 +151,7 @@ var FormValidator = /** @class */ (function () {
         var password = (document.getElementById("" + passwordId)).value;
         var errorText = "";
         // Checking email's conformity
-        users_json_1["default"].forEach(function (user) {
+        users.forEach(function (user) {
             var isRegisteredUser = user.email.toString() === email &&
                 user.password.toString() === password;
             var isRegisteredEmail = user.email.toString() === email;

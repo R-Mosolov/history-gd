@@ -1,6 +1,6 @@
 // Importing variables
 import renderError from "./render-error";
-import users from "../../data/users.json";
+import * as users from "../../data/users.json";
 
 // Creating the new class
 class FormValidator {

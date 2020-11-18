@@ -31,7 +31,7 @@ of scientific discoveries;
 
 ## Instruction to run the SPA
 Run following terminal's commands from root directory:
-1. `cd client`
+1. `npm install`
 2. `npm start`
 
 Then open a browser on: http://localhost:3000/
