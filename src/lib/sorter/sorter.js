@@ -1,6 +1,6 @@
 /** This module (reusable component) sorts data in a table */
 
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
 class Sorter extends Component {
   /**
@@ -30,7 +30,7 @@ class Sorter extends Component {
           isTextSorted: true,
         });
         if (itemA < itemB) return -1;
-        else if (itemA > itemB) return 1;
+        if (itemA > itemB) return 1;
       }
 
       if (this.state.isTextSorted) {
@@ -38,7 +38,7 @@ class Sorter extends Component {
           isTextSorted: false,
         });
         if (itemA < itemB) return 1;
-        else if (itemA > itemB) return -1;
+        if (itemA > itemB) return -1;
       }
 
       return 0;
