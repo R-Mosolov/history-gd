@@ -40,12 +40,16 @@ of scientific discoveries;
 | 3 | Google Firebase | NoSQL DBMS and hosting                |
 
 # Instructions
-## How to Run the SPA
+## How to Run the SPA: For guests
 Run following terminal commands from root directory:
 1. `npm install`
 2. `npm start`
 
 Then open a browser on: http://localhost:3000/
+
+## How to Run the SPA: For workers
+1. clear && npx eslint --fix src/ && tsc src/**/*.ts
+2. clear && npm start
 
 ## How to Compile Modules from JS Language to TypeScript
 `tsc src/**/*.ts`

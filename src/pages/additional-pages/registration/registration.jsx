@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import { utils } from "../../../utils";
 import {
-  USER,
+  BASIC_INFO, PROF_INFO, SERVICE_INFO,
   FIRST_NAME, MIDDLE_NAME, LAST_NAME,
   UNIVERSITY, PROF_DEGREE, ACADEMIC_DEGREE, RESEARCH_INTERESTS,
   REGISTRATION_EMAIL, PHONE, PASSWORD, REPEAT_PASSWORD,
@@ -13,7 +13,6 @@ import TopNavigation from "../../../components/top-navigation/top-navigation";
 
 import "./registration.css";
 
-const { basicInfo, profInfo, serviceInfo } = USER;
 let inputsCounter = 0;
 
 function addInput(id, obj) {
@@ -47,7 +46,7 @@ function Registration() {
           <fieldset className="mt-4">
             <legend>Базовая информация</legend>
             <div className="d-flex flex-column mb-3">
-              {addInput(LAST_NAME, basicInfo)}
+              {addInput(LAST_NAME, BASIC_INFO)}
               <input
                 id={LAST_NAME}
                 className="form-control"
@@ -59,7 +58,7 @@ function Registration() {
               />
             </div>
             <div className="d-flex flex-column mb-3">
-              {addInput(FIRST_NAME, basicInfo)}
+              {addInput(FIRST_NAME, BASIC_INFO)}
               <input
                 id={FIRST_NAME}
                 className="form-control"
@@ -71,7 +70,7 @@ function Registration() {
               />
             </div>
             <div className="d-flex flex-column mb-3">
-              {addInput(MIDDLE_NAME, basicInfo)}
+              {addInput(MIDDLE_NAME, BASIC_INFO)}
               <input
                 id={MIDDLE_NAME}
                 className="form-control"
@@ -87,7 +86,7 @@ function Registration() {
           <fieldset className="mt-3">
             <legend>Профессиональные сведения</legend>
             <div className="d-flex flex-column mb-3">
-              {addInput(UNIVERSITY, profInfo)}
+              {addInput(UNIVERSITY, PROF_INFO)}
               <input
                 id={UNIVERSITY}
                 className="form-control"
@@ -98,7 +97,7 @@ function Registration() {
               />
             </div>
             <div className="d-flex flex-column mb-3">
-              {addInput(PROF_DEGREE, profInfo)}
+              {addInput(PROF_DEGREE, PROF_INFO)}
               <input
                 id={PROF_DEGREE}
                 className="form-control"
@@ -109,7 +108,7 @@ function Registration() {
               />
             </div>
             <div className="d-flex flex-column mb-3">
-              {addInput(ACADEMIC_DEGREE, profInfo)}
+              {addInput(ACADEMIC_DEGREE, PROF_INFO)}
               <input
                 id={ACADEMIC_DEGREE}
                 className="form-control"
@@ -120,7 +119,7 @@ function Registration() {
               />
             </div>
             <div className="d-flex flex-column mb-3">
-              {addInput(RESEARCH_INTERESTS, profInfo)}
+              {addInput(RESEARCH_INTERESTS, PROF_INFO)}
               <textarea
                 id={RESEARCH_INTERESTS}
                 className="form-control"
@@ -132,7 +131,7 @@ function Registration() {
           <fieldset className="mt-3">
             <legend>Информация для пользования системой</legend>
             <div className="d-flex flex-column mb-3">
-              {addInput(REGISTRATION_EMAIL, serviceInfo)}
+              {addInput(REGISTRATION_EMAIL, SERVICE_INFO)}
               <input
                 id={REGISTRATION_EMAIL}
                 className="form-control"
@@ -144,7 +143,7 @@ function Registration() {
               />
             </div>
             <div className="d-flex flex-column mb-3">
-              {addInput(PHONE, serviceInfo)}
+              {addInput(PHONE, SERVICE_INFO)}
               <input
                 id={PHONE}
                 className="form-control"
@@ -156,7 +155,7 @@ function Registration() {
               />
             </div>
             <div className="d-flex flex-column mb-3">
-              {addInput(PASSWORD, serviceInfo)}
+              {addInput(PASSWORD, SERVICE_INFO)}
               <input
                 id={PASSWORD}
                 className="form-control"
@@ -168,7 +167,7 @@ function Registration() {
               />
             </div>
             <div className="d-flex flex-column mb-3">
-              {addInput(REPEAT_PASSWORD, serviceInfo)}
+              {addInput(REPEAT_PASSWORD, SERVICE_INFO)}
               <input
                 id={REPEAT_PASSWORD}
                 className="form-control"
