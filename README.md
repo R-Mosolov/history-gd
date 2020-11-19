@@ -48,7 +48,7 @@ Run following terminal commands from root directory:
 Then open a browser on: http://localhost:3000/
 
 ## How to Compile Modules from JS Language to TypeScript
-`tsc src/*.ts`
+`tsc src/**/*.ts`
 
 ## How to Check Syntax Quality into Modules
 `npx eslint --fix src/`

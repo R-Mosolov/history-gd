@@ -1,9 +1,31 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import "./registration.css";
+import { utils } from "../../../utils";
+import {
+  USER,
+  FIRST_NAME, MIDDLE_NAME, LAST_NAME,
+  UNIVERSITY, PROF_DEGREE, ACADEMIC_DEGREE, RESEARCH_INTERESTS,
+  REGISTRATION_EMAIL, PHONE, PASSWORD, REPEAT_PASSWORD,
+} from "../../../constants/index.js";
 import "./functions/validate-form";
 import TopNavigation from "../../../components/top-navigation/top-navigation";
+
+import "./registration.css";
+
+const { basicInfo, profInfo, serviceInfo } = USER;
+let inputsCounter = 0;
+
+function addInput(id, obj) {
+  inputsCounter += 1;
+
+  // Add ID attribute for a label
+  return (
+    <label htmlFor={id}>
+      {`${inputsCounter}. ${utils.getLabelById(id, obj)}${utils.getRequiredById(id, obj) ? '*' : ''}`}
+    </label>
+  );
+}
 
 function Registration() {
   return (
@@ -25,9 +47,9 @@ function Registration() {
           <fieldset className="mt-4">
             <legend>Базовая информация</legend>
             <div className="d-flex flex-column mb-3">
-              <label>1. Фамилия*</label>
+              {addInput(LAST_NAME, basicInfo)}
               <input
-                id="last-name"
+                id={LAST_NAME}
                 className="form-control"
                 type="text"
                 min="2"
@@ -37,9 +59,9 @@ function Registration() {
               />
             </div>
             <div className="d-flex flex-column mb-3">
-              <label>2. Имя*</label>
+              {addInput(FIRST_NAME, basicInfo)}
               <input
-                id="first-name"
+                id={FIRST_NAME}
                 className="form-control"
                 type="text"
                 min="2"
@@ -49,9 +71,9 @@ function Registration() {
               />
             </div>
             <div className="d-flex flex-column mb-3">
-              <label>3. Отчество*</label>
+              {addInput(MIDDLE_NAME, basicInfo)}
               <input
-                id="middle-name"
+                id={MIDDLE_NAME}
                 className="form-control"
                 type="text"
                 min="2"
@@ -65,9 +87,9 @@ function Registration() {
           <fieldset className="mt-3">
             <legend>Профессиональные сведения</legend>
             <div className="d-flex flex-column mb-3">
-              <label>4. Полное название ВУЗ-а, в котором Вы работаете</label>
+              {addInput(UNIVERSITY, profInfo)}
               <input
-                id="university"
+                id={UNIVERSITY}
                 className="form-control"
                 type="text"
                 min="3"
@@ -76,9 +98,9 @@ function Registration() {
               />
             </div>
             <div className="d-flex flex-column mb-3">
-              <label>5. Учёное звание</label>
+              {addInput(PROF_DEGREE, profInfo)}
               <input
-                id="academic-title"
+                id={PROF_DEGREE}
                 className="form-control"
                 type="text"
                 min="3"
@@ -87,9 +109,9 @@ function Registration() {
               />
             </div>
             <div className="d-flex flex-column mb-3">
-              <label>6. Учёная степень</label>
+              {addInput(ACADEMIC_DEGREE, profInfo)}
               <input
-                id="academic-degree"
+                id={ACADEMIC_DEGREE}
                 className="form-control"
                 type="text"
                 min="3"
@@ -98,9 +120,9 @@ function Registration() {
               />
             </div>
             <div className="d-flex flex-column mb-3">
-              <label>7. Научно-исследовательские интересы</label>
+              {addInput(RESEARCH_INTERESTS, profInfo)}
               <textarea
-                id="research-interests"
+                id={RESEARCH_INTERESTS}
                 className="form-control"
                 placeholder="Мозаичное дело, изобретение ночезрительных труб"
               />
@@ -110,9 +132,9 @@ function Registration() {
           <fieldset className="mt-3">
             <legend>Информация для пользования системой</legend>
             <div className="d-flex flex-column mb-3">
-              <label>8. Email (электронная почта)*</label>
+              {addInput(REGISTRATION_EMAIL, serviceInfo)}
               <input
-                id="registration-email"
+                id={REGISTRATION_EMAIL}
                 className="form-control"
                 type="email"
                 min="3"
@@ -122,9 +144,9 @@ function Registration() {
               />
             </div>
             <div className="d-flex flex-column mb-3">
-              <label>9. Моб. телефон*</label>
+              {addInput(PHONE, serviceInfo)}
               <input
-                id="phone"
+                id={PHONE}
                 className="form-control"
                 type="number"
                 min="11"
@@ -134,9 +156,9 @@ function Registration() {
               />
             </div>
             <div className="d-flex flex-column mb-3">
-              <label>10.1. Пароль*</label>
+              {addInput(PASSWORD, serviceInfo)}
               <input
-                id="password"
+                id={PASSWORD}
                 className="form-control"
                 type="password"
                 min="8"
@@ -146,9 +168,9 @@ function Registration() {
               />
             </div>
             <div className="d-flex flex-column mb-3">
-              <label>10.2. Повторите пароль*</label>
+              {addInput(REPEAT_PASSWORD, serviceInfo)}
               <input
-                id="repeated-password"
+                id={REPEAT_PASSWORD}
                 className="form-control"
                 type="password"
                 min="8"
