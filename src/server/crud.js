@@ -1,0 +1,1 @@
+// Here will be added CRUD methods to manage DB
