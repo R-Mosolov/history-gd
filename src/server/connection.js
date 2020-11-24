@@ -1,10 +1,10 @@
 // Firebase App (the core Firebase SDK) is always required and
 // must be listed before other Firebase SDKs
-const firebase = require('firebase/app');
+import firebase from "firebase/app";
 
-// Add the Firebase products that you want to use
-require('firebase/auth');
-require('firebase/firestore');
+// Add the Firebase services that you want to use
+import "firebase/auth";
+import "firebase/firestore";
 
 // TODO: Replace the following with your app's Firebase project configuration
 // For Firebase JavaScript SDK v7.20.0 and later, `measurementId` is an optional field
@@ -22,19 +22,4 @@ const firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
-
-// Simple deleting data
-db
-  .collection('users').doc('alovelace').delete()
-  .then(() => console.log('Document was deleted.'));
-
-// Simple adding data
-db
-  .collection('users')
-  .doc('alovelace')
-  .set({
-    first: 'Ada',
-    last: 'Lovelace',
-    born: 1815,
-  })
-  .then(() => console.log('Document was added.'));
+export default db;

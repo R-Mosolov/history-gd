@@ -5,41 +5,44 @@ import "./manuscripts.css";
 import LargeManuscript from "./images/large-manuscript.svg";
 import SmallManuscript from "./images/small-manuscript.svg";
 import LeftNavigation from "../../../components/left-navigation/left-navigation";
-import manuscriptsBase from "../../../data/manuscripts/manuscripts-base";
+// import manuscriptsBase from "../../../data/manuscripts/manuscripts-base";
 import Searcher from "../../../lib/searcher/searcher";
 import TopNavigation from "../../../components/top-navigation/top-navigation";
+
+import { getAll, docs } from '../../../server/crud';
+
+// function renderWorkInformation() {
+//   let docsInfo = [];
+
+//   getAll('manuscripts').map((manuscript, index) => {
+//     return (
+//       docsInfo.push(
+//         <tr>
+//           <th scope="row">
+//             <p className="m-0 text-center">{index += 1}</p>
+//           </th>
+//           <td>{manuscript.title}</td>
+//           <td>{manuscript.author}</td>
+//           <td>{manuscript.type}</td>
+//           <td>{manuscript.creationDate}</td>
+//         </tr>
+//       )
+//     )
+//   });
+
+//   return docsInfo;
+// }
 
 class Manuscripts extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      manuscriptsList: manuscriptsBase,
+      manuscriptsList: docs,
 
       isTitleSorted: false,
       isAuthorSorted: false,
       isCreationDateSorted: false,
     };
-  }
-
-  renderWorkInformation() {
-    let manuscriptsList = [];
-    let counter = 1;
-
-    for (let manuscript in manuscriptsBase) {
-      manuscriptsList.push(
-        <tr>
-          <th scope="row">
-            <p className="m-0 text-center">{counter++}</p>
-          </th>
-          <td>{this.state.manuscriptsList[manuscript].title}</td>
-          <td>{this.state.manuscriptsList[manuscript].author}</td>
-          <td>{this.state.manuscriptsList[manuscript].type}</td>
-          <td>{this.state.manuscriptsList[manuscript].creationDate}</td>
-        </tr>
-      );
-    }
-
-    return manuscriptsList;
   }
 
   sortByTitle() {
@@ -241,7 +244,31 @@ class Manuscripts extends Component {
                       </th>
                     </tr>
                   </thead>
-                  <tbody>{this.renderWorkInformation()}</tbody>
+                  <tbody>
+                    <tr>
+                      <td>
+                        {
+                          // JSON.stringify(docs)
+                          JSON.stringify(getAll('manuscripts'))
+                        }
+                      </td>
+                    </tr>
+                    {/* {[
+                      ...getAll('manuscripts').map((manuscript, index) => {
+                        return (
+                          <tr>
+                            <th scope="row">
+                              <p className="m-0 text-center">{index += 1}</p>
+                            </th>
+                            <td>{manuscript.title}</td>
+                            <td>{manuscript.author}</td>
+                            <td>{manuscript.type}</td>
+                            <td>{manuscript.creationDate}</td>
+                          </tr>
+                        )
+                      })
+                    ]} */}
+                  </tbody>
                 </table>
               </ul>
             </div>
