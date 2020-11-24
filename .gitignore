@@ -1,0 +1,14 @@
+# IDE
+.idea
+
+# MacOS file
+.DS_Store
+
+# Dependencies
+node_modules
+
+# Data for connection to a server
+server/
+
+# Enviroment variables
+.env
