@@ -1,12 +1,22 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 import "./add-manuscript.css";
 
 import LeftNavigation from "../../../components/left-navigation/left-navigation";
-import expandManuscripts from "./services/expand-manuscripts";
 import TopNavigation from "../../../components/top-navigation/top-navigation";
 
+import db from '../../../server/db';
+import { MANUSCRIPTS } from '../../../constants';
+
 function AddManuscript() {
+  const [author, setAuthor] = useState('');
+
+  db
+    .collection(MANUSCRIPTS)
+    .doc('5d4de0e4-bb47-42b1-9819-0aede0551837')
+    .get()
+    .then((doc) => setAuthor(doc.data().author))
+
   return (
     <div className="add-manuscript">
       <TopNavigation />
@@ -60,7 +70,7 @@ function AddManuscript() {
                 id="manuscript-author"
                 type="text"
                 className="form-control"
-                placeholder="Дарвин Ч."
+                placeholder={author}
                 aria-label="Username"
                 aria-describedby="basic-addon1"
               />
@@ -92,7 +102,14 @@ function AddManuscript() {
             <div className="d-flex justify-content-center">
               <button
                 className="mt-3 btn btn-success"
-                onClick={() => expandManuscripts()}
+                onClick={() => {
+                  return db.createOne('manuscripts', {
+                    title: 'Название 4',
+                    author: 'Автор 4',
+                    creationDate: '2004',
+                    type: 'Научная публикация',
+                  });
+                }}
               >
                 Создать рукопись
               </button>

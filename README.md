@@ -25,12 +25,13 @@ of scientific discoveries;
 | 1 | HTML          | Adds layout                             |
 | 2 | CSS           | Adds stylization                        |
 | 3 | JavaScript    | Frontend PL                             |
-| 4 | TypeScript    | Add strong types to variables           | 
+| 4 | TypeScript    | Adds strong types to variables          | 
 | 5 | React.js      | Main high-level library for JS          |
 | 6 | Material UI   | Adds templates of frontend components   |
 | 7 | React Router  | Adds paths between pages                |
 | 8 | Redux         | Contains main static data structures    |
 | 9 | ESLint        | Check code quality into modules         |
+| 10 | Jest         | Tests modules code quality              |
 
 ## Backend
 | # | Technology      | Role                                  |
@@ -38,6 +39,7 @@ of scientific discoveries;
 | 1 | Node.js         | Server PL                             |
 | 2 | Express.js      | Main high-level library for Node.js   |
 | 3 | Google Firebase | NoSQL DBMS and hosting                |
+| 4 | Jest            | Tests modules code quality            |
 
 # Instructions
 ## How to Run the SPA: For guests
@@ -52,7 +54,7 @@ Then open a browser on: http://localhost:3000/
 2. clear && npm start
 
 ## How to Compile Modules from JS Language to TypeScript
-`tsc src/**/*.ts`
+`tsc src/**/*.ts && tsc src/**/*.tsx`
 
 ## How to Check Syntax Quality into Modules
 `npx eslint --fix src/`

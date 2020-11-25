@@ -1,3 +1,4 @@
+// Registration form data
 export const FIRST_NAME: string = 'first-name';
 export const MIDDLE_NAME: string = 'middle-name';
 export const LAST_NAME: string = 'last-name';
@@ -12,8 +13,12 @@ export const PHONE: string = 'phone';
 export const PASSWORD: string = 'password';
 export const REPEAT_PASSWORD: string = 'repeat-password';
 
+// Database collections
+export const USERS: string = 'users';
+export const MANUSCRIPTS: string = 'manuscripts';
+
 /**
- * Set interfaces (types of keys values)
+ * Set the interface (types of keys values)
  */
 
 interface RegistrationConfig {

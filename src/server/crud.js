@@ -1,34 +1,47 @@
-import db from './connection';
+import database from './db';
+const { v4: uuidv4 } = require('uuid');
 
-let docs = [];
-
-function getAll(collectionName) {
-  // DRAFT 2
-  return db
-    .collection(collectionName)
-    .get()
-    .then((snapshot) => {
-      snapshot.forEach((doc) => {
-          docs.push(doc.data());
-      });
-    })
-    .finally((result) => {
-      console.log(result);
-      return result;
-    });
-
-  // DRAFT 1
-  // const collection = db.collection(collectionName);
-  // return await collection
-  //   .get()
-  //   .then((snapshot) => {
-  //     return snapshot.forEach(doc => docs.push(doc.data()));
-  //   });
-
-  // console.log(docs);
-  // return docs;
+function createOne(collection, data) {
+  const docId = uuidv4();
+  return database
+    .collection(collection)
+    .doc(docId)
+    .set(data)
+    .then(() => console.log(`Document ${docId} successfully added.`))
+    .catch((err) => console.log(err));
 }
 
-// getAll();
+function readAll(collection) {
+  return database
+    .collection(collection)
+    .get()
+    .then((docs) => docs.data())
+    .catch((err) => console.log(err));
+}
 
-export { getAll, docs };
+function readOne(collection, doc) {
+  return database
+    .collection(collection)
+    .doc(doc)
+    .get()
+    .then((doc) => doc.data())
+    .catch((err) => console.log(err));
+}
+
+function deleteOne(collection, doc) {
+  return database
+    .collection(collection)
+    .doc(doc)
+    .delete()
+    .then(() => console.log(`Document ${doc} successfully deleted`))
+    .catch((err) => console.log(err));
+}
+
+const db = {
+  createOne,
+  readAll,
+  readOne,
+  deleteOne,
+};
+
+export default db;

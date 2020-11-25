@@ -9,7 +9,7 @@ import LeftNavigation from "../../../components/left-navigation/left-navigation"
 import Searcher from "../../../lib/searcher/searcher";
 import TopNavigation from "../../../components/top-navigation/top-navigation";
 
-import { getAll, docs } from '../../../server/crud';
+// import { getAll, docs } from '../../../server/crud';
 
 // function renderWorkInformation() {
 //   let docsInfo = [];
@@ -37,7 +37,7 @@ class Manuscripts extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      manuscriptsList: docs,
+      manuscriptsList: [],
 
       isTitleSorted: false,
       isAuthorSorted: false,
@@ -245,14 +245,14 @@ class Manuscripts extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
+                    {/* <tr>
                       <td>
                         {
                           // JSON.stringify(docs)
                           JSON.stringify(getAll('manuscripts'))
                         }
                       </td>
-                    </tr>
+                    </tr> */}
                     {/* {[
                       ...getAll('manuscripts').map((manuscript, index) => {
                         return (
