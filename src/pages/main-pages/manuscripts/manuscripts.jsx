@@ -5,44 +5,34 @@ import "./manuscripts.css";
 import LargeManuscript from "./images/large-manuscript.svg";
 import SmallManuscript from "./images/small-manuscript.svg";
 import LeftNavigation from "../../../components/left-navigation/left-navigation";
-// import manuscriptsBase from "../../../data/manuscripts/manuscripts-base";
 import Searcher from "../../../lib/searcher/searcher";
 import TopNavigation from "../../../components/top-navigation/top-navigation";
 
-// import { getAll, docs } from '../../../server/crud';
+import db from '../../../server/db';
+import { MANUSCRIPTS } from '../../../constants';
 
-// function renderWorkInformation() {
-//   let docsInfo = [];
-
-//   getAll('manuscripts').map((manuscript, index) => {
-//     return (
-//       docsInfo.push(
-//         <tr>
-//           <th scope="row">
-//             <p className="m-0 text-center">{index += 1}</p>
-//           </th>
-//           <td>{manuscript.title}</td>
-//           <td>{manuscript.author}</td>
-//           <td>{manuscript.type}</td>
-//           <td>{manuscript.creationDate}</td>
-//         </tr>
-//       )
-//     )
-//   });
-
-//   return docsInfo;
-// }
+let manuscriptsList = [];
 
 class Manuscripts extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      manuscriptsList: [],
+  state = {
+    manuscriptsList: [],
 
-      isTitleSorted: false,
-      isAuthorSorted: false,
-      isCreationDateSorted: false,
-    };
+    isTitleSorted: false,
+    isAuthorSorted: false,
+    isCreationDateSorted: false,
+  };
+
+  async componentDidMount() {
+    manuscriptsList = [];
+
+    db
+      .collection(MANUSCRIPTS)
+      .get()
+      .then((docs) => docs.forEach((doc) => manuscriptsList.push(doc.data())))
+      .then(() => this.setState({
+        manuscriptsList: manuscriptsList
+      }))
+      .catch((error) => console.log(error));
   }
 
   sortByTitle() {
@@ -245,16 +235,8 @@ class Manuscripts extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                    {/* <tr>
-                      <td>
-                        {
-                          // JSON.stringify(docs)
-                          JSON.stringify(getAll('manuscripts'))
-                        }
-                      </td>
-                    </tr> */}
-                    {/* {[
-                      ...getAll('manuscripts').map((manuscript, index) => {
+                    {[
+                      ...this.state.manuscriptsList.map((manuscript, index) => {
                         return (
                           <tr>
                             <th scope="row">
@@ -267,7 +249,7 @@ class Manuscripts extends Component {
                           </tr>
                         )
                       })
-                    ]} */}
+                    ]}
                   </tbody>
                 </table>
               </ul>

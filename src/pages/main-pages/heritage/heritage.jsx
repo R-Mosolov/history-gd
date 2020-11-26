@@ -1,12 +1,7 @@
 import React from "react";
 
 import LeftNavigation from "../../../components/left-navigation/left-navigation";
-import EmailSender from "../../../lib/email-sender/send-email";
-import main from "../../../lib/email-sender/nodemailer";
 import TopNavigation from "../../../components/top-navigation/top-navigation";
-
-const emailSender = new EmailSender();
-main();
 
 function Heritage() {
   return (

@@ -1,4 +1,5 @@
 import database from './db';
+
 const { v4: uuidv4 } = require('uuid');
 
 function createOne(collection, data) {
