@@ -4,7 +4,14 @@ for Scientists») is the scientific portal that was created to help
 scientists keeping own manuscripts (e.g., scientific articles, 
 university manuals, and monographs).
 
-# Current GUI
+# The Prerequisites of Creation
+The software is based on following scientific article
+containing main software targets and the conception:
+
+**Mosolov R.V. Programma "Istorija genial'nogo otkrytija" //
+Elektronnyye biblioteki. 2020. T. 23. No 6.** (preparing to a publication).
+
+# The Current GUI
 At current time, GUI looks so as shown below. This GUI presents 
 part of project's worked functionality on 04.05.2020 on the left. 
 ![File:GUI on 04.05.2020](public/img/GUI-on-04.05.2020.png "GUI on 04.05.2020")
@@ -41,7 +48,7 @@ of scientific discoveries;
 | 3 | Google Firebase | NoSQL DBMS and hosting                |
 | 4 | Jest            | Tests modules code quality            |
 
-# Instructions
+# The Instructions
 ## How to Run the SPA: For guests
 Run following terminal commands from root directory:
 1. `npm install`
