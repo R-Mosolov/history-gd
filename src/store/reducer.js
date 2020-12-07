@@ -1,7 +1,7 @@
 import initialState from './initial-state';
 
-import { utils } from "../utils";
-import { CONFERENCE_THESES, MANUSCRIPTS, MANUSCRIPT_TYPES, MONOGRAPH, OTHER, SCIENCE_PUBLICATION, TEACHING_AID } from '../constants';
+import { utils } from '../utils';
+import { MANUSCRIPT_TYPES, MONOGRAPH, TEACHING_AID } from '../constants';
 
 const reducer = (state = initialState, action) => {
   const { type } = action;
@@ -9,14 +9,13 @@ const reducer = (state = initialState, action) => {
   switch (type) {
     case 'FILTER_BY_LARGE_MANUSCRIPTS':
       return state = state.filter((manuscript) => {
-          if (
-            manuscript.type === utils.getLabelById(MONOGRAPH, MANUSCRIPT_TYPES)
+        if (
+          manuscript.type === utils.getLabelById(MONOGRAPH, MANUSCRIPT_TYPES)
             || manuscript.type === utils.getLabelById(TEACHING_AID, MANUSCRIPT_TYPES)
-          ) {
-            return true;
-          }
+        ) {
+          return true;
         }
-      );
+      });
 
     default:
       return initialState;
