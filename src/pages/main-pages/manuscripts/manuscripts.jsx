@@ -9,31 +9,20 @@ import Searcher from "../../../lib/searcher/searcher";
 import TopNavigation from "../../../components/top-navigation/top-navigation";
 
 import db from '../../../server/db';
-import { MANUSCRIPTS } from '../../../constants';
-
-let manuscriptsList = [];
+import { utils } from "../../../utils";
+import { CONFERENCE_THESES, MANUSCRIPTS, MANUSCRIPT_TYPES, MONOGRAPH, OTHER, SCIENCE_PUBLICATION, TEACHING_AID } from '../../../constants';
+import initialState from "../../../store/initial-state";
+import { dispatch } from "../../../store";
+import { filterByLargeManuscripts } from "../../../store/action-creators";
 
 class Manuscripts extends Component {
   state = {
-    manuscriptsList: [],
+    manuscriptsList: initialState,
 
     isTitleSorted: false,
     isAuthorSorted: false,
     isCreationDateSorted: false,
   };
-
-  async componentDidMount() {
-    manuscriptsList = [];
-
-    db
-      .collection(MANUSCRIPTS)
-      .get()
-      .then((docs) => docs.forEach((doc) => manuscriptsList.push(doc.data())))
-      .then(() => this.setState({
-        manuscriptsList: manuscriptsList
-      }))
-      .catch((error) => console.log(error));
-  }
 
   sortByTitle() {
     this.setState({
@@ -135,9 +124,24 @@ class Manuscripts extends Component {
   }
 
   filterByLargeManuscripts() {
+    // dispatch(filterByLargeManuscripts());
+
+    this.setState({ manuscriptsList: dispatch(filterByLargeManuscripts()) });
+    return console.log(this.state.manuscriptsList);
+  }
+
+  filterBySmallManuscripts() {
     this.setState({
       manuscriptsList: this.state.manuscriptsList.filter(
-        (manuscripts) => manuscripts.creationDate > 2001
+        (manuscripts) => {
+          if (
+            manuscripts.type === utils.getLabelById(SCIENCE_PUBLICATION, MANUSCRIPT_TYPES)
+            || manuscripts.type === utils.getLabelById(CONFERENCE_THESES, MANUSCRIPT_TYPES)
+            || manuscripts.type === utils.getLabelById(OTHER, MANUSCRIPT_TYPES)
+          ) {
+            return true;
+          }
+        }
       ),
     });
   }
@@ -172,7 +176,12 @@ class Manuscripts extends Component {
                     Крупные работы (монографии, учебники и др.)
                   </span>
                 </li>
-                <li className="small-manuscripts d-flex align-items-center small-manuscripts">
+                <li
+                  className="small-manuscripts d-flex align-items-center small-manuscripts"
+                  onClick={() => {
+                    this.filterBySmallManuscripts();
+                  }}
+                >
                   <img
                     className="m-2 small-manuscripts__banner"
                     alt="Papyrus"

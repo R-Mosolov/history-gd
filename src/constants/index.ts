@@ -17,6 +17,15 @@ export const REPEAT_PASSWORD: string = 'repeat-password';
 export const USERS: string = 'users';
 export const MANUSCRIPTS: string = 'manuscripts';
 
+// Manuscript types
+export const MONOGRAPH = 'monograph';
+export const TEACHING_AID = 'teaching-aid';
+export const SCIENCE_PUBLICATION = 'science-publication';
+export const CONFERENCE_THESES = 'conference-theses';
+export const OTHER = 'other';
+export const LARGE = 'large';
+export const SMALL = 'small';
+
 /**
  * Set the interface (types of keys values)
  */
@@ -27,6 +36,14 @@ interface RegistrationConfig {
     label: string;
     placeholder: string;
     isRequired: boolean;
+  };
+}
+
+interface ManuscriptTypesConfig {
+  [index: number]: {
+    id: string;
+    label: string;
+    type: string;
   };
 }
 
@@ -107,4 +124,32 @@ export const SERVICE_INFO: RegistrationConfig = [
     placeholder: "********",
     isRequired: true,
   },
+];
+
+export const MANUSCRIPT_TYPES: ManuscriptTypesConfig = [
+  {
+    id: MONOGRAPH,
+    label: 'Монография',
+    type: LARGE,
+  },
+  {
+    id: TEACHING_AID,
+    label: 'Учебное пособие',
+    type: LARGE,
+  },
+  {
+    id: SCIENCE_PUBLICATION,
+    label: 'Научная публикация',
+    type: SMALL,
+  },
+  {
+    id: CONFERENCE_THESES,
+    label: 'Тезисы конференции',
+    type: SMALL,
+  },
+  {
+    id: OTHER,
+    label: 'Другое',
+    type: SMALL,
+  }
 ];

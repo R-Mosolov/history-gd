@@ -1,35 +1,26 @@
-const initialState = require('./initial-state');
+import initialState from './initial-state';
+
+import { utils } from "../utils";
+import { CONFERENCE_THESES, MANUSCRIPTS, MANUSCRIPT_TYPES, MONOGRAPH, OTHER, SCIENCE_PUBLICATION, TEACHING_AID } from '../constants';
 
 const reducer = (state = initialState, action) => {
-  const { manuscriptsList } = state;
   const { type } = action;
 
   switch (type) {
-    case 'SORT_TITLE_FROM_A_TO_Z':
-      return manuscriptsList.sort((a, b) => {
-        if (a.title > b.title) {
-          return 1;
+    case 'FILTER_BY_LARGE_MANUSCRIPTS':
+      return state = state.filter((manuscript) => {
+          if (
+            manuscript.type === utils.getLabelById(MONOGRAPH, MANUSCRIPT_TYPES)
+            || manuscript.type === utils.getLabelById(TEACHING_AID, MANUSCRIPT_TYPES)
+          ) {
+            return true;
+          }
         }
-        if (a.title < b.title) {
-          return -1;
-        }
-        return 0;
-      });
-
-    case 'SORT_TITLE_FROM_Z_TO_A':
-      return manuscriptsList.sort((a, b) => {
-        if (a.title > b.title) {
-          return -1;
-        }
-        if (a.title < b.title) {
-          return 1;
-        }
-        return 0;
-      });
+      );
 
     default:
       return initialState;
   }
 };
 
-module.exports = reducer;
+export default reducer;
