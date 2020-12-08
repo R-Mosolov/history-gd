@@ -9,7 +9,13 @@ import LeftNavigation from "../../../components/left-navigation/left-navigation"
 import Searcher from "../../../lib/searcher/searcher";
 import TopNavigation from "../../../components/top-navigation/top-navigation";
 
-function Manuscripts({ initialState, filterByLargeManuscripts }) {
+function Manuscripts({
+  initialState,
+  filterByLargeManuscripts,
+  filterBySmallManuscripts,
+  sortTitleFromAToZ,
+  sortTitleFromZToA,
+}) {
   return (
     <div className="manuscripts">
       <TopNavigation />
@@ -37,7 +43,10 @@ function Manuscripts({ initialState, filterByLargeManuscripts }) {
                   Крупные работы (монографии, учебники и др.)
                 </span>
               </li>
-              <li className="small-manuscripts d-flex align-items-center small-manuscripts">
+              <li
+                className="small-manuscripts d-flex align-items-center small-manuscripts"
+                onClick={filterBySmallManuscripts}
+              >
                 <img
                   className="m-2 small-manuscripts__banner"
                   alt="Papyrus"
@@ -64,6 +73,7 @@ function Manuscripts({ initialState, filterByLargeManuscripts }) {
                     <th
                       className="interactive-th"
                       scope="col"
+                      onClick={sortTitleFromAToZ}
                     >
                       Название работы
                     </th>
@@ -122,6 +132,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     filterByLargeManuscripts: () => dispatch({ type: 'FILTER_BY_LARGE_MANUSCRIPTS' }),
+    filterBySmallManuscripts: () => dispatch({ type: 'FILTER_BY_SMALL_MANUSCRIPTS' }),
+    sortTitleFromAToZ: () => dispatch({ type: 'SORT_TITLE_FROM_A_TO_Z' }),
+    sortTitleFromZToA: () => dispatch({ type: 'SORT_TITLE_FROM_Z_TO_A' }),
   }
 };
 
