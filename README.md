@@ -61,7 +61,10 @@ Then open a browser on: http://localhost:3000/
 2. clear && npm start
 
 ## How to Compile Modules from JS Language to TypeScript
+### The Manual Method
 `tsc src/**/*.ts && tsc src/**/*.tsx`
+### The Automatic Method (by using Grunt library)
+`grunt watch`
 
 ## How to Check Syntax Quality into Modules
 `npx eslint --fix src/`

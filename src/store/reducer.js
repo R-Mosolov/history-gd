@@ -8,7 +8,7 @@ const reducer = (state = initialState, action) => {
 
   switch (type) {
     case 'FILTER_BY_LARGE_MANUSCRIPTS':
-      return state = state.filter((manuscript) => {
+      return initialState.filter((manuscript) => {
         if (
           manuscript.type === utils.getLabelById(MONOGRAPH, MANUSCRIPT_TYPES)
             || manuscript.type === utils.getLabelById(TEACHING_AID, MANUSCRIPT_TYPES)
@@ -18,7 +18,7 @@ const reducer = (state = initialState, action) => {
       });
 
     case 'FILTER_BY_SMALL_MANUSCRIPTS':
-      return state = state.filter((manuscript) => {
+      return initialState.filter((manuscript) => {
         if (
           manuscript.type === utils.getLabelById(SCIENCE_PUBLICATION, MANUSCRIPT_TYPES)
             || manuscript.type === utils.getLabelById(CONFERENCE_THESES, MANUSCRIPT_TYPES)
@@ -28,7 +28,7 @@ const reducer = (state = initialState, action) => {
       });
 
     case 'SORT_TITLE_FROM_A_TO_Z':
-      return state = state.sort((a, b) => {
+      return state.sort((a, b) => {
         if (a.title > b.title) {
           return 1;
         }
@@ -39,12 +39,12 @@ const reducer = (state = initialState, action) => {
       });
 
     case 'SORT_TITLE_FROM_Z_TO_A':
-      return state = state.sort((a, b) => {
-        if (a.title > b.title) {
-          return -1;
-        }
+      return state.sort((a, b) => {
         if (a.title < b.title) {
           return 1;
+        }
+        if (a.title > b.title) {
+          return -1;
         }
         return 0;
       });

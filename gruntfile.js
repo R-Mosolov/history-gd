@@ -5,7 +5,7 @@ module.exports = function (grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         watch: {
-            files: ['**/*.ts', '**/*.tsx'],
+            files: ['src/**/*.ts', 'src/**/*.tsx'],
             tasks: ['exec:run_tsc']
         },
         exec: {
