@@ -1,6 +1,6 @@
 [
   {
-    "cyrillic": "a",
+    "cyrillic": "а",
     "latin": "a"
   },
   {
@@ -108,16 +108,8 @@
     "latin": "shh"
   },
   {
-    "cyrillic": "ъ",
-    "latin": "\""
-  },
-  {
     "cyrillic": "ы",
     "latin": "y"
-  },
-  {
-    "cyrillic": "ь",
-    "latin": "'"
   },
   {
     "cyrillic": "э",
