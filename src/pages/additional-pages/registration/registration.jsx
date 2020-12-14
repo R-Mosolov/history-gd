@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
 import { utils } from "../../../utils";
@@ -8,16 +8,13 @@ import {
   UNIVERSITY, PROF_DEGREE, ACADEMIC_DEGREE, RESEARCH_INTERESTS,
   REGISTRATION_EMAIL, PHONE, PASSWORD, REPEAT_PASSWORD,
 } from "../../../constants/index.js";
-import "./functions/validate-form";
 import TopNavigation from "../../../components/top-navigation/top-navigation";
 
 import db from "../../../server/db";
 import { USERS } from "../../../constants";
-// import "./functions/validate-form";
+import validateRegistrationForm from "./functions/validate-registration-form";
 
 import "./registration.css";
-
-const { v4: uuidv4 } = require('uuid');
 
 let inputsCounter = 0;
 
@@ -35,7 +32,7 @@ function addInput(id, obj) {
 function postDataToDB() {
   return db
     .collection(USERS)
-    .doc(uuidv4())
+    .doc(Date.now().toString())
     .set({
       "basicInfo": {
         "middleName": document.getElementById(MIDDLE_NAME).value,
@@ -57,7 +54,14 @@ function postDataToDB() {
     });
 }
 
+function checkFormData() {
+  return validateRegistrationForm();
+  // return postDataToDB();
+}
+
 function Registration() {
+  inputsCounter = 0;
+
   return (
     <div className="registration mt-5 mb-5 d-flex justify-content-center container">
       <TopNavigation
@@ -216,7 +220,7 @@ function Registration() {
           <button
             id="registration-button"
             className="mt-3 btn btn-success btn-block"
-            onClick={() => postDataToDB()}
+            onClick={() => checkFormData()}
           >
             Зарегистрироваться
           </button>
