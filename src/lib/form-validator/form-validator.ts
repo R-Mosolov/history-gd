@@ -2,51 +2,38 @@
 import renderError from "./render-error";
 // import * as users from "../../data/users.json";
 
-const errorForRequiredFields = 'Поле является обязательным для заполнения.';
-const errorField: any = (fieldId: any) => document.getElementById(`error-${fieldId}`);
-const deleteErrorById = (fieldId: any) => { if (errorField(fieldId)) return errorField(fieldId).remove() };
+function deleteOldErrorField(fieldId: string): void {
+  const errorField: any = document.getElementById(`error-${fieldId}`);
+  if (errorField) {
+    return errorField.remove();
+  }
+}
 
 // Creating the new class
 class FormValidator {
-  // checkRequiredFields(fieldId: string): void | string {
-  //   const fieldToCheck: any = document.getElementById(`${fieldId}`);
-  //   const hasFieldFilled: boolean = fieldToCheck.value.length === 0;
-  //   let errorText: string = "";
+  checkStringLength(
+    fieldId: string,
+    minLength: number,
+    maxLength: number
+  ): void | string {
+    const fieldToCheck: any = document.getElementById(`${fieldId}`);
+    let errorText: string = "";
 
-  //   if (hasFieldFilled) {
-  //     errorText = errorForRequiredFields;
-  //   }
+    deleteOldErrorField(fieldId);
 
-  //   if (errorText !== "") {
-  //     renderError(fieldId, errorText);
-  //   } else {
-  //     deleteErrorById(fieldId);
-  //   }
+    if (
+      fieldToCheck.value && fieldToCheck.value.length < minLength
+      || fieldToCheck.value && fieldToCheck.value.length > maxLength
+    ) {
+      errorText = `Поле должно содержать от ${minLength} до ${maxLength} символов.`;
+    }
 
-  //   return errorText;
-  // }
+    if (errorText !== "") {
+      return renderError(fieldId, errorText);
+    }
 
-  // checkStringLength(
-  //   fieldId: string,
-  //   minLength: number,
-  //   maxLength: number
-  // ): void | string {
-  //   const fieldToCheck: any = document.getElementById(`${fieldId}`);
-  //   let errorText: string = "";
-
-  //   if (
-  //     fieldToCheck.value && fieldToCheck.value.length < minLength
-  //     || fieldToCheck.value && fieldToCheck.value.length > maxLength
-  //   ) {
-  //     errorText = `Поле должно содержать от ${minLength} до ${maxLength} символов.`;
-  //   }
-
-  //   if (errorText !== "") {
-  //     return renderError(fieldId, errorText);
-  //   }
-
-  //   return errorText;
-  // }
+    return errorText;
+  }
 
   // checkDigitsExistence(fieldId: string): void | string {
   //   const fieldToCheck: string = (<HTMLInputElement>(
@@ -54,6 +41,8 @@ class FormValidator {
   //   )).value;
   //   let errorText: string = "";
   //   let isDigit: boolean = false;
+
+  //   deleteOldErrorField(fieldId);
 
   //   for (let item of fieldToCheck) {
   //     if (
@@ -83,40 +72,37 @@ class FormValidator {
   //   return errorText;
   // }
 
-  checkWordsQuantity(
-    fieldId: string,
-    wordsMin: number,
-    wordsMax: number
-  ): void | string {
-    const fieldToCheck: string = (<HTMLInputElement>(
-      document.getElementById(`${fieldId}`)
-    )).value;
-    let errorText: string = "";
-    let wordsCount: number = 0;
+  // checkWordsQuantity(
+  //   fieldId: string,
+  //   wordsMin: number,
+  //   wordsMax: number
+  // ): void | string {
+  //   const fieldToCheck: string = (<HTMLInputElement>(
+  //     document.getElementById(`${fieldId}`)
+  //   )).value;
+  //   let errorText: string = "";
+  //   let wordsCount: number = 0;
 
-    const errorField: any = document.getElementById(`error-${fieldId}`);
-    if (errorField) {
-      return errorField.remove();
-    }
+  //   deleteOldErrorField(fieldId);
 
-    for (let item of fieldToCheck) {
-      wordsCount++;
-    }
+  //   for (let item of fieldToCheck) {
+  //     wordsCount++;
+  //   }
 
-    if (wordsCount < wordsMin || wordsCount > wordsMax) {
-      errorText = `Поле должно содержать от ${wordsMin} до ${wordsMax} слов.`;
-    }
+  //   if (wordsCount < wordsMin || wordsCount > wordsMax) {
+  //     errorText = `Поле должно содержать от ${wordsMin} до ${wordsMax} слов.`;
+  //   }
 
-    if (errorText === "Поле должно содержать от 1 до 1 слов.") {
-      errorText = "Поле должно содержать 1 слово.";
-    }
+  //   if (errorText === "Поле должно содержать от 1 до 1 слов.") {
+  //     errorText = "Поле должно содержать 1 слово.";
+  //   }
 
-    if (errorText) {
-      renderError(fieldId, errorText);
-    }
+  //   if (errorText !== "") {
+  //     renderError(fieldId, errorText);
+  //   }
 
-    return errorText;
-  }
+  //   return errorText;
+  // }
 
   // checkSpecialSymbols(
   //   fieldId: string,
