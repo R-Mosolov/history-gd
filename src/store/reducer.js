@@ -11,7 +11,7 @@ const reducer = (state = initialState, action) => {
       return initialState.filter((manuscript) => {
         if (
           manuscript.type === utils.getLabelById(MONOGRAPH, MANUSCRIPT_TYPES)
-            || manuscript.type === utils.getLabelById(TEACHING_AID, MANUSCRIPT_TYPES)
+          || manuscript.type === utils.getLabelById(TEACHING_AID, MANUSCRIPT_TYPES)
         ) {
           return true;
         }
@@ -21,7 +21,7 @@ const reducer = (state = initialState, action) => {
       return initialState.filter((manuscript) => {
         if (
           manuscript.type === utils.getLabelById(SCIENCE_PUBLICATION, MANUSCRIPT_TYPES)
-            || manuscript.type === utils.getLabelById(CONFERENCE_THESES, MANUSCRIPT_TYPES)
+          || manuscript.type === utils.getLabelById(CONFERENCE_THESES, MANUSCRIPT_TYPES)
         ) {
           return true;
         }

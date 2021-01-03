@@ -5,7 +5,6 @@ import "./manuscripts.css";
 import LargeManuscript from "./images/large-manuscript.svg";
 import SmallManuscript from "./images/small-manuscript.svg";
 import LeftNavigation from "../../../components/left-navigation/left-navigation";
-import Searcher from "../../../lib/searcher/searcher";
 import TopNavigation from "../../../components/top-navigation/top-navigation";
 
 import db from '../../../server/db';
@@ -50,7 +49,7 @@ class Manuscripts extends Component {
       manuscriptsList: manuscriptsList.filter((manuscript) => {
         if (
           manuscript.type === utils.getLabelById(MONOGRAPH, MANUSCRIPT_TYPES)
-            || manuscript.type === utils.getLabelById(TEACHING_AID, MANUSCRIPT_TYPES)
+          || manuscript.type === utils.getLabelById(TEACHING_AID, MANUSCRIPT_TYPES)
         ) {
           return true;
         }
@@ -63,7 +62,7 @@ class Manuscripts extends Component {
       manuscriptsList: manuscriptsList.filter((manuscript) => {
         if (
           manuscript.type === utils.getLabelById(SCIENCE_PUBLICATION, MANUSCRIPT_TYPES)
-            || manuscript.type === utils.getLabelById(CONFERENCE_THESES, MANUSCRIPT_TYPES)
+          || manuscript.type === utils.getLabelById(CONFERENCE_THESES, MANUSCRIPT_TYPES)
         ) {
           return true;
         }
@@ -170,6 +169,43 @@ class Manuscripts extends Component {
     });
   }
 
+  searchByManuscripts() {
+    const searchQuery = document.getElementById('search-query').value.toString().toLowerCase();
+    const searchQueryLength = searchQuery.length;
+
+    return this.setState({
+      manuscriptsList: manuscriptsList.filter((manuscript) => {
+        if (
+          manuscript.title.toLowerCase().substring(0, searchQueryLength)
+          === searchQuery.substring(0, searchQueryLength)
+        ) {
+          return true;
+        }
+
+        else if (
+          manuscript.author.toLowerCase().substring(0, searchQueryLength)
+          === searchQuery.substring(0, searchQueryLength)
+        ) {
+          return true;
+        }
+
+        else if (
+          manuscript.type.toLowerCase().substring(0, searchQueryLength)
+          === searchQuery.substring(0, searchQueryLength)
+        ) {
+          return true;
+        }
+
+        else if (
+          manuscript.creationDate.toString().substring(0, searchQueryLength)
+          === searchQuery.substring(0, searchQueryLength)
+        ) {
+          return true;
+        }
+      }),
+    });
+  }
+
   render() {
     return (
       <div className="manuscripts">
@@ -231,7 +267,13 @@ class Manuscripts extends Component {
 
               <div className="mt-5 d-flex justify-content-between">
                 <h2>Список с учётом фильтра:</h2>
-                <Searcher />
+                <input
+                  id="search-query"
+                  className="input"
+                  placeholder="Поисковый запрос..."
+                  onChange={(event) => this.searchByManuscripts(event)}
+                />
+                {/* <Searcher /> */}
               </div>
               <ul className="mt-4 list-unstyled">
                 <table className="mt-2 table table-bordered">
