@@ -1,23 +1,17 @@
 "use strict";
 exports.__esModule = true;
-var initialState = [
-    {
-        type: 'Монография',
-        title: 'Название 3',
-        author: 'Автор 3',
-        creationDate: 2001
-    },
-    {
-        type: 'Монография',
-        title: 'Название 1',
-        author: 'Автор 2',
-        creationDate: 2002
-    },
-    {
-        type: 'Научная публикация',
-        title: 'Название 2',
-        author: 'Автор 1',
-        creationDate: 2003
-    },
-];
+var db_1 = require("../server/db");
+var constants_1 = require("../constants");
+var initialState = [];
+db_1["default"]
+    .collection(constants_1.MANUSCRIPTS)
+    .get()
+    .then(function (docs) { return docs.forEach(function (doc) { return initialState.push(doc.data()); }); })
+    .then(function () { return console.log(initialState); })
+    .then(function () { return console.log('Step 1'); })["catch"](function (err) { return console.log(err); });
+// async function f() {
+//   return console.log('Step 1');
+// }
+// f().then((res) => res);
+console.log('Step 2');
 exports["default"] = initialState;

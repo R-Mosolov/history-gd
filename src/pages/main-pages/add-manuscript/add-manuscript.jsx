@@ -17,8 +17,8 @@ function sendDataToDB() {
   return db.createOne('manuscripts', {
     title: (title) ? title : null,
     author: (author) ? author : null,
-    creationDate: new Date(),
-    type: (type) ? type : null,
+    creationDate: new Date().getFullYear(),
+    type: (type) ? utils.getLabelById(type, MANUSCRIPT_TYPES) : null,
   });
 }
 

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import "./login.css";
 import "../../../lib/form-validator/render-error";
-import validateForm from "./functions/validate-form";
+// import validateForm from "./functions/validate-form";
 import users from "../../../data/users";
 import TopNavigation from "../../../components/top-navigation/top-navigation";
 
@@ -81,7 +81,7 @@ class Login extends Component {
           <button
             id="login-button"
             className="mt-3 btn btn-success btn-block"
-            onClick={() => validateForm()}
+            // onClick={() => validateForm()}
           >
             Войти
           </button>

@@ -103,16 +103,17 @@ function Manuscripts({
                       return (
                         <tr>
                           <th scope="row">
-                            <p className="m-0 text-center">{index += 1}</p>
+                            <p className="m-0 text-center">{`${index += 1}`}</p>
                           </th>
-                          <td>{manuscript.title}</td>
-                          <td>{manuscript.author}</td>
-                          <td>{manuscript.type}</td>
-                          <td>{manuscript.creationDate}</td>
+                          <td>{manuscript.title.toString()}</td>
+                          <td>{manuscript.author.toString()}</td>
+                          <td>{manuscript.type.toString()}</td>
+                          <td>{manuscript.creationDate.toString()}</td>
                         </tr>
                       )
                     })
                   ]}
+                  {console.log('Step 1')}
                 </tbody>
               </table>
             </ul>

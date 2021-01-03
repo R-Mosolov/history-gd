@@ -4,7 +4,7 @@ export default function validateRegistrationForm() {
   const formValidator = new FormValidator();
 
   // Validating a last name
-  formValidator.checkStringLength('last-name', 2, 75);
+  // formValidator.checkStringLength('last-name', 2, 75);
   // formValidator.checkDigitsExistence('last-name');
   // formValidator.checkWordsQuantity('last-name', 1, 1);
 
