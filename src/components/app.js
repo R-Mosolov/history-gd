@@ -21,6 +21,7 @@ import AudioGenerator from '../pages/main-pages/audio-generator/audio-generator'
 import Diary from '../pages/main-pages/diary/diary';
 import Heritage from '../pages/main-pages/heritage/heritage';
 import ErrorMessage from '../pages/additional-pages/error-message/error-message';
+import UserAgreement from '../pages/additional-pages/user-agreement/user-agreement';
 
 function App() {
   setupDefaultAuth();
@@ -34,6 +35,7 @@ function App() {
           <Route path="/registration" component={Registration} />
           <Route path="/login" component={Login} />
           <Route path="/error-message" component={ErrorMessage} />
+          <Route path="/user-agreement" component={UserAgreement} />
 
           <Route path="/left-navigation" component={LeftNavigation} />
           <Route path="/manuscripts" component={Manuscripts} />
