@@ -1,7 +1,9 @@
 import initialState from './initial-state';
 
 import { utils } from '../utils';
-import { MANUSCRIPT_TYPES, MONOGRAPH, TEACHING_AID, SCIENCE_PUBLICATION, CONFERENCE_THESES } from '../constants';
+import {
+  MANUSCRIPT_TYPES, MONOGRAPH, TEACHING_AID, SCIENCE_PUBLICATION, CONFERENCE_THESES,
+} from '../constants';
 
 const reducer = (state = initialState, action) => {
   const { type } = action;

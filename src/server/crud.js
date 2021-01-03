@@ -1,5 +1,5 @@
-import database from './db';
 import { now } from 'lodash';
+import database from './db';
 
 function createOne(collection, data) {
   const docId = now().toString();

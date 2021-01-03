@@ -1,11 +1,10 @@
-"use strict";
 exports.__esModule = true;
 exports.sortTitleFromZToA = exports.sortTitleFromAToZ = exports.filterBySmallManuscripts = exports.filterByLargeManuscripts = void 0;
-var filterByLargeManuscripts = function () { return ({ type: 'FILTER_BY_LARGE_MANUSCRIPTS' }); };
+const filterByLargeManuscripts = function () { return ({ type: 'FILTER_BY_LARGE_MANUSCRIPTS' }); };
 exports.filterByLargeManuscripts = filterByLargeManuscripts;
-var filterBySmallManuscripts = function () { return ({ type: 'FILTER_BY_SMALL_MANUSCRIPTS' }); };
+const filterBySmallManuscripts = function () { return ({ type: 'FILTER_BY_SMALL_MANUSCRIPTS' }); };
 exports.filterBySmallManuscripts = filterBySmallManuscripts;
-var sortTitleFromAToZ = function () { return ({ type: 'SORT_TITLE_FROM_A_TO_Z' }); };
+const sortTitleFromAToZ = function () { return ({ type: 'SORT_TITLE_FROM_A_TO_Z' }); };
 exports.sortTitleFromAToZ = sortTitleFromAToZ;
-var sortTitleFromZToA = function () { return ({ type: 'SORT_TITLE_FROM_Z_TO_A' }); };
+const sortTitleFromZToA = function () { return ({ type: 'SORT_TITLE_FROM_Z_TO_A' }); };
 exports.sortTitleFromZToA = sortTitleFromZToA;
