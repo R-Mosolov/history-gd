@@ -3,7 +3,7 @@ import React from "react";
 import LeftNavigation from "../../../components/left-navigation/left-navigation";
 import TopNavigation from "../../../components/top-navigation/top-navigation";
 
-function SourceHandling() {
+function HandlingSources() {
   const marginTopFour = "mt-4";
   const marginTopFive = "mt-5";
 
@@ -21,18 +21,23 @@ function SourceHandling() {
             <div className="source-handling__description mt-5 p-5 text-justify bg-light rounded">
               В рамках данной страницы приведён обзор сервисов, являющихся
               полезными инструментами для работы с текстами и оптимизации
-              научно-исследовательской деятельности.
+              научно-исследовательской деятельности. <b>Обратите внимание</b>,
+              что все представленные здесь сервисы являются, в основном, внешними
+              и бесплатными. Администрация сайта не несёт ответственности за их использование.
+              Также мы настоятельно не рекомендуем использовать их в коммерческих целях,
+              поскольку бесплатные сервисы опасны тем, что всегда есть вероятность утечки
+              коммерческой информации.
             </div>
 
             <div className={`source-handling__services ${marginTopFive}`}>
               <h2>Обзор информационных технологий</h2>
 
               <h3 className={`${marginTopFive}`}>
-                1 Сервисы для работы с текстом
+                1 Сервисы для обработки текста
               </h3>
 
               <h4 className={`${marginTopFour}`}>
-                <a href="https://www.newocr.com">
+                <a href="https://www.newocr.com" target="__blank">
                   1.1 New OCR: Перевести изображение в текст
                 </a>
               </h4>
@@ -46,7 +51,7 @@ function SourceHandling() {
               </p>
 
               <h4 className={`${marginTopFour}`}>
-                <a href="http://ru.texthandler.com/text-tools/remove-line-breaks/">
+                <a href="http://ru.texthandler.com/text-tools/remove-line-breaks/" target="__blank">
                   1.2 Text Handler: Удалить разрывы между строк
                 </a>
               </h4>
@@ -58,7 +63,7 @@ function SourceHandling() {
               </p>
 
               <h4 className={`${marginTopFour}`}>
-                <a href="https://smallpdf.com/ru/split-pdf">
+                <a href="https://smallpdf.com/ru/split-pdf" target="__blank">
                   1.3 Small PDF: Разделить текст на части
                 </a>
               </h4>
@@ -71,7 +76,7 @@ function SourceHandling() {
               </p>
 
               <h4 className={`${marginTopFour}`}>
-                <a href="https://languagetool.org/ru/">
+                <a href="https://languagetool.org/ru/" target="__blank">
                   1.4 Language Tool: Проверить текст на стилистические ошибки
                 </a>
               </h4>
@@ -82,7 +87,7 @@ function SourceHandling() {
               </p>
 
               <h4 className={`${marginTopFour}`}>
-                <a href="https://www.artlebedev.ru/typograf/">
+                <a href="https://www.artlebedev.ru/typograf/" target="__blank">
                   1.5 Типограф: Проверить стиль символов
                 </a>
               </h4>
@@ -94,13 +99,99 @@ function SourceHandling() {
                 и т.д.
               </p>
 
+              <h4 className={`${marginTopFour}`}>
+                <a href="https://2cyr.com/decode/?lang=ru" target="__blank">
+                  1.7 Универсальный декодер: Получить читабельный текст
+                </a>
+              </h4>
+              <p className="text-justify">
+                Если Вы когда-нибудь имели дело с т.н. «иероглифами», т.е.
+                случаями, когда перед Вами был текст, состоящий из непонятных
+                символов, которые невозможно прочитать, то, вероятнее всего,
+                в таких случаях Вам будет полезен декодер текста, переводящий его
+                с одного машинного языка на другой, более понятный.
+              </p>
+              
               <h3 className={`${marginTopFive}`}>
-                2 Сервисы для контент-анализа (дискурс-анализа)
+                2 Сервисы для работы с англоязычным текстом
               </h3>
 
               <h4 className={`${marginTopFour}`}>
-                <a href="http://vkmate.ru/servisy/sohranenie-steny-vkontakte/">
-                  2.2 VKMate: Собрать материал для контент-анализа
+                <a href="https://translit.cc" target="__blank">
+                  2.1 TRANSLIT.CC: Перевести кириллицу в латиницу и наоборот
+                </a>
+              </h4>
+              <p className="text-justify">
+                Сервис позволяет автоматически перекодировать символы
+                с кириллицы на символы латиницы, что может пригодиться, например,
+                при подготовки рукописи, в особобенности раздела с англоязычными
+                источниками (References). При перекодировке символов сервис опирается
+                на международный стандарт «Library of Congress».
+              </p>
+
+              <h4 className={`${marginTopFour}`}>
+                <a href="https://www.lingvolive.com/ru-ru" target="__blank">
+                  2.2 ABBYY Lingvo Live: Перевести слово на иностранный язык
+                </a>
+              </h4>
+              <p className="text-justify">
+                Сервис является аналогом бумажного переводчика на иностаранные языки
+                и имеет большой корпус текстов. Предпочтителен для перевода отдельных слов.
+                Дополнительным преимуществом является то, что сервис позволяет видеть
+                наиболее устойчивые выражения в тексте, например, на английском языке.
+              </p>
+
+              <h4 className={`${marginTopFour}`}>
+                <a href="https://www.deepl.com/translator" target="__blank">
+                  2.3 DeepL: Перевести слово на иностранный язык
+                </a>
+              </h4>
+              <p className="text-justify">
+                Сервис является аналогом бумажного переводчика на иностаранные языки,
+                но, в отличие от вышеупомянутого сервиса (ABBYY Lingvo Live), более
+                предпочтителен для перевода целых предложений и абзацев. Качество переводов,
+                как правило, является несколько лучше, чем в Google Translator.
+              </p>
+
+              <h4 className={`${marginTopFour}`}>
+                <a href="https://www.gingersoftware.com/grammarcheck" target="__blank">
+                  2.4 Ginger Grammar Checker: Проверить грамматику иностранного текста
+                </a>
+              </h4>
+              <p className="text-justify">
+                Сервис позволяет проверить, правильно ли, с грамматической точки зрения,
+                был построен текст, учитывая диалект. В основном, хорошо подходит
+                только для проверки отдельных предложений.
+              </p>
+              
+              <h3 className={`${marginTopFive}`}>
+                3 Сервисы для перевода текста в аудиоформат
+              </h3>
+
+              <h4 className={`${marginTopFour}`}>
+                <a href="https://bradtraversy.github.io/type-n-speak/" target="__blank">
+                  Type-n-Speak: Перевести текст в аудиоформат для прослушивания
+                </a>
+              </h4>
+              <p className="text-justify">
+                Пожалуй, это одна из наиболее ценных технологий, которая используется
+                нами уже на протяжении минимум последнего года (2020-2021 гг.), поскольку она
+                позволяет в 1,5-2 раза экономить исследовательские часы на изучении вторичных
+                источников. Дело в том, что в аудиоформате (речь о т.н. «аудиокнигах»)
+                обычно хранятся преимущественно книги художественного и научно-популярного
+                характера. С помощью же данной технологии можно переводить в аудиоформат
+                в том числе научные публикации, тезисы конференций и монографии, слушая их по дороге
+                куда-либо, например, по пути из дома в университет и обратно и в перерывах
+                между лекциями.
+              </p>
+
+              <h3 className={`${marginTopFive}`}>
+                4 Сервисы для контент-анализа (дискурс-анализа)
+              </h3>
+
+              <h4 className={`${marginTopFour}`}>
+                <a href="http://vkmate.ru/servisy/sohranenie-steny-vkontakte/" target="__blank">
+                  4.1 VKMate: Собрать материал для контент-анализа
                 </a>
               </h4>
               <p className="text-justify">
@@ -115,8 +206,8 @@ function SourceHandling() {
               </p>
 
               <h4 className={`${marginTopFour}`}>
-                <a href="https://voyant-tools.org">
-                  2.3 Voyant Tools: Провести контент-анализ
+                <a href="https://voyant-tools.org" target="__blank">
+                  4.2 Voyant Tools: Провести контент-анализ
                 </a>
               </h4>
               <p className="text-justify">
@@ -127,12 +218,12 @@ function SourceHandling() {
               </p>
 
               <h3 className={`${marginTopFive}`}>
-                3 Социально-демографический анализ
+                5 Социально-демографический анализ
               </h3>
 
-              <h4 className={`${marginTopFour}`}>
+              <h4 className={`${marginTopFour}`} target="__blank">
                 <a href="https://adspoiler.com">
-                  3.1 Adspoiler: Определить интересы аудитории
+                  5.1 Adspoiler: Определить интересы аудитории
                 </a>
               </h4>
               <p className="text-justify">
@@ -142,13 +233,13 @@ function SourceHandling() {
               </p>
 
               <h4 className={`${marginTopFour}`}>
-                <a href="https://vk.targethunter.ru">
-                  3.2 Target Hunter: Провести системный анализ социальной группы
+                <a href="https://vk.targethunter.ru" target="__blank">
+                  5.2 Target Hunter: Провести системный анализ социальной группы
                 </a>
               </h4>
               <p className="text-justify">
                 <p>
-                  3.2.1 Это сервис, на наш взгляд, заслуживающий отдельного
+                  5.2.1 Это сервис, на наш взгляд, заслуживающий отдельного
                   рассмотрения. Его возможности столь широки и многообразны,
                   что, полагаем, если бы З. Фрейд жил в наше время и искал
                   возможности для исследования психологии больших социальных
@@ -157,7 +248,7 @@ function SourceHandling() {
                 </p>
 
                 <p>
-                  3.2.2 «TargetHunter» – это сервис, изначально
+                  5.2.2 «TargetHunter» – это сервис, изначально
                   разрабатывающийся для маркетологов, однако его функционал так
                   велик, что деятелям гуманитарных наук – особенно
                   представляющим собой молодое поколение родившихся после 1990-х
@@ -166,7 +257,7 @@ function SourceHandling() {
                 </p>
 
                 <p>
-                  3.2.3 Функциональные возможности данного сервиса позволяют:
+                  5.2.3 Функциональные возможности данного сервиса позволяют:
                 </p>
                 <p>
                   – проводить контент-анализ собранного через сервис в п. 4
@@ -209,7 +300,7 @@ function SourceHandling() {
                 </p>
 
                 <p>
-                  3.2.4 «Вконтакте» как социальная сеть с 97 миллионами активных
+                  5.2.4 «Вконтакте» как социальная сеть с 97 миллионами активных
                   пользователей в месяц, то есть высокой концентрацией
                   российских респондентов, вкупе с современными IT
                   (информационными технологиями) позволяет получать при
@@ -228,4 +319,4 @@ function SourceHandling() {
   );
 }
 
-export default SourceHandling;
+export default HandlingSources;
