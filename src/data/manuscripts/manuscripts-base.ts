@@ -1,4 +1,4 @@
-const manuscriptsBase: object[] = [
+const manuscriptsBase: any = [
   {
     author: "Автор 2",
     title: "Название 1",
