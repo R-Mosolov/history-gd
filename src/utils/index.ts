@@ -15,11 +15,15 @@ const changeDateFormat = () => {
   const currentDay = date.getDate();
   const currentMonth = date.getMonth() + 1;
   const currentYear = date.getFullYear();
+  const currentHour = date.getHours();
+  const currentMinute = date.getMinutes();
 
   return (
-    `${(currentDay > 9) ? currentDay : `0${currentDay}`}.
-    ${(currentMonth > 9) ? currentMonth : `0${currentMonth}`}.
-    ${currentYear}`
+    `${(currentDay > 9) ? currentDay : `0${currentDay}`}.`
+    + `${(currentMonth > 9) ? currentMonth : `0${currentMonth}`}.`
+    + `${currentYear}`
+    + ', '
+    + `${currentHour}:${currentMinute} (МСК)`
   );
 };
 

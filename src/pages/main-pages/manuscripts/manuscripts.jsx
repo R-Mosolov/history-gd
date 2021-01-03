@@ -6,6 +6,7 @@ import LargeManuscript from "./images/large-manuscript.svg";
 import SmallManuscript from "./images/small-manuscript.svg";
 import LeftNavigation from "../../../components/left-navigation/left-navigation";
 import TopNavigation from "../../../components/top-navigation/top-navigation";
+import SortIcon from '@material-ui/icons/Sort';
 
 import db from '../../../server/db';
 import { utils } from '../../../utils';
@@ -23,6 +24,11 @@ class Manuscripts extends Component {
     isTitleSorted: false,
     isAuthorSorted: false,
     isCreationDateSorted: false,
+    
+    areTitlesSortedByIncrease: true,
+    areAuthorsSortedByIncrease: true,
+    areTypesSortedByIncrease: true,
+    areCreationDatesSortedByIncrease: true
   };
 
   async componentDidMount() {
@@ -38,12 +44,66 @@ class Manuscripts extends Component {
       .catch((error) => console.log(error));
   }
 
+  /**
+   * Set icon positions to sort table columns
+   */
+  setSortIconForTitles() {
+    if (this.state.areTitlesSortedByIncrease) {
+      return this.setState({
+        areTitlesSortedByIncrease: false,
+      });
+    } else {
+      return this.setState({
+        areTitlesSortedByIncrease: true,
+      });
+    }
+  }
+
+  setSortIconForAuthors() {
+    if (this.state.areAuthorsSortedByIncrease) {
+      return this.setState({
+        areAuthorsSortedByIncrease: false,
+      });
+    } else {
+      return this.setState({
+        areAuthorsSortedByIncrease: true,
+      });
+    }
+  }
+
+  setSortIconForCreationDates() {
+    if (this.state.areCreationDatesSortedByIncrease) {
+      return this.setState({
+        areCreationDatesSortedByIncrease: false,
+      });
+    } else {
+      return this.setState({
+        areCreationDatesSortedByIncrease: true,
+      });
+    }
+  }
+
+  setSortIconForTypes() {
+    if (this.state.areTypesSortedByIncrease) {
+      return this.setState({
+        areTypesSortedByIncrease: false,
+      });
+    } else {
+      return this.setState({
+        areTypesSortedByIncrease: true,
+      });
+    }
+  }
+
   resetState() {
     return this.setState({
       manuscriptsList: manuscriptsList,
     });
   }
 
+  /**
+   * Add methods to filter table columns
+   */
   filterByLargeManuscripts() {
     return this.setState({
       manuscriptsList: manuscriptsList.filter((manuscript) => {
@@ -70,7 +130,12 @@ class Manuscripts extends Component {
     });
   }
 
+  /**
+   * Add methods to sort table columns
+   */
   sortByTitle() {
+    this.setSortIconForTitles();
+
     this.setState({
       manuscriptsList: this.state.manuscriptsList.sort((a, b) => {
         const titleA = a.title.toUpperCase();
@@ -98,6 +163,8 @@ class Manuscripts extends Component {
   }
 
   sortByAuthor() {
+    this.setSortIconForAuthors();
+
     this.setState({
       manuscriptsList: this.state.manuscriptsList.sort((a, b) => {
         const authorA = a.author.toUpperCase();
@@ -125,6 +192,8 @@ class Manuscripts extends Component {
   }
 
   sortByType() {
+    this.setSortIconForTypes();
+
     this.setState({
       manuscriptsList: this.state.manuscriptsList.sort((a, b) => {
         const typeA = a.type.toUpperCase();
@@ -152,6 +221,8 @@ class Manuscripts extends Component {
   }
 
   sortByCreationDate() {
+    this.setSortIconForCreationDates();
+
     this.setState({
       manuscriptsList: this.state.manuscriptsList.sort((a, b) => {
         if (!this.state.isCreationDateSorted) {
@@ -169,6 +240,9 @@ class Manuscripts extends Component {
     });
   }
 
+  /**
+   * Add the method to search by table columns
+   */
   searchByManuscripts() {
     const searchQuery = document.getElementById('search-query').value.toString().toLowerCase();
     const searchQueryLength = searchQuery.length;
@@ -273,7 +347,6 @@ class Manuscripts extends Component {
                   placeholder="Поисковый запрос..."
                   onChange={(event) => this.searchByManuscripts(event)}
                 />
-                {/* <Searcher /> */}
               </div>
               <ul className="mt-4 list-unstyled">
                 <table className="mt-2 table table-bordered">
@@ -290,6 +363,14 @@ class Manuscripts extends Component {
                         }}
                       >
                         Название работы
+                        {
+                          (this.state.areTitlesSortedByIncrease)
+                            ? <SortIcon className="ml-1" />
+                            : <SortIcon
+                              className="ml-1"
+                              style={{ transform: "scale(1, -1)" }}
+                            />
+                        }
                       </th>
                       <th
                         className="interactive-th"
@@ -299,6 +380,14 @@ class Manuscripts extends Component {
                         }}
                       >
                         Автор
+                        {
+                          (this.state.areAuthorsSortedByIncrease)
+                            ? <SortIcon className="ml-1" />
+                            : <SortIcon
+                              className="ml-1"
+                              style={{ transform: "scale(1, -1)" }}
+                            />
+                        }
                       </th>
                       <th
                         className="interactive-th"
@@ -308,6 +397,14 @@ class Manuscripts extends Component {
                         }}
                       >
                         Тип рукописи
+                        {
+                          (this.state.areTypesSortedByIncrease)
+                            ? <SortIcon className="ml-1" />
+                            : <SortIcon
+                              className="ml-1"
+                              style={{ transform: "scale(1, -1)" }}
+                            />
+                        }
                       </th>
                       <th
                         className="interactive-th"
@@ -317,6 +414,14 @@ class Manuscripts extends Component {
                         }}
                       >
                         Дата добавления
+                        {
+                          (this.state.areCreationDatesSortedByIncrease)
+                            ? <SortIcon className="ml-1" />
+                            : <SortIcon
+                              className="ml-1"
+                              style={{ transform: "scale(1, -1)" }}
+                            />
+                        }
                       </th>
                     </tr>
                   </thead>
@@ -328,10 +433,10 @@ class Manuscripts extends Component {
                             <th scope="row">
                               <p className="m-0 text-center">{index += 1}</p>
                             </th>
-                            <td>{manuscript.title}</td>
-                            <td>{manuscript.author}</td>
-                            <td>{manuscript.type}</td>
-                            <td>{manuscript.creationDate}</td>
+                            <td>{(manuscript.title) ? manuscript.title.toString() : "–"}</td>
+                            <td>{(manuscript.author) ? manuscript.author.toString() : "–"}</td>
+                            <td>{(manuscript.type) ? manuscript.type.toString() : "–"}</td>
+                            <td>{(manuscript.creationDate) ? manuscript.creationDate.toString() : "–"}</td>
                           </tr>
                         )
                       })

@@ -5,24 +5,45 @@ import "./add-manuscript.css";
 import LeftNavigation from "../../../components/left-navigation/left-navigation";
 import TopNavigation from "../../../components/top-navigation/top-navigation";
 
+// The dialog window
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+
 import db from '../../../server/crud';
 import { MANUSCRIPT_TYPES } from '../../../constants';
 import { utils } from "../../../utils";
 
-function sendDataToDB() {
-  const title = document.getElementById('manuscript-title').value;
-  const author = document.getElementById('manuscript-author').value;
-  const type = document.getElementById('manuscript-type').value;
-
-  return db.createOne('manuscripts', {
-    title: (title) ? title : null,
-    author: (author) ? author : null,
-    creationDate: new Date().getFullYear(),
-    type: (type) ? utils.getLabelById(type, MANUSCRIPT_TYPES) : null,
-  });
-}
-
 function AddManuscript() {
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  function sendDataToDB() {
+    const title = document.getElementById('manuscript-title').value;
+    const author = document.getElementById('manuscript-author').value;
+    const type = document.getElementById('manuscript-type').value;
+  
+    // Send data to the DB
+    db.createOne('manuscripts', {
+      title: (title) ? title : null,
+      author: (author) ? author : null,
+      creationDate: utils.changeDateFormat(),
+      type: (type) ? utils.getLabelById(type, MANUSCRIPT_TYPES) : null,
+    });
+  
+    return handleClickOpen();
+  }
+
   return (
     <div className="add-manuscript">
       <TopNavigation />
@@ -120,6 +141,32 @@ function AddManuscript() {
             </div>
           </div>
         </div>
+      </div>
+
+      <div>
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">{"Уведомление"}</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Ваша рукопись была успешно создана.
+              Теперь Вы можете её увидеть в общем списке рукописей.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              style={{ color: "white", backgroundColor: "green" }}
+              onClick={handleClose}
+              autoFocus
+            >
+              Хорошо
+            </Button>
+          </DialogActions>
+        </Dialog>
       </div>
     </div>
   );
