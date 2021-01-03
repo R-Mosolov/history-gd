@@ -5,11 +5,15 @@ import "./manuscripts.css";
 import LargeManuscript from "./images/large-manuscript.svg";
 import SmallManuscript from "./images/small-manuscript.svg";
 import LeftNavigation from "../../../components/left-navigation/left-navigation";
-import Searcher from "../../../lib/searcher/searcher";
 import TopNavigation from "../../../components/top-navigation/top-navigation";
+import SortIcon from '@material-ui/icons/Sort';
 
 import db from '../../../server/db';
-import { MANUSCRIPTS } from '../../../constants';
+import { utils } from '../../../utils';
+import { 
+  MANUSCRIPTS, MANUSCRIPT_TYPES, MONOGRAPH, TEACHING_AID,
+  SCIENCE_PUBLICATION, CONFERENCE_THESES 
+} from '../../../constants';
 
 let manuscriptsList = [];
 
@@ -20,6 +24,11 @@ class Manuscripts extends Component {
     isTitleSorted: false,
     isAuthorSorted: false,
     isCreationDateSorted: false,
+    
+    areTitlesSortedByIncrease: true,
+    areAuthorsSortedByIncrease: true,
+    areTypesSortedByIncrease: true,
+    areCreationDatesSortedByIncrease: true
   };
 
   async componentDidMount() {
@@ -35,7 +44,98 @@ class Manuscripts extends Component {
       .catch((error) => console.log(error));
   }
 
+  /**
+   * Set icon positions to sort table columns
+   */
+  setSortIconForTitles() {
+    if (this.state.areTitlesSortedByIncrease) {
+      return this.setState({
+        areTitlesSortedByIncrease: false,
+      });
+    } else {
+      return this.setState({
+        areTitlesSortedByIncrease: true,
+      });
+    }
+  }
+
+  setSortIconForAuthors() {
+    if (this.state.areAuthorsSortedByIncrease) {
+      return this.setState({
+        areAuthorsSortedByIncrease: false,
+      });
+    } else {
+      return this.setState({
+        areAuthorsSortedByIncrease: true,
+      });
+    }
+  }
+
+  setSortIconForCreationDates() {
+    if (this.state.areCreationDatesSortedByIncrease) {
+      return this.setState({
+        areCreationDatesSortedByIncrease: false,
+      });
+    } else {
+      return this.setState({
+        areCreationDatesSortedByIncrease: true,
+      });
+    }
+  }
+
+  setSortIconForTypes() {
+    if (this.state.areTypesSortedByIncrease) {
+      return this.setState({
+        areTypesSortedByIncrease: false,
+      });
+    } else {
+      return this.setState({
+        areTypesSortedByIncrease: true,
+      });
+    }
+  }
+
+  resetState() {
+    return this.setState({
+      manuscriptsList: manuscriptsList,
+    });
+  }
+
+  /**
+   * Add methods to filter table columns
+   */
+  filterByLargeManuscripts() {
+    return this.setState({
+      manuscriptsList: manuscriptsList.filter((manuscript) => {
+        if (
+          manuscript.type === utils.getLabelById(MONOGRAPH, MANUSCRIPT_TYPES)
+          || manuscript.type === utils.getLabelById(TEACHING_AID, MANUSCRIPT_TYPES)
+        ) {
+          return true;
+        }
+      })
+    });
+  }
+
+  filterBySmallManuscripts() {
+    return this.setState({
+      manuscriptsList: manuscriptsList.filter((manuscript) => {
+        if (
+          manuscript.type === utils.getLabelById(SCIENCE_PUBLICATION, MANUSCRIPT_TYPES)
+          || manuscript.type === utils.getLabelById(CONFERENCE_THESES, MANUSCRIPT_TYPES)
+        ) {
+          return true;
+        }
+      })
+    });
+  }
+
+  /**
+   * Add methods to sort table columns
+   */
   sortByTitle() {
+    this.setSortIconForTitles();
+
     this.setState({
       manuscriptsList: this.state.manuscriptsList.sort((a, b) => {
         const titleA = a.title.toUpperCase();
@@ -63,6 +163,8 @@ class Manuscripts extends Component {
   }
 
   sortByAuthor() {
+    this.setSortIconForAuthors();
+
     this.setState({
       manuscriptsList: this.state.manuscriptsList.sort((a, b) => {
         const authorA = a.author.toUpperCase();
@@ -90,6 +192,8 @@ class Manuscripts extends Component {
   }
 
   sortByType() {
+    this.setSortIconForTypes();
+
     this.setState({
       manuscriptsList: this.state.manuscriptsList.sort((a, b) => {
         const typeA = a.type.toUpperCase();
@@ -117,6 +221,8 @@ class Manuscripts extends Component {
   }
 
   sortByCreationDate() {
+    this.setSortIconForCreationDates();
+
     this.setState({
       manuscriptsList: this.state.manuscriptsList.sort((a, b) => {
         if (!this.state.isCreationDateSorted) {
@@ -134,11 +240,43 @@ class Manuscripts extends Component {
     });
   }
 
-  filterByLargeManuscripts() {
-    this.setState({
-      manuscriptsList: this.state.manuscriptsList.filter(
-        (manuscripts) => manuscripts.creationDate > 2001
-      ),
+  /**
+   * Add the method to search by table columns
+   */
+  searchByManuscripts() {
+    const searchQuery = document.getElementById('search-query').value.toString().toLowerCase();
+    const searchQueryLength = searchQuery.length;
+
+    return this.setState({
+      manuscriptsList: manuscriptsList.filter((manuscript) => {
+        if (
+          manuscript.title.toLowerCase().substring(0, searchQueryLength)
+          === searchQuery.substring(0, searchQueryLength)
+        ) {
+          return true;
+        }
+
+        else if (
+          manuscript.author.toLowerCase().substring(0, searchQueryLength)
+          === searchQuery.substring(0, searchQueryLength)
+        ) {
+          return true;
+        }
+
+        else if (
+          manuscript.type.toLowerCase().substring(0, searchQueryLength)
+          === searchQuery.substring(0, searchQueryLength)
+        ) {
+          return true;
+        }
+
+        else if (
+          manuscript.creationDate.toString().substring(0, searchQueryLength)
+          === searchQuery.substring(0, searchQueryLength)
+        ) {
+          return true;
+        }
+      }),
     });
   }
 
@@ -154,7 +292,18 @@ class Manuscripts extends Component {
             <div className="container">
               <h1 className="mt-5 mb-5 text-center">Список рукописей</h1>
 
-              <h2 className="mb-4">Какой тип работ оставить?</h2>
+              <div class="d-flex justify-content-between align-items-end mb-4">
+                <h2>Какой тип работ оставить?</h2>
+                <span
+                  style={{
+                    textDecoration: "underline",
+                    cursor: "pointer"
+                  }}
+                  onClick={() => this.resetState()}
+                >
+                  Сбросить фильтр
+                </span>
+              </div>
               <ul className="d-flex justify-content-between list-unstyled">
                 <li
                   className="large-manuscripts d-flex align-items-center large-manuscripts"
@@ -172,7 +321,12 @@ class Manuscripts extends Component {
                     Крупные работы (монографии, учебники и др.)
                   </span>
                 </li>
-                <li className="small-manuscripts d-flex align-items-center small-manuscripts">
+                <li
+                  className="small-manuscripts d-flex align-items-center small-manuscripts"
+                  onClick={() => {
+                    this.filterBySmallManuscripts();
+                  }}
+                >
                   <img
                     className="m-2 small-manuscripts__banner"
                     alt="Papyrus"
@@ -187,7 +341,12 @@ class Manuscripts extends Component {
 
               <div className="mt-5 d-flex justify-content-between">
                 <h2>Список с учётом фильтра:</h2>
-                <Searcher />
+                <input
+                  id="search-query"
+                  className="input"
+                  placeholder="Поисковый запрос..."
+                  onChange={(event) => this.searchByManuscripts(event)}
+                />
               </div>
               <ul className="mt-4 list-unstyled">
                 <table className="mt-2 table table-bordered">
@@ -204,6 +363,14 @@ class Manuscripts extends Component {
                         }}
                       >
                         Название работы
+                        {
+                          (this.state.areTitlesSortedByIncrease)
+                            ? <SortIcon className="ml-1" />
+                            : <SortIcon
+                              className="ml-1"
+                              style={{ transform: "scale(1, -1)" }}
+                            />
+                        }
                       </th>
                       <th
                         className="interactive-th"
@@ -213,6 +380,14 @@ class Manuscripts extends Component {
                         }}
                       >
                         Автор
+                        {
+                          (this.state.areAuthorsSortedByIncrease)
+                            ? <SortIcon className="ml-1" />
+                            : <SortIcon
+                              className="ml-1"
+                              style={{ transform: "scale(1, -1)" }}
+                            />
+                        }
                       </th>
                       <th
                         className="interactive-th"
@@ -222,6 +397,14 @@ class Manuscripts extends Component {
                         }}
                       >
                         Тип рукописи
+                        {
+                          (this.state.areTypesSortedByIncrease)
+                            ? <SortIcon className="ml-1" />
+                            : <SortIcon
+                              className="ml-1"
+                              style={{ transform: "scale(1, -1)" }}
+                            />
+                        }
                       </th>
                       <th
                         className="interactive-th"
@@ -231,6 +414,14 @@ class Manuscripts extends Component {
                         }}
                       >
                         Дата добавления
+                        {
+                          (this.state.areCreationDatesSortedByIncrease)
+                            ? <SortIcon className="ml-1" />
+                            : <SortIcon
+                              className="ml-1"
+                              style={{ transform: "scale(1, -1)" }}
+                            />
+                        }
                       </th>
                     </tr>
                   </thead>
@@ -242,10 +433,10 @@ class Manuscripts extends Component {
                             <th scope="row">
                               <p className="m-0 text-center">{index += 1}</p>
                             </th>
-                            <td>{manuscript.title}</td>
-                            <td>{manuscript.author}</td>
-                            <td>{manuscript.type}</td>
-                            <td>{manuscript.creationDate}</td>
+                            <td>{(manuscript.title) ? manuscript.title.toString() : "–"}</td>
+                            <td>{(manuscript.author) ? manuscript.author.toString() : "–"}</td>
+                            <td>{(manuscript.type) ? manuscript.type.toString() : "–"}</td>
+                            <td>{(manuscript.creationDate) ? manuscript.creationDate.toString() : "–"}</td>
                           </tr>
                         )
                       })

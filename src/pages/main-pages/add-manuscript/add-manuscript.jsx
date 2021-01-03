@@ -1,21 +1,48 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 import "./add-manuscript.css";
 
 import LeftNavigation from "../../../components/left-navigation/left-navigation";
 import TopNavigation from "../../../components/top-navigation/top-navigation";
 
-import db from '../../../server/db';
-import { MANUSCRIPTS } from '../../../constants';
+// The dialog window
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+
+import db from '../../../server/crud';
+import { MANUSCRIPT_TYPES } from '../../../constants';
+import { utils } from "../../../utils";
 
 function AddManuscript() {
-  const [author, setAuthor] = useState('');
+  const [open, setOpen] = React.useState(false);
 
-  db
-    .collection(MANUSCRIPTS)
-    .doc('5d4de0e4-bb47-42b1-9819-0aede0551837')
-    .get()
-    .then((doc) => setAuthor(doc.data().author))
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  function sendDataToDB() {
+    const title = document.getElementById('manuscript-title').value;
+    const author = document.getElementById('manuscript-author').value;
+    const type = document.getElementById('manuscript-type').value;
+  
+    // Send data to the DB
+    db.createOne('manuscripts', {
+      title: (title) ? title : null,
+      author: (author) ? author : null,
+      creationDate: utils.changeDateFormat(),
+      type: (type) ? utils.getLabelById(type, MANUSCRIPT_TYPES) : null,
+    });
+  
+    return handleClickOpen();
+  }
 
   return (
     <div className="add-manuscript">
@@ -38,9 +65,14 @@ function AddManuscript() {
                 </label>
               </div>
               <select id="manuscript-type" className="custom-select">
-                <option selected>Выбрать...</option>
-                <option value="Научная публикация">Научная публикация</option>
-                <option value="Монография">Монография</option>
+                <option value="" disabled selected>Выбрать...</option>
+                { MANUSCRIPT_TYPES.map((manuscript) => {
+                  return (
+                    <option value={ manuscript.id }>
+                      { utils.getLabelById(manuscript.id, MANUSCRIPT_TYPES) }
+                    </option>
+                  );
+                }) }
               </select>
             </div>
 
@@ -70,7 +102,7 @@ function AddManuscript() {
                 id="manuscript-author"
                 type="text"
                 className="form-control"
-                placeholder={author}
+                placeholder="Дарвин Ч."
                 aria-label="Username"
                 aria-describedby="basic-addon1"
               />
@@ -102,20 +134,39 @@ function AddManuscript() {
             <div className="d-flex justify-content-center">
               <button
                 className="mt-3 btn btn-success"
-                onClick={() => {
-                  return db.createOne('manuscripts', {
-                    title: 'Название 4',
-                    author: 'Автор 4',
-                    creationDate: '2004',
-                    type: 'Научная публикация',
-                  });
-                }}
+                onClick={sendDataToDB}
               >
                 Создать рукопись
               </button>
             </div>
           </div>
         </div>
+      </div>
+
+      <div>
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">{"Уведомление"}</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Ваша рукопись была успешно создана.
+              Теперь Вы можете её увидеть в общем списке рукописей.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              style={{ color: "white", backgroundColor: "green" }}
+              onClick={handleClose}
+              autoFocus
+            >
+              Хорошо
+            </Button>
+          </DialogActions>
+        </Dialog>
       </div>
     </div>
   );

@@ -1,9 +1,8 @@
+import { now } from 'lodash';
 import database from './db';
 
-const { v4: uuidv4 } = require('uuid');
-
 function createOne(collection, data) {
-  const docId = uuidv4();
+  const docId = now().toString();
   return database
     .collection(collection)
     .doc(docId)

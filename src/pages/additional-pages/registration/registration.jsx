@@ -8,8 +8,11 @@ import {
   UNIVERSITY, PROF_DEGREE, ACADEMIC_DEGREE, RESEARCH_INTERESTS,
   REGISTRATION_EMAIL, PHONE, PASSWORD, REPEAT_PASSWORD,
 } from "../../../constants/index.js";
-import "./functions/validate-form";
 import TopNavigation from "../../../components/top-navigation/top-navigation";
+
+import db from "../../../server/db";
+import { USERS } from "../../../constants";
+import validateRegistrationForm from "./functions/validate-registration-form";
 
 import "./registration.css";
 
@@ -26,7 +29,39 @@ function addInput(id, obj) {
   );
 }
 
+function postDataToDB() {
+  return db
+    .collection(USERS)
+    .doc(Date.now().toString())
+    .set({
+      "basicInfo": {
+        "middleName": document.getElementById(MIDDLE_NAME).value,
+        "lastName": document.getElementById(LAST_NAME).value,
+        "firstName": document.getElementById(FIRST_NAME).value
+      },
+      "profInfo": {
+        "academicDegree": document.getElementById(ACADEMIC_DEGREE).value,
+        "profDegree": document.getElementById(PROF_DEGREE).value,
+        "university": document.getElementById(UNIVERSITY).value,
+        "researchInterests": document.getElementById(RESEARCH_INTERESTS).value
+      },
+      "serviceInfo": {
+        "password": document.getElementById(PASSWORD).value,
+        "registrationEmail": document.getElementById(REGISTRATION_EMAIL).value,
+        "phone": document.getElementById(PHONE).value,
+        "repeatPassword": document.getElementById(REPEAT_PASSWORD).value
+      }
+    });
+}
+
+function checkFormData() {
+  return validateRegistrationForm();
+  // return postDataToDB();
+}
+
 function Registration() {
+  inputsCounter = 0;
+
   return (
     <div className="registration mt-5 mb-5 d-flex justify-content-center container">
       <TopNavigation
@@ -185,6 +220,7 @@ function Registration() {
           <button
             id="registration-button"
             className="mt-3 btn btn-success btn-block"
+            onClick={() => checkFormData()}
           >
             Зарегистрироваться
           </button>
