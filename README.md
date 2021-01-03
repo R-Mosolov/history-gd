@@ -1,7 +1,6 @@
 # About the SPA
-**«History of Genius Discovery»** (shortly «History GD» or «GitHub 
-for Scientists») is the scientific portal that was created to help 
-scientists keeping own manuscripts (e.g., scientific articles, 
+**«History of Genius Discovery»** (shortly _«History GD»_ or _«GitHub for Scientists»_) is the scientific portal that was created to help 
+scientists to keep own manuscripts (e.g., scientific articles, 
 university manuals, and monographs).
 
 # The Prerequisites of Creation
@@ -14,7 +13,7 @@ Elektronnyye biblioteki. 2020. T. 23. No 6.** (preparing to a publication).
 # The Current GUI
 At current time, GUI looks so as shown below. This GUI presents 
 part of project's worked functionality on 04.05.2020 on the left. 
-![File:GUI on 04.05.2020](public/img/GUI-on-04.05.2020.png "GUI on 04.05.2020")
+![File:GUI on 04.05.2020](src/assets/gui-on-04.05.2020.png "GUI on 04.05.2020")
 
 # The List of Planned SPA Functionality
 1) creating manuscripts;
@@ -36,8 +35,8 @@ of scientific discoveries;
 | 5 | React.js      | Main high-level library for JS          |
 | 6 | Material UI   | Adds templates of frontend components   |
 | 7 | React Router  | Adds paths between pages                |
-| 8 | Redux         | Contains main static data structures    |
-| 9 | ESLint        | Check code quality into modules         |
+| 8 | Redux         | Manages all SPA conditions              |
+| 9 | ESLint        | Checks code quality into modules        |
 | 10 | Jest         | Tests modules code quality              |
 
 ## Backend
@@ -57,8 +56,8 @@ Run following terminal commands from root directory:
 Then open a browser on: http://localhost:3000/
 
 ## How to Run the SPA: For workers
-1. clear && npx eslint --fix src/ && tsc src/**/*.ts
-2. clear && npm start
+1. `clear && npx eslint --fix src/ && tsc src/**/*.ts`
+2. `clear && npm start`
 
 ## How to Compile Modules from JS Language to TypeScript
 ### The Manual Method
