@@ -6,7 +6,8 @@ import LargeManuscript from "./images/large-manuscript.svg";
 import SmallManuscript from "./images/small-manuscript.svg";
 import LeftNavigation from "../../../components/left-navigation/left-navigation";
 import TopNavigation from "../../../components/top-navigation/top-navigation";
-import SortIcon from '@material-ui/icons/Sort';
+import SortIcon from "@material-ui/icons/Sort";
+import InfinitySpinner from "../../../assets/infinity-spinner.svg"
 
 import db from '../../../server/db';
 import { utils } from '../../../utils';
@@ -28,10 +29,12 @@ class Manuscripts extends Component {
     areTitlesSortedByIncrease: true,
     areAuthorsSortedByIncrease: true,
     areTypesSortedByIncrease: true,
-    areCreationDatesSortedByIncrease: true
+    areCreationDatesSortedByIncrease: true,
+
+    loading: true,
   };
 
-  async componentDidMount() {
+  componentDidMount() {
     manuscriptsList = [];
 
     db
@@ -39,7 +42,8 @@ class Manuscripts extends Component {
       .get()
       .then((docs) => docs.forEach((doc) => manuscriptsList.push(doc.data())))
       .then(() => this.setState({
-        manuscriptsList: manuscriptsList
+        manuscriptsList: manuscriptsList,
+        loading: false
       }))
       .catch((error) => console.log(error));
   }
@@ -349,100 +353,106 @@ class Manuscripts extends Component {
                 />
               </div>
               <ul className="mt-4 list-unstyled">
-                <table className="mt-2 table table-bordered">
-                  <thead>
-                    <tr>
-                      <th className="interactive-th" scope="col">
-                        <p className="m-0 text-center">№</p>
-                      </th>
-                      <th
-                        className="interactive-th"
-                        scope="col"
-                        onClick={() => {
-                          this.sortByTitle();
-                        }}
-                      >
-                        Название работы
-                        {
-                          (this.state.areTitlesSortedByIncrease)
-                            ? <SortIcon className="ml-1" />
-                            : <SortIcon
-                              className="ml-1"
-                              style={{ transform: "scale(1, -1)" }}
-                            />
-                        }
-                      </th>
-                      <th
-                        className="interactive-th"
-                        scope="col"
-                        onClick={() => {
-                          this.sortByAuthor();
-                        }}
-                      >
-                        Автор
-                        {
-                          (this.state.areAuthorsSortedByIncrease)
-                            ? <SortIcon className="ml-1" />
-                            : <SortIcon
-                              className="ml-1"
-                              style={{ transform: "scale(1, -1)" }}
-                            />
-                        }
-                      </th>
-                      <th
-                        className="interactive-th"
-                        scope="col"
-                        onClick={() => {
-                          this.sortByType();
-                        }}
-                      >
-                        Тип рукописи
-                        {
-                          (this.state.areTypesSortedByIncrease)
-                            ? <SortIcon className="ml-1" />
-                            : <SortIcon
-                              className="ml-1"
-                              style={{ transform: "scale(1, -1)" }}
-                            />
-                        }
-                      </th>
-                      <th
-                        className="interactive-th"
-                        scope="col"
-                        onClick={() => {
-                          this.sortByCreationDate();
-                        }}
-                      >
-                        Дата добавления
-                        {
-                          (this.state.areCreationDatesSortedByIncrease)
-                            ? <SortIcon className="ml-1" />
-                            : <SortIcon
-                              className="ml-1"
-                              style={{ transform: "scale(1, -1)" }}
-                            />
-                        }
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {[
-                      ...this.state.manuscriptsList.map((manuscript, index) => {
-                        return (
-                          <tr>
-                            <th scope="row">
-                              <p className="m-0 text-center">{index += 1}</p>
-                            </th>
-                            <td>{(manuscript.title) ? manuscript.title.toString() : "–"}</td>
-                            <td>{(manuscript.author) ? manuscript.author.toString() : "–"}</td>
-                            <td>{(manuscript.type) ? manuscript.type.toString() : "–"}</td>
-                            <td>{(manuscript.creationDate) ? manuscript.creationDate.toString() : "–"}</td>
-                          </tr>
-                        )
-                      })
-                    ]}
-                  </tbody>
-                </table>
+                {
+                  (this.state.loading)
+                    ? <div className="d-flex justify-content-center" style={{ width: 900 + "px" }}>
+                      <img src={InfinitySpinner} />
+                    </div>
+                    : <table className="mt-2 table table-bordered">
+                    <thead>
+                      <tr>
+                        <th className="interactive-th" scope="col">
+                          <p className="m-0 text-center">№</p>
+                        </th>
+                        <th
+                          className="interactive-th"
+                          scope="col"
+                          onClick={() => {
+                            this.sortByTitle();
+                          }}
+                        >
+                          Название работы
+                          {
+                            (this.state.areTitlesSortedByIncrease)
+                              ? <SortIcon className="ml-1" />
+                              : <SortIcon
+                                className="ml-1"
+                                style={{ transform: "scale(1, -1)" }}
+                              />
+                          }
+                        </th>
+                        <th
+                          className="interactive-th"
+                          scope="col"
+                          onClick={() => {
+                            this.sortByAuthor();
+                          }}
+                        >
+                          Автор
+                          {
+                            (this.state.areAuthorsSortedByIncrease)
+                              ? <SortIcon className="ml-1" />
+                              : <SortIcon
+                                className="ml-1"
+                                style={{ transform: "scale(1, -1)" }}
+                              />
+                          }
+                        </th>
+                        <th
+                          className="interactive-th"
+                          scope="col"
+                          onClick={() => {
+                            this.sortByType();
+                          }}
+                        >
+                          Тип рукописи
+                          {
+                            (this.state.areTypesSortedByIncrease)
+                              ? <SortIcon className="ml-1" />
+                              : <SortIcon
+                                className="ml-1"
+                                style={{ transform: "scale(1, -1)" }}
+                              />
+                          }
+                        </th>
+                        <th
+                          className="interactive-th"
+                          scope="col"
+                          onClick={() => {
+                            this.sortByCreationDate();
+                          }}
+                        >
+                          Дата добавления
+                          {
+                            (this.state.areCreationDatesSortedByIncrease)
+                              ? <SortIcon className="ml-1" />
+                              : <SortIcon
+                                className="ml-1"
+                                style={{ transform: "scale(1, -1)" }}
+                              />
+                          }
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {
+                        [...this.state.manuscriptsList.map((manuscript, index) => {
+                          return (
+                            <tr>
+                              <th scope="row">
+                                <p className="m-0 text-center">{index += 1}</p>
+                              </th>
+                              <td>{(manuscript.title) ? manuscript.title.toString() : "–"}</td>
+                              <td>{(manuscript.author) ? manuscript.author.toString() : "–"}</td>
+                              <td>{(manuscript.type) ? manuscript.type.toString() : "–"}</td>
+                              <td>{(manuscript.creationDate) ? manuscript.creationDate.toString() : "–"}</td>
+                            </tr>
+                          )
+                        })]
+                      }
+                    </tbody>
+                  </table>
+                }
               </ul>
             </div>
           </div>
