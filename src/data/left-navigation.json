@@ -12,12 +12,16 @@
     "link": "/full-manuscript"
   },
   {
-    "name": "Обработка источников",
-    "link": "/handling-sources"
+    "name": "Личный дневник",
+    "link": "/diary"
   },
   {
-    "name": "Генератор аудиомонографий",
-    "link": "/audio-generator"
+    "name": "Научная переписка",
+    "link": "/manuscripts"
+  },
+  {
+    "name": "Обработка источников",
+    "link": "/handling-sources"
   },
   {
     "name": "Наследники рукописей",
@@ -25,10 +29,6 @@
   },
   {
     "name": "Научное становление",
-    "link": "/manuscripts"
-  },
-  {
-    "name": "Научная переписка",
     "link": "/manuscripts"
   },
   {
@@ -48,11 +48,11 @@
     "link": "/manuscripts"
   },
   {
-    "name": "Личный дневник",
-    "link": "/diary"
-  },
-  {
     "name": "Мультимедийные факты",
     "link": "/manuscripts"
+  },
+  {
+    "name": "Генератор аудиомонографий",
+    "link": "/audio-generator"
   }
 ]

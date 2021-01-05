@@ -36,6 +36,7 @@
     "jquery": "^3.5.0",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.20",
+    "material-table": "^1.69.2",
     "nodemailer": "^6.4.6",
     "pdfmake": "^0.1.65",
     "react": "^16.14.0",
