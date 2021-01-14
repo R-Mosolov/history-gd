@@ -36,8 +36,10 @@ of scientific discoveries;
 | 6 | Material UI   | Adds templates of frontend components   |
 | 7 | React Router  | Adds paths between pages                |
 | 8 | Redux         | Manages all SPA conditions              |
-| 9 | ESLint        | Checks code quality into modules        |
-| 10 | Jest         | Tests modules code quality              |
+| 9 | Redux Saga    | Deletes sides effects                   |
+| 10 | React Hemlet | Makes the SPA more familiarity with SEO |
+| 11 | ESLint       | Checks code quality into modules        |
+| 12 | Jest         | Tests modules code quality              |
 
 ## Backend
 | # | Technology      | Role                                  |
