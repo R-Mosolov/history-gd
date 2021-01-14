@@ -40,6 +40,7 @@ of scientific discoveries;
 | 10 | React Hemlet | Makes the SPA more familiarity with SEO |
 | 11 | ESLint       | Checks code quality into modules        |
 | 12 | Jest         | Tests modules code quality              |
+The additional technoligical stack: Redux Thunk, Reselect, GraphQL.
 
 ## Backend
 | # | Technology      | Role                                  |
