@@ -8,7 +8,7 @@ The software is based on following scientific article
 containing main software targets and the conception:
 
 **Mosolov R.V. Programma "Istorija genial'nogo otkrytija" //
-Elektronnyye biblioteki. 2020. T. 23. No 6.** (preparing to a publication).
+Elektronnyye biblioteki. 2020. V. 23. No 6. https://doi.org/10.26907/1562-5419-2020-23-6-1239-1278.**
 
 # The Current GUI
 At current time, GUI looks so as shown below. This GUI presents 
@@ -41,7 +41,7 @@ of scientific discoveries;
 | 11 | ESLint       | Checks code quality into modules        |
 | 12 | Jest         | Tests modules code quality              |
 
-The additional technoligical stack: Redux Thunk, Reselect, GraphQL.
+The additional technoligical stack: Next.js, Redux Thunk, Reselect, GraphQL/Apollo.
 
 ## Backend
 | # | Technology      | Role                                  |
