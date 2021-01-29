@@ -1,0 +1,28 @@
+# IDE
+.idea
+
+# MacOS file
+.DS_Store
+
+# Dependencies
+node_modules
+
+# Enviroment variables
+.env
+
+# JS modules based on TypeScript
+src/lib/form-validator/form-validator.js
+src/lib/form-validator/render-error.js
+
+src/pages/main-pages/add-manuscript/services/expand-manuscripts.js
+
+src/utils/index.js
+
+src/data/manuscripts/manuscripts-base.js
+src/data/manuscripts/manuscripts-details.js
+
+src/constants/index.js
+
+src/store/index.js
+src/store/initial-state.js
+src/store/action-creators.js
