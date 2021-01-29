@@ -9,7 +9,7 @@ const getLabelById: UtilsConfig = (id, obj) => obj.find((item: any) => item.id =
 const getPlaceholderById: UtilsConfig = (id, obj) => obj.find((item: any) => item.id === id).placeholder;
 const getRequiredById: UtilsConfig = (id, obj) => obj.find((item: any) => item.id === id).isRequired;
 
-const changeDateFormat = () => {
+const addCustomCurrentDate = () => {
   const date = new Date();
 
   const currentDay = date.getDate();
@@ -23,7 +23,8 @@ const changeDateFormat = () => {
     + `${(currentMonth > 9) ? currentMonth : `0${currentMonth}`}.`
     + `${currentYear}`
     + ', '
-    + `${currentHour}:${currentMinute} (МСК)`
+    + `${(currentHour > 9) ? currentHour : `0${currentHour}`}`
+    + `:${(currentMinute > 9) ? currentMinute : `0${currentMinute}`} (МСК)`
   );
 };
 
@@ -31,5 +32,5 @@ export const utils = {
   getLabelById,
   getPlaceholderById,
   getRequiredById,
-  changeDateFormat,
+  addCustomCurrentDate,
 };

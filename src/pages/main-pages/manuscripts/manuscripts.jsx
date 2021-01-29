@@ -2,11 +2,23 @@ import React, { Component } from "react";
 
 import "./manuscripts.css";
 
-import LargeManuscript from "./images/large-manuscript.svg";
-import SmallManuscript from "./images/small-manuscript.svg";
+import Box from '@material-ui/core/Box';
+import SortIcon from "@material-ui/icons/Sort";
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
+
+// Dialog dependencies
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+
 import LeftNavigation from "../../../components/left-navigation/left-navigation";
 import TopNavigation from "../../../components/top-navigation/top-navigation";
-import SortIcon from "@material-ui/icons/Sort";
+import LargeManuscript from "./images/large-manuscript.svg";
+import SmallManuscript from "./images/small-manuscript.svg";
 import InfinitySpinner from "../../../assets/infinity-spinner.svg"
 
 import db from '../../../server/db';
@@ -21,6 +33,7 @@ let manuscriptsList = [];
 class Manuscripts extends Component {
   state = {
     manuscriptsList: [],
+    activeManuscript: {},
 
     isTitleSorted: false,
     isAuthorSorted: false,
@@ -32,9 +45,14 @@ class Manuscripts extends Component {
     areCreationDatesSortedByIncrease: true,
 
     loading: true,
+    isDeletingAlertOpen: false,
   };
 
   componentDidMount() {
+    this.updateManuscriptsList();
+  }
+
+  updateManuscriptsList() {
     manuscriptsList = [];
 
     db
@@ -284,6 +302,32 @@ class Manuscripts extends Component {
     });
   }
 
+  /**
+   * Handle editing and deleting a manuscript
+   */
+  handleDeletingManuscript(isDeletingAlertOpen, manuscript) {
+    this.setState({ activeManuscript: manuscript })
+
+    if (isDeletingAlertOpen) {
+      this.setState({ isDeletingAlertOpen: false });
+    } else {
+      this.setState({ isDeletingAlertOpen: true });
+    }
+  }
+
+  deleteManuscriptFromDB(docId) {
+    // Delete a manuscript from DB
+    db
+      .collection(MANUSCRIPTS)
+      .doc(docId)
+      .delete()
+      .then(() => console.log(`Document ${docId} successfully deleted`))
+      .catch((err) => console.log(err));
+
+    // Update information about manuscripts on frontend
+    this.updateManuscriptsList();
+  }
+
   render() {
     return (
       <div className="manuscripts">
@@ -432,6 +476,11 @@ class Manuscripts extends Component {
                               />
                           }
                         </th>
+                        <th scope="col">
+                          <Box display="flex" justifyContent="center">
+                            Действия
+                          </Box>
+                        </th>
                       </tr>
                     </thead>
                     <tbody>
@@ -446,6 +495,19 @@ class Manuscripts extends Component {
                               <td>{(manuscript.author) ? manuscript.author.toString() : "–"}</td>
                               <td>{(manuscript.type) ? manuscript.type.toString() : "–"}</td>
                               <td>{(manuscript.creationDate) ? manuscript.creationDate.toString() : "–"}</td>
+                              <td>
+                                <Box display="flex" justifyContent="space-around">
+                                  <span style={{ cursor: "pointer" }}>
+                                    {<EditIcon/>}
+                                  </span>
+                                  <span
+                                    style={{ cursor: "pointer" }}
+                                    onClick={() => this.handleDeletingManuscript(this.state.isDeletingAlertOpen, manuscript)}
+                                  >
+                                    {<DeleteIcon />}
+                                  </span>
+                                </Box>
+                              </td>
                             </tr>
                           )
                         })]
@@ -455,6 +517,39 @@ class Manuscripts extends Component {
                 }
               </ul>
             </div>
+            <Dialog
+              open={this.state.isDeletingAlertOpen}
+              onClose={() => this.handleDeletingManuscript(this.state.isDeletingAlertOpen)}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+            >
+              <DialogTitle id="alert-dialog-title">{"Уведомление"}</DialogTitle>
+              <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                  Вы уверены, что хотите <b>навсегда</b> удалить рукопись?
+                  В случае удаления данную рукопись нельзя будет восстановить.
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  size="small"
+                  onClick={() => this.handleDeletingManuscript(this.state.isDeletingAlertOpen)}
+                >
+                  Отменить действие
+                </Button>
+                <Button
+                  onClick={() => this.handleDeletingManuscript(this.state.isDeletingAlertOpen)}
+                  variant="outlined"
+                  color="secondary"
+                  size="small"
+                  onClick={() => this.deleteManuscriptFromDB(this.state.activeManuscript.id)}
+                >
+                  Удалить рукопись
+                </Button>
+              </DialogActions>
+            </Dialog>
           </div>
         </div>
       </div>

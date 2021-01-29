@@ -1,7 +1,5 @@
 import React from "react";
 
-import "./add-manuscript.css";
-
 import LeftNavigation from "../../../components/left-navigation/left-navigation";
 import TopNavigation from "../../../components/top-navigation/top-navigation";
 
@@ -13,9 +11,13 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
+import { v4 as uuidv4 } from 'uuid';
+
 import db from '../../../server/crud';
 import { MANUSCRIPT_TYPES } from '../../../constants';
 import { utils } from "../../../utils";
+
+import './add-manuscript.css';
 
 function AddManuscript() {
   const [open, setOpen] = React.useState(false);
@@ -35,9 +37,10 @@ function AddManuscript() {
   
     // Send data to the DB
     db.createOne('manuscripts', {
+      id: uuidv4(),
       title: (title) ? title : null,
       author: (author) ? author : null,
-      creationDate: utils.changeDateFormat(),
+      creationDate: utils.addCustomCurrentDate(),
       type: (type) ? utils.getLabelById(type, MANUSCRIPT_TYPES) : null,
     });
   
@@ -159,9 +162,10 @@ function AddManuscript() {
           </DialogContent>
           <DialogActions>
             <Button
-              style={{ color: "white", backgroundColor: "green" }}
+              variant="outlined"
+              color="primary"
+              size="small"
               onClick={handleClose}
-              autoFocus
             >
               Хорошо
             </Button>
