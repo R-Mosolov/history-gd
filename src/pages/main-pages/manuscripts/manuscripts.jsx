@@ -315,17 +315,27 @@ class Manuscripts extends Component {
     }
   }
 
-  deleteManuscriptFromDB(docId) {
+  deleteManuscriptFromDB(manuscriptId) {
     // Delete a manuscript from DB
-    db
-      .collection(MANUSCRIPTS)
-      .doc(docId)
-      .delete()
-      .then(() => console.log(`Document ${docId} successfully deleted`))
-      .catch((err) => console.log(err));
+    db.collection(MANUSCRIPTS).get().then((res) => res.forEach(((doc) => {
+      console.log(doc.id);
 
-    // Update information about manuscripts on frontend
-    this.updateManuscriptsList();
+      if (doc.data().id === manuscriptId) {
+        db
+          .collection(MANUSCRIPTS)
+          .doc(doc.id)
+          .delete()
+          .then(() => console.log(`Document ${manuscriptId} successfully deleted`))
+          .catch((err) => console.log(err))
+          .then(() => {
+            // Hide alert dialog
+            this.setState({ isDeletingAlertOpen: false });
+
+            // Update information about manuscripts on frontend
+            this.updateManuscriptsList();
+          })
+      }
+    })));
   }
 
   render() {
