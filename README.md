@@ -59,7 +59,7 @@ Then open a browser on: http://localhost:3000/
 1. `clear && npx eslint --fix src/ && tsc src/**/*.ts`
 2. `clear && npm start`
 
-## How to Compile Modules from JS Language to TypeScript
+## How to Transpile TypeScript Modules in JS Language
 ### The Manual Method
 `clear && tsc ./src/**/*`
 

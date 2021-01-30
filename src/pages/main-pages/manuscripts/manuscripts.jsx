@@ -504,7 +504,7 @@ class Manuscripts extends Component {
                               <td>{(manuscript.title) ? manuscript.title.toString() : "–"}</td>
                               <td>{(manuscript.author) ? manuscript.author.toString() : "–"}</td>
                               <td>{(manuscript.type) ? manuscript.type.toString() : "–"}</td>
-                              <td>{(manuscript.creationDate) ? manuscript.creationDate.toString() : "–"}</td>
+                              <td>{(manuscript.creationDate) ? utils.convertDateToCustom(manuscript.creationDate) : "–"}</td>
                               <td>
                                 <Box display="flex" justifyContent="space-around">
                                   <span style={{ cursor: "pointer" }}>

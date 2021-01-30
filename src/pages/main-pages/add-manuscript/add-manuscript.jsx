@@ -40,7 +40,7 @@ function AddManuscript() {
       id: uuidv4(),
       title: (title) ? title : null,
       author: (author) ? author : null,
-      creationDate: utils.addCustomCurrentDate(),
+      creationDate: new Date(),
       type: (type) ? utils.getLabelById(type, MANUSCRIPT_TYPES) : null,
     });
   

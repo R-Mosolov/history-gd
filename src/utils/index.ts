@@ -9,22 +9,23 @@ const getLabelById: UtilsConfig = (id, obj) => obj.find((item: any) => item.id =
 const getPlaceholderById: UtilsConfig = (id, obj) => obj.find((item: any) => item.id === id).placeholder;
 const getRequiredById: UtilsConfig = (id, obj) => obj.find((item: any) => item.id === id).isRequired;
 
-const addCustomCurrentDate = () => {
-  const date = new Date();
+const convertDateToCustom = (date: Date) => {
+  // TODO: To parse a date, use DateJS library (see https://github.com/datejs/Datejs)
+  const datePrototype = new Date(date);
 
-  const currentDay = date.getDate();
-  const currentMonth = date.getMonth() + 1;
-  const currentYear = date.getFullYear();
-  const currentHour = date.getHours();
-  const currentMinute = date.getMinutes();
+  const day = datePrototype.getDate();
+  const month = datePrototype.getMonth() + 1;
+  const year = datePrototype.getFullYear();
+  const hour = datePrototype.getHours();
+  const minute = datePrototype.getMinutes();
 
   return (
-    `${(currentDay > 9) ? currentDay : `0${currentDay}`}.`
-    + `${(currentMonth > 9) ? currentMonth : `0${currentMonth}`}.`
-    + `${currentYear}`
+    `${(day > 9) ? day : `0${day}`}.`
+    + `${(month > 9) ? month : `0${month}`}.`
+    + `${year}`
     + ', '
-    + `${(currentHour > 9) ? currentHour : `0${currentHour}`}`
-    + `:${(currentMinute > 9) ? currentMinute : `0${currentMinute}`} (МСК)`
+    + `${(hour > 9) ? hour : `0${hour}`}`
+    + `:${(minute > 9) ? minute : `0${minute}`} (МСК)`
   );
 };
 
@@ -32,5 +33,5 @@ export const utils = {
   getLabelById,
   getPlaceholderById,
   getRequiredById,
-  addCustomCurrentDate,
+  convertDateToCustom,
 };
