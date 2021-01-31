@@ -19,6 +19,7 @@ import LargeManuscript from "./images/large-manuscript.svg";
 import SmallManuscript from "./images/small-manuscript.svg";
 import InfinitySpinner from "../../../assets/infinity-spinner.svg"
 
+import { connect } from 'react-redux';
 import db from '../../../server/db';
 import { utils } from '../../../utils';
 import { 
@@ -30,9 +31,9 @@ import "./manuscripts.css";
 
 let manuscriptsList = [];
 
-export default class Manuscripts extends Component {
+class Manuscripts extends Component {
   state = {
-    manuscriptsList: manuscriptsList,
+    manuscriptsList: this.props.manuscriptsList,
     activeManuscript: {},
 
     isTitleSorted: false,
@@ -44,13 +45,8 @@ export default class Manuscripts extends Component {
     areTypesSortedByIncrease: true,
     areCreationDatesSortedByIncrease: true,
 
-    loading: false,
     isDeletingAlertOpen: false,
   };
-
-  componentDidMount() {
-    this.updateManuscriptsList();
-  }
 
   updateManuscriptsList() {
     manuscriptsList = [];
@@ -339,6 +335,8 @@ export default class Manuscripts extends Component {
   }
 
   render() {
+    const { store, loading } = this.props;
+
     return (
       <div className="manuscripts">
         <TopNavigation />
@@ -408,7 +406,7 @@ export default class Manuscripts extends Component {
               </div>
               <ul className="mt-4 list-unstyled">
                 {
-                  (this.state.loading)
+                  (loading)
                     ? <div className="d-flex justify-content-center" style={{ width: 900 + "px" }}>
                       <img src={InfinitySpinner} />
                     </div>
@@ -495,7 +493,7 @@ export default class Manuscripts extends Component {
                     </thead>
                     <tbody>
                       {
-                        [...this.state.manuscriptsList.map((manuscript, index) => {
+                        [...store.map((manuscript, index) => {
                           return (
                             <tr>
                               <th scope="row">
@@ -566,3 +564,17 @@ export default class Manuscripts extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    store: state,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getInitialState: () => dispatch({ type: 'GET_INITIAL_STATE' }),
+  }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Manuscripts);
