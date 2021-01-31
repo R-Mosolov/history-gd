@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-
-import "./manuscripts.css";
+import { connect } from "react-redux";
 
 import Box from '@material-ui/core/Box';
 import SortIcon from "@material-ui/icons/Sort";
@@ -28,43 +27,48 @@ import {
   SCIENCE_PUBLICATION, CONFERENCE_THESES 
 } from '../../../constants';
 
+import "./manuscripts.css";
+
 let manuscriptsList = [];
 
 class Manuscripts extends Component {
-  state = {
-    manuscriptsList: [],
-    activeManuscript: {},
-
-    isTitleSorted: false,
-    isAuthorSorted: false,
-    isCreationDateSorted: false,
-    
-    areTitlesSortedByIncrease: true,
-    areAuthorsSortedByIncrease: true,
-    areTypesSortedByIncrease: true,
-    areCreationDatesSortedByIncrease: true,
-
-    loading: true,
-    isDeletingAlertOpen: false,
-  };
-
-  componentDidMount() {
-    this.updateManuscriptsList();
+  constructor(props) {
+    super(props);
+    this.state = {
+      manuscriptsList: this.props.initialState,
+      activeManuscript: {},
+  
+      isTitleSorted: false,
+      isAuthorSorted: false,
+      isCreationDateSorted: false,
+      
+      areTitlesSortedByIncrease: true,
+      areAuthorsSortedByIncrease: true,
+      areTypesSortedByIncrease: true,
+      areCreationDatesSortedByIncrease: true,
+  
+      loading: false,
+      isDeletingAlertOpen: false,
+    };
   }
 
-  updateManuscriptsList() {
-    manuscriptsList = [];
+  // componentDidMount() {
+  //   this.updateManuscriptsList();
+  // }
 
-    db
-      .collection(MANUSCRIPTS)
-      .get()
-      .then((docs) => docs.forEach((doc) => manuscriptsList.push(doc.data())))
-      .then(() => this.setState({
-        manuscriptsList: manuscriptsList,
-        loading: false
-      }))
-      .catch((error) => console.log(error));
-  }
+  // updateManuscriptsList() {
+  //   manuscriptsList = [];
+
+  //   db
+  //     .collection(MANUSCRIPTS)
+  //     .get()
+  //     .then((docs) => docs.forEach((doc) => manuscriptsList.push(doc.data())))
+  //     .then(() => this.setState({
+  //       manuscriptsList: manuscriptsList,
+  //       loading: false
+  //     }))
+  //     .catch((error) => console.log(error));
+  // }
 
   /**
    * Set icon positions to sort table columns
@@ -567,4 +571,16 @@ class Manuscripts extends Component {
   }
 }
 
-export default Manuscripts;
+const mapStateToProps = (state) => {
+  return {
+    initialState: state,
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    clearState: () => dispatch({ type: 'CLEAR_STATE' }),
+  }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Manuscripts);

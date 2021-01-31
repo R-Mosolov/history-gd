@@ -13,7 +13,7 @@ Elektronnyye biblioteki. 2020. T. 23. No 6.** (preparing to a publication).
 # The Current GUI
 At current time, GUI looks so as shown below. This GUI presents 
 part of project's worked functionality on 04.05.2020 on the left. 
-![File:GUI on 04.05.2020](src/assets/gui-on-04.05.2020.png "GUI on 04.05.2020")
+![File:GUI at 04.05.2020](src/assets/gui-at-04.05.2020.png "GUI at 04.05.2020")
 
 # The List of Planned SPA Functionality
 1) creating manuscripts;

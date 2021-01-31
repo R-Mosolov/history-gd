@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import LogoIcon from "./images/logo.svg";
+import LogoIcon from "../../../assets/logo.svg";
 import "./logo.css";
 
 function Logo() {
