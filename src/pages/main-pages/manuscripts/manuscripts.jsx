@@ -36,7 +36,7 @@ class Manuscripts extends Component {
     manuscriptsList: this.props.manuscriptsList,
     activeManuscript: {},
 
-    isTitleSorted: false,
+    haveTitlesSorted: false,
     isAuthorSorted: false,
     isCreationDateSorted: false,
     
@@ -151,33 +151,10 @@ class Manuscripts extends Component {
   /**
    * Add methods to sort table columns
    */
-  sortByTitle() {
+  sortByTitles() {
     this.setSortIconForTitles();
-
-    this.setState({
-      manuscriptsList: this.state.manuscriptsList.sort((a, b) => {
-        const titleA = a.title.toUpperCase();
-        const titleB = b.title.toUpperCase();
-
-        if (!this.state.isTextSorted) {
-          this.setState({
-            isTextSorted: true,
-          });
-          if (titleA < titleB) return -1;
-          else if (titleA > titleB) return 1;
-        }
-
-        if (this.state.isTextSorted) {
-          this.setState({
-            isTextSorted: false,
-          });
-          if (titleA < titleB) return 1;
-          else if (titleA > titleB) return -1;
-        }
-
-        return 0;
-      }),
-    });
+    this.props.sortByTitles(this.state.haveTitlesSorted);
+    this.setState({ haveTitlesSorted: (this.state.haveTitlesSorted) ? false : true });
   }
 
   sortByAuthor() {
@@ -420,7 +397,7 @@ class Manuscripts extends Component {
                           className="interactive-th"
                           scope="col"
                           onClick={() => {
-                            this.sortByTitle();
+                            this.sortByTitles();
                           }}
                         >
                           Название работы
@@ -573,7 +550,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getInitialState: () => dispatch({ type: 'GET_INITIAL_STATE' }),
+    sortByTitles: (payload) => dispatch({ type: 'SORT_BY_TITLES', payload }),
   }
 };
 

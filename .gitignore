@@ -22,7 +22,3 @@ src/data/manuscripts/manuscripts-base.js
 src/data/manuscripts/manuscripts-details.js
 
 src/constants/index.js
-
-src/store/index.js
-src/store/initial-state.js
-src/store/action-creators.js
