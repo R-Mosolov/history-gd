@@ -37,7 +37,7 @@ class Manuscripts extends Component {
     activeManuscript: {},
 
     haveTitlesSorted: false,
-    isAuthorSorted: false,
+    haveAuthorsSorted: false,
     isCreationDateSorted: false,
     
     areTitlesSortedByIncrease: true,
@@ -123,29 +123,15 @@ class Manuscripts extends Component {
    * Add methods to filter table columns
    */
   filterByLargeManuscripts() {
-    return this.setState({
-      manuscriptsList: manuscriptsList.filter((manuscript) => {
-        if (
-          manuscript.type === utils.getLabelById(MONOGRAPH, MANUSCRIPT_TYPES)
-          || manuscript.type === utils.getLabelById(TEACHING_AID, MANUSCRIPT_TYPES)
-        ) {
-          return true;
-        }
-      })
-    });
+    // this.props.setInitialState(this.props.store);
+    // this.props.resetState();
+    this.props.filterByLargeManuscripts();
   }
 
   filterBySmallManuscripts() {
-    return this.setState({
-      manuscriptsList: manuscriptsList.filter((manuscript) => {
-        if (
-          manuscript.type === utils.getLabelById(SCIENCE_PUBLICATION, MANUSCRIPT_TYPES)
-          || manuscript.type === utils.getLabelById(CONFERENCE_THESES, MANUSCRIPT_TYPES)
-        ) {
-          return true;
-        }
-      })
-    });
+    // this.props.setInitialState(this.props.store);
+    // this.props.resetState();
+    this.props.filterBySmallManuscripts();
   }
 
   /**
@@ -157,33 +143,10 @@ class Manuscripts extends Component {
     this.setState({ haveTitlesSorted: (this.state.haveTitlesSorted) ? false : true });
   }
 
-  sortByAuthor() {
+  sortByAuthors() {
     this.setSortIconForAuthors();
-
-    this.setState({
-      manuscriptsList: this.state.manuscriptsList.sort((a, b) => {
-        const authorA = a.author.toUpperCase();
-        const authorB = b.author.toUpperCase();
-
-        if (!this.state.isAuthorSorted) {
-          this.setState({
-            isAuthorSorted: true,
-          });
-          if (authorA < authorB) return -1;
-          else if (authorA > authorB) return 1;
-        }
-
-        if (this.state.isAuthorSorted) {
-          this.setState({
-            isAuthorSorted: false,
-          });
-          if (authorA < authorB) return 1;
-          else if (authorA > authorB) return -1;
-        }
-
-        return 0;
-      }),
-    });
+    this.props.sortByAuthors(this.state.haveAuthorsSorted);
+    this.setState({ haveAuthorsSorted: (this.state.haveAuthorsSorted) ? false : true });
   }
 
   sortByType() {
@@ -414,7 +377,7 @@ class Manuscripts extends Component {
                           className="interactive-th"
                           scope="col"
                           onClick={() => {
-                            this.sortByAuthor();
+                            this.sortByAuthors();
                           }}
                         >
                           Автор
@@ -550,7 +513,12 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    setInitialState: (payload) => dispatch({ type: 'SET_INITIAL_STATE', payload }),
     sortByTitles: (payload) => dispatch({ type: 'SORT_BY_TITLES', payload }),
+    sortByAuthors: (payload) => dispatch({ type: 'SORT_BY_AUTHORS', payload }),
+    filterByLargeManuscripts: () => dispatch({ type: 'FILTER_BY_LARGE_MANUSCRIPTS' }),
+    filterBySmallManuscripts: () => dispatch({ type: 'FILTER_BY_SMALL_MANUSCRIPTS' }),
+    resetState: () => dispatch({ type: 'RESET_STATE' }),
   }
 };
 
