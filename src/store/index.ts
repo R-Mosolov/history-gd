@@ -1,39 +1,48 @@
-import { createStore } from "redux";
+// Core
+import { createStore, applyMiddleware } from "redux";
+import thunk from "redux-thunk";
+import { createLogger } from "redux-logger";
+
+// Configs
 import { ActionConfig } from "../configs";
 
-import {
-  MANUSCRIPTS,
-  MANUSCRIPT_TYPES,
-  MONOGRAPH,
-  TEACHING_AID,
-  SCIENCE_PUBLICATION,
-  CONFERENCE_THESES,
-} from "../constants";
 import initialState from "./initial-state";
 import TYPES from "../store/types";
 import { utils } from "../utils";
 
 // Restructure types
-const {
-  SET_INITIAL_STATE,
-  SORT_BY_TITLES,
-  SORT_BY_AUTHORS,
-  FILTER_BY_LARGE_MANUSCRIPTS,
-  FILTER_BY_SMALL_MANUSCRIPTS,
-  RESET_STATE,
-} = TYPES;
+const { SET_STATE } = TYPES;
 
 // Create the reducer
 const reducer: any = (store = initialState, action: ActionConfig) => {
   switch (action.type) {
-    case SET_INITIAL_STATE:
-      return action.payload;
+    case SET_STATE:
+      return {
+        ...store,
+        fetchedManuscripts: action.payload,
+        areManuscriptsLoading: false,
+      };
 
     default:
       return initialState;
   }
 };
 
-const store: any = createStore(reducer);
+// Set up logger
+const logger = createLogger({
+  duration: true,
+  collapsed: true,
+  colors: {
+    title: () => "lightblue",
+    prevState: () => "blue",
+    action: () => "green",
+    nextState: () => "orange",
+    error: () => "red",
+  },
+});
+
+const middleware = [thunk, logger];
+
+const store: any = createStore(reducer, applyMiddleware(...middleware));
 
 export default store;

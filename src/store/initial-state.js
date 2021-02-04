@@ -4,6 +4,7 @@ var initialState = {
   fetchedManuscripts: [],
   filteredManuscripts: [],
   sortedManuscripts: [],
+  areManuscriptsLoading: true,
   areTitlesSortedByIncrease: false,
   areAuthorsSortedByIncrease: false,
   areTypesSortedByIncrease: false,

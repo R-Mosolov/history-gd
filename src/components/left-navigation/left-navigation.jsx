@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
 
 import "./left-navigation.css";
 import leftNavigation from "../../data/left-navigation";
@@ -9,7 +10,7 @@ function LeftNavigation() {
     let itemsList = [];
     for (let item of leftNavigation) {
       itemsList.push(
-        <Link to={item.link}>
+        <Link key={uuidv4()} to={item.link}>
           <li className="left-nav__container--item">{item.name}</li>
         </Link>
       );

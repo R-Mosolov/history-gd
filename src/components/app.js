@@ -21,30 +21,29 @@ import ErrorMessage from "../pages/additional-pages/error-message/error-message"
 import UserAgreement from "../pages/additional-pages/user-agreement/user-agreement";
 
 import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { fetchStore } from "../store/action-creators";
 import { MANUSCRIPTS } from "../constants";
 import db from "../server/db";
 
-class App extends Component {
-  state = {
-    loading: true,
+const mapStateToProps = (state) => {
+  return {
+    store: state,
   };
+};
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    actions: bindActionCreators({ fetchStore }, dispatch),
+  };
+};
+
+class App extends Component {
   componentDidMount() {
-    let manuscriptsList = [];
-
-    db.collection(MANUSCRIPTS)
-      .get()
-      .then((docs) => docs.forEach((doc) => manuscriptsList.push(doc.data())))
-      .then(() => {
-        this.props.setInitialState(manuscriptsList);
-        this.setState({ loading: false });
-      })
-      .catch((error) => console.log(error));
+    this.props.actions.fetchStore();
   }
 
   render() {
-    const { loading } = this.state;
-
     return (
       <Router>
         <div className="app mb-5">
@@ -56,11 +55,7 @@ class App extends Component {
             <Route path="/user-agreement" component={UserAgreement} />
 
             <Route path="/left-navigation" component={LeftNavigation} />
-            <Route
-              path="/manuscripts"
-              component={Manuscripts}
-              loading={loading}
-            />
+            <Route path="/manuscripts" component={Manuscripts} />
             <Route path="/full-manuscript" component={FullManuscript} />
             <Route path="/handling-sources" component={HandlingSources} />
             <Route path="/add-manuscript" component={AddManuscript} />
@@ -73,18 +68,5 @@ class App extends Component {
     );
   }
 }
-
-const mapStateToProps = (state) => {
-  return {
-    store: state,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setInitialState: (payload) =>
-      dispatch({ type: "SET_INITIAL_STATE", payload }),
-  };
-};
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

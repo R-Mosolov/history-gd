@@ -1,6 +1,9 @@
 // Core
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { fetchStore } from "../../../store/action-creators";
+import { v4 as uuidv4 } from "uuid";
 
 // Icons
 import Box from "@material-ui/core/Box";
@@ -46,26 +49,24 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setInitialState: (payload) =>
-      dispatch({ type: "SET_INITIAL_STATE", payload }),
-    sortByTitles: (payload) => dispatch({ type: "SORT_BY_TITLES", payload }),
-    sortByAuthors: (payload) => dispatch({ type: "SORT_BY_AUTHORS", payload }),
-    filterByLargeManuscripts: () =>
-      dispatch({ type: "FILTER_BY_LARGE_MANUSCRIPTS" }),
-    filterBySmallManuscripts: () =>
-      dispatch({ type: "FILTER_BY_SMALL_MANUSCRIPTS" }),
-    resetState: () => dispatch({ type: "RESET_STATE" }),
+    actions: bindActionCreators({ fetchStore }, dispatch),
   };
 };
 
 class Manuscripts extends Component {
+  static defaultProps = {
+    actions: {
+      fetchStore: () => {},
+    },
+  };
+
   state = {
     isDeletingAlertOpen: false,
     activeManuscript: 1,
   };
 
   render() {
-    const { store, loading } = this.props;
+    const { store, areManuscriptsLoading } = this.props;
 
     return (
       <div className="manuscripts">
@@ -78,7 +79,7 @@ class Manuscripts extends Component {
             <div className="container">
               <h1 className="mt-5 mb-5 text-center">Список рукописей</h1>
 
-              <div class="d-flex justify-content-between align-items-end mb-4">
+              <div className="d-flex justify-content-between align-items-end mb-4">
                 <h2>Какой тип работ оставить?</h2>
                 <span
                   style={{
@@ -135,7 +136,7 @@ class Manuscripts extends Component {
                 />
               </div>
               <ul className="mt-4 list-unstyled">
-                {loading ? (
+                {areManuscriptsLoading ? (
                   <div
                     className="d-flex justify-content-center"
                     style={{ width: 900 + "px" }}
@@ -224,36 +225,69 @@ class Manuscripts extends Component {
                         </th>
                       </tr>
                     </thead>
-                    {/* <tbody>
-                      {
-                        [...store.map((manuscript, index) => {
+                    <tbody>
+                      {[
+                        ...store.fetchedManuscripts.map((manuscript, index) => {
                           return (
-                            <tr>
-                              <th scope="row">
-                                <p className="m-0 text-center">{index += 1}</p>
+                            <tr key={uuidv4()}>
+                              <th key={uuidv4()} scope="row">
+                                <p key={uuidv4()} className="m-0 text-center">
+                                  {(index += 1)}
+                                </p>
                               </th>
-                              <td>{(manuscript.title) ? manuscript.title.toString() : "–"}</td>
-                              <td>{(manuscript.author) ? manuscript.author.toString() : "–"}</td>
-                              <td>{(manuscript.type) ? manuscript.type.toString() : "–"}</td>
-                              <td>{(manuscript.creationDate) ? utils.convertDateToCustom(manuscript.creationDate) : "–"}</td>
-                              <td>
-                                <Box display="flex" justifyContent="space-around">
-                                  <span style={{ cursor: "pointer" }}>
-                                    {<EditIcon/>}
+                              <td key={uuidv4()}>
+                                {manuscript.title
+                                  ? manuscript.title.toString()
+                                  : "–"}
+                              </td>
+                              <td key={uuidv4()}>
+                                {manuscript.author
+                                  ? manuscript.author.toString()
+                                  : "–"}
+                              </td>
+                              <td key={uuidv4()}>
+                                {manuscript.type
+                                  ? manuscript.type.toString()
+                                  : "–"}
+                              </td>
+                              <td key={uuidv4()}>
+                                {manuscript.creationDate
+                                  ? utils.convertDateToCustom(
+                                      manuscript.creationDate
+                                    )
+                                  : "–"}
+                              </td>
+                              <td key={uuidv4()}>
+                                <Box
+                                  key={uuidv4()}
+                                  display="flex"
+                                  justifyContent="space-around"
+                                >
+                                  <span
+                                    key={uuidv4()}
+                                    style={{ cursor: "pointer" }}
+                                  >
+                                    {<EditIcon />}
                                   </span>
                                   <span
+                                    key={uuidv4()}
                                     style={{ cursor: "pointer" }}
-                                    onClick={() => this.handleDeletingManuscript(this.state.isDeletingAlertOpen, manuscript)}
+                                    onClick={() =>
+                                      this.handleDeletingManuscript(
+                                        this.state.isDeletingAlertOpen,
+                                        manuscript
+                                      )
+                                    }
                                   >
                                     {<DeleteIcon />}
                                   </span>
                                 </Box>
                               </td>
                             </tr>
-                          )
-                        })]
-                      }
-                    </tbody> */}
+                          );
+                        }),
+                      ]}
+                    </tbody>
                   </table>
                 )}
               </ul>
