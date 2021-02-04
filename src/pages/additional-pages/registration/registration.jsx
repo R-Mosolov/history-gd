@@ -3,10 +3,20 @@ import { Link } from "react-router-dom";
 
 import { utils } from "../../../utils";
 import {
-  BASIC_INFO, PROF_INFO, SERVICE_INFO,
-  FIRST_NAME, MIDDLE_NAME, LAST_NAME,
-  UNIVERSITY, PROF_DEGREE, ACADEMIC_DEGREE, RESEARCH_INTERESTS,
-  REGISTRATION_EMAIL, PHONE, PASSWORD, REPEAT_PASSWORD,
+  BASIC_INFO,
+  PROF_INFO,
+  SERVICE_INFO,
+  FIRST_NAME,
+  MIDDLE_NAME,
+  LAST_NAME,
+  UNIVERSITY,
+  PROF_DEGREE,
+  ACADEMIC_DEGREE,
+  RESEARCH_INTERESTS,
+  REGISTRATION_EMAIL,
+  PHONE,
+  PASSWORD,
+  REPEAT_PASSWORD,
 } from "../../../constants/index.js";
 import TopNavigation from "../../../components/top-navigation/top-navigation";
 
@@ -24,7 +34,9 @@ function addInput(id, obj) {
   // Add ID attribute for a label
   return (
     <label htmlFor={id}>
-      {`${inputsCounter}. ${utils.getLabelById(id, obj)}${utils.getRequiredById(id, obj) ? '*' : ''}`}
+      {`${inputsCounter}. ${utils.getLabelById(id, obj)}${
+        utils.getRequiredById(id, obj) ? "*" : ""
+      }`}
     </label>
   );
 }
@@ -34,23 +46,23 @@ function postDataToDB() {
     .collection(USERS)
     .doc(Date.now().toString())
     .set({
-      "basicInfo": {
-        "middleName": document.getElementById(MIDDLE_NAME).value,
-        "lastName": document.getElementById(LAST_NAME).value,
-        "firstName": document.getElementById(FIRST_NAME).value
+      basicInfo: {
+        middleName: document.getElementById(MIDDLE_NAME).value,
+        lastName: document.getElementById(LAST_NAME).value,
+        firstName: document.getElementById(FIRST_NAME).value,
       },
-      "profInfo": {
-        "academicDegree": document.getElementById(ACADEMIC_DEGREE).value,
-        "profDegree": document.getElementById(PROF_DEGREE).value,
-        "university": document.getElementById(UNIVERSITY).value,
-        "researchInterests": document.getElementById(RESEARCH_INTERESTS).value
+      profInfo: {
+        academicDegree: document.getElementById(ACADEMIC_DEGREE).value,
+        profDegree: document.getElementById(PROF_DEGREE).value,
+        university: document.getElementById(UNIVERSITY).value,
+        researchInterests: document.getElementById(RESEARCH_INTERESTS).value,
       },
-      "serviceInfo": {
-        "password": document.getElementById(PASSWORD).value,
-        "registrationEmail": document.getElementById(REGISTRATION_EMAIL).value,
-        "phone": document.getElementById(PHONE).value,
-        "repeatPassword": document.getElementById(REPEAT_PASSWORD).value
-      }
+      serviceInfo: {
+        password: document.getElementById(PASSWORD).value,
+        registrationEmail: document.getElementById(REGISTRATION_EMAIL).value,
+        phone: document.getElementById(PHONE).value,
+        repeatPassword: document.getElementById(REPEAT_PASSWORD).value,
+      },
     });
 }
 

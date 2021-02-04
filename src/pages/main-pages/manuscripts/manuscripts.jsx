@@ -1,32 +1,41 @@
+// Core
 import React, { Component } from "react";
+import { connect } from "react-redux";
 
-import Box from '@material-ui/core/Box';
+// Icons
+import Box from "@material-ui/core/Box";
 import SortIcon from "@material-ui/icons/Sort";
-import EditIcon from '@material-ui/icons/Edit';
-import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from "@material-ui/icons/Edit";
+import DeleteIcon from "@material-ui/icons/Delete";
 
-// Dialog dependencies
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
+// Dialog window
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
 
+// Components
 import LeftNavigation from "../../../components/left-navigation/left-navigation";
 import TopNavigation from "../../../components/top-navigation/top-navigation";
 import LargeManuscript from "./images/large-manuscript.svg";
 import SmallManuscript from "./images/small-manuscript.svg";
-import InfinitySpinner from "../../../assets/infinity-spinner.svg"
+import InfinitySpinner from "../../../assets/infinity-spinner.svg";
 
-import { connect } from 'react-redux';
-import db from '../../../server/db';
-import { utils } from '../../../utils';
-import { 
-  MANUSCRIPTS, MANUSCRIPT_TYPES, MONOGRAPH, TEACHING_AID,
-  SCIENCE_PUBLICATION, CONFERENCE_THESES 
-} from '../../../constants';
+// Data
+import { utils } from "../../../utils";
+import db from "../../../server/db";
+import {
+  MANUSCRIPTS,
+  MANUSCRIPT_TYPES,
+  MONOGRAPH,
+  TEACHING_AID,
+  SCIENCE_PUBLICATION,
+  CONFERENCE_THESES,
+} from "../../../constants";
 
+// Styles
 import "./manuscripts.css";
 
 const mapStateToProps = (state) => {
@@ -37,13 +46,16 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setInitialState: (payload) => dispatch({ type: 'SET_INITIAL_STATE', payload }),
-    sortByTitles: (payload) => dispatch({ type: 'SORT_BY_TITLES', payload }),
-    sortByAuthors: (payload) => dispatch({ type: 'SORT_BY_AUTHORS', payload }),
-    filterByLargeManuscripts: () => dispatch({ type: 'FILTER_BY_LARGE_MANUSCRIPTS' }),
-    filterBySmallManuscripts: () => dispatch({ type: 'FILTER_BY_SMALL_MANUSCRIPTS' }),
-    resetState: () => dispatch({ type: 'RESET_STATE' }),
-  }
+    setInitialState: (payload) =>
+      dispatch({ type: "SET_INITIAL_STATE", payload }),
+    sortByTitles: (payload) => dispatch({ type: "SORT_BY_TITLES", payload }),
+    sortByAuthors: (payload) => dispatch({ type: "SORT_BY_AUTHORS", payload }),
+    filterByLargeManuscripts: () =>
+      dispatch({ type: "FILTER_BY_LARGE_MANUSCRIPTS" }),
+    filterBySmallManuscripts: () =>
+      dispatch({ type: "FILTER_BY_SMALL_MANUSCRIPTS" }),
+    resetState: () => dispatch({ type: "RESET_STATE" }),
+  };
 };
 
 class Manuscripts extends Component {
@@ -71,7 +83,7 @@ class Manuscripts extends Component {
                 <span
                   style={{
                     textDecoration: "underline",
-                    cursor: "pointer"
+                    cursor: "pointer",
                   }}
                   onClick={() => this.resetState()}
                 >
@@ -123,12 +135,15 @@ class Manuscripts extends Component {
                 />
               </div>
               <ul className="mt-4 list-unstyled">
-                {
-                  (loading)
-                    ? <div className="d-flex justify-content-center" style={{ width: 900 + "px" }}>
-                      <img src={InfinitySpinner} />
-                    </div>
-                    : <table className="mt-2 table table-bordered">
+                {loading ? (
+                  <div
+                    className="d-flex justify-content-center"
+                    style={{ width: 900 + "px" }}
+                  >
+                    <img src={InfinitySpinner} />
+                  </div>
+                ) : (
+                  <table className="mt-2 table table-bordered">
                     <thead>
                       <tr>
                         <th className="interactive-th" scope="col">
@@ -142,14 +157,14 @@ class Manuscripts extends Component {
                           }}
                         >
                           Название работы
-                          {
-                            (this.state.areTitlesSortedByIncrease)
-                              ? <SortIcon className="ml-1" />
-                              : <SortIcon
-                                className="ml-1"
-                                style={{ transform: "scale(1, -1)" }}
-                              />
-                          }
+                          {this.state.areTitlesSortedByIncrease ? (
+                            <SortIcon className="ml-1" />
+                          ) : (
+                            <SortIcon
+                              className="ml-1"
+                              style={{ transform: "scale(1, -1)" }}
+                            />
+                          )}
                         </th>
                         <th
                           className="interactive-th"
@@ -159,14 +174,14 @@ class Manuscripts extends Component {
                           }}
                         >
                           Автор
-                          {
-                            (this.state.areAuthorsSortedByIncrease)
-                              ? <SortIcon className="ml-1" />
-                              : <SortIcon
-                                className="ml-1"
-                                style={{ transform: "scale(1, -1)" }}
-                              />
-                          }
+                          {this.state.areAuthorsSortedByIncrease ? (
+                            <SortIcon className="ml-1" />
+                          ) : (
+                            <SortIcon
+                              className="ml-1"
+                              style={{ transform: "scale(1, -1)" }}
+                            />
+                          )}
                         </th>
                         <th
                           className="interactive-th"
@@ -176,14 +191,14 @@ class Manuscripts extends Component {
                           }}
                         >
                           Тип рукописи
-                          {
-                            (this.state.areTypesSortedByIncrease)
-                              ? <SortIcon className="ml-1" />
-                              : <SortIcon
-                                className="ml-1"
-                                style={{ transform: "scale(1, -1)" }}
-                              />
-                          }
+                          {this.state.areTypesSortedByIncrease ? (
+                            <SortIcon className="ml-1" />
+                          ) : (
+                            <SortIcon
+                              className="ml-1"
+                              style={{ transform: "scale(1, -1)" }}
+                            />
+                          )}
                         </th>
                         <th
                           className="interactive-th"
@@ -193,14 +208,14 @@ class Manuscripts extends Component {
                           }}
                         >
                           Дата добавления
-                          {
-                            (this.state.areCreationDatesSortedByIncrease)
-                              ? <SortIcon className="ml-1" />
-                              : <SortIcon
-                                className="ml-1"
-                                style={{ transform: "scale(1, -1)" }}
-                              />
-                          }
+                          {this.state.areCreationDatesSortedByIncrease ? (
+                            <SortIcon className="ml-1" />
+                          ) : (
+                            <SortIcon
+                              className="ml-1"
+                              style={{ transform: "scale(1, -1)" }}
+                            />
+                          )}
                         </th>
                         <th scope="col">
                           <Box display="flex" justifyContent="center">
@@ -240,20 +255,22 @@ class Manuscripts extends Component {
                       }
                     </tbody> */}
                   </table>
-                }
+                )}
               </ul>
             </div>
             <Dialog
               open={this.state.isDeletingAlertOpen}
-              onClose={() => this.handleDeletingManuscript(this.state.isDeletingAlertOpen)}
+              onClose={() =>
+                this.handleDeletingManuscript(this.state.isDeletingAlertOpen)
+              }
               aria-labelledby="alert-dialog-title"
               aria-describedby="alert-dialog-description"
             >
               <DialogTitle id="alert-dialog-title">{"Уведомление"}</DialogTitle>
               <DialogContent>
                 <DialogContentText id="alert-dialog-description">
-                  Вы уверены, что хотите <b>навсегда</b> удалить рукопись?
-                  В случае удаления данную рукопись нельзя будет восстановить.
+                  Вы уверены, что хотите <b>навсегда</b> удалить рукопись? В
+                  случае удаления данную рукопись нельзя будет восстановить.
                 </DialogContentText>
               </DialogContent>
               <DialogActions>
@@ -261,16 +278,26 @@ class Manuscripts extends Component {
                   variant="outlined"
                   color="primary"
                   size="small"
-                  onClick={() => this.handleDeletingManuscript(this.state.isDeletingAlertOpen)}
+                  onClick={() =>
+                    this.handleDeletingManuscript(
+                      this.state.isDeletingAlertOpen
+                    )
+                  }
                 >
                   Отменить действие
                 </Button>
                 <Button
-                  onClick={() => this.handleDeletingManuscript(this.state.isDeletingAlertOpen)}
+                  onClick={() =>
+                    this.handleDeletingManuscript(
+                      this.state.isDeletingAlertOpen
+                    )
+                  }
                   variant="outlined"
                   color="secondary"
                   size="small"
-                  onClick={() => this.deleteManuscriptFromDB(this.state.activeManuscript.id)}
+                  onClick={() =>
+                    this.deleteManuscriptFromDB(this.state.activeManuscript.id)
+                  }
                 >
                   Удалить рукопись
                 </Button>

@@ -4,20 +4,20 @@ import LeftNavigation from "../../../components/left-navigation/left-navigation"
 import TopNavigation from "../../../components/top-navigation/top-navigation";
 
 // The dialog window
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
 
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 
-import db from '../../../server/crud';
-import { MANUSCRIPT_TYPES } from '../../../constants';
+import db from "../../../server/crud";
+import { MANUSCRIPT_TYPES } from "../../../constants";
 import { utils } from "../../../utils";
 
-import './add-manuscript.css';
+import "./add-manuscript.css";
 
 function AddManuscript() {
   const [open, setOpen] = React.useState(false);
@@ -31,19 +31,19 @@ function AddManuscript() {
   };
 
   function sendDataToDB() {
-    const title = document.getElementById('manuscript-title').value;
-    const author = document.getElementById('manuscript-author').value;
-    const type = document.getElementById('manuscript-type').value;
-  
+    const title = document.getElementById("manuscript-title").value;
+    const author = document.getElementById("manuscript-author").value;
+    const type = document.getElementById("manuscript-type").value;
+
     // Send data to the DB
-    db.createOne('manuscripts', {
+    db.createOne("manuscripts", {
       id: uuidv4(),
-      title: (title) ? title : null,
-      author: (author) ? author : null,
+      title: title ? title : null,
+      author: author ? author : null,
       creationDate: new Date(),
-      type: (type) ? utils.getLabelById(type, MANUSCRIPT_TYPES) : null,
+      type: type ? utils.getLabelById(type, MANUSCRIPT_TYPES) : null,
     });
-  
+
     return handleClickOpen();
   }
 
@@ -68,14 +68,16 @@ function AddManuscript() {
                 </label>
               </div>
               <select id="manuscript-type" className="custom-select">
-                <option value="" disabled selected>Выбрать...</option>
-                { MANUSCRIPT_TYPES.map((manuscript) => {
+                <option value="" disabled selected>
+                  Выбрать...
+                </option>
+                {MANUSCRIPT_TYPES.map((manuscript) => {
                   return (
-                    <option value={ manuscript.id }>
-                      { utils.getLabelById(manuscript.id, MANUSCRIPT_TYPES) }
+                    <option value={manuscript.id}>
+                      {utils.getLabelById(manuscript.id, MANUSCRIPT_TYPES)}
                     </option>
                   );
-                }) }
+                })}
               </select>
             </div>
 
@@ -135,10 +137,7 @@ function AddManuscript() {
             </div>
 
             <div className="d-flex justify-content-center">
-              <button
-                className="mt-3 btn btn-success"
-                onClick={sendDataToDB}
-              >
+              <button className="mt-3 btn btn-success" onClick={sendDataToDB}>
                 Создать рукопись
               </button>
             </div>
@@ -156,8 +155,8 @@ function AddManuscript() {
           <DialogTitle id="alert-dialog-title">{"Уведомление"}</DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
-              Ваша рукопись была успешно создана.
-              Теперь Вы можете её увидеть в общем списке рукописей.
+              Ваша рукопись была успешно создана. Теперь Вы можете её увидеть в
+              общем списке рукописей.
             </DialogContentText>
           </DialogContent>
           <DialogActions>

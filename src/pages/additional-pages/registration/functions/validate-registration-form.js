@@ -1,4 +1,4 @@
-const FormValidator = require('../../../../lib/form-validator/form-validator');
+const FormValidator = require("../../../../lib/form-validator/form-validator");
 
 export default function validateRegistrationForm() {
   const formValidator = new FormValidator();

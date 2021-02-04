@@ -3,13 +3,13 @@ export interface TypesConfig {
 }
 
 export interface InitialStateConfig {
-  fetchedManuscripts: Array<object>,
-  filteredManuscripts: Array<object>,
-  sortedManuscripts: Array<object>,
-  areTitlesSortedByIncrease: Boolean,
-  areAuthorsSortedByIncrease: Boolean,
-  areTypesSortedByIncrease: Boolean,
-  areCreationDatesSortedByIncrease: Boolean,
+  fetchedManuscripts: Array<object>;
+  filteredManuscripts: Array<object>;
+  sortedManuscripts: Array<object>;
+  areTitlesSortedByIncrease: Boolean;
+  areAuthorsSortedByIncrease: Boolean;
+  areTypesSortedByIncrease: Boolean;
+  areCreationDatesSortedByIncrease: Boolean;
 }
 
 export interface ActionConfig {

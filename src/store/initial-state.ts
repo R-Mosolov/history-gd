@@ -1,8 +1,8 @@
-import { InitialStateConfig } from '../configs';
+import { InitialStateConfig } from "../configs";
 
 const initialState: InitialStateConfig = {
   fetchedManuscripts: [],
-  filteredManuscripts: [], 
+  filteredManuscripts: [],
   sortedManuscripts: [],
   areTitlesSortedByIncrease: false,
   areAuthorsSortedByIncrease: false,

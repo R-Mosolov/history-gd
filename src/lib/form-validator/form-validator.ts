@@ -22,8 +22,8 @@ class FormValidator {
     deleteOldErrorField(fieldId);
 
     if (
-      fieldToCheck.value && fieldToCheck.value.length < minLength
-      || fieldToCheck.value && fieldToCheck.value.length > maxLength
+      (fieldToCheck.value && fieldToCheck.value.length < minLength) ||
+      (fieldToCheck.value && fieldToCheck.value.length > maxLength)
     ) {
       errorText = `Поле должно содержать от ${minLength} до ${maxLength} символов.`;
     }

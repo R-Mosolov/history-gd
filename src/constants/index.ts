@@ -1,30 +1,30 @@
 // Registration form data
-export const FIRST_NAME: string = 'first-name';
-export const MIDDLE_NAME: string = 'middle-name';
-export const LAST_NAME: string = 'last-name';
+export const FIRST_NAME: string = "first-name";
+export const MIDDLE_NAME: string = "middle-name";
+export const LAST_NAME: string = "last-name";
 
-export const UNIVERSITY: string = 'university';
-export const PROF_DEGREE: string = 'prof-degree';
-export const ACADEMIC_DEGREE: string = 'academic-degree';
-export const RESEARCH_INTERESTS: string = 'research-interests';
+export const UNIVERSITY: string = "university";
+export const PROF_DEGREE: string = "prof-degree";
+export const ACADEMIC_DEGREE: string = "academic-degree";
+export const RESEARCH_INTERESTS: string = "research-interests";
 
-export const REGISTRATION_EMAIL: string = 'registration-email';
-export const PHONE: string = 'phone';
-export const PASSWORD: string = 'password';
-export const REPEAT_PASSWORD: string = 'repeat-password';
+export const REGISTRATION_EMAIL: string = "registration-email";
+export const PHONE: string = "phone";
+export const PASSWORD: string = "password";
+export const REPEAT_PASSWORD: string = "repeat-password";
 
 // Database collections
-export const USERS: string = 'users';
-export const MANUSCRIPTS: string = 'manuscripts';
+export const USERS: string = "users";
+export const MANUSCRIPTS: string = "manuscripts";
 
 // Manuscript types
-export const MONOGRAPH = 'monograph';
-export const TEACHING_AID = 'teaching-aid';
-export const SCIENCE_PUBLICATION = 'science-publication';
-export const CONFERENCE_THESES = 'conference-theses';
-export const OTHER = 'other';
-export const LARGE = 'large';
-export const SMALL = 'small';
+export const MONOGRAPH = "monograph";
+export const TEACHING_AID = "teaching-aid";
+export const SCIENCE_PUBLICATION = "science-publication";
+export const CONFERENCE_THESES = "conference-theses";
+export const OTHER = "other";
+export const LARGE = "large";
+export const SMALL = "small";
 
 /**
  * Set the interface (types of keys values)
@@ -129,27 +129,27 @@ export const SERVICE_INFO: RegistrationConfig = [
 export const MANUSCRIPT_TYPES: ManuscriptTypesConfig = [
   {
     id: MONOGRAPH,
-    label: 'Монография',
+    label: "Монография",
     type: LARGE,
   },
   {
     id: TEACHING_AID,
-    label: 'Учебное пособие',
+    label: "Учебное пособие",
     type: LARGE,
   },
   {
     id: SCIENCE_PUBLICATION,
-    label: 'Научная публикация',
+    label: "Научная публикация",
     type: SMALL,
   },
   {
     id: CONFERENCE_THESES,
-    label: 'Тезисы конференции',
+    label: "Тезисы конференции",
     type: SMALL,
   },
   {
     id: OTHER,
-    label: 'Другое',
+    label: "Другое",
     type: SMALL,
-  }
+  },
 ];

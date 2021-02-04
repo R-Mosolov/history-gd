@@ -1,13 +1,17 @@
-import { createStore } from 'redux';
-import { ActionConfig } from '../configs';
+import { createStore } from "redux";
+import { ActionConfig } from "../configs";
 
-import { 
-  MANUSCRIPTS, MANUSCRIPT_TYPES, MONOGRAPH, TEACHING_AID,
-  SCIENCE_PUBLICATION, CONFERENCE_THESES 
-} from '../constants';
-import initialState from './initial-state';
-import TYPES from '../store/types';
-import { utils } from '../utils';
+import {
+  MANUSCRIPTS,
+  MANUSCRIPT_TYPES,
+  MONOGRAPH,
+  TEACHING_AID,
+  SCIENCE_PUBLICATION,
+  CONFERENCE_THESES,
+} from "../constants";
+import initialState from "./initial-state";
+import TYPES from "../store/types";
+import { utils } from "../utils";
 
 // Restructure types
 const {
@@ -16,15 +20,15 @@ const {
   SORT_BY_AUTHORS,
   FILTER_BY_LARGE_MANUSCRIPTS,
   FILTER_BY_SMALL_MANUSCRIPTS,
-  RESET_STATE
+  RESET_STATE,
 } = TYPES;
 
 // Create the reducer
 const reducer: any = (store = initialState, action: ActionConfig) => {
-  switch(action.type) {
+  switch (action.type) {
     case SET_INITIAL_STATE:
       return action.payload;
-    
+
     default:
       return initialState;
   }
