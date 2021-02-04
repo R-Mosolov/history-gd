@@ -33,7 +33,7 @@ import TYPES from "../../../store/types";
 // Styles
 import "./manuscripts.css";
 
-const { SORT_STATE } = TYPES;
+const { SORT_MANUSCRIPTS, FILTER_MANUSCRIPTS } = TYPES;
 
 const mapStateToProps = (state) => {
   return {
@@ -44,7 +44,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     actions: bindActionCreators({ fetchStore }, dispatch),
-    sortState: (payload) => dispatch({ type: SORT_STATE, payload: payload }),
+    sortManuscripts: (payload) =>
+      dispatch({ type: SORT_MANUSCRIPTS, payload: payload }),
+    filterManuscripts: (payload) =>
+      dispatch({ type: FILTER_MANUSCRIPTS, payload: payload }),
   };
 };
 
@@ -64,9 +67,10 @@ class Manuscripts extends Component {
     const {
       store,
       areManuscriptsLoading,
-      sortState,
-      areManuscriptsSorted,
+      sortManuscripts,
+      filterManuscripts,
     } = this.props;
+    const { areManuscriptsSorted, areManuscriptsFiltered } = this.props.store;
 
     return (
       <div className="manuscripts">
@@ -94,9 +98,7 @@ class Manuscripts extends Component {
               <ul className="d-flex justify-content-between list-unstyled">
                 <li
                   className="large-manuscripts d-flex align-items-center large-manuscripts"
-                  onClick={() => {
-                    this.filterByLargeManuscripts();
-                  }}
+                  onClick={() => filterManuscripts("largeManuscripts")}
                 >
                   <img
                     className="m-2 large-manuscripts__banner"
@@ -110,9 +112,7 @@ class Manuscripts extends Component {
                 </li>
                 <li
                   className="small-manuscripts d-flex align-items-center small-manuscripts"
-                  onClick={() => {
-                    this.filterBySmallManuscripts();
-                  }}
+                  onClick={() => filterManuscripts("smallManuscripts")}
                 >
                   <img
                     className="m-2 small-manuscripts__banner"
@@ -153,7 +153,7 @@ class Manuscripts extends Component {
                         <th
                           className="interactive-th"
                           scope="col"
-                          onClick={() => sortState('title')}
+                          onClick={() => sortManuscripts("title")}
                         >
                           Название работы
                           {this.state.areTitlesSortedByIncrease ? (
@@ -168,7 +168,7 @@ class Manuscripts extends Component {
                         <th
                           className="interactive-th"
                           scope="col"
-                          onClick={() => sortState('author')}
+                          onClick={() => sortManuscripts("author")}
                         >
                           Автор
                           {this.state.areAuthorsSortedByIncrease ? (
@@ -183,7 +183,7 @@ class Manuscripts extends Component {
                         <th
                           className="interactive-th"
                           scope="col"
-                          onClick={() => sortState('type')}
+                          onClick={() => sortManuscripts("type")}
                         >
                           Тип рукописи
                           {this.state.areTypesSortedByIncrease ? (
@@ -221,11 +221,19 @@ class Manuscripts extends Component {
                     </thead>
                     <tbody>
                       {(() => {
-                        let selectedStoreChunk = "";
+                        let selectedStoreChunk = "fetchedManuscripts";
 
-                        (areManuscriptsSorted)
-                          ? selectedStoreChunk = "sortedManuscripts"
-                          : selectedStoreChunk = "fetchedManuscripts"
+                        if (
+                          areManuscriptsSorted.isActive &&
+                          !areManuscriptsFiltered.isActive
+                        ) {
+                          selectedStoreChunk = "sortedManuscripts";
+                        } else if (
+                          !areManuscriptsSorted.isActive &&
+                          areManuscriptsFiltered.isActive
+                        ) {
+                          selectedStoreChunk = "filteredManuscripts";
+                        }
 
                         return [
                           ...store[selectedStoreChunk].map(
