@@ -46,6 +46,7 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.0",
     "redux": "^4.0.5",
+    "reselect": "^4.0.0",
     "sendmail": "^1.6.1",
     "styled-components": "^5.2.1",
     "text-to-speech-js": "^1.1.9",

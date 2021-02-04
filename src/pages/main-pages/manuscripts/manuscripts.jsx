@@ -29,250 +29,28 @@ import {
 
 import "./manuscripts.css";
 
-let manuscriptsList = [];
+const mapStateToProps = (state) => {
+  return {
+    store: state,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setInitialState: (payload) => dispatch({ type: 'SET_INITIAL_STATE', payload }),
+    sortByTitles: (payload) => dispatch({ type: 'SORT_BY_TITLES', payload }),
+    sortByAuthors: (payload) => dispatch({ type: 'SORT_BY_AUTHORS', payload }),
+    filterByLargeManuscripts: () => dispatch({ type: 'FILTER_BY_LARGE_MANUSCRIPTS' }),
+    filterBySmallManuscripts: () => dispatch({ type: 'FILTER_BY_SMALL_MANUSCRIPTS' }),
+    resetState: () => dispatch({ type: 'RESET_STATE' }),
+  }
+};
 
 class Manuscripts extends Component {
   state = {
-    manuscriptsList: this.props.manuscriptsList,
-    activeManuscript: {},
-
-    haveTitlesSorted: false,
-    haveAuthorsSorted: false,
-    isCreationDateSorted: false,
-    
-    areTitlesSortedByIncrease: true,
-    areAuthorsSortedByIncrease: true,
-    areTypesSortedByIncrease: true,
-    areCreationDatesSortedByIncrease: true,
-
     isDeletingAlertOpen: false,
+    activeManuscript: 1,
   };
-
-  updateManuscriptsList() {
-    manuscriptsList = [];
-
-    db
-      .collection(MANUSCRIPTS)
-      .get()
-      .then((docs) => docs.forEach((doc) => manuscriptsList.push(doc.data())))
-      .then(() => this.setState({
-        manuscriptsList: manuscriptsList,
-        loading: false
-      }))
-      .catch((error) => console.log(error));
-  }
-
-  /**
-   * Set icon positions to sort table columns
-   */
-  setSortIconForTitles() {
-    if (this.state.areTitlesSortedByIncrease) {
-      return this.setState({
-        areTitlesSortedByIncrease: false,
-      });
-    } else {
-      return this.setState({
-        areTitlesSortedByIncrease: true,
-      });
-    }
-  }
-
-  setSortIconForAuthors() {
-    if (this.state.areAuthorsSortedByIncrease) {
-      return this.setState({
-        areAuthorsSortedByIncrease: false,
-      });
-    } else {
-      return this.setState({
-        areAuthorsSortedByIncrease: true,
-      });
-    }
-  }
-
-  setSortIconForCreationDates() {
-    if (this.state.areCreationDatesSortedByIncrease) {
-      return this.setState({
-        areCreationDatesSortedByIncrease: false,
-      });
-    } else {
-      return this.setState({
-        areCreationDatesSortedByIncrease: true,
-      });
-    }
-  }
-
-  setSortIconForTypes() {
-    if (this.state.areTypesSortedByIncrease) {
-      return this.setState({
-        areTypesSortedByIncrease: false,
-      });
-    } else {
-      return this.setState({
-        areTypesSortedByIncrease: true,
-      });
-    }
-  }
-
-  resetState() {
-    return this.setState({
-      manuscriptsList: manuscriptsList,
-    });
-  }
-
-  /**
-   * Add methods to filter table columns
-   */
-  filterByLargeManuscripts() {
-    // this.props.setInitialState(this.props.store);
-    // this.props.resetState();
-    this.props.filterByLargeManuscripts();
-  }
-
-  filterBySmallManuscripts() {
-    // this.props.setInitialState(this.props.store);
-    // this.props.resetState();
-    this.props.filterBySmallManuscripts();
-  }
-
-  /**
-   * Add methods to sort table columns
-   */
-  sortByTitles() {
-    this.setSortIconForTitles();
-    this.props.sortByTitles(this.state.haveTitlesSorted);
-    this.setState({ haveTitlesSorted: (this.state.haveTitlesSorted) ? false : true });
-  }
-
-  sortByAuthors() {
-    this.setSortIconForAuthors();
-    this.props.sortByAuthors(this.state.haveAuthorsSorted);
-    this.setState({ haveAuthorsSorted: (this.state.haveAuthorsSorted) ? false : true });
-  }
-
-  sortByType() {
-    this.setSortIconForTypes();
-
-    this.setState({
-      manuscriptsList: this.state.manuscriptsList.sort((a, b) => {
-        const typeA = a.type.toUpperCase();
-        const typeB = b.type.toUpperCase();
-
-        if (!this.state.isTextSorted) {
-          this.setState({
-            isTextSorted: true,
-          });
-          if (typeA < typeB) return -1;
-          else if (typeA > typeB) return 1;
-        }
-
-        if (this.state.isTextSorted) {
-          this.setState({
-            isTextSorted: false,
-          });
-          if (typeA < typeB) return 1;
-          else if (typeA > typeB) return -1;
-        }
-
-        return 0;
-      }),
-    });
-  }
-
-  sortByCreationDate() {
-    this.setSortIconForCreationDates();
-
-    this.setState({
-      manuscriptsList: this.state.manuscriptsList.sort((a, b) => {
-        if (!this.state.isCreationDateSorted) {
-          this.setState({
-            isCreationDateSorted: true,
-          });
-          return a.creationDate - b.creationDate;
-        } else if (this.state.isCreationDateSorted) {
-          this.setState({
-            isCreationDateSorted: false,
-          });
-          return b.creationDate - a.creationDate;
-        }
-      }),
-    });
-  }
-
-  /**
-   * Add the method to search by table columns
-   */
-  searchByManuscripts() {
-    const searchQuery = document.getElementById('search-query').value.toString().toLowerCase();
-    const searchQueryLength = searchQuery.length;
-
-    return this.setState({
-      manuscriptsList: manuscriptsList.filter((manuscript) => {
-        if (
-          manuscript.title.toLowerCase().substring(0, searchQueryLength)
-          === searchQuery.substring(0, searchQueryLength)
-        ) {
-          return true;
-        }
-
-        else if (
-          manuscript.author.toLowerCase().substring(0, searchQueryLength)
-          === searchQuery.substring(0, searchQueryLength)
-        ) {
-          return true;
-        }
-
-        else if (
-          manuscript.type.toLowerCase().substring(0, searchQueryLength)
-          === searchQuery.substring(0, searchQueryLength)
-        ) {
-          return true;
-        }
-
-        else if (
-          manuscript.creationDate.toString().substring(0, searchQueryLength)
-          === searchQuery.substring(0, searchQueryLength)
-        ) {
-          return true;
-        }
-      }),
-    });
-  }
-
-  /**
-   * Handle editing and deleting a manuscript
-   */
-  handleDeletingManuscript(isDeletingAlertOpen, manuscript) {
-    this.setState({ activeManuscript: manuscript })
-
-    if (isDeletingAlertOpen) {
-      this.setState({ isDeletingAlertOpen: false });
-    } else {
-      this.setState({ isDeletingAlertOpen: true });
-    }
-  }
-
-  deleteManuscriptFromDB(manuscriptId) {
-    // Delete a manuscript from DB
-    db.collection(MANUSCRIPTS).get().then((res) => res.forEach(((doc) => {
-      console.log(doc.id);
-
-      if (doc.data().id === manuscriptId) {
-        db
-          .collection(MANUSCRIPTS)
-          .doc(doc.id)
-          .delete()
-          .then(() => console.log(`Document ${manuscriptId} successfully deleted`))
-          .catch((err) => console.log(err))
-          .then(() => {
-            // Hide alert dialog
-            this.setState({ isDeletingAlertOpen: false });
-
-            // Update information about manuscripts on frontend
-            this.updateManuscriptsList();
-          })
-      }
-    })));
-  }
 
   render() {
     const { store, loading } = this.props;
@@ -431,7 +209,7 @@ class Manuscripts extends Component {
                         </th>
                       </tr>
                     </thead>
-                    <tbody>
+                    {/* <tbody>
                       {
                         [...store.map((manuscript, index) => {
                           return (
@@ -460,7 +238,7 @@ class Manuscripts extends Component {
                           )
                         })]
                       }
-                    </tbody>
+                    </tbody> */}
                   </table>
                 }
               </ul>
@@ -504,22 +282,5 @@ class Manuscripts extends Component {
     );
   }
 }
-
-const mapStateToProps = (state) => {
-  return {
-    store: state,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setInitialState: (payload) => dispatch({ type: 'SET_INITIAL_STATE', payload }),
-    sortByTitles: (payload) => dispatch({ type: 'SORT_BY_TITLES', payload }),
-    sortByAuthors: (payload) => dispatch({ type: 'SORT_BY_AUTHORS', payload }),
-    filterByLargeManuscripts: () => dispatch({ type: 'FILTER_BY_LARGE_MANUSCRIPTS' }),
-    filterBySmallManuscripts: () => dispatch({ type: 'FILTER_BY_SMALL_MANUSCRIPTS' }),
-    resetState: () => dispatch({ type: 'RESET_STATE' }),
-  }
-};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Manuscripts);
