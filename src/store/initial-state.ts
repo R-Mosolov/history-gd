@@ -5,16 +5,8 @@ const initialState: InitialStateConfig = {
   filteredManuscripts: [],
   sortedManuscripts: [],
   areManuscriptsLoading: true,
-  areTitlesSorted: {
-    active: false,
-    byDecrease: false,
-  },
-  areAuthorsSorted: {
-    active: false,
-    byDecrease: false,
-  },
-  areTypesSorted: {
-    active: false,
+  areManuscriptsSorted: {
+    isActive: false,
     byDecrease: false,
   },
   areCreationDatesSorted: false,

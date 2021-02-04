@@ -33,7 +33,7 @@ import TYPES from "../../../store/types";
 // Styles
 import "./manuscripts.css";
 
-const { SORT_BY_TITLES, SORT_BY_AUTHORS, SORT_BY_TYPES } = TYPES;
+const { SORT_STATE } = TYPES;
 
 const mapStateToProps = (state) => {
   return {
@@ -44,9 +44,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     actions: bindActionCreators({ fetchStore }, dispatch),
-    sortByTitles: () => dispatch({ type: SORT_BY_TITLES }),
-    sortByAuthors: () => dispatch({ type: SORT_BY_AUTHORS }),
-    sortByTypes: () => dispatch({ type: SORT_BY_TYPES }),
+    sortState: (payload) => dispatch({ type: SORT_STATE, payload: payload }),
   };
 };
 
@@ -66,12 +64,8 @@ class Manuscripts extends Component {
     const {
       store,
       areManuscriptsLoading,
-      sortByTitles,
-      areTitlesSorted,
-      sortByAuthors,
-      areAuthorsSorted,
-      sortByTypes,
-      areTypesSorted,
+      sortState,
+      areManuscriptsSorted,
     } = this.props;
 
     return (
@@ -159,7 +153,7 @@ class Manuscripts extends Component {
                         <th
                           className="interactive-th"
                           scope="col"
-                          onClick={sortByTitles}
+                          onClick={() => sortState('title')}
                         >
                           Название работы
                           {this.state.areTitlesSortedByIncrease ? (
@@ -174,7 +168,7 @@ class Manuscripts extends Component {
                         <th
                           className="interactive-th"
                           scope="col"
-                          onClick={sortByAuthors}
+                          onClick={() => sortState('author')}
                         >
                           Автор
                           {this.state.areAuthorsSortedByIncrease ? (
@@ -189,7 +183,7 @@ class Manuscripts extends Component {
                         <th
                           className="interactive-th"
                           scope="col"
-                          onClick={sortByTypes}
+                          onClick={() => sortState('type')}
                         >
                           Тип рукописи
                           {this.state.areTypesSortedByIncrease ? (
@@ -229,31 +223,9 @@ class Manuscripts extends Component {
                       {(() => {
                         let selectedStoreChunk = "";
 
-                        if (
-                          !areTitlesSorted &&
-                          !areAuthorsSorted &&
-                          !areTypesSorted
-                        ) {
-                          selectedStoreChunk = "fetchedManuscripts";
-                        } else if (
-                          areTitlesSorted &&
-                          !areAuthorsSorted &&
-                          !areTypesSorted
-                        ) {
-                          selectedStoreChunk = "sortedManuscripts";
-                        } else if (
-                          !areTitlesSorted &&
-                          areAuthorsSorted &&
-                          !areTypesSorted
-                        ) {
-                          selectedStoreChunk = "sortedManuscripts";
-                        } else if (
-                          !areTitlesSorted &&
-                          !areAuthorsSorted &&
-                          areTypesSorted
-                        ) {
-                          selectedStoreChunk = "sortedManuscripts";
-                        }
+                        (areManuscriptsSorted)
+                          ? selectedStoreChunk = "sortedManuscripts"
+                          : selectedStoreChunk = "fetchedManuscripts"
 
                         return [
                           ...store[selectedStoreChunk].map(

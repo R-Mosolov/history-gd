@@ -28,101 +28,101 @@ exports.SMALL = "small";
  * Create constants
  */
 exports.BASIC_INFO = [
-  {
-    id: exports.FIRST_NAME,
-    label: "Имя",
-    placeholder: "Михаил",
-    isRequired: true,
-  },
-  {
-    id: exports.MIDDLE_NAME,
-    label: "Отчество",
-    placeholder: "Васильевич",
-    isRequired: true,
-  },
-  {
-    id: exports.LAST_NAME,
-    label: "Фамилия",
-    placeholder: "Ломоносов",
-    isRequired: true,
-  },
+    {
+        id: exports.FIRST_NAME,
+        label: "Имя",
+        placeholder: "Михаил",
+        isRequired: true
+    },
+    {
+        id: exports.MIDDLE_NAME,
+        label: "Отчество",
+        placeholder: "Васильевич",
+        isRequired: true
+    },
+    {
+        id: exports.LAST_NAME,
+        label: "Фамилия",
+        placeholder: "Ломоносов",
+        isRequired: true
+    },
 ];
 exports.PROF_INFO = [
-  {
-    id: exports.UNIVERSITY,
-    label: "Полное название ВУЗ-а, в котором Вы учитесь/работаете",
-    placeholder: "Московский государственный университет",
-    isRequired: false,
-  },
-  {
-    id: exports.PROF_DEGREE,
-    label: "Учёное звание",
-    placeholder: "Профессор",
-    isRequired: false,
-  },
-  {
-    id: exports.ACADEMIC_DEGREE,
-    label: "Учёная степень",
-    placeholder: "Академик СПбАН",
-    isRequired: false,
-  },
-  {
-    id: exports.RESEARCH_INTERESTS,
-    label: "Научно-исследовательские интересы",
-    placeholder: "Мозаичное дело, изобретение ночезрительных труб",
-    isRequired: false,
-  },
+    {
+        id: exports.UNIVERSITY,
+        label: "Полное название ВУЗ-а, в котором Вы учитесь/работаете",
+        placeholder: "Московский государственный университет",
+        isRequired: false
+    },
+    {
+        id: exports.PROF_DEGREE,
+        label: "Учёное звание",
+        placeholder: "Профессор",
+        isRequired: false
+    },
+    {
+        id: exports.ACADEMIC_DEGREE,
+        label: "Учёная степень",
+        placeholder: "Академик СПбАН",
+        isRequired: false
+    },
+    {
+        id: exports.RESEARCH_INTERESTS,
+        label: "Научно-исследовательские интересы",
+        placeholder: "Мозаичное дело, изобретение ночезрительных труб",
+        isRequired: false
+    },
 ];
 exports.SERVICE_INFO = [
-  {
-    id: exports.REGISTRATION_EMAIL,
-    label: "Email (электронная почта)",
-    placeholder: "MV.Lomonosov@msu.ru",
-    isRequired: true,
-  },
-  {
-    id: exports.PHONE,
-    label: "Моб. телефон",
-    placeholder: "+7 (999) 999-99-99",
-    isRequired: true,
-  },
-  {
-    id: exports.PASSWORD,
-    label: "Пароль",
-    placeholder: "********",
-    isRequired: true,
-  },
-  {
-    id: exports.REPEAT_PASSWORD,
-    label: "Повторите пароль",
-    placeholder: "********",
-    isRequired: true,
-  },
+    {
+        id: exports.REGISTRATION_EMAIL,
+        label: "Email (электронная почта)",
+        placeholder: "MV.Lomonosov@msu.ru",
+        isRequired: true
+    },
+    {
+        id: exports.PHONE,
+        label: "Моб. телефон",
+        placeholder: "+7 (999) 999-99-99",
+        isRequired: true
+    },
+    {
+        id: exports.PASSWORD,
+        label: "Пароль",
+        placeholder: "********",
+        isRequired: true
+    },
+    {
+        id: exports.REPEAT_PASSWORD,
+        label: "Повторите пароль",
+        placeholder: "********",
+        isRequired: true
+    },
 ];
 exports.MANUSCRIPT_TYPES = [
-  {
-    id: exports.MONOGRAPH,
-    label: "Монография",
-    type: exports.LARGE,
-  },
-  {
-    id: exports.TEACHING_AID,
-    label: "Учебное пособие",
-    type: exports.LARGE,
-  },
-  {
-    id: exports.SCIENCE_PUBLICATION,
-    label: "Научная публикация",
-    type: exports.SMALL,
-  },
-  {
-    id: exports.CONFERENCE_THESES,
-    label: "Тезисы конференции",
-    type: exports.SMALL,
-  },
-  {
-    id: exports.OTHER,
-    label: "Другое",
-    type: exports.SMALL,
-  },
+    {
+        id: exports.MONOGRAPH,
+        label: "Монография",
+        type: exports.LARGE
+    },
+    {
+        id: exports.TEACHING_AID,
+        label: "Учебное пособие",
+        type: exports.LARGE
+    },
+    {
+        id: exports.SCIENCE_PUBLICATION,
+        label: "Научная публикация",
+        type: exports.SMALL
+    },
+    {
+        id: exports.CONFERENCE_THESES,
+        label: "Тезисы конференции",
+        type: exports.SMALL
+    },
+    {
+        id: exports.OTHER,
+        label: "Другое",
+        type: exports.SMALL
+    },
 ];

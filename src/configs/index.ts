@@ -7,16 +7,8 @@ export interface InitialStateConfig {
   filteredManuscripts: Array<object>;
   sortedManuscripts: Array<object>;
   areManuscriptsLoading: Boolean;
-  areTitlesSorted: {
-    active: Boolean;
-    byDecrease: Boolean;
-  };
-  areAuthorsSorted: {
-    active: Boolean;
-    byDecrease: Boolean;
-  };
-  areTypesSorted: {
-    active: Boolean;
+  areManuscriptsSorted: {
+    isActive: Boolean;
     byDecrease: Boolean;
   };
   areCreationDatesSorted: Boolean;

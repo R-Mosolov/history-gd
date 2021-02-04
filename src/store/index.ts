@@ -10,7 +10,7 @@ import initialState from "./initial-state";
 import TYPES from "../store/types";
 
 // Restructure types
-const { SET_STATE, SORT_BY_TITLES, SORT_BY_AUTHORS, SORT_BY_TYPES } = TYPES;
+const { SET_STATE, SORT_STATE } = TYPES;
 
 // Create the reducer
 const reducer: any = (store = initialState, action: ActionConfig) => {
@@ -22,96 +22,29 @@ const reducer: any = (store = initialState, action: ActionConfig) => {
         areManuscriptsLoading: false,
       };
 
-    case SORT_BY_TITLES:
+    case SORT_STATE:
+      // TODO: Change Any types
+      const sorterParam: String = action.payload;
+
       return {
         ...store,
         // TODO: Change Any types
         sortedManuscripts: store.fetchedManuscripts.sort((a: any, b: any) => {
-          const titleA = a.title.toUpperCase();
-          const titleB = b.title.toUpperCase();
+          const aParam = a[`${sorterParam}`].toUpperCase();
+          const bParam = b[`${sorterParam}`].toUpperCase();
 
-          if (store.areTitlesSorted.byDecrease) {
-            if (titleA < titleB) return -1;
-            if (titleA > titleB) return 1;
+          if (store.areManuscriptsSorted.byDecrease) {
+            if (aParam < bParam) return -1;
+            if (aParam > bParam) return 1;
           } else {
-            if (titleA < titleB) return 1;
-            if (titleA > titleB) return -1;
+            if (aParam < bParam) return 1;
+            if (aParam > bParam) return -1;
           }
           return 0;
         }),
-        areTitlesSorted: {
+        areManuscriptsSorted: {
           active: true,
-          byDecrease: store.areTitlesSorted.byDecrease ? false : true,
-        },
-        areAuthorsSorted: {
-          ...store.areAuthorsSorted,
-          active: false,
-        },
-        areTypesSorted: {
-          ...store.areTypesSorted,
-          active: false,
-        },
-      };
-
-    case SORT_BY_AUTHORS:
-      return {
-        ...store,
-        // TODO: Change Any types
-        sortedManuscripts: store.fetchedManuscripts.sort((a: any, b: any) => {
-          const titleA = a.author.toUpperCase();
-          const titleB = b.author.toUpperCase();
-
-          if (store.areAuthorsSorted.byDecrease) {
-            if (titleA < titleB) return -1;
-            if (titleA > titleB) return 1;
-          } else {
-            if (titleA < titleB) return 1;
-            if (titleA > titleB) return -1;
-          }
-          return 0;
-        }),
-        areAuthorsSorted: {
-          active: true,
-          byDecrease: store.areAuthorsSorted.byDecrease ? false : true,
-        },
-        areTitlesSorted: {
-          ...store.areTitlesSorted,
-          active: false,
-        },
-        areTypesSorted: {
-          ...store.areTypesSorted,
-          active: false,
-        },
-      };
-
-    case SORT_BY_TYPES:
-      return {
-        ...store,
-        // TODO: Change Any types
-        sortedManuscripts: store.fetchedManuscripts.sort((a: any, b: any) => {
-          const titleA = a.author.toUpperCase();
-          const titleB = b.author.toUpperCase();
-
-          if (store.areTypesSorted.byDecrease) {
-            if (titleA < titleB) return -1;
-            if (titleA > titleB) return 1;
-          } else {
-            if (titleA < titleB) return 1;
-            if (titleA > titleB) return -1;
-          }
-          return 0;
-        }),
-        areTypesSorted: {
-          active: true,
-          byDecrease: store.areTypesSorted.byDecrease ? false : true,
-        },
-        areAuthorsSorted: {
-          ...store.areAuthorsSorted,
-          active: false,
-        },
-        areTitlesSorted: {
-          ...store.areTitlesSorted,
-          active: false,
+          byDecrease: store.areManuscriptsSorted.byDecrease ? false : true,
         },
       };
 
