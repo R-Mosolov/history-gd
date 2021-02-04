@@ -28,18 +28,12 @@ import InfinitySpinner from "../../../assets/infinity-spinner.svg";
 
 // Data
 import { utils } from "../../../utils";
-import db from "../../../server/db";
-import {
-  MANUSCRIPTS,
-  MANUSCRIPT_TYPES,
-  MONOGRAPH,
-  TEACHING_AID,
-  SCIENCE_PUBLICATION,
-  CONFERENCE_THESES,
-} from "../../../constants";
+import TYPES from "../../../store/types";
 
 // Styles
 import "./manuscripts.css";
+
+const { SORT_BY_TITLES } = TYPES;
 
 const mapStateToProps = (state) => {
   return {
@@ -50,6 +44,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     actions: bindActionCreators({ fetchStore }, dispatch),
+    sortByTitles: () => dispatch({ type: SORT_BY_TITLES }),
   };
 };
 
@@ -66,7 +61,12 @@ class Manuscripts extends Component {
   };
 
   render() {
-    const { store, areManuscriptsLoading } = this.props;
+    const {
+      store,
+      areManuscriptsLoading,
+      sortByTitles,
+      areTitlesSorted,
+    } = this.props;
 
     return (
       <div className="manuscripts">
@@ -153,9 +153,7 @@ class Manuscripts extends Component {
                         <th
                           className="interactive-th"
                           scope="col"
-                          onClick={() => {
-                            this.sortByTitles();
-                          }}
+                          onClick={sortByTitles}
                         >
                           Название работы
                           {this.state.areTitlesSortedByIncrease ? (
@@ -226,67 +224,82 @@ class Manuscripts extends Component {
                       </tr>
                     </thead>
                     <tbody>
-                      {[
-                        ...store.fetchedManuscripts.map((manuscript, index) => {
-                          return (
-                            <tr key={uuidv4()}>
-                              <th key={uuidv4()} scope="row">
-                                <p key={uuidv4()} className="m-0 text-center">
-                                  {(index += 1)}
-                                </p>
-                              </th>
-                              <td key={uuidv4()}>
-                                {manuscript.title
-                                  ? manuscript.title.toString()
-                                  : "–"}
-                              </td>
-                              <td key={uuidv4()}>
-                                {manuscript.author
-                                  ? manuscript.author.toString()
-                                  : "–"}
-                              </td>
-                              <td key={uuidv4()}>
-                                {manuscript.type
-                                  ? manuscript.type.toString()
-                                  : "–"}
-                              </td>
-                              <td key={uuidv4()}>
-                                {manuscript.creationDate
-                                  ? utils.convertDateToCustom(
-                                      manuscript.creationDate
-                                    )
-                                  : "–"}
-                              </td>
-                              <td key={uuidv4()}>
-                                <Box
-                                  key={uuidv4()}
-                                  display="flex"
-                                  justifyContent="space-around"
-                                >
-                                  <span
-                                    key={uuidv4()}
-                                    style={{ cursor: "pointer" }}
-                                  >
-                                    {<EditIcon />}
-                                  </span>
-                                  <span
-                                    key={uuidv4()}
-                                    style={{ cursor: "pointer" }}
-                                    onClick={() =>
-                                      this.handleDeletingManuscript(
-                                        this.state.isDeletingAlertOpen,
-                                        manuscript
-                                      )
-                                    }
-                                  >
-                                    {<DeleteIcon />}
-                                  </span>
-                                </Box>
-                              </td>
-                            </tr>
-                          );
-                        }),
-                      ]}
+                      {(() => {
+                        let selectedStoreChunk = "";
+
+                        if (!areTitlesSorted) {
+                          selectedStoreChunk = "fetchedManuscripts";
+                        } else if (areTitlesSorted) {
+                          selectedStoreChunk = "sortedManuscripts";
+                        }
+
+                        return [
+                          ...store[selectedStoreChunk].map(
+                            (manuscript, index) => {
+                              return (
+                                <tr key={uuidv4()}>
+                                  <th key={uuidv4()} scope="row">
+                                    <p
+                                      key={uuidv4()}
+                                      className="m-0 text-center"
+                                    >
+                                      {(index += 1)}
+                                    </p>
+                                  </th>
+                                  <td key={uuidv4()}>
+                                    {manuscript.title
+                                      ? manuscript.title.toString()
+                                      : "–"}
+                                  </td>
+                                  <td key={uuidv4()}>
+                                    {manuscript.author
+                                      ? manuscript.author.toString()
+                                      : "–"}
+                                  </td>
+                                  <td key={uuidv4()}>
+                                    {manuscript.type
+                                      ? manuscript.type.toString()
+                                      : "–"}
+                                  </td>
+                                  <td key={uuidv4()}>
+                                    {manuscript.creationDate
+                                      ? utils.convertDateToCustom(
+                                          manuscript.creationDate
+                                        )
+                                      : "–"}
+                                  </td>
+                                  <td key={uuidv4()}>
+                                    <Box
+                                      key={uuidv4()}
+                                      display="flex"
+                                      justifyContent="space-around"
+                                    >
+                                      <span
+                                        key={uuidv4()}
+                                        style={{ cursor: "pointer" }}
+                                      >
+                                        {<EditIcon />}
+                                      </span>
+                                      <span
+                                        key={uuidv4()}
+                                        style={{ cursor: "pointer" }}
+                                        onClick={() =>
+                                          this.handleDeletingManuscript(
+                                            this.state.isDeletingAlertOpen,
+                                            manuscript
+                                          )
+                                        }
+                                      >
+                                        {<DeleteIcon />}
+                                      </span>
+                                    </Box>
+                                  </td>
+                                </tr>
+                              );
+                            }
+                          ),
+                        ];
+                      })()}
                     </tbody>
                   </table>
                 )}

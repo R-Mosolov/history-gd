@@ -7,10 +7,13 @@ export interface InitialStateConfig {
   filteredManuscripts: Array<object>;
   sortedManuscripts: Array<object>;
   areManuscriptsLoading: Boolean;
-  areTitlesSortedByIncrease: Boolean;
-  areAuthorsSortedByIncrease: Boolean;
-  areTypesSortedByIncrease: Boolean;
-  areCreationDatesSortedByIncrease: Boolean;
+  areTitlesSorted: {
+    active: Boolean;
+    byDecrease: Boolean;
+  };
+  areAuthorsSorted: Boolean;
+  areTypesSorted: Boolean;
+  areCreationDatesSorted: Boolean;
 }
 
 // TODO: Change Any types

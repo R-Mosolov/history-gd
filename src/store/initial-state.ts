@@ -5,10 +5,13 @@ const initialState: InitialStateConfig = {
   filteredManuscripts: [],
   sortedManuscripts: [],
   areManuscriptsLoading: true,
-  areTitlesSortedByIncrease: false,
-  areAuthorsSortedByIncrease: false,
-  areTypesSortedByIncrease: false,
-  areCreationDatesSortedByIncrease: false,
+  areTitlesSorted: {
+    active: false,
+    byDecrease: false,
+  },
+  areAuthorsSorted: false,
+  areTypesSorted: false,
+  areCreationDatesSorted: false,
 };
 
 export default initialState;

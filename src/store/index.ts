@@ -8,10 +8,9 @@ import { ActionConfig } from "../configs";
 
 import initialState from "./initial-state";
 import TYPES from "../store/types";
-import { utils } from "../utils";
 
 // Restructure types
-const { SET_STATE } = TYPES;
+const { SET_STATE, SORT_BY_TITLES } = TYPES;
 
 // Create the reducer
 const reducer: any = (store = initialState, action: ActionConfig) => {
@@ -21,6 +20,29 @@ const reducer: any = (store = initialState, action: ActionConfig) => {
         ...store,
         fetchedManuscripts: action.payload,
         areManuscriptsLoading: false,
+      };
+
+    case SORT_BY_TITLES:
+      return {
+        ...store,
+        // TODO: Change Any types
+        sortedManuscripts: store.fetchedManuscripts.sort((a: any, b: any) => {
+          const titleA = a.title.toUpperCase();
+          const titleB = b.title.toUpperCase();
+
+          if (store.areTitlesSorted.byDecrease) {
+            if (titleA < titleB) return -1;
+            if (titleA > titleB) return 1;
+          } else {
+            if (titleA < titleB) return 1;
+            if (titleA > titleB) return -1;
+          }
+          return 0;
+        }),
+        areTitlesSorted: {
+          active: true,
+          byDecrease: store.areTitlesSorted.byDecrease ? false : true,
+        },
       };
 
     default:

@@ -22,7 +22,8 @@ var redux_logger_1 = require("redux-logger");
 var initial_state_1 = require("./initial-state");
 var types_1 = require("../store/types");
 // Restructure types
-var SET_STATE = types_1["default"].SET_STATE;
+var SET_STATE = types_1["default"].SET_STATE,
+  SORT_BY_TITLES = types_1["default"].SORT_BY_TITLES;
 // Create the reducer
 var reducer = function (store, action) {
   if (store === void 0) {
@@ -33,6 +34,26 @@ var reducer = function (store, action) {
       return __assign(__assign({}, store), {
         fetchedManuscripts: action.payload,
         areManuscriptsLoading: false,
+      });
+    case SORT_BY_TITLES:
+      return __assign(__assign({}, store), {
+        // TODO: Change Any types
+        sortedManuscripts: store.fetchedManuscripts.sort(function (a, b) {
+          var titleA = a.title.toUpperCase();
+          var titleB = b.title.toUpperCase();
+          if (store.areTitlesSorted.byDecrease) {
+            if (titleA < titleB) return -1;
+            if (titleA > titleB) return 1;
+          } else {
+            if (titleA < titleB) return 1;
+            if (titleA > titleB) return -1;
+          }
+          return 0;
+        }),
+        areTitlesSorted: {
+          active: true,
+          byDecrease: store.areTitlesSorted.byDecrease ? false : true,
+        },
       });
     default:
       return initial_state_1["default"];
