@@ -23,7 +23,9 @@ var initial_state_1 = require("./initial-state");
 var types_1 = require("../store/types");
 // Restructure types
 var SET_STATE = types_1["default"].SET_STATE,
-  SORT_BY_TITLES = types_1["default"].SORT_BY_TITLES;
+  SORT_BY_TITLES = types_1["default"].SORT_BY_TITLES,
+  SORT_BY_AUTHORS = types_1["default"].SORT_BY_AUTHORS,
+  SORT_BY_TYPES = types_1["default"].SORT_BY_TYPES;
 // Create the reducer
 var reducer = function (store, action) {
   if (store === void 0) {
@@ -54,6 +56,64 @@ var reducer = function (store, action) {
           active: true,
           byDecrease: store.areTitlesSorted.byDecrease ? false : true,
         },
+        areAuthorsSorted: __assign(__assign({}, store.areAuthorsSorted), {
+          active: false,
+        }),
+        areTypesSorted: __assign(__assign({}, store.areTypesSorted), {
+          active: false,
+        }),
+      });
+    case SORT_BY_AUTHORS:
+      return __assign(__assign({}, store), {
+        // TODO: Change Any types
+        sortedManuscripts: store.fetchedManuscripts.sort(function (a, b) {
+          var titleA = a.author.toUpperCase();
+          var titleB = b.author.toUpperCase();
+          if (store.areAuthorsSorted.byDecrease) {
+            if (titleA < titleB) return -1;
+            if (titleA > titleB) return 1;
+          } else {
+            if (titleA < titleB) return 1;
+            if (titleA > titleB) return -1;
+          }
+          return 0;
+        }),
+        areAuthorsSorted: {
+          active: true,
+          byDecrease: store.areAuthorsSorted.byDecrease ? false : true,
+        },
+        areTitlesSorted: __assign(__assign({}, store.areTitlesSorted), {
+          active: false,
+        }),
+        areTypesSorted: __assign(__assign({}, store.areTypesSorted), {
+          active: false,
+        }),
+      });
+    case SORT_BY_TYPES:
+      return __assign(__assign({}, store), {
+        // TODO: Change Any types
+        sortedManuscripts: store.fetchedManuscripts.sort(function (a, b) {
+          var titleA = a.author.toUpperCase();
+          var titleB = b.author.toUpperCase();
+          if (store.areTypesSorted.byDecrease) {
+            if (titleA < titleB) return -1;
+            if (titleA > titleB) return 1;
+          } else {
+            if (titleA < titleB) return 1;
+            if (titleA > titleB) return -1;
+          }
+          return 0;
+        }),
+        areTypesSorted: {
+          active: true,
+          byDecrease: store.areTypesSorted.byDecrease ? false : true,
+        },
+        areAuthorsSorted: __assign(__assign({}, store.areAuthorsSorted), {
+          active: false,
+        }),
+        areTitlesSorted: __assign(__assign({}, store.areTitlesSorted), {
+          active: false,
+        }),
       });
     default:
       return initial_state_1["default"];

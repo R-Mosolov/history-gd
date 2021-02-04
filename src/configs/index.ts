@@ -11,8 +11,14 @@ export interface InitialStateConfig {
     active: Boolean;
     byDecrease: Boolean;
   };
-  areAuthorsSorted: Boolean;
-  areTypesSorted: Boolean;
+  areAuthorsSorted: {
+    active: Boolean;
+    byDecrease: Boolean;
+  };
+  areTypesSorted: {
+    active: Boolean;
+    byDecrease: Boolean;
+  };
   areCreationDatesSorted: Boolean;
 }
 

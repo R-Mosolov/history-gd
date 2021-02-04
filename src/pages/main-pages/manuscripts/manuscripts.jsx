@@ -33,7 +33,7 @@ import TYPES from "../../../store/types";
 // Styles
 import "./manuscripts.css";
 
-const { SORT_BY_TITLES } = TYPES;
+const { SORT_BY_TITLES, SORT_BY_AUTHORS, SORT_BY_TYPES } = TYPES;
 
 const mapStateToProps = (state) => {
   return {
@@ -45,6 +45,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     actions: bindActionCreators({ fetchStore }, dispatch),
     sortByTitles: () => dispatch({ type: SORT_BY_TITLES }),
+    sortByAuthors: () => dispatch({ type: SORT_BY_AUTHORS }),
+    sortByTypes: () => dispatch({ type: SORT_BY_TYPES }),
   };
 };
 
@@ -66,6 +68,10 @@ class Manuscripts extends Component {
       areManuscriptsLoading,
       sortByTitles,
       areTitlesSorted,
+      sortByAuthors,
+      areAuthorsSorted,
+      sortByTypes,
+      areTypesSorted,
     } = this.props;
 
     return (
@@ -168,9 +174,7 @@ class Manuscripts extends Component {
                         <th
                           className="interactive-th"
                           scope="col"
-                          onClick={() => {
-                            this.sortByAuthors();
-                          }}
+                          onClick={sortByAuthors}
                         >
                           Автор
                           {this.state.areAuthorsSortedByIncrease ? (
@@ -185,9 +189,7 @@ class Manuscripts extends Component {
                         <th
                           className="interactive-th"
                           scope="col"
-                          onClick={() => {
-                            this.sortByType();
-                          }}
+                          onClick={sortByTypes}
                         >
                           Тип рукописи
                           {this.state.areTypesSortedByIncrease ? (
@@ -227,9 +229,29 @@ class Manuscripts extends Component {
                       {(() => {
                         let selectedStoreChunk = "";
 
-                        if (!areTitlesSorted) {
+                        if (
+                          !areTitlesSorted &&
+                          !areAuthorsSorted &&
+                          !areTypesSorted
+                        ) {
                           selectedStoreChunk = "fetchedManuscripts";
-                        } else if (areTitlesSorted) {
+                        } else if (
+                          areTitlesSorted &&
+                          !areAuthorsSorted &&
+                          !areTypesSorted
+                        ) {
+                          selectedStoreChunk = "sortedManuscripts";
+                        } else if (
+                          !areTitlesSorted &&
+                          areAuthorsSorted &&
+                          !areTypesSorted
+                        ) {
+                          selectedStoreChunk = "sortedManuscripts";
+                        } else if (
+                          !areTitlesSorted &&
+                          !areAuthorsSorted &&
+                          areTypesSorted
+                        ) {
                           selectedStoreChunk = "sortedManuscripts";
                         }
 

@@ -9,8 +9,14 @@ const initialState: InitialStateConfig = {
     active: false,
     byDecrease: false,
   },
-  areAuthorsSorted: false,
-  areTypesSorted: false,
+  areAuthorsSorted: {
+    active: false,
+    byDecrease: false,
+  },
+  areTypesSorted: {
+    active: false,
+    byDecrease: false,
+  },
   areCreationDatesSorted: false,
 };
 
