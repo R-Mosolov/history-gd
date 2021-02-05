@@ -5,12 +5,14 @@ export interface TypesConfig {
 export interface InitialStateConfig {
   // TODO: Add sorting by date
   fetchedManuscripts: any;
+  intersectedManuscripts: Array<object>;
   filteredManuscripts: Array<object>;
   sortedManuscripts: Array<object>;
   searchedManuscripts: Array<object>;
   areManuscriptsLoading: Boolean;
   // TODO: Add sorting by date
   areCreationDatesSorted: Boolean;
+  areManuscriptsIntersected: Boolean;
   areManuscriptsSorted: {
     isActive: Boolean;
     byDecrease: Boolean;

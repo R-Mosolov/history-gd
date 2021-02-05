@@ -33,7 +33,13 @@ import TYPES from "../../../store/types";
 // Styles
 import "./manuscripts.css";
 
-const { SORT_MANUSCRIPTS, FILTER_MANUSCRIPTS, SEARCH_MANUSCRIPTS } = TYPES;
+const {
+  CHECK_INTERSECTIONS,
+  SORT_MANUSCRIPTS,
+  FILTER_MANUSCRIPTS,
+  SEARCH_MANUSCRIPTS,
+  RESET_STATE,
+} = TYPES;
 
 const mapStateToProps = (state) => {
   return {
@@ -43,13 +49,17 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    // TODO: Add only finished actions instead of a dispatcher here
     actions: bindActionCreators({ fetchStore }, dispatch),
     sortManuscripts: (payload) =>
       dispatch({ type: SORT_MANUSCRIPTS, payload: payload }),
     filterManuscripts: (payload) =>
       dispatch({ type: FILTER_MANUSCRIPTS, payload: payload }),
-    searchManuscripts: (payload) =>
-      dispatch({ type: SEARCH_MANUSCRIPTS, payload: payload }),
+    searchManuscripts: (payload) => {
+      dispatch({ type: CHECK_INTERSECTIONS });
+      dispatch({ type: SEARCH_MANUSCRIPTS, payload: payload });
+    },
+    resetState: () => dispatch({ type: RESET_STATE }),
   };
 };
 
@@ -72,8 +82,10 @@ class Manuscripts extends Component {
       sortManuscripts,
       filterManuscripts,
       searchManuscripts,
+      resetState,
     } = this.props;
     const {
+      areManuscriptsIntersected,
       areManuscriptsSorted,
       areManuscriptsFiltered,
       areManuscriptsSearched,
@@ -97,9 +109,9 @@ class Manuscripts extends Component {
                     textDecoration: "underline",
                     cursor: "pointer",
                   }}
-                  onClick={() => this.resetState()}
+                  onClick={resetState}
                 >
-                  Сбросить фильтр
+                  Сбросить все фильтры
                 </span>
               </div>
               <ul className="d-flex justify-content-between list-unstyled">
@@ -135,6 +147,7 @@ class Manuscripts extends Component {
 
               <div className="mt-5 d-flex justify-content-between">
                 <h2>Список с учётом фильтра:</h2>
+                {/* TODO: Add dependency from store here. Clear search query by a condition */}
                 <input
                   id="search-query"
                   className="input"
@@ -248,6 +261,8 @@ class Manuscripts extends Component {
                           areManuscriptsSearched
                         ) {
                           selectedStoreChunk = "searchedManuscripts";
+                        } else if (areManuscriptsIntersected) {
+                          selectedStoreChunk = "intersectedManuscripts";
                         }
 
                         return [

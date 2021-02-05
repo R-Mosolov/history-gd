@@ -16,9 +16,11 @@ import { utils } from "../utils";
 // Restructure types
 const {
   SET_STATE,
+  CHECK_INTERSECTIONS,
   SORT_MANUSCRIPTS,
   FILTER_MANUSCRIPTS,
   SEARCH_MANUSCRIPTS,
+  RESET_STATE,
 } = TYPES;
 
 // Create the reducer
@@ -30,6 +32,15 @@ const reducer: any = (store = initialState, action: ActionConfig) => {
         fetchedManuscripts: action.payload,
         areManuscriptsLoading: false,
       };
+
+    case CHECK_INTERSECTIONS:
+      if (store.areManuscriptsFiltered) {
+        return {
+          ...store,
+          intersectedManuscripts: store.filteredManuscripts,
+          areManuscriptsIntersected: true,
+        };
+      }
 
     case SORT_MANUSCRIPTS:
       const sorterParam: String = action.payload;
@@ -100,10 +111,18 @@ const reducer: any = (store = initialState, action: ActionConfig) => {
       };
 
     case SEARCH_MANUSCRIPTS:
+      // return (dispatch) => {
       const searcherParam: String = action.payload.toString().toLowerCase();
+      let searchedStoreChunk = "fetchedManuscripts";
+
+      // store.dispatch({ type: CHECK_INTERSECTIONS });
+      if (store.areManuscriptsIntersected) {
+        searchedStoreChunk = "intersectedManuscripts";
+      }
+
       return {
         ...store,
-        searchedManuscripts: store.fetchedManuscripts.filter((manuscript) => {
+        searchedManuscripts: store[searchedStoreChunk].filter((manuscript) => {
           // TODO: Add searching by date
           const { title, author, type } = manuscript;
 
@@ -116,6 +135,21 @@ const reducer: any = (store = initialState, action: ActionConfig) => {
           }
         }),
         areManuscriptsSearched: true,
+        areManuscriptsSorted: {
+          ...store.areManuscriptsSorted,
+          isActive: false,
+        },
+        areManuscriptsFiltered: {
+          ...store.areManuscriptsFiltered,
+          isActive: false,
+        },
+      };
+    // };
+
+    case RESET_STATE:
+      return {
+        ...store,
+        areManuscriptsSearched: false,
         areManuscriptsSorted: {
           ...store.areManuscriptsSorted,
           isActive: false,

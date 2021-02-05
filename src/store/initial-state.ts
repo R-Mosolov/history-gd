@@ -1,13 +1,16 @@
 import { InitialStateConfig } from "../configs";
 
-const initialState: InitialStateConfig = {
+// TODO: Change Any types
+const initialState: any = {
   fetchedManuscripts: [],
+  intersectedManuscripts: [],
   filteredManuscripts: [],
   sortedManuscripts: [],
   searchedManuscripts: [],
   areManuscriptsLoading: true,
   // TODO: Add sorting by date
   areCreationDatesSorted: false,
+  areManuscriptsIntersected: false,
   areManuscriptsSorted: {
     isActive: false,
     byDecrease: false,

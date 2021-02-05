@@ -21,9 +21,11 @@ var constants_1 = require("../constants");
 var utils_1 = require("../utils");
 // Restructure types
 var SET_STATE = types_1["default"].SET_STATE,
+  CHECK_INTERSECTIONS = types_1["default"].CHECK_INTERSECTIONS,
   SORT_MANUSCRIPTS = types_1["default"].SORT_MANUSCRIPTS,
   FILTER_MANUSCRIPTS = types_1["default"].FILTER_MANUSCRIPTS,
-  SEARCH_MANUSCRIPTS = types_1["default"].SEARCH_MANUSCRIPTS;
+  SEARCH_MANUSCRIPTS = types_1["default"].SEARCH_MANUSCRIPTS,
+  RESET_STATE = types_1["default"].RESET_STATE;
 // Create the reducer
 var reducer = function (store, action) {
   if (store === void 0) {
@@ -35,6 +37,13 @@ var reducer = function (store, action) {
         fetchedManuscripts: action.payload,
         areManuscriptsLoading: false,
       });
+    case CHECK_INTERSECTIONS:
+      if (store.areManuscriptsFiltered) {
+        return __assign(__assign({}, store), {
+          intersectedManuscripts: store.filteredManuscripts,
+          areManuscriptsIntersected: true,
+        });
+      }
     case SORT_MANUSCRIPTS:
       var sorterParam_1 = action.payload;
       return __assign(__assign({}, store), {
@@ -113,9 +122,15 @@ var reducer = function (store, action) {
         areManuscriptsSearched: false,
       });
     case SEARCH_MANUSCRIPTS:
+      // return (dispatch) => {
       var searcherParam_1 = action.payload.toString().toLowerCase();
+      var searchedStoreChunk = "fetchedManuscripts";
+      // store.dispatch({ type: CHECK_INTERSECTIONS });
+      if (store.areManuscriptsIntersected) {
+        searchedStoreChunk = "intersectedManuscripts";
+      }
       return __assign(__assign({}, store), {
-        searchedManuscripts: store.fetchedManuscripts.filter(function (
+        searchedManuscripts: store[searchedStoreChunk].filter(function (
           manuscript
         ) {
           // TODO: Add searching by date
@@ -131,6 +146,19 @@ var reducer = function (store, action) {
           }
         }),
         areManuscriptsSearched: true,
+        areManuscriptsSorted: __assign(
+          __assign({}, store.areManuscriptsSorted),
+          { isActive: false }
+        ),
+        areManuscriptsFiltered: __assign(
+          __assign({}, store.areManuscriptsFiltered),
+          { isActive: false }
+        ),
+      });
+    // };
+    case RESET_STATE:
+      return __assign(__assign({}, store), {
+        areManuscriptsSearched: false,
         areManuscriptsSorted: __assign(
           __assign({}, store.areManuscriptsSorted),
           { isActive: false }
