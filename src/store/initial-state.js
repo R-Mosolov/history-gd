@@ -4,6 +4,7 @@ var initialState = {
   fetchedManuscripts: [],
   filteredManuscripts: [],
   sortedManuscripts: [],
+  searchedManuscripts: [],
   areManuscriptsLoading: true,
   // TODO: Add sorting by date
   areCreationDatesSorted: false,
@@ -15,5 +16,6 @@ var initialState = {
     isActive: false,
     byLargeManuscripts: false,
   },
+  areManuscriptsSearched: false,
 };
 exports["default"] = initialState;

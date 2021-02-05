@@ -7,6 +7,7 @@ export interface InitialStateConfig {
   fetchedManuscripts: any;
   filteredManuscripts: Array<object>;
   sortedManuscripts: Array<object>;
+  searchedManuscripts: Array<object>;
   areManuscriptsLoading: Boolean;
   // TODO: Add sorting by date
   areCreationDatesSorted: Boolean;
@@ -18,6 +19,7 @@ export interface InitialStateConfig {
     isActive: Boolean;
     byLargeManuscripts: Boolean;
   };
+  areManuscriptsSearched: Boolean;
 }
 
 // TODO: Change Any types

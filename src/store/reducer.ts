@@ -5,7 +5,6 @@ import initialState from "./initial-state";
 import TYPES from "../store/types";
 
 import {
-  MANUSCRIPTS,
   MANUSCRIPT_TYPES,
   MONOGRAPH,
   TEACHING_AID,
@@ -15,7 +14,12 @@ import {
 import { utils } from "../utils";
 
 // Restructure types
-const { SET_STATE, SORT_MANUSCRIPTS, FILTER_MANUSCRIPTS } = TYPES;
+const {
+  SET_STATE,
+  SORT_MANUSCRIPTS,
+  FILTER_MANUSCRIPTS,
+  SEARCH_MANUSCRIPTS,
+} = TYPES;
 
 // Create the reducer
 const reducer: any = (store = initialState, action: ActionConfig) => {
@@ -28,9 +32,7 @@ const reducer: any = (store = initialState, action: ActionConfig) => {
       };
 
     case SORT_MANUSCRIPTS:
-      // TODO: Change Any types
       const sorterParam: String = action.payload;
-
       return {
         ...store,
         // TODO: Change Any types
@@ -51,12 +53,15 @@ const reducer: any = (store = initialState, action: ActionConfig) => {
           isActive: true,
           byDecrease: store.areManuscriptsSorted.byDecrease ? false : true,
         },
+        areManuscriptsFiltered: {
+          ...store.areManuscriptsFiltered,
+          isActive: false,
+        },
+        areManuscriptsSearched: false,
       };
 
     case FILTER_MANUSCRIPTS:
-      // TODO: Change Any types
       const filterParam: String = action.payload;
-
       return {
         ...store,
         // TODO: Change Any types
@@ -86,6 +91,38 @@ const reducer: any = (store = initialState, action: ActionConfig) => {
           byLargeManuscripts: store.areManuscriptsFiltered.byLargeManuscripts
             ? false
             : true,
+        },
+        areManuscriptsSorted: {
+          ...store.areManuscriptsSorted,
+          isActive: false,
+        },
+        areManuscriptsSearched: false,
+      };
+
+    case SEARCH_MANUSCRIPTS:
+      const searcherParam: String = action.payload.toString().toLowerCase();
+      return {
+        ...store,
+        searchedManuscripts: store.fetchedManuscripts.filter((manuscript) => {
+          // TODO: Add searching by date
+          const { title, author, type } = manuscript;
+
+          if (
+            title.toString().toLowerCase().includes(searcherParam) ||
+            author.toString().toLowerCase().includes(searcherParam) ||
+            type.toString().toLowerCase().includes(searcherParam)
+          ) {
+            return true;
+          }
+        }),
+        areManuscriptsSearched: true,
+        areManuscriptsSorted: {
+          ...store.areManuscriptsSorted,
+          isActive: false,
+        },
+        areManuscriptsFiltered: {
+          ...store.areManuscriptsFiltered,
+          isActive: false,
         },
       };
 

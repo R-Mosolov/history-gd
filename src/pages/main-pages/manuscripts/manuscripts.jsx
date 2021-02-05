@@ -33,7 +33,7 @@ import TYPES from "../../../store/types";
 // Styles
 import "./manuscripts.css";
 
-const { SORT_MANUSCRIPTS, FILTER_MANUSCRIPTS } = TYPES;
+const { SORT_MANUSCRIPTS, FILTER_MANUSCRIPTS, SEARCH_MANUSCRIPTS } = TYPES;
 
 const mapStateToProps = (state) => {
   return {
@@ -48,6 +48,8 @@ const mapDispatchToProps = (dispatch) => {
       dispatch({ type: SORT_MANUSCRIPTS, payload: payload }),
     filterManuscripts: (payload) =>
       dispatch({ type: FILTER_MANUSCRIPTS, payload: payload }),
+    searchManuscripts: (payload) =>
+      dispatch({ type: SEARCH_MANUSCRIPTS, payload: payload }),
   };
 };
 
@@ -69,8 +71,13 @@ class Manuscripts extends Component {
       areManuscriptsLoading,
       sortManuscripts,
       filterManuscripts,
+      searchManuscripts,
     } = this.props;
-    const { areManuscriptsSorted, areManuscriptsFiltered } = this.props.store;
+    const {
+      areManuscriptsSorted,
+      areManuscriptsFiltered,
+      areManuscriptsSearched,
+    } = this.props.store;
 
     return (
       <div className="manuscripts">
@@ -132,7 +139,7 @@ class Manuscripts extends Component {
                   id="search-query"
                   className="input"
                   placeholder="Поисковый запрос..."
-                  onChange={(event) => this.searchByManuscripts(event)}
+                  onChange={(event) => searchManuscripts(event.target.value)}
                 />
               </div>
               <ul className="mt-4 list-unstyled">
@@ -225,14 +232,22 @@ class Manuscripts extends Component {
 
                         if (
                           areManuscriptsSorted.isActive &&
-                          !areManuscriptsFiltered.isActive
+                          !areManuscriptsFiltered.isActive &&
+                          !areManuscriptsSearched
                         ) {
                           selectedStoreChunk = "sortedManuscripts";
                         } else if (
                           !areManuscriptsSorted.isActive &&
-                          areManuscriptsFiltered.isActive
+                          areManuscriptsFiltered.isActive &&
+                          !areManuscriptsSearched
                         ) {
                           selectedStoreChunk = "filteredManuscripts";
+                        } else if (
+                          !areManuscriptsSorted.isActive &&
+                          !areManuscriptsFiltered.isActive &&
+                          areManuscriptsSearched
+                        ) {
+                          selectedStoreChunk = "searchedManuscripts";
                         }
 
                         return [

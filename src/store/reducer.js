@@ -22,7 +22,8 @@ var utils_1 = require("../utils");
 // Restructure types
 var SET_STATE = types_1["default"].SET_STATE,
   SORT_MANUSCRIPTS = types_1["default"].SORT_MANUSCRIPTS,
-  FILTER_MANUSCRIPTS = types_1["default"].FILTER_MANUSCRIPTS;
+  FILTER_MANUSCRIPTS = types_1["default"].FILTER_MANUSCRIPTS,
+  SEARCH_MANUSCRIPTS = types_1["default"].SEARCH_MANUSCRIPTS;
 // Create the reducer
 var reducer = function (store, action) {
   if (store === void 0) {
@@ -35,7 +36,6 @@ var reducer = function (store, action) {
         areManuscriptsLoading: false,
       });
     case SORT_MANUSCRIPTS:
-      // TODO: Change Any types
       var sorterParam_1 = action.payload;
       return __assign(__assign({}, store), {
         // TODO: Change Any types
@@ -55,9 +55,13 @@ var reducer = function (store, action) {
           isActive: true,
           byDecrease: store.areManuscriptsSorted.byDecrease ? false : true,
         },
+        areManuscriptsFiltered: __assign(
+          __assign({}, store.areManuscriptsFiltered),
+          { isActive: false }
+        ),
+        areManuscriptsSearched: false,
       });
     case FILTER_MANUSCRIPTS:
-      // TODO: Change Any types
       var filterParam_1 = action.payload;
       return __assign(__assign({}, store), {
         // TODO: Change Any types
@@ -102,6 +106,39 @@ var reducer = function (store, action) {
             ? false
             : true,
         },
+        areManuscriptsSorted: __assign(
+          __assign({}, store.areManuscriptsSorted),
+          { isActive: false }
+        ),
+        areManuscriptsSearched: false,
+      });
+    case SEARCH_MANUSCRIPTS:
+      var searcherParam_1 = action.payload.toString().toLowerCase();
+      return __assign(__assign({}, store), {
+        searchedManuscripts: store.fetchedManuscripts.filter(function (
+          manuscript
+        ) {
+          // TODO: Add searching by date
+          var title = manuscript.title,
+            author = manuscript.author,
+            type = manuscript.type;
+          if (
+            title.toString().toLowerCase().includes(searcherParam_1) ||
+            author.toString().toLowerCase().includes(searcherParam_1) ||
+            type.toString().toLowerCase().includes(searcherParam_1)
+          ) {
+            return true;
+          }
+        }),
+        areManuscriptsSearched: true,
+        areManuscriptsSorted: __assign(
+          __assign({}, store.areManuscriptsSorted),
+          { isActive: false }
+        ),
+        areManuscriptsFiltered: __assign(
+          __assign({}, store.areManuscriptsFiltered),
+          { isActive: false }
+        ),
       });
     default:
       return initial_state_1["default"];
