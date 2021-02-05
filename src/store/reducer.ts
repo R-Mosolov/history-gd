@@ -10,6 +10,10 @@ import {
   TEACHING_AID,
   SCIENCE_PUBLICATION,
   CONFERENCE_THESES,
+  LARGE_MANUSCRIPTS,
+  SMALL_MANUSCRIPTS,
+  FETCHED_MANUSCRIPTS,
+  INTERSECTED_MANUSCRIPTS,
 } from "../constants";
 import { utils } from "../utils";
 
@@ -77,7 +81,7 @@ const reducer: any = (store = initialState, action: ActionConfig) => {
         ...store,
         // TODO: Change Any types
         filteredManuscripts: store.fetchedManuscripts.filter((manuscript) => {
-          if (filterParam === "largeManuscripts") {
+          if (filterParam === LARGE_MANUSCRIPTS) {
             if (
               manuscript.type ===
                 utils.getLabelById(MONOGRAPH, MANUSCRIPT_TYPES) ||
@@ -86,7 +90,7 @@ const reducer: any = (store = initialState, action: ActionConfig) => {
             ) {
               return true;
             }
-          } else if (filterParam === "smallManuscripts") {
+          } else if (filterParam === SMALL_MANUSCRIPTS) {
             if (
               manuscript.type ===
                 utils.getLabelById(SCIENCE_PUBLICATION, MANUSCRIPT_TYPES) ||
@@ -111,13 +115,11 @@ const reducer: any = (store = initialState, action: ActionConfig) => {
       };
 
     case SEARCH_MANUSCRIPTS:
-      // return (dispatch) => {
       const searcherParam: String = action.payload.toString().toLowerCase();
-      let searchedStoreChunk = "fetchedManuscripts";
+      let searchedStoreChunk = FETCHED_MANUSCRIPTS;
 
-      // store.dispatch({ type: CHECK_INTERSECTIONS });
       if (store.areManuscriptsIntersected) {
-        searchedStoreChunk = "intersectedManuscripts";
+        searchedStoreChunk = INTERSECTED_MANUSCRIPTS;
       }
 
       return {
@@ -144,11 +146,11 @@ const reducer: any = (store = initialState, action: ActionConfig) => {
           isActive: false,
         },
       };
-    // };
 
     case RESET_STATE:
       return {
         ...store,
+        areManuscriptsIntersected: false,
         areManuscriptsSearched: false,
         areManuscriptsSorted: {
           ...store.areManuscriptsSorted,

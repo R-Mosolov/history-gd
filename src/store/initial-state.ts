@@ -1,7 +1,6 @@
 import { InitialStateConfig } from "../configs";
 
-// TODO: Change Any types
-const initialState: any = {
+const initialState: InitialStateConfig = {
   fetchedManuscripts: [],
   intersectedManuscripts: [],
   filteredManuscripts: [],

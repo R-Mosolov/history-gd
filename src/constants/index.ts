@@ -26,6 +26,15 @@ export const OTHER = "other";
 export const LARGE = "large";
 export const SMALL = "small";
 
+// Redux
+export const LARGE_MANUSCRIPTS = "largeManuscripts";
+export const SMALL_MANUSCRIPTS = "smallManuscripts";
+export const FETCHED_MANUSCRIPTS = "fetchedManuscripts";
+export const INTERSECTED_MANUSCRIPTS = "intersectedManuscripts";
+export const SORTED_MANUSCRIPTS = "sortedManuscripts";
+export const FILTERED_MANUSCRIPTS = "filteredManuscripts";
+export const SEARCHED_MANUSCRIPTS = "searchedManuscripts";
+
 /**
  * Set the interface (types of keys values)
  */

@@ -29,6 +29,13 @@ import InfinitySpinner from "../../../assets/infinity-spinner.svg";
 // Data
 import { utils } from "../../../utils";
 import TYPES from "../../../store/types";
+import {
+  FETCHED_MANUSCRIPTS,
+  INTERSECTED_MANUSCRIPTS,
+  FILTERED_MANUSCRIPTS,
+  SEARCHED_MANUSCRIPTS,
+  SORTED_MANUSCRIPTS
+} from "../../../constants";
 
 // Styles
 import "./manuscripts.css";
@@ -241,28 +248,28 @@ class Manuscripts extends Component {
                     </thead>
                     <tbody>
                       {(() => {
-                        let selectedStoreChunk = "fetchedManuscripts";
+                        let selectedStoreChunk = FETCHED_MANUSCRIPTS;
 
                         if (
                           areManuscriptsSorted.isActive &&
                           !areManuscriptsFiltered.isActive &&
                           !areManuscriptsSearched
                         ) {
-                          selectedStoreChunk = "sortedManuscripts";
+                          selectedStoreChunk = SORTED_MANUSCRIPTS;
                         } else if (
                           !areManuscriptsSorted.isActive &&
                           areManuscriptsFiltered.isActive &&
                           !areManuscriptsSearched
                         ) {
-                          selectedStoreChunk = "filteredManuscripts";
+                          selectedStoreChunk = FILTERED_MANUSCRIPTS;
                         } else if (
                           !areManuscriptsSorted.isActive &&
                           !areManuscriptsFiltered.isActive &&
                           areManuscriptsSearched
                         ) {
-                          selectedStoreChunk = "searchedManuscripts";
+                          selectedStoreChunk = SEARCHED_MANUSCRIPTS;
                         } else if (areManuscriptsIntersected) {
-                          selectedStoreChunk = "intersectedManuscripts";
+                          selectedStoreChunk = INTERSECTED_MANUSCRIPTS;
                         }
 
                         return [
