@@ -16,13 +16,21 @@ var types_1 = require("../store/types");
 var constants_1 = require("../constants");
 var utils_1 = require("../utils");
 // Restructure types
-var SET_STATE = types_1["default"].SET_STATE, CHECK_INTERSECTIONS = types_1["default"].CHECK_INTERSECTIONS, SORT_MANUSCRIPTS = types_1["default"].SORT_MANUSCRIPTS, FILTER_MANUSCRIPTS = types_1["default"].FILTER_MANUSCRIPTS, SEARCH_MANUSCRIPTS = types_1["default"].SEARCH_MANUSCRIPTS, RESET_STATE = types_1["default"].RESET_STATE;
+var SET_STATE = types_1["default"].SET_STATE, SET_AUTHENTICATION = types_1["default"].SET_AUTHENTICATION, CHECK_INTERSECTIONS = types_1["default"].CHECK_INTERSECTIONS, SORT_MANUSCRIPTS = types_1["default"].SORT_MANUSCRIPTS, FILTER_MANUSCRIPTS = types_1["default"].FILTER_MANUSCRIPTS, SEARCH_MANUSCRIPTS = types_1["default"].SEARCH_MANUSCRIPTS, RESET_STATE = types_1["default"].RESET_STATE;
 // Create the reducer
 var reducer = function (store, action) {
     if (store === void 0) { store = initial_state_1["default"]; }
     switch (action.type) {
+        /**
+         * App
+         */
         case SET_STATE:
             return __assign(__assign({}, store), { fetchedManuscripts: action.payload, areManuscriptsLoading: false });
+        case SET_AUTHENTICATION:
+            return __assign(__assign({}, store), { isAuthenticated: true });
+        /**
+         * Manuscripts page
+         */
         case CHECK_INTERSECTIONS:
             var areManuscriptsFiltered = store.areManuscriptsFiltered, areManuscriptsSearched = store.areManuscriptsSearched, areManuscriptsSorted = store.areManuscriptsSorted;
             var NOTAll = !areManuscriptsFiltered.isActive && !areManuscriptsSearched && !areManuscriptsSorted.isActive;

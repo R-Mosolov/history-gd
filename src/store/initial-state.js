@@ -1,6 +1,7 @@
 "use strict";
 exports.__esModule = true;
 var initialState = {
+    isAuthenticated: false,
     fetchedManuscripts: [],
     intersectionParams: {
         filter: null,

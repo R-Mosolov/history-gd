@@ -1,6 +1,7 @@
 import { InitialStateConfig } from "../configs";
 
 const initialState: InitialStateConfig = {
+  isAuthenticated: false,
   fetchedManuscripts: [],
   intersectionParams: {
     filter: null,

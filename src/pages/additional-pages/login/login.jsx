@@ -1,42 +1,39 @@
+// React
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
-import "./login.css";
-import "../../../lib/form-validator/render-error";
-// import validateForm from "./functions/validate-form";
-import users from "../../../data/users";
+// Components
 import TopNavigation from "../../../components/top-navigation/top-navigation";
 
+// Redux
+import { connect } from "react-redux";
+import TYPES from "../../../store/types";
+
+// Styles
+import "./login.css";
+
+const { SET_AUTHENTICATION } = TYPES;
+
+const mapStateToProps = (state) => {
+  return {
+    store: state,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setAuthentication: () => dispatch({ type: SET_AUTHENTICATION }),
+  };
+};
+
 class Login extends Component {
-  constructor() {
-    super();
-
-    this.state = {
-      userList: users,
-      email: "admin@test.ru",
-      password: "Initial State Password",
-      isCorrectData: false,
-    };
-  }
-
-  checkAuthData() {
-    this.setState({
-      email: document.getElementById("login-page__email").value,
-      password: document.getElementById("login-page__password").value,
-    });
-
-    users.forEach((user) => {
-      if (user.email === this.state.email) {
-        return <Link to="/manuscripts" />;
-      }
-    });
-
-    // users.forEach(user => console.log(`user.email: ${user.email}`));
-    // console.log(`this.state.email: ${this.state.email}`);
-    // console.log(`this.state.password: ${this.state.password}`);
-  }
+  state = {
+    isAuthenticated: false,
+  };
 
   render() {
+    const { setAuthentication } = this.props;
+
     return (
       <div className="login mt-5 mb-5 d-flex justify-content-center align-items-center container">
         <TopNavigation
@@ -81,7 +78,14 @@ class Login extends Component {
           <button
             id="login-button"
             className="mt-3 btn btn-success btn-block"
-            // onClick={() => validateForm()}
+            onClick={() => {
+              const email = document.getElementById("login-page__email").value;
+              const password = document.getElementById("login-page__password").value.toString();
+
+              if ((email === 'MV.Lomonosov@msu.ru') && (password === '1234')) {
+                setAuthentication();
+              }
+            }}
           >
             Войти
           </button>
@@ -91,4 +95,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

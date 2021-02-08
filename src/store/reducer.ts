@@ -24,6 +24,7 @@ import { utils } from "../utils";
 // Restructure types
 const {
   SET_STATE,
+  SET_AUTHENTICATION,
   CHECK_INTERSECTIONS,
   SORT_MANUSCRIPTS,
   FILTER_MANUSCRIPTS,
@@ -34,13 +35,25 @@ const {
 // Create the reducer
 const reducer: any = (store = initialState, action: ActionConfig) => {
   switch (action.type) {
+
+    /**
+     * App
+     */
     case SET_STATE:
       return {
         ...store,
         fetchedManuscripts: action.payload,
         areManuscriptsLoading: false,
       };
+    case SET_AUTHENTICATION:
+      return {
+        ...store,
+        isAuthenticated: true,
+      };
 
+    /**
+     * Manuscripts page
+     */
     case CHECK_INTERSECTIONS:
       const { areManuscriptsFiltered, areManuscriptsSearched, areManuscriptsSorted } = store;
 

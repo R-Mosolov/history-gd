@@ -3,6 +3,7 @@ export interface TypesConfig {
 }
 
 export interface InitialStateConfig {
+  isAuthenticated: boolean;
   // TODO: Change Any type
   fetchedManuscripts: any;
   intersectionParams: {
