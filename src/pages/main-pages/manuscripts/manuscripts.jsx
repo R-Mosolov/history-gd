@@ -30,6 +30,7 @@ import InfinitySpinner from "../../../assets/infinity-spinner.svg";
 import { utils } from "../../../utils";
 import TYPES from "../../../store/types";
 import {
+  MANUSCRIPT_TYPES,
   FETCHED_MANUSCRIPTS,
   INTERSECTED_MANUSCRIPTS,
   FILTERED_MANUSCRIPTS,
@@ -301,7 +302,7 @@ class Manuscripts extends Component {
                                   </td>
                                   <td key={uuidv4()}>
                                     {manuscript.type
-                                      ? manuscript.type.toString()
+                                      ? utils.getLabelById(manuscript.type, MANUSCRIPT_TYPES)
                                       : "–"}
                                   </td>
                                   <td key={uuidv4()}>

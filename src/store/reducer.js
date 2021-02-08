@@ -41,15 +41,24 @@ var reducer = function (store, action) {
                 return __assign(__assign({}, store), { areManuscriptsIntersected: true, intersectedManuscripts: store.fetchedManuscripts.filter(function (manuscript) {
                         // TODO: Add searching by date
                         var title = manuscript.title, author = manuscript.author, type = manuscript.type;
-                        var adaptedType = (store.intersectionParams.filter === constants_1.LARGE_MANUSCRIPTS)
-                            ? constants_1.LARGE
-                            : constants_1.SMALL;
-                        if (type === "Монография"
-                        // && (title.toString().toLowerCase().includes(action.payload.toString().toLowerCase()) ||
-                        // author.toString().toLowerCase().includes(action.payload.toString().toLowerCase()) ||
-                        // type.toString().toLowerCase().includes(action.payload.toString().toLowerCase()))
-                        ) {
-                            return true;
+                        var filterParam = store.intersectionParams.filter;
+                        if (filterParam === constants_1.LARGE_MANUSCRIPTS) {
+                            if ((type === constants_1.MONOGRAPH || type === constants_1.TEACHING_AID)
+                                && (title.includes(store.intersectionParams.searcher.toString().toLowerCase())
+                                    || author.includes(store.intersectionParams.searcher.toString().toLowerCase())
+                                    || utils_1.utils.getLabelById(type, constants_1.MANUSCRIPT_TYPES).toLowerCase()
+                                        .includes(store.intersectionParams.searcher.toString().toLowerCase()))) {
+                                return true;
+                            }
+                        }
+                        else if (filterParam === constants_1.SMALL_MANUSCRIPTS) {
+                            if ((type === constants_1.SCIENCE_PUBLICATION || type === constants_1.CONFERENCE_THESES || type === constants_1.OTHER)
+                                && (title.includes(store.intersectionParams.searcher.toString().toLowerCase())
+                                    || author.includes(store.intersectionParams.searcher.toString().toLowerCase())
+                                    || utils_1.utils.getLabelById(type, constants_1.MANUSCRIPT_TYPES).toLowerCase()
+                                        .includes(store.intersectionParams.searcher.toString().toLowerCase()))) {
+                                return true;
+                            }
                         }
                     }) });
             }
@@ -87,18 +96,14 @@ var reducer = function (store, action) {
                 // TODO: Change Any type
                 filteredManuscripts: store[filteredStoreChunk].filter(function (manuscript) {
                     if (filterParam_1 === constants_1.LARGE_MANUSCRIPTS) {
-                        if (manuscript.type ===
-                            utils_1.utils.getLabelById(constants_1.MONOGRAPH, constants_1.MANUSCRIPT_TYPES) ||
-                            manuscript.type ===
-                                utils_1.utils.getLabelById(constants_1.TEACHING_AID, constants_1.MANUSCRIPT_TYPES)) {
+                        if (manuscript.type === constants_1.MONOGRAPH ||
+                            manuscript.type === constants_1.TEACHING_AID) {
                             return true;
                         }
                     }
                     else if (filterParam_1 === constants_1.SMALL_MANUSCRIPTS) {
-                        if (manuscript.type ===
-                            utils_1.utils.getLabelById(constants_1.SCIENCE_PUBLICATION, constants_1.MANUSCRIPT_TYPES) ||
-                            manuscript.type ===
-                                utils_1.utils.getLabelById(constants_1.CONFERENCE_THESES, constants_1.MANUSCRIPT_TYPES)) {
+                        if (manuscript.type === constants_1.SCIENCE_PUBLICATION ||
+                            manuscript.type === constants_1.CONFERENCE_THESES) {
                             return true;
                         }
                     }

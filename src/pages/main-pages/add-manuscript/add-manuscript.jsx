@@ -38,8 +38,8 @@ function AddManuscript() {
     // Send data to the DB
     db.createOne("manuscripts", {
       id: uuidv4(),
-      title: title ? title : null,
-      author: author ? author : null,
+      title: title ? title.toString() : null,
+      author: author ? author.toString() : null,
       creationDate: new Date(),
       type: type ? utils.getLabelById(type, MANUSCRIPT_TYPES) : null,
     });
