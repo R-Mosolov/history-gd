@@ -24,10 +24,11 @@ var reducer = function (store, action) {
         case SET_STATE:
             return __assign(__assign({}, store), { fetchedManuscripts: action.payload, areManuscriptsLoading: false });
         case CHECK_INTERSECTIONS:
-            var manuscriptsNOTFilteredAndSearched = (!store.areManuscriptsFiltered && !store.areManuscriptsSearched);
-            var manuscriptsOnlyFiltered = (store.areManuscriptsFiltered && !store.areManuscriptsSearched);
-            var manuscriptsOnlySearched = (!store.areManuscriptsFiltered && store.areManuscriptsSearched);
-            var manuscriptsFilteredAndSearched = (store.areManuscriptsFiltered && store.areManuscriptsSearched);
+            var areManuscriptsFiltered = store.areManuscriptsFiltered, areManuscriptsSearched = store.areManuscriptsSearched;
+            var manuscriptsNOTFilteredAndSearched = !areManuscriptsFiltered.isActive && !areManuscriptsSearched;
+            var manuscriptsOnlyFiltered = areManuscriptsFiltered.isActive && !areManuscriptsSearched;
+            var manuscriptsOnlySearched = !areManuscriptsFiltered.isActive && areManuscriptsSearched;
+            var manuscriptsFilteredAndSearched = areManuscriptsFiltered.isActive && areManuscriptsSearched;
             if (manuscriptsNOTFilteredAndSearched) {
                 return __assign(__assign({}, store), { areManuscriptsIntersected: false });
             }
@@ -38,6 +39,7 @@ var reducer = function (store, action) {
                 return __assign(__assign({}, store), { areManuscriptsIntersected: false, intersectedManuscripts: store.searchedManuscripts });
             }
             else if (manuscriptsFilteredAndSearched) {
+                console.log('Logic: I am here!');
                 return __assign(__assign({}, store), { areManuscriptsIntersected: true, intersectedManuscripts: store.fetchedManuscripts.filter(function (manuscript) {
                         // TODO: Add searching by date
                         var title = manuscript.title, author = manuscript.author, type = manuscript.type;

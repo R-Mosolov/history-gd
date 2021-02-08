@@ -39,18 +39,11 @@ const reducer: any = (store = initialState, action: ActionConfig) => {
       };
 
     case CHECK_INTERSECTIONS:
-      const manuscriptsNOTFilteredAndSearched: boolean = (
-        !store.areManuscriptsFiltered && !store.areManuscriptsSearched
-      );
-      const manuscriptsOnlyFiltered: boolean = (
-        store.areManuscriptsFiltered && !store.areManuscriptsSearched
-      );
-      const manuscriptsOnlySearched: boolean = (
-        !store.areManuscriptsFiltered && store.areManuscriptsSearched
-      );
-      const manuscriptsFilteredAndSearched: boolean = (
-        store.areManuscriptsFiltered && store.areManuscriptsSearched
-      );
+      const { areManuscriptsFiltered, areManuscriptsSearched } = store;
+      const manuscriptsNOTFilteredAndSearched: boolean = !areManuscriptsFiltered.isActive && !areManuscriptsSearched;
+      const manuscriptsOnlyFiltered: boolean = areManuscriptsFiltered.isActive && !areManuscriptsSearched;
+      const manuscriptsOnlySearched: boolean = !areManuscriptsFiltered.isActive && areManuscriptsSearched;
+      const manuscriptsFilteredAndSearched: boolean = areManuscriptsFiltered.isActive && areManuscriptsSearched;
 
       if (manuscriptsNOTFilteredAndSearched) {
         return {
@@ -70,6 +63,7 @@ const reducer: any = (store = initialState, action: ActionConfig) => {
           intersectedManuscripts: store.searchedManuscripts,
         };
       } else if (manuscriptsFilteredAndSearched) {
+        console.log('Logic: I am here!');
         return {
           ...store,
           areManuscriptsIntersected: true,
