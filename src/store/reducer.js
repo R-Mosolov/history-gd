@@ -24,13 +24,39 @@ var reducer = function (store, action) {
         case SET_STATE:
             return __assign(__assign({}, store), { fetchedManuscripts: action.payload, areManuscriptsLoading: false });
         case CHECK_INTERSECTIONS:
-            if (store.areManuscriptsFiltered) {
-                return __assign(__assign({}, store), { intersectedManuscripts: store.filteredManuscripts, areManuscriptsIntersected: true });
+            var manuscriptsNOTFilteredAndSearched = (!store.areManuscriptsFiltered && !store.areManuscriptsSearched);
+            var manuscriptsOnlyFiltered = (store.areManuscriptsFiltered && !store.areManuscriptsSearched);
+            var manuscriptsOnlySearched = (!store.areManuscriptsFiltered && store.areManuscriptsSearched);
+            var manuscriptsFilteredAndSearched = (store.areManuscriptsFiltered && store.areManuscriptsSearched);
+            if (manuscriptsNOTFilteredAndSearched) {
+                return __assign(__assign({}, store), { areManuscriptsIntersected: false });
+            }
+            else if (manuscriptsOnlyFiltered) {
+                return __assign(__assign({}, store), { areManuscriptsIntersected: false, intersectedManuscripts: store.filteredManuscripts });
+            }
+            else if (manuscriptsOnlySearched) {
+                return __assign(__assign({}, store), { areManuscriptsIntersected: false, intersectedManuscripts: store.searchedManuscripts });
+            }
+            else if (manuscriptsFilteredAndSearched) {
+                return __assign(__assign({}, store), { areManuscriptsIntersected: true, intersectedManuscripts: store.fetchedManuscripts.filter(function (manuscript) {
+                        // TODO: Add searching by date
+                        var title = manuscript.title, author = manuscript.author, type = manuscript.type;
+                        var adaptedType = (store.intersectionParams.filter === constants_1.LARGE_MANUSCRIPTS)
+                            ? constants_1.LARGE
+                            : constants_1.SMALL;
+                        if (type === "Монография"
+                        // && (title.toString().toLowerCase().includes(action.payload.toString().toLowerCase()) ||
+                        // author.toString().toLowerCase().includes(action.payload.toString().toLowerCase()) ||
+                        // type.toString().toLowerCase().includes(action.payload.toString().toLowerCase()))
+                        ) {
+                            return true;
+                        }
+                    }) });
             }
         case SORT_MANUSCRIPTS:
             var sorterParam_1 = action.payload;
             return __assign(__assign({}, store), { 
-                // TODO: Change Any types
+                // TODO: Change Any type
                 sortedManuscripts: store.fetchedManuscripts.sort(function (a, b) {
                     var aParam = a["" + sorterParam_1].toUpperCase();
                     var bParam = b["" + sorterParam_1].toUpperCase();
@@ -50,12 +76,16 @@ var reducer = function (store, action) {
                 }), areManuscriptsSorted: {
                     isActive: true,
                     byDecrease: store.areManuscriptsSorted.byDecrease ? false : true
-                }, areManuscriptsFiltered: __assign(__assign({}, store.areManuscriptsFiltered), { isActive: false }), areManuscriptsSearched: false });
+                } });
         case FILTER_MANUSCRIPTS:
             var filterParam_1 = action.payload;
+            var filteredStoreChunk = constants_1.FETCHED_MANUSCRIPTS;
+            if (store.areManuscriptsIntersected) {
+                filteredStoreChunk = constants_1.INTERSECTED_MANUSCRIPTS;
+            }
             return __assign(__assign({}, store), { 
-                // TODO: Change Any types
-                filteredManuscripts: store.fetchedManuscripts.filter(function (manuscript) {
+                // TODO: Change Any type
+                filteredManuscripts: store[filteredStoreChunk].filter(function (manuscript) {
                     if (filterParam_1 === constants_1.LARGE_MANUSCRIPTS) {
                         if (manuscript.type ===
                             utils_1.utils.getLabelById(constants_1.MONOGRAPH, constants_1.MANUSCRIPT_TYPES) ||
@@ -72,12 +102,12 @@ var reducer = function (store, action) {
                             return true;
                         }
                     }
-                }), areManuscriptsFiltered: {
+                }), intersectionParams: __assign(__assign({}, store.intersectionParams), { filter: filterParam_1 }), areManuscriptsFiltered: {
                     isActive: true,
                     byLargeManuscripts: store.areManuscriptsFiltered.byLargeManuscripts
                         ? false
                         : true
-                }, areManuscriptsSorted: __assign(__assign({}, store.areManuscriptsSorted), { isActive: false }), areManuscriptsSearched: false });
+                } });
         case SEARCH_MANUSCRIPTS:
             var searcherParam_1 = action.payload.toString().toLowerCase();
             var searchedStoreChunk = constants_1.FETCHED_MANUSCRIPTS;
@@ -92,7 +122,7 @@ var reducer = function (store, action) {
                         type.toString().toLowerCase().includes(searcherParam_1)) {
                         return true;
                     }
-                }), areManuscriptsSearched: true, areManuscriptsSorted: __assign(__assign({}, store.areManuscriptsSorted), { isActive: false }), areManuscriptsFiltered: __assign(__assign({}, store.areManuscriptsFiltered), { isActive: false }) });
+                }), intersectionParams: __assign(__assign({}, store.intersectionParams), { searcher: searcherParam_1 }), areManuscriptsSearched: true });
         case RESET_STATE:
             return __assign(__assign({}, store), { areManuscriptsIntersected: false, areManuscriptsSearched: false, areManuscriptsSorted: __assign(__assign({}, store.areManuscriptsSorted), { isActive: false }), areManuscriptsFiltered: __assign(__assign({}, store.areManuscriptsFiltered), { isActive: false }) });
         default:

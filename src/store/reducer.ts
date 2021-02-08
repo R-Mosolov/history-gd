@@ -10,6 +10,8 @@ import {
   TEACHING_AID,
   SCIENCE_PUBLICATION,
   CONFERENCE_THESES,
+  LARGE,
+  SMALL,
   LARGE_MANUSCRIPTS,
   SMALL_MANUSCRIPTS,
   FETCHED_MANUSCRIPTS,
@@ -38,19 +40,63 @@ const reducer: any = (store = initialState, action: ActionConfig) => {
       };
 
     case CHECK_INTERSECTIONS:
-      if (store.areManuscriptsFiltered) {
+      const manuscriptsNOTFilteredAndSearched: boolean = (
+        !store.areManuscriptsFiltered && !store.areManuscriptsSearched
+      );
+      const manuscriptsOnlyFiltered: boolean = (
+        store.areManuscriptsFiltered && !store.areManuscriptsSearched
+      );
+      const manuscriptsOnlySearched: boolean = (
+        !store.areManuscriptsFiltered && store.areManuscriptsSearched
+      );
+      const manuscriptsFilteredAndSearched: boolean = (
+        store.areManuscriptsFiltered && store.areManuscriptsSearched
+      );
+
+      if (manuscriptsNOTFilteredAndSearched) {
         return {
           ...store,
+          areManuscriptsIntersected: false,
+        };
+      } else if (manuscriptsOnlyFiltered) {
+        return {
+          ...store,
+          areManuscriptsIntersected: false,
           intersectedManuscripts: store.filteredManuscripts,
+        };
+      } else if (manuscriptsOnlySearched) {
+        return {
+          ...store,
+          areManuscriptsIntersected: false,
+          intersectedManuscripts: store.searchedManuscripts,
+        };
+      } else if (manuscriptsFilteredAndSearched) {
+        return {
+          ...store,
           areManuscriptsIntersected: true,
+          intersectedManuscripts: store.fetchedManuscripts.filter((manuscript) => {
+            // TODO: Add searching by date
+            const { title, author, type } = manuscript;
+            let adaptedType: string = (store.intersectionParams.filter === LARGE_MANUSCRIPTS)
+              ? LARGE
+              : SMALL;
+            if (
+              type === "Монография"
+              // && (title.toString().toLowerCase().includes(action.payload.toString().toLowerCase()) ||
+              // author.toString().toLowerCase().includes(action.payload.toString().toLowerCase()) ||
+              // type.toString().toLowerCase().includes(action.payload.toString().toLowerCase()))
+            ) {
+              return true;
+            }
+          }),
         };
       }
 
     case SORT_MANUSCRIPTS:
-      const sorterParam: String = action.payload;
+      const sorterParam: string = action.payload;
       return {
         ...store,
-        // TODO: Change Any types
+        // TODO: Change Any type
         sortedManuscripts: store.fetchedManuscripts.sort((a: any, b: any) => {
           const aParam = a[`${sorterParam}`].toUpperCase();
           const bParam = b[`${sorterParam}`].toUpperCase();
@@ -68,19 +114,20 @@ const reducer: any = (store = initialState, action: ActionConfig) => {
           isActive: true,
           byDecrease: store.areManuscriptsSorted.byDecrease ? false : true,
         },
-        areManuscriptsFiltered: {
-          ...store.areManuscriptsFiltered,
-          isActive: false,
-        },
-        areManuscriptsSearched: false,
       };
 
     case FILTER_MANUSCRIPTS:
-      const filterParam: String = action.payload;
+      const filterParam: string = action.payload;
+      let filteredStoreChunk = FETCHED_MANUSCRIPTS;
+
+      if (store.areManuscriptsIntersected) {
+        filteredStoreChunk = INTERSECTED_MANUSCRIPTS;
+      }
+
       return {
         ...store,
-        // TODO: Change Any types
-        filteredManuscripts: store.fetchedManuscripts.filter((manuscript) => {
+        // TODO: Change Any type
+        filteredManuscripts: store[filteredStoreChunk].filter((manuscript) => {
           if (filterParam === LARGE_MANUSCRIPTS) {
             if (
               manuscript.type ===
@@ -101,21 +148,20 @@ const reducer: any = (store = initialState, action: ActionConfig) => {
             }
           }
         }),
+        intersectionParams: {
+          ...store.intersectionParams,
+          filter: filterParam,
+        },
         areManuscriptsFiltered: {
           isActive: true,
           byLargeManuscripts: store.areManuscriptsFiltered.byLargeManuscripts
             ? false
             : true,
         },
-        areManuscriptsSorted: {
-          ...store.areManuscriptsSorted,
-          isActive: false,
-        },
-        areManuscriptsSearched: false,
       };
 
     case SEARCH_MANUSCRIPTS:
-      const searcherParam: String = action.payload.toString().toLowerCase();
+      const searcherParam: string = action.payload.toString().toLowerCase();
       let searchedStoreChunk = FETCHED_MANUSCRIPTS;
 
       if (store.areManuscriptsIntersected) {
@@ -136,15 +182,11 @@ const reducer: any = (store = initialState, action: ActionConfig) => {
             return true;
           }
         }),
+        intersectionParams: {
+          ...store.intersectionParams,
+          searcher: searcherParam,
+        },
         areManuscriptsSearched: true,
-        areManuscriptsSorted: {
-          ...store.areManuscriptsSorted,
-          isActive: false,
-        },
-        areManuscriptsFiltered: {
-          ...store.areManuscriptsFiltered,
-          isActive: false,
-        },
       };
 
     case RESET_STATE:

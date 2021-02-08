@@ -60,11 +60,13 @@ const mapDispatchToProps = (dispatch) => {
     actions: bindActionCreators({ fetchStore }, dispatch),
     sortManuscripts: (payload) =>
       dispatch({ type: SORT_MANUSCRIPTS, payload: payload }),
-    filterManuscripts: (payload) =>
-      dispatch({ type: FILTER_MANUSCRIPTS, payload: payload }),
-    searchManuscripts: (payload) => {
+    filterManuscripts: (payload) => {
+      dispatch({ type: FILTER_MANUSCRIPTS, payload: payload });
       dispatch({ type: CHECK_INTERSECTIONS });
+    },
+    searchManuscripts: (payload) => {
       dispatch({ type: SEARCH_MANUSCRIPTS, payload: payload });
+      dispatch({ type: CHECK_INTERSECTIONS, payload: payload });
     },
     resetState: () => dispatch({ type: RESET_STATE }),
   };
@@ -250,26 +252,28 @@ class Manuscripts extends Component {
                       {(() => {
                         let selectedStoreChunk = FETCHED_MANUSCRIPTS;
 
-                        if (
-                          areManuscriptsSorted.isActive &&
-                          !areManuscriptsFiltered.isActive &&
-                          !areManuscriptsSearched
-                        ) {
-                          selectedStoreChunk = SORTED_MANUSCRIPTS;
-                        } else if (
-                          !areManuscriptsSorted.isActive &&
-                          areManuscriptsFiltered.isActive &&
-                          !areManuscriptsSearched
-                        ) {
-                          selectedStoreChunk = FILTERED_MANUSCRIPTS;
-                        } else if (
-                          !areManuscriptsSorted.isActive &&
-                          !areManuscriptsFiltered.isActive &&
-                          areManuscriptsSearched
-                        ) {
-                          selectedStoreChunk = SEARCHED_MANUSCRIPTS;
-                        } else if (areManuscriptsIntersected) {
+                        if (areManuscriptsIntersected) {
                           selectedStoreChunk = INTERSECTED_MANUSCRIPTS;
+                        } else {
+                          if (
+                            areManuscriptsSorted.isActive &&
+                            !areManuscriptsFiltered.isActive &&
+                            !areManuscriptsSearched
+                          ) {
+                            selectedStoreChunk = SORTED_MANUSCRIPTS;
+                          } else if (
+                            !areManuscriptsSorted.isActive &&
+                            areManuscriptsFiltered.isActive &&
+                            !areManuscriptsSearched
+                          ) {
+                            selectedStoreChunk = FILTERED_MANUSCRIPTS;
+                          } else if (
+                            !areManuscriptsSorted.isActive &&
+                            !areManuscriptsFiltered.isActive &&
+                            areManuscriptsSearched
+                          ) {
+                            selectedStoreChunk = SEARCHED_MANUSCRIPTS;
+                          }
                         }
 
                         return [

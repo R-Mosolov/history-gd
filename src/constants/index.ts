@@ -18,22 +18,22 @@ export const USERS: string = "users";
 export const MANUSCRIPTS: string = "manuscripts";
 
 // Manuscript types
-export const MONOGRAPH = "monograph";
-export const TEACHING_AID = "teaching-aid";
-export const SCIENCE_PUBLICATION = "science-publication";
-export const CONFERENCE_THESES = "conference-theses";
-export const OTHER = "other";
-export const LARGE = "large";
-export const SMALL = "small";
+export const MONOGRAPH: string = "monograph";
+export const TEACHING_AID: string = "teaching-aid";
+export const SCIENCE_PUBLICATION: string = "science-publication";
+export const CONFERENCE_THESES: string = "conference-theses";
+export const OTHER: string = "other";
+export const LARGE: string = "large";
+export const SMALL: string = "small";
 
 // Redux
-export const LARGE_MANUSCRIPTS = "largeManuscripts";
-export const SMALL_MANUSCRIPTS = "smallManuscripts";
-export const FETCHED_MANUSCRIPTS = "fetchedManuscripts";
-export const INTERSECTED_MANUSCRIPTS = "intersectedManuscripts";
-export const SORTED_MANUSCRIPTS = "sortedManuscripts";
-export const FILTERED_MANUSCRIPTS = "filteredManuscripts";
-export const SEARCHED_MANUSCRIPTS = "searchedManuscripts";
+export const LARGE_MANUSCRIPTS: string = "largeManuscripts";
+export const SMALL_MANUSCRIPTS: string = "smallManuscripts";
+export const FETCHED_MANUSCRIPTS: string = "fetchedManuscripts";
+export const INTERSECTED_MANUSCRIPTS: string = "intersectedManuscripts";
+export const SORTED_MANUSCRIPTS: string = "sortedManuscripts";
+export const FILTERED_MANUSCRIPTS: string = "filteredManuscripts";
+export const SEARCHED_MANUSCRIPTS: string = "searchedManuscripts";
 
 /**
  * Set the interface (types of keys values)

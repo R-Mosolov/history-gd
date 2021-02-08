@@ -2,6 +2,10 @@
 exports.__esModule = true;
 var initialState = {
     fetchedManuscripts: [],
+    intersectionParams: {
+        filter: null,
+        searcher: null
+    },
     intersectedManuscripts: [],
     filteredManuscripts: [],
     sortedManuscripts: [],

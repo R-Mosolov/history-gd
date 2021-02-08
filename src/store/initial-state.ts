@@ -2,6 +2,10 @@ import { InitialStateConfig } from "../configs";
 
 const initialState: InitialStateConfig = {
   fetchedManuscripts: [],
+  intersectionParams: {
+    filter: null,
+    searcher: null,
+  },
   intersectedManuscripts: [],
   filteredManuscripts: [],
   sortedManuscripts: [],

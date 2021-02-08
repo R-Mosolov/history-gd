@@ -3,28 +3,32 @@ export interface TypesConfig {
 }
 
 export interface InitialStateConfig {
-  // TODO: Add sorting by date
+  // TODO: Change Any type
   fetchedManuscripts: any;
+  intersectionParams: {
+    filter: string | null,
+    searcher: string | null,
+  };
   intersectedManuscripts: Array<object>;
   filteredManuscripts: Array<object>;
   sortedManuscripts: Array<object>;
   searchedManuscripts: Array<object>;
-  areManuscriptsLoading: Boolean;
+  areManuscriptsLoading: boolean;
   // TODO: Add sorting by date
-  areCreationDatesSorted: Boolean;
-  areManuscriptsIntersected: Boolean;
+  areCreationDatesSorted: boolean;
+  areManuscriptsIntersected: boolean;
   areManuscriptsSorted: {
-    isActive: Boolean;
-    byDecrease: Boolean;
+    isActive: boolean;
+    byDecrease: boolean;
   };
   areManuscriptsFiltered: {
-    isActive: Boolean;
-    byLargeManuscripts: Boolean;
+    isActive: boolean;
+    byLargeManuscripts: boolean;
   };
-  areManuscriptsSearched: Boolean;
+  areManuscriptsSearched: boolean;
 }
 
-// TODO: Change Any types
+// TODO: Change Any type
 export interface ActionConfig {
   [key: string]: any;
 }
