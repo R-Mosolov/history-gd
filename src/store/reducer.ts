@@ -15,6 +15,9 @@ import {
   SMALL_MANUSCRIPTS,
   FETCHED_MANUSCRIPTS,
   INTERSECTED_MANUSCRIPTS,
+  FILTERED_MANUSCRIPTS,
+  SEARCHED_MANUSCRIPTS,
+  SORTED_MANUSCRIPTS,
 } from "../constants";
 import { utils } from "../utils";
 
@@ -39,13 +42,14 @@ const reducer: any = (store = initialState, action: ActionConfig) => {
       };
 
     case CHECK_INTERSECTIONS:
-      const { areManuscriptsFiltered, areManuscriptsSearched } = store;
-      const manuscriptsNOTFilteredAndSearched: boolean = !areManuscriptsFiltered.isActive && !areManuscriptsSearched;
-      const manuscriptsOnlyFiltered: boolean = areManuscriptsFiltered.isActive && !areManuscriptsSearched;
-      const manuscriptsOnlySearched: boolean = !areManuscriptsFiltered.isActive && areManuscriptsSearched;
-      const manuscriptsFilteredAndSearched: boolean = areManuscriptsFiltered.isActive && areManuscriptsSearched;
+      const { areManuscriptsFiltered, areManuscriptsSearched, areManuscriptsSorted } = store;
 
-      if (manuscriptsNOTFilteredAndSearched) {
+      const NOTAll: boolean = !areManuscriptsFiltered.isActive && !areManuscriptsSearched && !areManuscriptsSorted.isActive;
+      const manuscriptsOnlyFiltered: boolean = areManuscriptsFiltered.isActive && !areManuscriptsSearched && !areManuscriptsSorted.isActive;
+      const manuscriptsOnlySearched: boolean = !areManuscriptsFiltered.isActive && areManuscriptsSearched && !areManuscriptsSorted.isActive;
+      const manuscriptsOnlySorted: boolean = !areManuscriptsFiltered.isActive && !areManuscriptsSearched && areManuscriptsSorted.isActive;
+
+      if (NOTAll) {
         return {
           ...store,
           areManuscriptsIntersected: false,
@@ -62,8 +66,13 @@ const reducer: any = (store = initialState, action: ActionConfig) => {
           areManuscriptsIntersected: false,
           intersectedManuscripts: store.searchedManuscripts,
         };
-      } else if (manuscriptsFilteredAndSearched) {
-        console.log('Logic: I am here!');
+      }  else if (manuscriptsOnlySorted) {
+        return {
+          ...store,
+          areManuscriptsIntersected: false,
+          intersectedManuscripts: store.sortedManuscripts,
+        };
+      } else {
         return {
           ...store,
           areManuscriptsIntersected: true,
@@ -103,10 +112,22 @@ const reducer: any = (store = initialState, action: ActionConfig) => {
 
     case SORT_MANUSCRIPTS:
       const sorterParam: string = action.payload;
+      let sortedStoreChunk = FETCHED_MANUSCRIPTS;
+
+      if (store.areManuscriptsIntersected) {
+        sortedStoreChunk = INTERSECTED_MANUSCRIPTS;
+      } else {
+        if (store.areManuscriptsFiltered.isActive) {
+          sortedStoreChunk = FILTERED_MANUSCRIPTS;
+        } else if (store.areManuscriptsSearched) {
+          sortedStoreChunk = SEARCHED_MANUSCRIPTS;
+        }
+      }
+
       return {
         ...store,
         // TODO: Change Any type
-        sortedManuscripts: store.fetchedManuscripts.sort((a: any, b: any) => {
+        sortedManuscripts: store[sortedStoreChunk].sort((a: any, b: any) => {
           const aParam = a[`${sorterParam}`].toUpperCase();
           const bParam = b[`${sorterParam}`].toUpperCase();
 
@@ -131,6 +152,12 @@ const reducer: any = (store = initialState, action: ActionConfig) => {
 
       if (store.areManuscriptsIntersected) {
         filteredStoreChunk = INTERSECTED_MANUSCRIPTS;
+      } else {
+        if (store.areManuscriptsSorted.isActive && !store.areManuscriptsSearched) {
+          filteredStoreChunk = SORTED_MANUSCRIPTS;
+        } else if (!store.areManuscriptsSorted.isActive && store.areManuscriptsSearched) {
+          filteredStoreChunk = SEARCHED_MANUSCRIPTS;
+        }
       }
 
       return {
@@ -171,6 +198,12 @@ const reducer: any = (store = initialState, action: ActionConfig) => {
 
       if (store.areManuscriptsIntersected) {
         searchedStoreChunk = INTERSECTED_MANUSCRIPTS;
+      } else {
+        if (store.areManuscriptsSorted.isActive) {
+          searchedStoreChunk = SORTED_MANUSCRIPTS;
+        } else if (store.areManuscriptsFiltered.isActive) {
+          searchedStoreChunk = FILTERED_MANUSCRIPTS;
+        }
       }
 
       return {

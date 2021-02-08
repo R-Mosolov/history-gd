@@ -59,8 +59,10 @@ const mapDispatchToProps = (dispatch) => {
   return {
     // TODO: Add only finished actions instead of a dispatcher here
     actions: bindActionCreators({ fetchStore }, dispatch),
-    sortManuscripts: (payload) =>
-      dispatch({ type: SORT_MANUSCRIPTS, payload: payload }),
+    sortManuscripts: (payload) => {
+      dispatch({ type: SORT_MANUSCRIPTS, payload: payload });
+      dispatch({ type: CHECK_INTERSECTIONS });
+    },
     filterManuscripts: (payload) => {
       dispatch({ type: FILTER_MANUSCRIPTS, payload: payload });
       dispatch({ type: CHECK_INTERSECTIONS });
@@ -278,6 +280,7 @@ class Manuscripts extends Component {
                         }
 
                         return [
+                          // TODO: Add handler for full not matching (empty) values
                           ...store[selectedStoreChunk].map(
                             (manuscript, index) => {
                               return (

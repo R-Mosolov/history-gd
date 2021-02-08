@@ -24,12 +24,12 @@ var reducer = function (store, action) {
         case SET_STATE:
             return __assign(__assign({}, store), { fetchedManuscripts: action.payload, areManuscriptsLoading: false });
         case CHECK_INTERSECTIONS:
-            var areManuscriptsFiltered = store.areManuscriptsFiltered, areManuscriptsSearched = store.areManuscriptsSearched;
-            var manuscriptsNOTFilteredAndSearched = !areManuscriptsFiltered.isActive && !areManuscriptsSearched;
-            var manuscriptsOnlyFiltered = areManuscriptsFiltered.isActive && !areManuscriptsSearched;
-            var manuscriptsOnlySearched = !areManuscriptsFiltered.isActive && areManuscriptsSearched;
-            var manuscriptsFilteredAndSearched = areManuscriptsFiltered.isActive && areManuscriptsSearched;
-            if (manuscriptsNOTFilteredAndSearched) {
+            var areManuscriptsFiltered = store.areManuscriptsFiltered, areManuscriptsSearched = store.areManuscriptsSearched, areManuscriptsSorted = store.areManuscriptsSorted;
+            var NOTAll = !areManuscriptsFiltered.isActive && !areManuscriptsSearched && !areManuscriptsSorted.isActive;
+            var manuscriptsOnlyFiltered = areManuscriptsFiltered.isActive && !areManuscriptsSearched && !areManuscriptsSorted.isActive;
+            var manuscriptsOnlySearched = !areManuscriptsFiltered.isActive && areManuscriptsSearched && !areManuscriptsSorted.isActive;
+            var manuscriptsOnlySorted = !areManuscriptsFiltered.isActive && !areManuscriptsSearched && areManuscriptsSorted.isActive;
+            if (NOTAll) {
                 return __assign(__assign({}, store), { areManuscriptsIntersected: false });
             }
             else if (manuscriptsOnlyFiltered) {
@@ -38,8 +38,10 @@ var reducer = function (store, action) {
             else if (manuscriptsOnlySearched) {
                 return __assign(__assign({}, store), { areManuscriptsIntersected: false, intersectedManuscripts: store.searchedManuscripts });
             }
-            else if (manuscriptsFilteredAndSearched) {
-                console.log('Logic: I am here!');
+            else if (manuscriptsOnlySorted) {
+                return __assign(__assign({}, store), { areManuscriptsIntersected: false, intersectedManuscripts: store.sortedManuscripts });
+            }
+            else {
                 return __assign(__assign({}, store), { areManuscriptsIntersected: true, intersectedManuscripts: store.fetchedManuscripts.filter(function (manuscript) {
                         // TODO: Add searching by date
                         var title = manuscript.title, author = manuscript.author, type = manuscript.type;
@@ -66,9 +68,21 @@ var reducer = function (store, action) {
             }
         case SORT_MANUSCRIPTS:
             var sorterParam_1 = action.payload;
+            var sortedStoreChunk = constants_1.FETCHED_MANUSCRIPTS;
+            if (store.areManuscriptsIntersected) {
+                sortedStoreChunk = constants_1.INTERSECTED_MANUSCRIPTS;
+            }
+            else {
+                if (store.areManuscriptsFiltered.isActive) {
+                    sortedStoreChunk = constants_1.FILTERED_MANUSCRIPTS;
+                }
+                else if (store.areManuscriptsSearched) {
+                    sortedStoreChunk = constants_1.SEARCHED_MANUSCRIPTS;
+                }
+            }
             return __assign(__assign({}, store), { 
                 // TODO: Change Any type
-                sortedManuscripts: store.fetchedManuscripts.sort(function (a, b) {
+                sortedManuscripts: store[sortedStoreChunk].sort(function (a, b) {
                     var aParam = a["" + sorterParam_1].toUpperCase();
                     var bParam = b["" + sorterParam_1].toUpperCase();
                     if (store.areManuscriptsSorted.byDecrease) {
@@ -93,6 +107,14 @@ var reducer = function (store, action) {
             var filteredStoreChunk = constants_1.FETCHED_MANUSCRIPTS;
             if (store.areManuscriptsIntersected) {
                 filteredStoreChunk = constants_1.INTERSECTED_MANUSCRIPTS;
+            }
+            else {
+                if (store.areManuscriptsSorted.isActive && !store.areManuscriptsSearched) {
+                    filteredStoreChunk = constants_1.SORTED_MANUSCRIPTS;
+                }
+                else if (!store.areManuscriptsSorted.isActive && store.areManuscriptsSearched) {
+                    filteredStoreChunk = constants_1.SEARCHED_MANUSCRIPTS;
+                }
             }
             return __assign(__assign({}, store), { 
                 // TODO: Change Any type
@@ -120,6 +142,14 @@ var reducer = function (store, action) {
             var searchedStoreChunk = constants_1.FETCHED_MANUSCRIPTS;
             if (store.areManuscriptsIntersected) {
                 searchedStoreChunk = constants_1.INTERSECTED_MANUSCRIPTS;
+            }
+            else {
+                if (store.areManuscriptsSorted.isActive) {
+                    searchedStoreChunk = constants_1.SORTED_MANUSCRIPTS;
+                }
+                else if (store.areManuscriptsFiltered.isActive) {
+                    searchedStoreChunk = constants_1.FILTERED_MANUSCRIPTS;
+                }
             }
             return __assign(__assign({}, store), { searchedManuscripts: store[searchedStoreChunk].filter(function (manuscript) {
                     // TODO: Add searching by date
