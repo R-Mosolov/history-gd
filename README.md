@@ -57,7 +57,7 @@ The additional technological stack: Reselect.
 ## How to Run the SPA (for guests)
 Run following terminal commands from root directory:
 1. `npm install`
-2. `npm start`
+2. `npm run build && npm start`
 
 Then open a browser on: http://localhost:3000/
 

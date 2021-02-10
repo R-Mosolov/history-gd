@@ -1,8 +1,12 @@
-import React, { Component } from "react";
+import * as React from "react";
 
 import Logo from "./logo/logo";
 
-class TopNavigation extends Component {
+export interface Props {
+  btnOnWorkArea?: any;
+}
+
+class TopNavigation extends React.Component<Props, {}> {
   render() {
     return (
       <header className="fixed-top vw-100 bg-white">

@@ -1,12 +1,9 @@
 import React from "react";
 
-import manuscriptsBase from "../../../data/manuscripts/manuscripts-base";
-import manuscriptsDetails from "../../../data/manuscripts/manuscripts-details";
-
 import LeftNavigation from "../../../components/left-navigation/left-navigation";
 import TopNavigation from "../../../components/top-navigation/top-navigation";
 
-function UserAgreement({ addNewText, deleteAllText }) {
+function UserAgreement() {
   return (
     <div className="full-manuscript">
       <TopNavigation />

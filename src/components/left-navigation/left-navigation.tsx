@@ -1,9 +1,9 @@
-import React from "react";
+import * as React from "react";
 import { Link } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 
 import "./left-navigation.css";
-import leftNavigation from "../../data/left-navigation";
+import leftNavigation from "../../data/left-navigation.json";
 
 function LeftNavigation() {
   function renderLeftNav() {
