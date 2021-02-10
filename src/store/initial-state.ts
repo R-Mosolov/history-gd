@@ -1,14 +1,29 @@
-import data from '../data/manuscripts/manuscripts-base';
+import { InitialStateConfig } from "../configs";
 
-interface initialStateConfig {
-  [index: number]: {
-    type: string;
-    title: string;
-    author: string;
-    creationDate: number;
-  }
-}
-
-const initialState: initialStateConfig = data;
+const initialState: InitialStateConfig = {
+  isAuthenticated: false,
+  fetchedManuscripts: [],
+  intersectionParams: {
+    filter: null,
+    searcher: null,
+  },
+  intersectedManuscripts: [],
+  filteredManuscripts: [],
+  sortedManuscripts: [],
+  searchedManuscripts: [],
+  areManuscriptsLoading: true,
+  // TODO: Add sorting by date
+  areCreationDatesSorted: false,
+  areManuscriptsIntersected: false,
+  areManuscriptsSorted: {
+    isActive: false,
+    byDecrease: false,
+  },
+  areManuscriptsFiltered: {
+    isActive: false,
+    byLargeManuscripts: false,
+  },
+  areManuscriptsSearched: false,
+};
 
 export default initialState;

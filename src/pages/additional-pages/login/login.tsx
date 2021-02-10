@@ -1,42 +1,59 @@
+// React
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
-import "./login.css";
-import "../../../lib/form-validator/render-error";
-// import validateForm from "./functions/validate-form";
-import users from "../../../data/users";
+// Components
 import TopNavigation from "../../../components/top-navigation/top-navigation";
 
-class Login extends Component {
-  constructor() {
-    super();
+// Redux
+import { connect } from "react-redux";
+import TYPES from "../../../store/types";
 
+// Styles
+import "./login.css";
+
+interface Props {
+  setAuthentication: () => {};
+}
+
+const { SET_AUTHENTICATION } = TYPES;
+
+const mapStateToProps = (state: object) => {
+  return {
+    store: state,
+  };
+};
+
+const mapDispatchToProps: any = (dispatch: (type: object) => object) => {
+  return {
+    setAuthentication: () => dispatch({ type: SET_AUTHENTICATION }),
+  };
+};
+
+class Login extends Component<Props, { isAuthenticated: boolean, email: string, password: string }> {
+  constructor(props: Props) {
+    super(props);
     this.state = {
-      userList: users,
-      email: "admin@test.ru",
-      password: "Initial State Password",
-      isCorrectData: false,
+      isAuthenticated: false,
+      email: '',
+      password: '',
     };
+
+    this.handleEmailChange = this.handleEmailChange.bind(this);
+    this.handlePasswordChange = this.handlePasswordChange.bind(this);
   }
 
-  checkAuthData() {
-    this.setState({
-      email: document.getElementById("login-page__email").value,
-      password: document.getElementById("login-page__password").value,
-    });
+  handleEmailChange(event: React.ChangeEvent<HTMLInputElement>) {
+    this.setState({email: event.target.value});
+  }
 
-    users.forEach((user) => {
-      if (user.email === this.state.email) {
-        return <Link to="/manuscripts" />;
-      }
-    });
-
-    // users.forEach(user => console.log(`user.email: ${user.email}`));
-    // console.log(`this.state.email: ${this.state.email}`);
-    // console.log(`this.state.password: ${this.state.password}`);
+  handlePasswordChange(event: React.ChangeEvent<HTMLInputElement>) {
+    this.setState({password: event.target.value});
   }
 
   render() {
+    const { setAuthentication } = this.props;
+
     return (
       <div className="login mt-5 mb-5 d-flex justify-content-center align-items-center container">
         <TopNavigation
@@ -56,24 +73,28 @@ class Login extends Component {
             <div className="d-flex flex-column mb-2">
               <label>Email (электронная почта)</label>
               <input
+                value={this.state.email}
                 id="login-page__email"
                 className="form-control"
                 type="email"
                 min="3"
                 max="75"
                 placeholder="MV.Lomonosov@msu.ru"
+                onChange={this.handleEmailChange}
               />
             </div>
 
             <div className="d-flex flex-column">
               <label>Пароль</label>
               <input
+                value={this.state.password}
                 id="login-page__password"
                 className="form-control"
                 type="password"
                 min="8"
                 max="50"
                 placeholder="********"
+                onChange={this.handlePasswordChange}
               />
             </div>
           </form>
@@ -81,7 +102,14 @@ class Login extends Component {
           <button
             id="login-button"
             className="mt-3 btn btn-success btn-block"
-            // onClick={() => validateForm()}
+            onClick={() => {
+              const email = this.state.email;
+              const password = this.state.password;
+
+              if ((email === 'MV.Lomonosov@msu.ru') && (password === '1234')) {
+                setAuthentication();
+              }
+            }}
           >
             Войти
           </button>
@@ -91,4 +119,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

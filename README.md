@@ -13,7 +13,7 @@ Elektronnyye biblioteki. 2020. V. 23. No 6. https://doi.org/10.26907/1562-5419-2
 # The Current GUI
 At current time, GUI looks so as shown below. This GUI presents 
 part of project's worked functionality on 04.05.2020 on the left. 
-![File:GUI on 04.05.2020](src/assets/gui-on-04.05.2020.png "GUI on 04.05.2020")
+![File:GUI at 04.05.2020](src/assets/gui-at-04.05.2020.png "GUI at 04.05.2020")
 
 # The List of Planned SPA Functionality
 1) creating manuscripts;
@@ -26,51 +26,47 @@ of scientific discoveries;
 
 # The List of Planned Technological Stack
 ## Frontend
-| # | Technology    | Role                                    |
-| - |:-------------:|:---------------------------------------:|
-| 1 | HTML          | Adds layout                             |
-| 2 | CSS           | Adds stylization                        |
-| 3 | JavaScript    | Frontend PL                             |
-| 4 | TypeScript    | Adds strong types to variables          | 
-| 5 | React.js      | Main high-level library for JS          |
-| 6 | Material UI   | Adds templates of frontend components   |
-| 7 | React Router  | Adds paths between pages                |
-| 8 | Redux         | Manages all SPA conditions              |
-| 9 | Redux Saga    | Deletes sides effects                   |
-| 10 | React Hemlet | Makes the SPA more familiarity with SEO |
-| 11 | ESLint       | Checks code quality into modules        |
-| 12 | Jest         | Tests modules code quality              |
+| # | Technology                | Role                                          |
+| - |:-------------------------:|:---------------------------------------------:|
+| 1 | HTML                      | Adds layout                                   |
+| 2 | CSS                       | Adds stylization                              |
+| 3 | JavaScript                | Frontend PL                                   |
+| 4 | TypeScript                | Adds strong types to variables                |
+| 5 | Next.js                   | Makes the SPA more familiarity with SEO       |
+| 6 | React.js                  | Main high-level library for JS                |
+| 7 | Material UI               | Adds templates of frontend components         |
+| 8 | React Router              | Adds URL paths between pages                  |
+| 9 | Redux                     | Manages all SPA states centrally              |
+| 10 | Redux Thunk/Redux Saga   | Deletes sides effects                         |
+| 11 | GraphQL/Apollo           | Sets strong types for data exchanging with DB |
+| 12 | ESLint + Prettier        | Check and fix code styles into modules        |
+| 13 | Grunt/Gulp               | Automates manual operations                   |
+| 14 | Jest                     | Tests modules code quality                    |
 
-The additional technoligical stack: Next.js, Redux Thunk, Reselect, GraphQL/Apollo.
+The additional technological stack: Reselect.
 
 ## Backend
 | # | Technology      | Role                                  |
 | - |:---------------:|:-------------------------------------:|
 | 1 | Node.js         | Server PL                             |
 | 2 | Express.js      | Main high-level library for Node.js   |
-| 3 | Google Firebase | NoSQL DBMS and hosting                |
+| 3 | Google Firebase | NoSQL DBMS and hosting for SPA        |
 | 4 | Jest            | Tests modules code quality            |
 
 # The Instructions
-## How to Run the SPA: For guests
+## How to Run the SPA (for guests)
 Run following terminal commands from root directory:
 1. `npm install`
-2. `npm start`
+2. `npm run build && npm start`
 
 Then open a browser on: http://localhost:3000/
 
-## How to Run the SPA: For workers
-1. `clear && npx eslint --fix src/ && tsc src/**/*.ts`
-2. `clear && npm start`
+## How to Run the SPA (for workers)
+1. For 1st Terminal window: `clear && npm start`
+2. For 2nd Terminal window: `clear && tsc ./src/**/*`
 
-## How to Compile Modules from JS Language to TypeScript
-### The Manual Method
-`tsc src/**/*.ts && tsc src/**/*.tsx`
-### The Automatic Method (by using Grunt library)
-`grunt watch`
-
-## How to Check Syntax Quality into Modules
-`npx eslint --fix src/`
+## How to Check Syntax Quality into Modules (using Prettier)
+`clear && cd src && npx prettier --write .`
 
 # The Project Technical Task and Timekeeping in Russian
 More information about project's technical details, planned 

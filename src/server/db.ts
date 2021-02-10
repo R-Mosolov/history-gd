@@ -1,18 +1,22 @@
 // Firebase App (the core Firebase SDK) is always required and
 // must be listed before other Firebase SDKs
-import firebase from 'firebase/app';
+import firebase from "firebase/app";
 
 // Add the Firebase services that you want to use
-import 'firebase/auth';
-import 'firebase/firestore';
+import "firebase/auth";
+import "firebase/firestore";
+
+interface FirebaseTypes {
+  [key: string]: string | undefined,
+}
 
 // TODO: Replace the following with your app's Firebase project configuration
 // For Firebase JavaScript SDK v7.20.0 and later, `measurementId` is an optional field
-const firebaseConfig = {
+const firebaseConfig: FirebaseTypes = {
   apiKey: process.env.API_KEY,
   authDomain: process.env.AUTH_DOMAIN,
   databaseURL: process.env.DATABASE_URL,
-  projectId: 'history-gd-cfc68',
+  projectId: "history-gd-cfc68",
   storageBucket: process.env.STORAGE_BUCKET,
   messagingSenderId: process.env.MESSAGING_SENDER_ID,
   appId: process.env.APP_ID,

@@ -1,11 +1,17 @@
-const filterByLargeManuscripts: object = () => ({ type: 'FILTER_BY_LARGE_MANUSCRIPTS' });
-const filterBySmallManuscripts: object = () => ({ type: 'FILTER_BY_SMALL_MANUSCRIPTS' });
-const sortTitleFromAToZ: object = () => ({ type: 'SORT_TITLE_FROM_A_TO_Z' });
-const sortTitleFromZToA: object = () => ({ type: 'SORT_TITLE_FROM_Z_TO_A' });
+import { MANUSCRIPTS } from "../constants";
+import TYPES from "./types";
+import db from "../server/db";
 
-export {
-  filterByLargeManuscripts,
-  filterBySmallManuscripts,
-  sortTitleFromAToZ,
-  sortTitleFromZToA,
+const { FETCH_STATE, SET_STATE } = TYPES;
+
+// TODO: Change Any types
+export const fetchStore: any = () => async (dispatch: any) => {
+  dispatch({ type: FETCH_STATE });
+
+  let manuscriptsList: Array<object> = [];
+  db.collection(MANUSCRIPTS)
+    .get()
+    .then((docs) => docs.forEach((doc) => manuscriptsList.push(doc.data())))
+    .then(() => dispatch({ type: SET_STATE, payload: manuscriptsList }))
+    .catch((error) => console.log(error));
 };

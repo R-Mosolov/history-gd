@@ -1,7 +1,7 @@
 function setupDefaultAuth() {
-  localStorage.setItem('hasAuthorized', 'false');
+  localStorage.setItem("hasAuthorized", "false");
   console.log(
-    `setup-default-auth.js: ${localStorage.getItem('hasAuthorized')}`,
+    `setup-default-auth.js: ${localStorage.getItem("hasAuthorized")}`
   );
 }
 
