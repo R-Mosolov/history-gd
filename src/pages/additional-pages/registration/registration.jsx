@@ -17,12 +17,11 @@ import {
   PHONE,
   PASSWORD,
   REPEAT_PASSWORD,
-} from "../../../constants/index.js";
+} from "../../../constants";
 import TopNavigation from "../../../components/top-navigation/top-navigation";
 
 import db from "../../../server/db";
 import { USERS } from "../../../constants";
-import validateRegistrationForm from "./functions/validate-registration-form";
 
 import "./registration.css";
 
@@ -64,11 +63,6 @@ function postDataToDB() {
         repeatPassword: document.getElementById(REPEAT_PASSWORD).value,
       },
     });
-}
-
-function checkFormData() {
-  return validateRegistrationForm();
-  // return postDataToDB();
 }
 
 function Registration() {
@@ -232,7 +226,6 @@ function Registration() {
           <button
             id="registration-button"
             className="mt-3 btn btn-success btn-block"
-            onClick={() => checkFormData()}
           >
             Зарегистрироваться
           </button>

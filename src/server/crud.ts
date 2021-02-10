@@ -1,7 +1,7 @@
 import { now } from "lodash";
 import database from "./db";
 
-function createOne(collection, data) {
+function createOne(collection: string, data: object) {
   const docId = now().toString();
   return database
     .collection(collection)
@@ -11,15 +11,15 @@ function createOne(collection, data) {
     .catch((err) => console.log(err));
 }
 
-function readAll(collection) {
+function readAll(collection: string) {
   return database
     .collection(collection)
     .get()
-    .then((docs) => docs.data())
+    .then((docs: any) => docs.data())
     .catch((err) => console.log(err));
 }
 
-function readOne(collection, doc) {
+function readOne(collection: string, doc: string) {
   return database
     .collection(collection)
     .doc(doc)
@@ -28,7 +28,7 @@ function readOne(collection, doc) {
     .catch((err) => console.log(err));
 }
 
-function deleteOne(collection, doc) {
+function deleteOne(collection: string, doc: string) {
   return database
     .collection(collection)
     .doc(doc)

@@ -1,5 +1,5 @@
 // Configs
-import { ActionConfig } from "../configs";
+import { ActionConfig, InitialStateConfig } from "../configs";
 
 import initialState from "./initial-state";
 import TYPES from "../store/types";
@@ -33,7 +33,7 @@ const {
 } = TYPES;
 
 // Create the reducer
-const reducer: any = (store = initialState, action: ActionConfig) => {
+const reducer: any = (store: InitialStateConfig = initialState, action: ActionConfig) => {
   switch (action.type) {
 
     /**
@@ -89,37 +89,37 @@ const reducer: any = (store = initialState, action: ActionConfig) => {
         return {
           ...store,
           areManuscriptsIntersected: true,
-          intersectedManuscripts: store.fetchedManuscripts.filter((manuscript) => {
-            // TODO: Add searching by date
-            const { title, author, type } = manuscript;
-            const filterParam = store.intersectionParams.filter;
+          // intersectedManuscripts: store.fetchedManuscripts.filter((manuscript: any) => {
+          //   // TODO: Add searching by date
+          //   const { title, author, type } = manuscript;
+          //   const filterParam = store.intersectionParams.filter;
 
-            if (filterParam === LARGE_MANUSCRIPTS) {
-              if (
-                (type === MONOGRAPH || type === TEACHING_AID)
-                && (
-                  title.includes(store.intersectionParams.searcher.toString().toLowerCase())
-                  || author.includes(store.intersectionParams.searcher.toString().toLowerCase())
-                  || utils.getLabelById(type, MANUSCRIPT_TYPES).toLowerCase()
-                    .includes(store.intersectionParams.searcher.toString().toLowerCase())
-                )
-              ) {
-                return true;
-              }
-            } else if (filterParam === SMALL_MANUSCRIPTS) {
-              if (
-                (type === SCIENCE_PUBLICATION || type === CONFERENCE_THESES || type === OTHER)
-                && (
-                  title.includes(store.intersectionParams.searcher.toString().toLowerCase())
-                  || author.includes(store.intersectionParams.searcher.toString().toLowerCase())
-                  || utils.getLabelById(type, MANUSCRIPT_TYPES).toLowerCase()
-                    .includes(store.intersectionParams.searcher.toString().toLowerCase())
-                )
-              ) {
-                return true;
-              }
-            }
-          }),
+          //   if (filterParam === LARGE_MANUSCRIPTS) {
+          //     if (
+          //       (type === MONOGRAPH || type === TEACHING_AID)
+          //       && (
+          //         title.includes(store.intersectionParams.searcher.toString().toLowerCase())
+          //         || author.includes(store.intersectionParams.searcher.toString().toLowerCase())
+          //         || utils.getLabelById(type, MANUSCRIPT_TYPES).toLowerCase()
+          //           .includes(store.intersectionParams.searcher.toString().toLowerCase())
+          //       )
+          //     ) {
+          //       return true;
+          //     }
+          //   } else if (filterParam === SMALL_MANUSCRIPTS) {
+          //     if (
+          //       (type === SCIENCE_PUBLICATION || type === CONFERENCE_THESES || type === OTHER)
+          //       && (
+          //         title.includes(store.intersectionParams.searcher.toString().toLowerCase())
+          //         || author.includes(store.intersectionParams.searcher.toString().toLowerCase())
+          //         || utils.getLabelById(type, MANUSCRIPT_TYPES).toLowerCase()
+          //           .includes(store.intersectionParams.searcher.toString().toLowerCase())
+          //       )
+          //     ) {
+          //       return true;
+          //     }
+          //   }
+          // }),
         };
       }
 
@@ -140,19 +140,19 @@ const reducer: any = (store = initialState, action: ActionConfig) => {
       return {
         ...store,
         // TODO: Change Any type
-        sortedManuscripts: store[sortedStoreChunk].sort((a: any, b: any) => {
-          const aParam = a[`${sorterParam}`].toUpperCase();
-          const bParam = b[`${sorterParam}`].toUpperCase();
+        // sortedManuscripts: store[sortedStoreChunk].sort((a: any, b: any) => {
+        //   const aParam = a[`${sorterParam}`].toUpperCase();
+        //   const bParam = b[`${sorterParam}`].toUpperCase();
 
-          if (store.areManuscriptsSorted.byDecrease) {
-            if (aParam < bParam) return -1;
-            if (aParam > bParam) return 1;
-          } else {
-            if (aParam < bParam) return 1;
-            if (aParam > bParam) return -1;
-          }
-          return 0;
-        }),
+        //   if (store.areManuscriptsSorted.byDecrease) {
+        //     if (aParam < bParam) return -1;
+        //     if (aParam > bParam) return 1;
+        //   } else {
+        //     if (aParam < bParam) return 1;
+        //     if (aParam > bParam) return -1;
+        //   }
+        //   return 0;
+        // }),
         areManuscriptsSorted: {
           isActive: true,
           byDecrease: store.areManuscriptsSorted.byDecrease ? false : true,
@@ -176,23 +176,23 @@ const reducer: any = (store = initialState, action: ActionConfig) => {
       return {
         ...store,
         // TODO: Change Any type
-        filteredManuscripts: store[filteredStoreChunk].filter((manuscript) => {
-          if (filterParam === LARGE_MANUSCRIPTS) {
-            if (
-              manuscript.type === MONOGRAPH ||
-              manuscript.type === TEACHING_AID
-            ) {
-              return true;
-            }
-          } else if (filterParam === SMALL_MANUSCRIPTS) {
-            if (
-              manuscript.type === SCIENCE_PUBLICATION ||
-              manuscript.type === CONFERENCE_THESES
-            ) {
-              return true;
-            }
-          }
-        }),
+        // filteredManuscripts: store[filteredStoreChunk].filter((manuscript) => {
+        //   if (filterParam === LARGE_MANUSCRIPTS) {
+        //     if (
+        //       manuscript.type === MONOGRAPH ||
+        //       manuscript.type === TEACHING_AID
+        //     ) {
+        //       return true;
+        //     }
+        //   } else if (filterParam === SMALL_MANUSCRIPTS) {
+        //     if (
+        //       manuscript.type === SCIENCE_PUBLICATION ||
+        //       manuscript.type === CONFERENCE_THESES
+        //     ) {
+        //       return true;
+        //     }
+        //   }
+        // }),
         intersectionParams: {
           ...store.intersectionParams,
           filter: filterParam,
@@ -207,7 +207,7 @@ const reducer: any = (store = initialState, action: ActionConfig) => {
 
     case SEARCH_MANUSCRIPTS:
       const searcherParam: string = action.payload.toString().toLowerCase();
-      let searchedStoreChunk = FETCHED_MANUSCRIPTS;
+      let searchedStoreChunk: string = FETCHED_MANUSCRIPTS;
 
       if (store.areManuscriptsIntersected) {
         searchedStoreChunk = INTERSECTED_MANUSCRIPTS;
@@ -221,18 +221,18 @@ const reducer: any = (store = initialState, action: ActionConfig) => {
 
       return {
         ...store,
-        searchedManuscripts: store[searchedStoreChunk].filter((manuscript) => {
-          // TODO: Add searching by date
-          const { title, author, type } = manuscript;
+        // searchedManuscripts: store[searchedStoreChunk].filter((manuscript) => {
+        //   // TODO: Add searching by date
+        //   const { title, author, type } = manuscript;
 
-          if (
-            title.toString().toLowerCase().includes(searcherParam) ||
-            author.toString().toLowerCase().includes(searcherParam) ||
-            type.toString().toLowerCase().includes(searcherParam)
-          ) {
-            return true;
-          }
-        }),
+        //   if (
+        //     title.toString().toLowerCase().includes(searcherParam) ||
+        //     author.toString().toLowerCase().includes(searcherParam) ||
+        //     type.toString().toLowerCase().includes(searcherParam)
+        //   ) {
+        //     return true;
+        //   }
+        // }),
         intersectionParams: {
           ...store.intersectionParams,
           searcher: searcherParam,
