@@ -23,7 +23,7 @@ import { utils } from "../utils";
 
 // Restructure types
 const {
-  SET_STATE,
+  UPDATE_ALL_MANUSCRIPTS,
   SET_AUTHENTICATION,
   CHECK_INTERSECTIONS,
   SORT_MANUSCRIPTS,
@@ -39,7 +39,7 @@ const reducer: any = (store: InitialStateConfig = initialState, action: ActionCo
     /**
      * App
      */
-    case SET_STATE:
+    case UPDATE_ALL_MANUSCRIPTS:
       return {
         ...store,
         fetchedManuscripts: action.payload,

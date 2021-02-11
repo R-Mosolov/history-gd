@@ -11,15 +11,30 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
+// Data
 import { v4 as uuidv4 } from "uuid";
-
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { readAllManuscripts } from "../../../store/action-creators";
 import db from "../../../server/crud";
-import { MANUSCRIPT_TYPES } from "../../../constants";
+import { MANUSCRIPT_TYPES, OTHER } from "../../../constants";
 import { utils } from "../../../utils";
 
 import "./add-manuscript.css";
 
-function AddManuscript() {
+const mapStateToProps = (state) => {
+  return {
+    store: state,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    actions: bindActionCreators({ readAllManuscripts }, dispatch),
+  };
+};
+
+function AddManuscript({ actions: { readAllManuscripts = () => {} } }) {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -30,7 +45,9 @@ function AddManuscript() {
     setOpen(false);
   };
 
-  function sendDataToDB() {
+  function createManuscript() {
+    // const { readAllManuscripts } = this.props.actions;
+
     const title = document.getElementById("manuscript-title").value;
     const author = document.getElementById("manuscript-author").value;
     const type = document.getElementById("manuscript-type").value;
@@ -41,8 +58,10 @@ function AddManuscript() {
       title: title ? title.toString() : null,
       author: author ? author.toString() : null,
       creationDate: new Date(),
-      type: type ? utils.getLabelById(type, MANUSCRIPT_TYPES) : null,
+      type: type ? utils.getLabelById(type, MANUSCRIPT_TYPES) : OTHER,
     });
+
+    readAllManuscripts();
 
     return handleClickOpen();
   }
@@ -137,7 +156,7 @@ function AddManuscript() {
             </div>
 
             <div className="d-flex justify-content-center">
-              <button className="mt-3 btn btn-success" onClick={sendDataToDB}>
+              <button className="mt-3 btn btn-success" onClick={createManuscript}>
                 Создать рукопись
               </button>
             </div>
@@ -175,4 +194,4 @@ function AddManuscript() {
   );
 }
 
-export default AddManuscript;
+export default connect(mapStateToProps, mapDispatchToProps)(AddManuscript);

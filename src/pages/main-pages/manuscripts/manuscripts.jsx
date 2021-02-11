@@ -1,8 +1,10 @@
+// TODO: Rewrite this module in TypeScript
+
 // Core
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { fetchStore } from "../../../store/action-creators";
+import { readAllManuscripts } from "../../../store/action-creators";
 import { v4 as uuidv4 } from "uuid";
 
 // Icons
@@ -27,9 +29,11 @@ import SmallManuscript from "./images/small-manuscript.svg";
 import InfinitySpinner from "../../../assets/infinity-spinner.svg";
 
 // Data
+import db from "../../../server/db";
 import { utils } from "../../../utils";
 import TYPES from "../../../store/types";
 import {
+  MANUSCRIPTS,
   MANUSCRIPT_TYPES,
   FETCHED_MANUSCRIPTS,
   INTERSECTED_MANUSCRIPTS,
@@ -58,7 +62,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     // TODO: Add only finished actions instead of a dispatcher here
-    actions: bindActionCreators({ fetchStore }, dispatch),
+    actions: bindActionCreators({ readAllManuscripts }, dispatch),
     sortManuscripts: (payload) => {
       dispatch({ type: SORT_MANUSCRIPTS, payload: payload });
       dispatch({ type: CHECK_INTERSECTIONS });
@@ -78,7 +82,7 @@ const mapDispatchToProps = (dispatch) => {
 class Manuscripts extends Component {
   static defaultProps = {
     actions: {
-      fetchStore: () => {},
+      readAllManuscripts: () => {},
     },
   };
 
@@ -86,6 +90,42 @@ class Manuscripts extends Component {
     isDeletingAlertOpen: false,
     activeManuscript: 1,
   };
+
+  /**
+   * Handle editing and deleting a manuscript
+   */
+  handleDeletingManuscript(isDeletingAlertOpen, manuscript) {
+    this.setState({ activeManuscript: manuscript })
+  
+    if (isDeletingAlertOpen) {
+      this.setState({ isDeletingAlertOpen: false });
+    } else {
+      this.setState({ isDeletingAlertOpen: true });
+    }
+  }
+  
+  deleteManuscript(manuscriptId) {
+    const { readAllManuscripts } = this.props.actions;
+
+    // Delete a manuscript from DB
+    db.collection(MANUSCRIPTS).get().then((res) => res.forEach(((doc) => {
+      if (doc.data().id === manuscriptId) {
+        db
+          .collection(MANUSCRIPTS)
+          .doc(doc.id)
+          .delete()
+          .then(() => console.log(`Document ${manuscriptId} successfully deleted`))
+          .catch((err) => console.log(err))
+          .then(() => {
+            // Hide alert dialog
+            this.setState({ isDeletingAlertOpen: false });
+  
+            // Update information about manuscripts on frontend
+            readAllManuscripts();
+          })
+      }
+    })));
+  }
 
   render() {
     const {
@@ -390,7 +430,7 @@ class Manuscripts extends Component {
                   color="secondary"
                   size="small"
                   onClick={() =>
-                    this.deleteManuscriptFromDB(this.state.activeManuscript.id)
+                    this.deleteManuscript(this.state.activeManuscript.id)
                   }
                 >
                   Удалить рукопись

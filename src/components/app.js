@@ -26,7 +26,7 @@ import UserAgreement from "../pages/additional-pages/user-agreement/user-agreeme
 // Redux
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { fetchStore } from "../store/action-creators";
+import { readAllManuscripts } from "../store/action-creators";
 
 const mapStateToProps = (state) => {
   return {
@@ -36,13 +36,13 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    actions: bindActionCreators({ fetchStore }, dispatch),
+    actions: bindActionCreators({ readAllManuscripts }, dispatch),
   };
 };
 
 class App extends Component {
   componentDidMount() {
-    this.props.actions.fetchStore();
+    this.props.actions.readAllManuscripts();
   }
 
   render() {
