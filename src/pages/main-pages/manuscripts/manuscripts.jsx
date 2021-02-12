@@ -13,13 +13,15 @@ import SortIcon from "@material-ui/icons/Sort";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 
-// Dialog window
+// Dialog windows
 import Button from "@material-ui/core/Button";
+import TextField from '@material-ui/core/TextField';
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import Autocomplete from '@material-ui/lab/Autocomplete';
 
 // Components
 import LeftNavigation from "../../../components/left-navigation/left-navigation";
@@ -84,28 +86,62 @@ class Manuscripts extends Component {
     actions: {
       readAllManuscripts: () => {},
     },
+    options: [{title: "Test"}],
+    getOptionLabel: (option) => option.title,
   };
 
-  state = {
-    isDeletingAlertOpen: false,
-    activeManuscript: 1,
-  };
+  constructor(props) {
+    super(props);
+    
+    this.state = {
+      title: '',
+      author: '',
+      type: '',
+      isUpdatingDialogOpen: false,
+      isDeletingDialogOpen: false,
+      activeManuscript: 1,
+    };
+    
+    this.handleTitleChange = this.handleTitleChange.bind(this);
+    this.handleAuthorChange = this.handleAuthorChange.bind(this);
+    this.handleTypeChange = this.handleTypeChange.bind(this);
+  }
+
+  handleTitleChange = (event) => this.setState({ title: event.target.value });
+  handleAuthorChange = (event) => this.setState({ author: event.target.value });
+  handleTypeChange = (event) => this.setState({ type: event.target.value });
 
   /**
    * Handle editing and deleting a manuscript
    */
-  handleDeletingManuscript(isDeletingAlertOpen, manuscript) {
-    this.setState({ activeManuscript: manuscript })
+  handleUpdatingManuscript(isUpdatingDialogOpen, manuscript) {
+    this.setState({
+      activeManuscript: manuscript,
+      title: manuscript.title,
+      author: manuscript.author,
+      type: manuscript.type,
+    });
   
-    if (isDeletingAlertOpen) {
-      this.setState({ isDeletingAlertOpen: false });
+    if (isUpdatingDialogOpen) {
+      this.setState({ isUpdatingDialogOpen: false });
     } else {
-      this.setState({ isDeletingAlertOpen: true });
+      this.setState({ isUpdatingDialogOpen: true });
+    }
+  }
+
+  handleDeletingManuscript(isDeletingDialogOpen, manuscript) {
+    this.setState({ activeManuscript: manuscript });
+  
+    if (isDeletingDialogOpen) {
+      this.setState({ isDeletingDialogOpen: false });
+    } else {
+      this.setState({ isDeletingDialogOpen: true });
     }
   }
   
   deleteManuscript(manuscriptId) {
     const { readAllManuscripts } = this.props.actions;
+    const { isDeletingDialogOpen } = this.state;
 
     // Delete a manuscript from DB
     db.collection(MANUSCRIPTS).get().then((res) => res.forEach(((doc) => {
@@ -118,13 +154,15 @@ class Manuscripts extends Component {
           .catch((err) => console.log(err))
           .then(() => {
             // Hide alert dialog
-            this.setState({ isDeletingAlertOpen: false });
+            this.setState({ isDeletingDialogOpen: false });
   
             // Update information about manuscripts on frontend
             readAllManuscripts();
           })
       }
     })));
+
+    this.handleDeletingManuscript(isDeletingDialogOpen);
   }
 
   render() {
@@ -142,6 +180,15 @@ class Manuscripts extends Component {
       areManuscriptsFiltered,
       areManuscriptsSearched,
     } = this.props.store;
+    const {
+      areTitlesSortedByIncrease,
+      areAuthorsSortedByIncrease,
+      areTypesSortedByIncrease,
+      areCreationDatesSortedByIncrease,
+      isUpdatingDialogOpen,
+      isDeletingDialogOpen,
+      activeManuscript,
+    } = this.state;
 
     return (
       <div className="manuscripts">
@@ -228,7 +275,7 @@ class Manuscripts extends Component {
                           onClick={() => sortManuscripts("title")}
                         >
                           Название работы
-                          {this.state.areTitlesSortedByIncrease ? (
+                          {areTitlesSortedByIncrease ? (
                             <SortIcon className="ml-1" />
                           ) : (
                             <SortIcon
@@ -243,7 +290,7 @@ class Manuscripts extends Component {
                           onClick={() => sortManuscripts("author")}
                         >
                           Автор
-                          {this.state.areAuthorsSortedByIncrease ? (
+                          {areAuthorsSortedByIncrease ? (
                             <SortIcon className="ml-1" />
                           ) : (
                             <SortIcon
@@ -258,7 +305,7 @@ class Manuscripts extends Component {
                           onClick={() => sortManuscripts("type")}
                         >
                           Тип рукописи
-                          {this.state.areTypesSortedByIncrease ? (
+                          {areTypesSortedByIncrease ? (
                             <SortIcon className="ml-1" />
                           ) : (
                             <SortIcon
@@ -275,7 +322,7 @@ class Manuscripts extends Component {
                           }}
                         >
                           Дата добавления
-                          {this.state.areCreationDatesSortedByIncrease ? (
+                          {areCreationDatesSortedByIncrease ? (
                             <SortIcon className="ml-1" />
                           ) : (
                             <SortIcon
@@ -364,6 +411,12 @@ class Manuscripts extends Component {
                                       <span
                                         key={uuidv4()}
                                         style={{ cursor: "pointer" }}
+                                        onClick={() =>
+                                          this.handleUpdatingManuscript(
+                                            isUpdatingDialogOpen,
+                                            manuscript
+                                          )
+                                        }
                                       >
                                         {<EditIcon />}
                                       </span>
@@ -372,7 +425,7 @@ class Manuscripts extends Component {
                                         style={{ cursor: "pointer" }}
                                         onClick={() =>
                                           this.handleDeletingManuscript(
-                                            this.state.isDeletingAlertOpen,
+                                            isDeletingDialogOpen,
                                             manuscript
                                           )
                                         }
@@ -393,10 +446,62 @@ class Manuscripts extends Component {
               </ul>
             </div>
             <Dialog
-              open={this.state.isDeletingAlertOpen}
-              onClose={() =>
-                this.handleDeletingManuscript(this.state.isDeletingAlertOpen)
-              }
+              open={isUpdatingDialogOpen}
+              onClose={() => this.handleUpdatingManuscript(isUpdatingDialogOpen)}
+              aria-labelledby="form-dialog-title"
+            >
+              <DialogTitle id="form-dialog-title">Информация о рукописи</DialogTitle>
+              <DialogContent>
+                <TextField
+                  margin="dense"
+                  id="name"
+                  label="Название работы"
+                  value={this.state.title}
+                  onChange={(event) => this.handleTitleChange(event)}
+                  fullWidth
+                />
+                <TextField
+                  margin="dense"
+                  id="name"
+                  label="Автор"
+                  value={this.state.author}
+                  onChange={(event) => this.handleAuthorChange(event)}
+                  fullWidth
+                />
+                <TextField
+                  margin="dense"
+                  id="name"
+                  label="Тип рукописи"
+                  value={this.state.type}
+                  onChange={(event) => this.handleTypeChange(event)}
+                  fullWidth
+                />
+                {/* <Autocomplete
+                  // {...defaultProps}
+                  {...this.defaultProps}
+                  id="auto-select"
+                  autoSelect
+                  renderInput={(params) => <TextField {...params} label="autoSelect" margin="normal" />}
+                /> */}
+              </DialogContent>
+              <DialogActions>
+                <Button
+                  onClose={() => this.handleUpdatingManuscript(isUpdatingDialogOpen)}
+                  color="primary"
+                >
+                  Отмена
+                </Button>
+                <Button
+                  onClose={() => this.handleUpdatingManuscript(isUpdatingDialogOpen)}
+                  color="primary"
+                >
+                  Обновить
+                </Button>
+              </DialogActions>
+            </Dialog>
+            <Dialog
+              open={isDeletingDialogOpen}
+              onClose={() => this.handleDeletingManuscript(isDeletingDialogOpen)}
               aria-labelledby="alert-dialog-title"
               aria-describedby="alert-dialog-description"
             >
@@ -412,26 +517,15 @@ class Manuscripts extends Component {
                   variant="outlined"
                   color="primary"
                   size="small"
-                  onClick={() =>
-                    this.handleDeletingManuscript(
-                      this.state.isDeletingAlertOpen
-                    )
-                  }
+                  onClick={() => this.handleDeletingManuscript(isDeletingDialogOpen)}
                 >
                   Отменить действие
                 </Button>
                 <Button
-                  onClick={() =>
-                    this.handleDeletingManuscript(
-                      this.state.isDeletingAlertOpen
-                    )
-                  }
                   variant="outlined"
                   color="secondary"
                   size="small"
-                  onClick={() =>
-                    this.deleteManuscript(this.state.activeManuscript.id)
-                  }
+                  onClick={() => this.deleteManuscript(activeManuscript.id)}
                 >
                   Удалить рукопись
                 </Button>
