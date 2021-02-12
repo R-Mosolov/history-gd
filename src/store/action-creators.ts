@@ -9,9 +9,7 @@ export const readAllManuscripts: any = () => async (dispatch: any) => {
   dispatch({ type: READ_ALL_MANUSCRIPTS });
 
   let manuscriptsList: Array<object> = [];
-  db
-    .collection(MANUSCRIPTS)
-    .get()
+  Promise.resolve(db.collection(MANUSCRIPTS).get())
     .then((docs) => docs.forEach((doc) => manuscriptsList.push(doc.data())))
     .then(() => dispatch({ type: UPDATE_ALL_MANUSCRIPTS, payload: manuscriptsList }))
     .catch((error) => console.log(error));

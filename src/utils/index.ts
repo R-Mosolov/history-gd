@@ -8,6 +8,8 @@ const getPlaceholderById: UtilsConfig = (id, obj) =>
   obj.find((item: any) => item.id === id).placeholder;
 const getRequiredById: UtilsConfig = (id, obj) =>
   obj.find((item: any) => item.id === id).isRequired;
+const getIdByLabel: UtilsConfig = (label, obj) =>
+  obj.find((item: any) => item.label === label).id;
 
 const convertDateToCustom = (date: Date) => {
   // TODO: To parse a date, use DateJS library (see https://github.com/datejs/Datejs)
@@ -33,5 +35,6 @@ export const utils = {
   getLabelById,
   getPlaceholderById,
   getRequiredById,
+  getIdByLabel,
   convertDateToCustom,
 };

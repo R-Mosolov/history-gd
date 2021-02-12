@@ -86,8 +86,6 @@ class Manuscripts extends Component {
     actions: {
       readAllManuscripts: () => {},
     },
-    options: [{title: "Test"}],
-    getOptionLabel: (option) => option.title,
   };
 
   constructor(props) {
@@ -97,9 +95,9 @@ class Manuscripts extends Component {
       title: '',
       author: '',
       type: '',
+      activeManuscript: '',
       isUpdatingDialogOpen: false,
       isDeletingDialogOpen: false,
-      activeManuscript: 1,
     };
     
     this.handleTitleChange = this.handleTitleChange.bind(this);
@@ -109,24 +107,58 @@ class Manuscripts extends Component {
 
   handleTitleChange = (event) => this.setState({ title: event.target.value });
   handleAuthorChange = (event) => this.setState({ author: event.target.value });
-  handleTypeChange = (event) => this.setState({ type: event.target.value });
+  handleTypeChange = (type) => this.setState({ type: type });
 
   /**
    * Handle editing and deleting a manuscript
    */
   handleUpdatingManuscript(isUpdatingDialogOpen, manuscript) {
-    this.setState({
-      activeManuscript: manuscript,
-      title: manuscript.title,
-      author: manuscript.author,
-      type: manuscript.type,
-    });
-  
+    this.setState({ activeManuscript: manuscript });
+
     if (isUpdatingDialogOpen) {
       this.setState({ isUpdatingDialogOpen: false });
     } else {
-      this.setState({ isUpdatingDialogOpen: true });
+      this.setState({
+        isUpdatingDialogOpen: true,
+
+        title: manuscript.title ? manuscript.title : '',
+        author: manuscript.author ? manuscript.author : '',
+        type: manuscript.type ? manuscript.type : '',
+      });
     }
+  }
+
+  updateManuscript(manuscriptId) {
+    const { readAllManuscripts } = this.props.actions;
+
+    Promise.resolve(db.collection(MANUSCRIPTS).where("id", "==", manuscriptId).get())
+      .then((querySnapshot) => {
+        let docId = '';
+        querySnapshot.forEach((doc) => {
+          docId = doc.id;
+        });
+        return docId;
+      })
+      .then((docId) => {
+        db
+          .collection(MANUSCRIPTS)
+          .doc(docId)
+          .set({
+            author: this.state.author.toString(),
+            title: this.state.title.toString(),
+            type: utils.getIdByLabel(this.state.type, MANUSCRIPT_TYPES),
+          }, { merge: true })
+          .then(() => {
+            // Update information about manuscripts on frontend
+            readAllManuscripts();
+            console.log(`Document ${docId} successfully updated.`);
+          });
+      })
+      .then(() => {
+        // Hide alert dialog
+        this.setState({ isUpdatingDialogOpen: false });
+      })
+      .catch((err) => console.log(err));
   }
 
   handleDeletingManuscript(isDeletingDialogOpen, manuscript) {
@@ -143,26 +175,28 @@ class Manuscripts extends Component {
     const { readAllManuscripts } = this.props.actions;
     const { isDeletingDialogOpen } = this.state;
 
-    // Delete a manuscript from DB
-    db.collection(MANUSCRIPTS).get().then((res) => res.forEach(((doc) => {
-      if (doc.data().id === manuscriptId) {
-        db
-          .collection(MANUSCRIPTS)
-          .doc(doc.id)
-          .delete()
-          .then(() => console.log(`Document ${manuscriptId} successfully deleted`))
-          .catch((err) => console.log(err))
-          .then(() => {
-            // Hide alert dialog
-            this.setState({ isDeletingDialogOpen: false });
-  
-            // Update information about manuscripts on frontend
-            readAllManuscripts();
-          })
-      }
-    })));
-
     this.handleDeletingManuscript(isDeletingDialogOpen);
+
+    // Delete a manuscript from DB
+    Promise.resolve(db.collection(MANUSCRIPTS).get())
+      .then((res) => res.forEach(((doc) => {
+        if (doc.data().id === manuscriptId) {
+          db
+            .collection(MANUSCRIPTS)
+            .doc(doc.id)
+            .delete()
+            .then(() => {
+              // Update information about manuscripts on frontend
+              readAllManuscripts();
+              console.log(`Document ${manuscriptId} successfully deleted`);
+            })
+            .then(() => {
+              // Hide alert dialog
+              this.setState({ isDeletingDialogOpen: false });
+            })
+        }
+    })))
+    .catch((err) => console.log(err));
   }
 
   render() {
@@ -187,7 +221,7 @@ class Manuscripts extends Component {
       areCreationDatesSortedByIncrease,
       isUpdatingDialogOpen,
       isDeletingDialogOpen,
-      activeManuscript,
+      activeManuscript: activeManuscript,
     } = this.state;
 
     return (
@@ -411,12 +445,12 @@ class Manuscripts extends Component {
                                       <span
                                         key={uuidv4()}
                                         style={{ cursor: "pointer" }}
-                                        onClick={() =>
+                                        onClick={() => {
                                           this.handleUpdatingManuscript(
                                             isUpdatingDialogOpen,
                                             manuscript
-                                          )
-                                        }
+                                          );
+                                        }}
                                       >
                                         {<EditIcon />}
                                       </span>
@@ -468,32 +502,27 @@ class Manuscripts extends Component {
                   onChange={(event) => this.handleAuthorChange(event)}
                   fullWidth
                 />
-                <TextField
-                  margin="dense"
-                  id="name"
-                  label="Тип рукописи"
-                  value={this.state.type}
-                  onChange={(event) => this.handleTypeChange(event)}
-                  fullWidth
+                <Autocomplete
+                  options={MANUSCRIPT_TYPES}
+                  getOptionLabel={(option) => option.label}
+                  id="auto-select-data"
+                  renderInput={(params) => <TextField {...params} label="Тип рукописи" margin="normal" />}
+                  inputValue={this.state.type}
+                  onInputChange={(event, type) => this.handleTypeChange(type)}
                 />
-                {/* <Autocomplete
-                  // {...defaultProps}
-                  {...this.defaultProps}
-                  id="auto-select"
-                  autoSelect
-                  renderInput={(params) => <TextField {...params} label="autoSelect" margin="normal" />}
-                /> */}
               </DialogContent>
               <DialogActions>
                 <Button
                   onClose={() => this.handleUpdatingManuscript(isUpdatingDialogOpen)}
                   color="primary"
+                  onClick={() => this.handleUpdatingManuscript(isUpdatingDialogOpen)}
                 >
                   Отмена
                 </Button>
                 <Button
                   onClose={() => this.handleUpdatingManuscript(isUpdatingDialogOpen)}
                   color="primary"
+                  onClick={() => this.updateManuscript(activeManuscript.id)}
                 >
                   Обновить
                 </Button>
