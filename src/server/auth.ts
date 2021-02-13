@@ -3,7 +3,7 @@ import "firebase/auth";
 import "firebase/firestore";
 
 const createUser = (email: string, password: string) => {
-  return Promise.resolve(firebase.auth().createUserWithEmailAndPassword(
+  Promise.resolve(firebase.auth().createUserWithEmailAndPassword(
     email.toString(),
     // Important: Firebase requires only 6 or more symbols in a password
     password.toString()
@@ -23,10 +23,10 @@ const createUser = (email: string, password: string) => {
     });
 };
 
-const checkAuth = (email: string, password: string) => {
-  return Promise.resolve(firebase.auth().signInWithEmailAndPassword(email, password))
-    .then((userCredential) => {
-      const user = userCredential.user;
+const checkAuth = (email: string, password: string, callback: any) => {
+  Promise.resolve(firebase.auth().signInWithEmailAndPassword(email, password))
+    .then(() => {
+      callback();
       console.log('Authenticated successfully!');
     })
     .catch((error) => {

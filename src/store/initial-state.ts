@@ -1,7 +1,9 @@
 import { InitialStateConfig } from "../configs";
 
+const isAuthenticatedLS: boolean = localStorage.getItem('isAuthenticated') === 'true';
+
 const initialState: InitialStateConfig = {
-  isAuthenticated: true,
+  isAuthenticated: (isAuthenticatedLS) ? true : false,
   fetchedManuscripts: [],
   intersectionParams: {
     filter: null,

@@ -46,9 +46,11 @@ const reducer = (store = initialState, action) => {
         areManuscriptsLoading: false,
       };
     case SET_AUTHENTICATION:
+      const { isAuthenticated } = store;
+      localStorage.setItem('isAuthenticated', (isAuthenticated) ? 'false' : 'true');
       return {
         ...store,
-        isAuthenticated: true,
+        isAuthenticated: (isAuthenticated) ? false : true,
       };
 
     /**

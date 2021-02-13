@@ -4,8 +4,8 @@ scientists to keep own manuscripts (e.g., scientific articles,
 university manuals, and monographs).
 
 # The Test Access for Guests
-Email: guest@history-gd.ru
-Password: 123456
+<p><b>Email</b>: guest@history-gd.ru</p>
+<p><b>Password</b>*: 123456</p>
 
 # The Prerequisites of Creation
 The software is based on following scientific article

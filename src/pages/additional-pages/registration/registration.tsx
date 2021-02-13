@@ -42,15 +42,7 @@ function Registration() {
 
   return (
     <div className="registration mt-5 mb-5 d-flex justify-content-center container">
-      <TopNavigation
-        btnOnWorkArea={
-          <Link to="/login">
-            <button className="on-work-table mr-lg-4 btn btn-warning">
-              Рабочий стол
-            </button>
-          </Link>
-        }
-      />
+      <TopNavigation isWorkArea={false} />
 
       <div className="w-lg-50">
         <h1 className="pt-5">Регистрация на сайте</h1>
@@ -202,11 +194,6 @@ function Registration() {
             Зарегистрироваться
           </button>
         </div>
-        <Link to="/login">
-          <div className="d-flex justify-content-center">
-            <button className="mt-2 btn btn-secondary btn-block">Войти</button>
-          </div>
-        </Link>
       </div>
     </div>
   );

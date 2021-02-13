@@ -5,9 +5,10 @@ import { Link } from "react-router-dom";
 // Components
 import TopNavigation from "../../../components/top-navigation/top-navigation";
 
-// Redux
+// Data
 import { connect } from "react-redux";
 import TYPES from "../../../store/types";
+import { checkAuth } from "../../../server/auth";
 
 // Styles
 import "./login.css";
@@ -30,11 +31,10 @@ const mapDispatchToProps: any = (dispatch: (type: object) => object) => {
   };
 };
 
-class Login extends Component<Props, { isAuthenticated: boolean, email: string, password: string }> {
+class Login extends Component<Props, { email: string, password: string }> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      isAuthenticated: false,
       email: '',
       password: '',
     };
@@ -51,20 +51,21 @@ class Login extends Component<Props, { isAuthenticated: boolean, email: string, 
     this.setState({password: event.target.value});
   }
 
-  render() {
+  handleAuth() {
     const { setAuthentication } = this.props;
 
+    const email = this.state.email;
+    const password = this.state.password;
+
+    if (email !== '' && password !== '') {
+      checkAuth(email, password, setAuthentication);
+    }
+  }
+
+  render() {
     return (
       <div className="login mt-5 mb-5 d-flex justify-content-center align-items-center container">
-        <TopNavigation
-          btnOnWorkArea={
-            <Link to="/manuscripts">
-              <button className="on-work-table mr-lg-4 btn btn-warning">
-                Рабочий стол
-              </button>
-            </Link>
-          }
-        />
+        <TopNavigation isWorkArea={false} />
 
         <div className="w-50">
           <h1 className="pt-5">Вход в систему</h1>
@@ -102,14 +103,7 @@ class Login extends Component<Props, { isAuthenticated: boolean, email: string, 
           <button
             id="login-button"
             className="mt-3 btn btn-success btn-block"
-            onClick={() => {
-              const email = this.state.email;
-              const password = this.state.password;
-
-              if ((email === 'MV.Lomonosov@msu.ru') && (password === '1234')) {
-                setAuthentication();
-              }
-            }}
+            onClick={() => this.handleAuth()}
           >
             Войти
           </button>
