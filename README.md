@@ -3,6 +3,10 @@
 scientists to keep own manuscripts (e.g., scientific articles, 
 university manuals, and monographs).
 
+# The Test Access for Guests
+Email: guest@history-gd.ru
+Password: 123456
+
 # The Prerequisites of Creation
 The software is based on following scientific article
 containing main software targets and the conception:
@@ -46,12 +50,13 @@ of scientific discoveries;
 The additional technological stack: Reselect.
 
 ## Backend
-| # | Technology      | Role                                  |
-| - |:---------------:|:-------------------------------------:|
-| 1 | Node.js         | Server PL                             |
-| 2 | Express.js      | Main high-level library for Node.js   |
-| 3 | Google Firebase | NoSQL DBMS and hosting for SPA        |
-| 4 | Jest            | Tests modules code quality            |
+| # | Technology      | Role                                            |
+| - |:---------------:|:-----------------------------------------------:|
+| 1 | Node.js         | Server PL                                       |
+| 2 | Express.js      | Main high-level library for Node.js             |
+| 3 | Google Firebase | NoSQL DBMS and hosting for SPA                  |
+| 4 | JWT             | Creates tokens to authenticate an user session  |
+| 5 | Jest            | Tests modules code quality                      |
 
 # The Instructions
 ## How to Run the SPA (for guests)

@@ -9,6 +9,7 @@ node_modules
 
 # Enviroment variables
 .env
+env.js
 
 # JS bundle
 build

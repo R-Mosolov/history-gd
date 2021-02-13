@@ -3,7 +3,7 @@ import { createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import { createLogger } from "redux-logger";
 
-import reducer from "./reducer";
+import reducer from "./reducer.js";
 
 // Set up logger
 // TODO: Add writing logs for only dev mode
