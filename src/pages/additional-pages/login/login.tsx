@@ -15,9 +15,10 @@ import "./login.css";
 
 interface Props {
   setAuthentication: () => {};
+  readAllManuscripts: () => {};
 }
 
-const { SET_AUTHENTICATION } = TYPES;
+const { SET_AUTHENTICATION, READ_ALL_MANUSCRIPTS } = TYPES;
 
 const mapStateToProps = (state: object) => {
   return {
@@ -28,6 +29,7 @@ const mapStateToProps = (state: object) => {
 const mapDispatchToProps: any = (dispatch: (type: object) => object) => {
   return {
     setAuthentication: () => dispatch({ type: SET_AUTHENTICATION }),
+    readAllManuscripts: () => dispatch({ type: READ_ALL_MANUSCRIPTS }),
   };
 };
 
@@ -52,13 +54,13 @@ class Login extends Component<Props, { email: string, password: string }> {
   }
 
   handleAuth() {
-    const { setAuthentication } = this.props;
+    const { setAuthentication, readAllManuscripts } = this.props;
 
     const email = this.state.email;
     const password = this.state.password;
 
     if (email !== '' && password !== '') {
-      checkAuth(email, password, setAuthentication);
+      checkAuth(email, password, setAuthentication, readAllManuscripts);
     }
   }
 

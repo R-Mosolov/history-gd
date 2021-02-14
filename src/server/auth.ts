@@ -1,6 +1,5 @@
 import firebase from "firebase/app";
 import "firebase/auth";
-import "firebase/firestore";
 
 const createUser = (email: string, password: string) => {
   Promise.resolve(firebase.auth().createUserWithEmailAndPassword(
@@ -23,10 +22,11 @@ const createUser = (email: string, password: string) => {
     });
 };
 
-const checkAuth = (email: string, password: string, callback: any) => {
+const checkAuth = (email: string, password: string, cbToAuth: any, cbToFetch: any) => {
   Promise.resolve(firebase.auth().signInWithEmailAndPassword(email, password))
     .then(() => {
-      callback();
+      cbToAuth();
+      cbToFetch();
       console.log('Authenticated successfully!');
     })
     .catch((error) => {

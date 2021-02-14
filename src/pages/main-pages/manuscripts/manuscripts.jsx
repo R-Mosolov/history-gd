@@ -5,7 +5,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { readAllManuscripts } from "../../../store/action-creators";
-import { v4 as uuidv4 } from "uuid";
 
 // Icons
 import Box from "@material-ui/core/Box";
@@ -31,6 +30,7 @@ import SmallManuscript from "./images/small-manuscript.svg";
 import InfinitySpinner from "../../../assets/infinity-spinner.svg";
 
 // Data
+import { v4 as uuidv4 } from "uuid";
 import db from "../../../server/db";
 import { utils } from "../../../utils";
 import TYPES from "../../../store/types";

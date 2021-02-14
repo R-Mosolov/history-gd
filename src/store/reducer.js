@@ -1,3 +1,5 @@
+import firebase from "firebase/app";
+import "firebase/auth";
 import initialState from "./initial-state";
 import TYPES from "./types";
 
@@ -37,16 +39,22 @@ const reducer = (store = initialState, action) => {
      * App
      */
     case UPDATE_ALL_MANUSCRIPTS:
+      const { userId } = store;
       return {
         ...store,
-        fetchedManuscripts: action.payload,
+        fetchedManuscripts: (userId === '')
+          ? action.payload
+          : action.payload,
+          // : action.payload.filter((manuscript) => manuscript.userId === userId),
         areManuscriptsLoading: false,
       };
     case SET_AUTHENTICATION:
       const { isAuthenticated } = store;
+      localStorage.setItem('userId', (store.userId === '') ? store.userId : '');
       localStorage.setItem('isAuthenticated', (isAuthenticated) ? 'false' : 'true');
       return {
         ...store,
+        userId: (firebase.auth().currentUser?.uid) ? firebase.auth().currentUser?.uid : '',
         isAuthenticated: (isAuthenticated) ? false : true,
       };
 

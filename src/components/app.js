@@ -41,9 +41,9 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 class App extends Component {
-  componentDidMount() {
-    this.props.actions.readAllManuscripts();
-  }
+  // componentDidMount() {
+  //   this.props.actions.readAllManuscripts();
+  // }
 
   render() {
     const { isAuthenticated } = this.props.store;
