@@ -55,4 +55,4 @@ class TopNavigation extends React.Component<Props, {}> {
   }
 }
 
-export default connect(mapDispatchToProps, mapStateToProps)(TopNavigation);
+export default connect(mapStateToProps, mapDispatchToProps)(TopNavigation);

@@ -259,7 +259,7 @@ class Manuscripts extends Component {
                     style={{ height: 150 + "px", width: 150 + "px" }}
                   />
                   <span className="custom-font large-manuscripts__title">
-                    Крупные работы (монографии, учебники и др.)
+                    Крупные работы (монографии, учебники)
                   </span>
                 </li>
                 <li

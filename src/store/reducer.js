@@ -1,6 +1,3 @@
-// Configs
-import { ActionConfig, InitialStateConfig } from "../configs";
-
 import initialState from "./initial-state";
 import TYPES from "./types";
 

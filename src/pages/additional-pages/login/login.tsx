@@ -65,7 +65,16 @@ class Login extends Component<Props, { email: string, password: string }> {
   render() {
     return (
       <div className="login mt-5 mb-5 d-flex justify-content-center align-items-center container">
-        <TopNavigation isWorkArea={false} />
+        <TopNavigation
+          btnOnWorkArea={
+            <Link to="/registration">
+              <button className="on-work-table mr-lg-4 btn btn-warning">
+                Зарегистрироваться
+              </button>
+            </Link>
+          }
+          isWorkArea={false}
+        />
 
         <div className="w-50">
           <h1 className="pt-5">Вход в систему</h1>
