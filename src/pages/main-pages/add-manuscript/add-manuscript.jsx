@@ -46,15 +46,14 @@ function AddManuscript({ actions: { readAllManuscripts = () => {} } }) {
   };
 
   function createManuscript() {
-    // const { readAllManuscripts } = this.props.actions;
-
     const title = document.getElementById("manuscript-title").value;
     const author = document.getElementById("manuscript-author").value;
     const type = document.getElementById("manuscript-type").value;
 
     // Send data to the DB
     db.createOne("manuscripts", {
-      id: uuidv4(),
+      userId: uuidv4(),
+      manuscriptId: uuidv4(),
       title: title ? title.toString() : null,
       author: author ? author.toString() : null,
       creationDate: new Date(),
@@ -92,8 +91,8 @@ function AddManuscript({ actions: { readAllManuscripts = () => {} } }) {
                 </option>
                 {MANUSCRIPT_TYPES.map((manuscript) => {
                   return (
-                    <option value={manuscript.id}>
-                      {utils.getLabelById(manuscript.id, MANUSCRIPT_TYPES)}
+                    <option value={manuscript.typeId}>
+                      {utils.getLabelById(manuscript.typeId, MANUSCRIPT_TYPES)}
                     </option>
                   );
                 })}

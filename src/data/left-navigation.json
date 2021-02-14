@@ -16,16 +16,16 @@
     "link": "/diary"
   },
   {
-    "name": "Научная переписка",
-    "link": "/manuscripts"
-  },
-  {
     "name": "Обработка источников",
     "link": "/handling-sources"
   },
   {
     "name": "Наследники рукописей",
     "link": "/heritage"
+  },
+  {
+    "name": "Научная переписка",
+    "link": "/manuscripts"
   },
   {
     "name": "Научное становление",
@@ -53,6 +53,6 @@
   },
   {
     "name": "Генератор аудиомонографий",
-    "link": "/audio-generator"
+    "link": "/manuscripts"
   }
 ]

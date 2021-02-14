@@ -50,8 +50,8 @@ interface RegistrationConfig {
 
 interface ManuscriptTypesConfig {
   [index: number]: {
-    id: string;
-    label: string;
+    typeId: string;
+    typeLabel: string;
     type: string;
   };
 }
@@ -137,28 +137,28 @@ export const SERVICE_INFO: RegistrationConfig = [
 
 export const MANUSCRIPT_TYPES: ManuscriptTypesConfig = [
   {
-    id: MONOGRAPH,
-    label: "Монография",
+    typeId: MONOGRAPH,
+    typeLabel: "Монография",
     type: LARGE,
   },
   {
-    id: TEACHING_AID,
-    label: "Учебное пособие",
+    typeId: TEACHING_AID,
+    typeLabel: "Учебное пособие",
     type: LARGE,
   },
   {
-    id: SCIENCE_PUBLICATION,
-    label: "Научная публикация",
+    typeId: SCIENCE_PUBLICATION,
+    typeLabel: "Научная публикация",
     type: SMALL,
   },
   {
-    id: CONFERENCE_THESES,
-    label: "Тезисы конференции",
+    typeId: CONFERENCE_THESES,
+    typeLabel: "Тезисы конференции",
     type: SMALL,
   },
   {
-    id: OTHER,
-    label: "Другое",
+    typeId: OTHER,
+    typeLabel: "Другое",
     type: SMALL,
   },
 ];

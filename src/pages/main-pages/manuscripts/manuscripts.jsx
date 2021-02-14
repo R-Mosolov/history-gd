@@ -131,7 +131,7 @@ class Manuscripts extends Component {
   updateManuscript(manuscriptId) {
     const { readAllManuscripts } = this.props.actions;
 
-    Promise.resolve(db.collection(MANUSCRIPTS).where("id", "==", manuscriptId).get())
+    Promise.resolve(db.collection(MANUSCRIPTS).where("manuscriptId", "==", manuscriptId).get())
       .then((querySnapshot) => {
         let docId = '';
         querySnapshot.forEach((doc) => {
@@ -146,7 +146,7 @@ class Manuscripts extends Component {
           .set({
             author: this.state.author.toString(),
             title: this.state.title.toString(),
-            type: utils.getIdByLabel(this.state.type, MANUSCRIPT_TYPES),
+            // type: utils.getIdByLabel(this.state.type, MANUSCRIPT_TYPES),
           }, { merge: true })
           .then(() => {
             // Update information about manuscripts on frontend
@@ -173,14 +173,11 @@ class Manuscripts extends Component {
   
   deleteManuscript(manuscriptId) {
     const { readAllManuscripts } = this.props.actions;
-    const { isDeletingDialogOpen } = this.state;
-
-    this.handleDeletingManuscript(isDeletingDialogOpen);
 
     // Delete a manuscript from DB
     Promise.resolve(db.collection(MANUSCRIPTS).get())
       .then((res) => res.forEach(((doc) => {
-        if (doc.data().id === manuscriptId) {
+        if (doc.data().manuscriptId === manuscriptId) {
           db
             .collection(MANUSCRIPTS)
             .doc(doc.id)
@@ -221,7 +218,7 @@ class Manuscripts extends Component {
       areCreationDatesSortedByIncrease,
       isUpdatingDialogOpen,
       isDeletingDialogOpen,
-      activeManuscript: activeManuscript,
+      activeManuscript,
     } = this.state;
 
     return (
@@ -488,7 +485,7 @@ class Manuscripts extends Component {
               <DialogContent>
                 <TextField
                   margin="dense"
-                  id="name"
+                  id="manuscript-title-to-update"
                   label="Название работы"
                   value={this.state.title}
                   onChange={(event) => this.handleTitleChange(event)}
@@ -496,20 +493,21 @@ class Manuscripts extends Component {
                 />
                 <TextField
                   margin="dense"
-                  id="name"
+                  id="manuscript-author-to-update"
                   label="Автор"
                   value={this.state.author}
                   onChange={(event) => this.handleAuthorChange(event)}
                   fullWidth
                 />
-                <Autocomplete
+                {/* TODO: Fix it */}
+                {/* <Autocomplete
                   options={MANUSCRIPT_TYPES}
                   getOptionLabel={(option) => option.label}
-                  id="auto-select-data"
+                  id="manuscript-type-to-update"
                   renderInput={(params) => <TextField {...params} label="Тип рукописи" margin="normal" />}
                   inputValue={this.state.type}
                   onInputChange={(event, type) => this.handleTypeChange(type)}
-                />
+                /> */}
               </DialogContent>
               <DialogActions>
                 <Button
@@ -522,7 +520,7 @@ class Manuscripts extends Component {
                 <Button
                   onClose={() => this.handleUpdatingManuscript(isUpdatingDialogOpen)}
                   color="primary"
-                  onClick={() => this.updateManuscript(activeManuscript.id)}
+                  onClick={() => this.updateManuscript(activeManuscript.manuscriptId)}
                 >
                   Обновить
                 </Button>
@@ -554,7 +552,7 @@ class Manuscripts extends Component {
                   variant="outlined"
                   color="secondary"
                   size="small"
-                  onClick={() => this.deleteManuscript(activeManuscript.id)}
+                  onClick={() => this.deleteManuscript(activeManuscript.manuscriptId)}
                 >
                   Удалить рукопись
                 </Button>
