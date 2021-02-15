@@ -1,6 +1,6 @@
 // React
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Redirect, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 
 // Styles
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -48,17 +48,19 @@ class App extends Component {
       <Router>
         <div className="app mb-5">
           <main className="header-place">
-            <Switch>
-              {/* Public pages */}
-              <Route path="/" exact component={Main} />
-              <Route path="/registration" component={Registration} />
-              <Route path="/login" component={Login} />
+            {
+              (isAuthenticated)
+                ? (
+                  <>
+                    {/* Public pages */}
+                    <Route path="/" exact component={Main} />
+                    <Route path="/registration" component={Registration} />
+                    <Route path="/login" component={Login} />
+                    <Redirect to={(isAuthenticated) ? "/manuscripts" : "/login"}>
+                      <Route path="/login" component={Login} />
+                    </Redirect>
 
-              {
-                isAuthenticated && (
-                  <Switch>
                     {/* Private pages */}
-                    <Redirect to="/manuscripts" />
                     <Route path="/left-navigation" component={LeftNavigation} />
                     <Route path="/manuscripts" component={Manuscripts} />
                     <Route path="/full-manuscript" component={FullManuscript} />
@@ -68,10 +70,22 @@ class App extends Component {
                     <Route path="/diary" component={Diary} />
                     <Route path="/heritage" component={Heritage} />
                     <Route path="/user-agreement" component={UserAgreement} />
-                  </Switch>
+                  </>
                 )
-              }
-            </Switch>
+                : (
+                  <>
+                    {/* Public pages */}
+                    <Route path="/" exact component={Main} />
+                    <Route path="/registration" component={Registration} />
+                    <Route path="/login" component={Login} />
+                    <Redirect to={(isAuthenticated) ? "/manuscripts" : "/login"}>
+                      <Route path="/login" component={Login} />
+                    </Redirect>
+
+                    {/* TODO: Add page to handle errors */}
+                  </>
+                )
+            }
           </main>
         </div>
       </Router>

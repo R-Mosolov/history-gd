@@ -10,7 +10,6 @@ import TopNavigation from "../../../components/top-navigation/top-navigation";
 // Data
 import { connect } from "react-redux";
 import TYPES from "../../../store/types";
-import { checkAuth } from "../../../server/auth";
 import { bindActionCreators } from "redux";
 import { readAllManuscripts } from "../../../store/action-creators";
 
@@ -67,12 +66,21 @@ class Login extends Component<Props, { email: string, password: string }> {
 
   handleAuth() {
     const { setAuthentication } = this.props;
+    const { readAllManuscripts } = this.props.actions;
 
     const email = this.state.email;
     const password = this.state.password;
 
     if (email !== '' && password !== '') {
-      checkAuth(email, password, setAuthentication);
+      Promise.resolve(firebase.auth().signInWithEmailAndPassword(email, password))
+        .then(() => console.log('Authenticated successfully!'))
+        .then(() => setAuthentication())
+        .then(() => readAllManuscripts())
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.error(errorCode, errorMessage);
+        });
     }
   }
 

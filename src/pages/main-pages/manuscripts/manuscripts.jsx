@@ -105,11 +105,6 @@ class Manuscripts extends Component {
     this.handleTypeChange = this.handleTypeChange.bind(this);
   }
 
-  componentDidMount() {
-    const { readAllManuscripts } = this.props.actions;
-    readAllManuscripts();
-  }
-
   handleTitleChange = (event) => this.setState({ title: event.target.value });
   handleAuthorChange = (event) => this.setState({ author: event.target.value });
   handleTypeChange = (type) => this.setState({ type: type });

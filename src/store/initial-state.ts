@@ -2,14 +2,13 @@ import firebase from "firebase/app";
 import "firebase/auth";
 import { InitialStateConfig } from "../configs";
 
-const userId: string | null | undefined = localStorage.getItem('userId');
-const isLSUserId: boolean = localStorage.getItem('userId') !== ''
-  && localStorage.getItem('userId') !== undefined
-  && localStorage.getItem('userId') !== null;
+const userId = firebase.auth().currentUser?.uid;
+const isUserIdInLS = localStorage.getItem('userId') !== undefined;
+const isAuthenticatedInLS = localStorage.getItem('isAuthenticated') === 'true';
 
 const initialState: InitialStateConfig = {
-  userId: (isLSUserId) ? userId : '',
-  isAuthenticated: (isLSUserId) ? true : false,
+  userId: (isUserIdInLS) ? userId : undefined,
+  isAuthenticated: (isAuthenticatedInLS) ? true : false,
   fetchedManuscripts: [],
   intersectionParams: {
     filter: null,

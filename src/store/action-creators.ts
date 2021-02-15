@@ -1,5 +1,4 @@
 // Core
-import "firebase/auth";
 import db from "../server/db";
 
 // Data
