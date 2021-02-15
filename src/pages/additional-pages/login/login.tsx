@@ -1,6 +1,8 @@
 // React
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import firebase from "firebase/app";
+import "firebase/auth";
 
 // Components
 import TopNavigation from "../../../components/top-navigation/top-navigation";
@@ -9,13 +11,17 @@ import TopNavigation from "../../../components/top-navigation/top-navigation";
 import { connect } from "react-redux";
 import TYPES from "../../../store/types";
 import { checkAuth } from "../../../server/auth";
+import { bindActionCreators } from "redux";
+import { readAllManuscripts } from "../../../store/action-creators";
 
 // Styles
 import "./login.css";
 
 interface Props {
   setAuthentication: () => {};
-  readAllManuscripts: () => {};
+  actions: {
+    readAllManuscripts: any;
+  };
 }
 
 const { SET_AUTHENTICATION, READ_ALL_MANUSCRIPTS } = TYPES;
@@ -26,14 +32,20 @@ const mapStateToProps = (state: object) => {
   };
 };
 
-const mapDispatchToProps: any = (dispatch: (type: object) => object) => {
+const mapDispatchToProps: any = (dispatch: any) => {
   return {
+    actions: bindActionCreators({ readAllManuscripts }, dispatch),
     setAuthentication: () => dispatch({ type: SET_AUTHENTICATION }),
-    readAllManuscripts: () => dispatch({ type: READ_ALL_MANUSCRIPTS }),
   };
 };
 
 class Login extends Component<Props, { email: string, password: string }> {
+  static defaultProps = {
+    actions: {
+      readAllManuscripts: () => {},
+    },
+  };
+
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -54,13 +66,13 @@ class Login extends Component<Props, { email: string, password: string }> {
   }
 
   handleAuth() {
-    const { setAuthentication, readAllManuscripts } = this.props;
+    const { setAuthentication } = this.props;
 
     const email = this.state.email;
     const password = this.state.password;
 
     if (email !== '' && password !== '') {
-      checkAuth(email, password, setAuthentication, readAllManuscripts);
+      checkAuth(email, password, setAuthentication);
     }
   }
 

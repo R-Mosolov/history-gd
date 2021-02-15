@@ -1,5 +1,4 @@
 // Core
-import firebase from "firebase/app";
 import "firebase/auth";
 import db from "../server/db";
 
@@ -12,9 +11,6 @@ const { READ_ALL_MANUSCRIPTS, UPDATE_ALL_MANUSCRIPTS } = TYPES;
 // TODO: Change Any type
 export const readAllManuscripts: any = () => async (dispatch: any) => {
   dispatch({ type: READ_ALL_MANUSCRIPTS });
-
-  // console.log('uid:');
-  // console.log(firebase.auth().currentUser?.uid);
 
   let manuscriptsList: Array<object> = [];
   Promise.resolve(db.collection(MANUSCRIPTS).get())

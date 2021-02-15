@@ -33,29 +33,33 @@ const {
 
 // Create the reducer
 const reducer = (store = initialState, action) => {
+  const userId = firebase.auth().currentUser?.uid;
+  const isUserId = localStorage.getItem('userId') !== ''
+    && localStorage.getItem('userId') !== undefined
+    && localStorage.getItem('userId') !== null;
+
   switch (action.type) {
 
     /**
      * App
      */
-    case UPDATE_ALL_MANUSCRIPTS:
-      const { userId } = store;
-      return {
-        ...store,
-        fetchedManuscripts: (userId === '')
-          ? action.payload
-          : action.payload,
-          // : action.payload.filter((manuscript) => manuscript.userId === userId),
-        areManuscriptsLoading: false,
-      };
     case SET_AUTHENTICATION:
-      const { isAuthenticated } = store;
-      localStorage.setItem('userId', (store.userId === '') ? store.userId : '');
-      localStorage.setItem('isAuthenticated', (isAuthenticated) ? 'false' : 'true');
+      localStorage.setItem('userId', (isUserId) ? '' : userId);
+      localStorage.setItem('isAuthenticated', (isUserId) ? 'false' : 'true');
       return {
         ...store,
-        userId: (firebase.auth().currentUser?.uid) ? firebase.auth().currentUser?.uid : '',
-        isAuthenticated: (isAuthenticated) ? false : true,
+        userId: (isUserId) ? '' : userId,
+        isAuthenticated: (isUserId) ? false : true,
+      };
+    case UPDATE_ALL_MANUSCRIPTS:
+      return {
+        ...store,
+        userId: userId,
+        isAuthenticated: true,
+        fetchedManuscripts: (isUserId)
+          ? action.payload.filter((manuscript) => manuscript.userId === userId)
+          : action.payload,
+        areManuscriptsLoading: false,
       };
 
     /**

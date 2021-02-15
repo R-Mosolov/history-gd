@@ -3,7 +3,7 @@ export interface TypesConfig {
 }
 
 export interface InitialStateConfig {
-  userId: string | undefined;
+  userId: string | null | undefined;
   isAuthenticated: boolean;
   // TODO: Change Any type
   fetchedManuscripts: any;

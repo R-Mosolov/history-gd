@@ -22,11 +22,10 @@ const createUser = (email: string, password: string) => {
     });
 };
 
-const checkAuth = (email: string, password: string, cbToAuth: any, cbToFetch: any) => {
+const checkAuth = (email: string, password: string, cbToAuth: any) => {
   Promise.resolve(firebase.auth().signInWithEmailAndPassword(email, password))
     .then(() => {
       cbToAuth();
-      cbToFetch();
       console.log('Authenticated successfully!');
     })
     .catch((error) => {
