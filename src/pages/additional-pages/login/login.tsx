@@ -1,10 +1,16 @@
-// React
+// Core
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import firebase from "firebase/app";
 import "firebase/auth";
 
-// Components
+// Material UI components
+import Box from '@material-ui/core/Box';
+import { Typography } from "@material-ui/core";
+import Checkbox from '@material-ui/core/Checkbox';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+
+// Custom components
 import TopNavigation from "../../../components/top-navigation/top-navigation";
 
 // Data
@@ -86,7 +92,7 @@ class Login extends Component<Props, { email: string, password: string }> {
 
   render() {
     return (
-      <div className="login mt-5 mb-5 d-flex justify-content-center align-items-center container">
+      <Box className="login mt-5 mb-5 d-flex justify-content-center align-items-center container">
         <TopNavigation
           btnOnWorkArea={
             <Link to="/registration">
@@ -98,11 +104,13 @@ class Login extends Component<Props, { email: string, password: string }> {
           isWorkArea={false}
         />
 
-        <div className="w-50">
-          <h1 className="pt-5">Вход в систему</h1>
+        <Box className="w-50">
+          <Box mb={3}>
+            <h1 className="pt-5" style={{ textAlign: "center" }}>Вход в систему</h1>
+          </Box>
 
           <form id="login-form">
-            <div className="d-flex flex-column mb-2">
+            <Box className="d-flex flex-column mb-2">
               <label>Email (электронная почта)</label>
               <input
                 value={this.state.email}
@@ -114,9 +122,9 @@ class Login extends Component<Props, { email: string, password: string }> {
                 placeholder="MV.Lomonosov@msu.ru"
                 onChange={this.handleEmailChange}
               />
-            </div>
+            </Box>
 
-            <div className="d-flex flex-column">
+            <Box className="d-flex flex-column">
               <label>Пароль</label>
               <input
                 value={this.state.password}
@@ -128,7 +136,7 @@ class Login extends Component<Props, { email: string, password: string }> {
                 placeholder="********"
                 onChange={this.handlePasswordChange}
               />
-            </div>
+            </Box>
           </form>
 
           <button
@@ -138,8 +146,34 @@ class Login extends Component<Props, { email: string, password: string }> {
           >
             Войти
           </button>
-        </div>
-      </div>
+          
+          <Box display="flex" justifyContent="center" mt={2}>
+            <Box>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    color="primary"
+                    inputProps={{ 'aria-label': 'secondary checkbox' }}
+                  />
+                }
+                label="Запомнить этот компьютер"
+              />
+            </Box>
+          </Box>
+          <Box display="flex" justifyContent="center" mt={-1}>
+            <Typography
+              variant="subtitle1"
+              style={{
+                textDecoration: 'underline',
+                cursor: "pointer",
+              }}
+              gutterBottom
+            >
+              Забыли пароль?
+            </Typography>
+          </Box>
+        </Box>
+      </Box>
     );
   }
 }

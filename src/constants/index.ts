@@ -1,17 +1,17 @@
 // Registration form data
-export const FIRST_NAME: string = "first-name";
-export const MIDDLE_NAME: string = "middle-name";
-export const LAST_NAME: string = "last-name";
+export const FIRST_NAME: string = "firstName";
+export const MIDDLE_NAME: string = "middleName";
+export const LAST_NAME: string = "lastName";
 
 export const UNIVERSITY: string = "university";
-export const PROF_DEGREE: string = "prof-degree";
-export const ACADEMIC_DEGREE: string = "academic-degree";
-export const RESEARCH_INTERESTS: string = "research-interests";
+export const PROF_DEGREE: string = "profDegree";
+export const ACADEMIC_DEGREE: string = "academicDegree";
+export const RESEARCH_INTERESTS: string = "researchInterests";
 
-export const REGISTRATION_EMAIL: string = "registration-email";
+export const REGISTRATION_EMAIL: string = "registrationEmail";
 export const PHONE: string = "phone";
 export const PASSWORD: string = "password";
-export const REPEAT_PASSWORD: string = "repeat-password";
+export const REPEAT_PASSWORD: string = "repeatPassword";
 
 // Database collections
 export const USERS: string = "users";
@@ -71,7 +71,7 @@ export const BASIC_INFO: RegistrationConfig = [
     id: MIDDLE_NAME,
     label: "Отчество",
     placeholder: "Васильевич",
-    isRequired: true,
+    isRequired: false,
   },
   {
     id: LAST_NAME,
@@ -111,26 +111,26 @@ export const PROF_INFO: RegistrationConfig = [
 export const SERVICE_INFO: RegistrationConfig = [
   {
     id: REGISTRATION_EMAIL,
-    label: "Email (электронная почта)",
+    label: "Эл. почта",
     placeholder: "MV.Lomonosov@msu.ru",
     isRequired: true,
   },
   {
     id: PHONE,
     label: "Моб. телефон",
-    placeholder: "+7 (999) 999-99-99",
+    placeholder: "89999999999",
     isRequired: true,
   },
   {
     id: PASSWORD,
     label: "Пароль",
-    placeholder: "********",
+    placeholder: "******",
     isRequired: true,
   },
   {
     id: REPEAT_PASSWORD,
     label: "Повторите пароль",
-    placeholder: "********",
+    placeholder: "******",
     isRequired: true,
   },
 ];

@@ -4,8 +4,8 @@ interface UtilsConfig {
 
 const getLabelById: UtilsConfig = (id, obj, isType = true) =>
   obj.find((item: any) => item[(isType) ? "typeId" : "id"] === id)[(isType) ? "typeLabel" : "label"];
-const getPlaceholderById: UtilsConfig = (typeId, obj) =>
-  obj.find((item: any) => item.typeId === typeId).placeholder;
+const getPlaceholderById: UtilsConfig = (id, obj) =>
+  obj.find((item: any) => item.id === id).placeholder;
 const getRequiredById: UtilsConfig = (id, obj) =>
   obj.find((item: any) => item.id === id).isRequired;
 const getIdByLabel: UtilsConfig = (typeLabel, obj) =>
