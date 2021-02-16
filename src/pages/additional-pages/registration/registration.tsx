@@ -30,7 +30,7 @@ function addInput(id: string, obj: object) {
   // Add ID attribute for a label
   return (
     <label htmlFor={id}>
-      {`${inputsCounter}. ${utils.getLabelById(id, obj)}${
+      {`${inputsCounter}. ${utils.getLabelById(id, obj, false)}${
         utils.getRequiredById(id, obj) ? "*" : ""
       }`}
     </label>
