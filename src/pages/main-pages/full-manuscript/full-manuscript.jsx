@@ -1,5 +1,6 @@
 import React from "react";
 
+import { v4 as uuidv4 } from "uuid";
 import manuscriptsBase from "../../../data/manuscripts/manuscripts-base";
 import manuscriptsDetails from "../../../data/manuscripts/manuscripts-details";
 
@@ -23,7 +24,7 @@ function FullManuscript({ addNewText, deleteAllText }) {
             </h3>
 
             {manuscriptsDetails.map((manuscript) => {
-              return <p className="mt-4 text-justify">{manuscript.content}</p>;
+              return <p key={uuidv4()} className="mt-4 text-justify">{manuscript.content}</p>;
             })}
           </div>
         </div>

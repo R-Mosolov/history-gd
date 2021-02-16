@@ -5,7 +5,7 @@ university manuals, and monographs).
 
 # The Test Access for Guests
 <p><b>Email</b>: guest@history-gd.ru</p>
-<p><b>Password</b>*: 123456</p>
+<p><b>Password</b>: 123456</p>
 
 # The Prerequisites of Creation
 The software is based on following scientific article
@@ -67,7 +67,7 @@ Run following terminal commands from root directory:
 Then open a browser on: http://localhost:3000/
 
 ## How to Run the SPA (for workers)
-1. For 1st Terminal window: `clear && npm start`
+1. For 1st Terminal window: `clear && npm run build && npm start`
 2. For 2nd Terminal window: `clear && tsc ./src/**/*`
 
 ## How to Check Syntax Quality into Modules (using Prettier)

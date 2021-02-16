@@ -12,14 +12,15 @@ const getIdByLabel: UtilsConfig = (typeLabel, obj) =>
   obj.find((item: any) => item.typeLabel === typeLabel).typeId;
 
 const convertDateToCustom = (date: Date) => {
-  // TODO: To parse a date, use DateJS library (see https://github.com/datejs/Datejs)
-  const datePrototype = new Date(date);
+  // Set the initial epoch
+  const dateClone = new Date("January 01, 1970 00:00:00 UTC");
+  dateClone.setSeconds(Object(date).seconds);
 
-  const day = datePrototype.getDate();
-  const month = datePrototype.getMonth() + 1;
-  const year = datePrototype.getFullYear();
-  const hour = datePrototype.getHours();
-  const minute = datePrototype.getMinutes();
+  const day = dateClone.getDate();
+  const month = dateClone.getMonth() + 1;
+  const year = dateClone.getFullYear();
+  const hour = dateClone.getHours();
+  const minute = dateClone.getMinutes();
 
   return (
     `${day > 9 ? day : `0${day}`}.` +
