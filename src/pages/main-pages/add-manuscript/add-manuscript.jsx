@@ -1,4 +1,7 @@
+// Core
 import React from "react";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 
 import LeftNavigation from "../../../components/left-navigation/left-navigation";
 import TopNavigation from "../../../components/top-navigation/top-navigation";
@@ -12,11 +15,9 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
 // Data
-import { v4 as uuidv4 } from "uuid";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import { readAllManuscripts } from "../../../store/action-creators";
 import db from "../../../server/crud";
+import { v4 as uuidv4 } from "uuid";
+import { readAllManuscripts } from "../../../store/action-creators";
 import { MANUSCRIPT_TYPES, OTHER } from "../../../constants";
 import { utils } from "../../../utils";
 
@@ -34,7 +35,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-function AddManuscript({ actions: { readAllManuscripts = () => {} } }) {
+function AddManuscript({ store, actions: { readAllManuscripts = () => {} } }) {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -46,18 +47,19 @@ function AddManuscript({ actions: { readAllManuscripts = () => {} } }) {
   };
 
   function createManuscript() {
+    const { userId } = store;
     const title = document.getElementById("manuscript-title").value;
     const author = document.getElementById("manuscript-author").value;
-    const type = document.getElementById("manuscript-type").value;
+    const typeId = document.getElementById("manuscript-type").value;
 
     // Send data to the DB
     db.createOne("manuscripts", {
-      userId: uuidv4(),
+      userId: userId,
       manuscriptId: uuidv4(),
       title: title ? title.toString() : null,
       author: author ? author.toString() : null,
       creationDate: new Date(),
-      type: type ? utils.getLabelById(type, MANUSCRIPT_TYPES) : OTHER,
+      type: typeId ? typeId : OTHER,
     });
 
     readAllManuscripts();
@@ -85,13 +87,16 @@ function AddManuscript({ actions: { readAllManuscripts = () => {} } }) {
                   Тип работы
                 </label>
               </div>
-              <select id="manuscript-type" className="custom-select">
-                <option value="" disabled selected>
+              <select defaultValue="other" id="manuscript-type" className="custom-select">
+                <option value="" disabled>
                   Выбрать...
                 </option>
                 {MANUSCRIPT_TYPES.map((manuscript) => {
                   return (
-                    <option value={manuscript.typeId}>
+                    <option
+                      key={uuidv4()}
+                      value={manuscript.typeId}
+                    >
                       {utils.getLabelById(manuscript.typeId, MANUSCRIPT_TYPES)}
                     </option>
                   );

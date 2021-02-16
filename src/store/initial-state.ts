@@ -1,14 +1,9 @@
-import firebase from "firebase/app";
-import "firebase/auth";
 import { InitialStateConfig } from "../configs";
 
-const userId = firebase.auth().currentUser?.uid;
-const isUserIdInLS = localStorage.getItem('userId') !== undefined;
-const isAuthenticatedInLS = localStorage.getItem('isAuthenticated') === 'true';
-
 const initialState: InitialStateConfig = {
-  userId: (isUserIdInLS) ? userId : undefined,
-  isAuthenticated: (isAuthenticatedInLS) ? true : false,
+  userId: undefined,
+  isAuthenticated: false,
+  // TODO: Add the feature to save an user manuscripts in LS
   fetchedManuscripts: [],
   intersectionParams: {
     filter: null,

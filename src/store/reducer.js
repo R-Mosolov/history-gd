@@ -42,12 +42,6 @@ const reducer = (store = initialState, action) => {
      * App
      */
     case SET_AUTHENTICATION:
-      const isUserIdInLS = localStorage.getItem('userId') !== undefined;
-      const isAuthenticatedInLS = localStorage.getItem('isAuthenticated') === 'true';
-
-      localStorage.setItem('userId', (isUserIdInLS) ? undefined : userId);
-      localStorage.setItem('isAuthenticated', (isAuthenticatedInLS) ? 'false' : 'true');
-      
       return {
         ...store,
         userId: (isAuthenticated) ? undefined : userId,
