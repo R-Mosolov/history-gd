@@ -1,39 +1,39 @@
 // TODO: Rewrite this module in TypeScript
 
 // Core
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import { readAllManuscripts } from "../../../store/action-creators";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { readAllManuscripts } from '../../../store/action-creators';
 
 // Icons
-import Box from "@material-ui/core/Box";
-import SortIcon from "@material-ui/icons/Sort";
-import EditIcon from "@material-ui/icons/Edit";
-import DeleteIcon from "@material-ui/icons/Delete";
+import Box from '@material-ui/core/Box';
+import SortIcon from '@material-ui/icons/Sort';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 // Dialog windows
-import Button from "@material-ui/core/Button";
+import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
 // Components
-import LeftNavigation from "../../../components/left-navigation/left-navigation";
-import TopNavigation from "../../../components/top-navigation/top-navigation";
-import LargeManuscript from "./images/large-manuscript.svg";
-import SmallManuscript from "./images/small-manuscript.svg";
-import InfinitySpinner from "../../../assets/infinity-spinner.svg";
+import LeftNavigation from '../../../components/left-navigation/left-navigation';
+import TopNavigation from '../../../components/top-navigation/top-navigation';
+import LargeManuscript from './images/large-manuscript.svg';
+import SmallManuscript from './images/small-manuscript.svg';
+import InfinitySpinner from '../../../assets/infinity-spinner.svg';
 
 // Data
-import { v4 as uuidv4 } from "uuid";
-import db from "../../../server/db";
-import { utils } from "../../../utils";
-import TYPES from "../../../store/types";
+import { v4 as uuidv4 } from 'uuid';
+import { firestore } from '../../../server';
+import { utils } from '../../../utils';
+import TYPES from '../../../store/types';
 import {
   MANUSCRIPTS,
   MANUSCRIPT_TYPES,
@@ -41,11 +41,11 @@ import {
   INTERSECTED_MANUSCRIPTS,
   FILTERED_MANUSCRIPTS,
   SEARCHED_MANUSCRIPTS,
-  SORTED_MANUSCRIPTS
-} from "../../../constants";
+  SORTED_MANUSCRIPTS,
+} from '../../../constants';
 
 // Styles
-import "./manuscripts.css";
+import './manuscripts.css';
 
 const {
   CHECK_INTERSECTIONS,
@@ -90,7 +90,7 @@ class Manuscripts extends Component {
 
   constructor(props) {
     super(props);
-    
+
     this.state = {
       title: '',
       author: '',
@@ -99,7 +99,7 @@ class Manuscripts extends Component {
       isUpdatingDialogOpen: false,
       isDeletingDialogOpen: false,
     };
-    
+
     this.handleTitleChange = this.handleTitleChange.bind(this);
     this.handleAuthorChange = this.handleAuthorChange.bind(this);
     this.handleTypeChange = this.handleTypeChange.bind(this);
@@ -131,69 +131,39 @@ class Manuscripts extends Component {
   updateManuscript(manuscriptId) {
     const { readAllManuscripts } = this.props.actions;
 
-    Promise.resolve(db.collection(MANUSCRIPTS).where("manuscriptId", "==", manuscriptId).get())
-      .then((querySnapshot) => {
-        let docId = '';
-        querySnapshot.forEach((doc) => {
-          docId = doc.id;
-        });
-        return docId;
-      })
-      .then((docId) => {
-        db
-          .collection(MANUSCRIPTS)
-          .doc(docId)
-          .set({
-            author: this.state.author.toString(),
-            title: this.state.title.toString(),
-            // type: utils.getIdByLabel(this.state.type, MANUSCRIPT_TYPES),
-          }, { merge: true })
-          .then(() => {
-            // Update information about manuscripts on frontend
-            readAllManuscripts();
-            console.log(`Document ${docId} successfully updated.`);
-          });
-      })
+    firestore
+      .updateManuscript(
+        MANUSCRIPTS,
+        manuscriptId,
+        this.state.author.toString(),
+        this.state.title.toString(),
+        readAllManuscripts
+      )
       .then(() => {
-        // Hide alert dialog
         this.setState({ isUpdatingDialogOpen: false });
-      })
-      .catch((err) => console.log(err));
+      });
   }
 
   handleDeletingManuscript(isDeletingDialogOpen, manuscript) {
     this.setState({ activeManuscript: manuscript });
-  
+
     if (isDeletingDialogOpen) {
       this.setState({ isDeletingDialogOpen: false });
     } else {
       this.setState({ isDeletingDialogOpen: true });
     }
   }
-  
+
   deleteManuscript(manuscriptId) {
     const { readAllManuscripts } = this.props.actions;
 
-    // Delete a manuscript from DB
-    Promise.resolve(db.collection(MANUSCRIPTS).get())
-      .then((res) => res.forEach(((doc) => {
-        if (doc.data().manuscriptId === manuscriptId) {
-          db
-            .collection(MANUSCRIPTS)
-            .doc(doc.id)
-            .delete()
-            .then(() => {
-              // Update information about manuscripts on frontend
-              readAllManuscripts();
-              console.log(`Document ${manuscriptId} successfully deleted`);
-            })
-            .then(() => {
-              // Hide alert dialog
-              this.setState({ isDeletingDialogOpen: false });
-            })
+    firestore
+      .deleteManuscript(MANUSCRIPTS, manuscriptId, readAllManuscripts)
+      .then((res) => {
+        if (res === 'SUCCESS') {
+          this.setState({ isDeletingDialogOpen: false });
         }
-    })))
-    .catch((err) => console.log(err));
+      });
   }
 
   render() {
@@ -236,8 +206,8 @@ class Manuscripts extends Component {
                 <h2>Какой тип работ оставить?</h2>
                 <span
                   style={{
-                    textDecoration: "underline",
-                    cursor: "pointer",
+                    textDecoration: 'underline',
+                    cursor: 'pointer',
                   }}
                   onClick={resetState}
                 >
@@ -247,13 +217,16 @@ class Manuscripts extends Component {
               <ul className="d-flex justify-content-between list-unstyled">
                 <li
                   className="large-manuscripts d-flex align-items-center large-manuscripts"
-                  onClick={() => filterManuscripts("largeManuscripts")}
+                  onClick={() => filterManuscripts('largeManuscripts')}
                 >
                   <img
                     className="m-2 large-manuscripts__banner"
                     alt="Manuscript"
                     src={LargeManuscript}
-                    style={{ height: 150 + "px", width: 150 + "px" }}
+                    style={{
+                      height: 150 + 'px',
+                      width: 150 + 'px',
+                    }}
                   />
                   <span className="custom-font large-manuscripts__title">
                     Крупные работы (монографии, учебники)
@@ -261,13 +234,16 @@ class Manuscripts extends Component {
                 </li>
                 <li
                   className="small-manuscripts d-flex align-items-center small-manuscripts"
-                  onClick={() => filterManuscripts("smallManuscripts")}
+                  onClick={() => filterManuscripts('smallManuscripts')}
                 >
                   <img
                     className="m-2 small-manuscripts__banner"
                     alt="Papyrus"
                     src={SmallManuscript}
-                    style={{ height: 180 + "px", width: 180 + "px" }}
+                    style={{
+                      height: 180 + 'px',
+                      width: 180 + 'px',
+                    }}
                   />
                   <span className="custom-font small-manuscripts__title">
                     Малые работы (статьи, тезисы докладов и др.)
@@ -289,7 +265,7 @@ class Manuscripts extends Component {
                 {areManuscriptsLoading ? (
                   <div
                     className="d-flex justify-content-center"
-                    style={{ width: 900 + "px" }}
+                    style={{ width: 900 + 'px' }}
                   >
                     <img src={InfinitySpinner} />
                   </div>
@@ -303,7 +279,7 @@ class Manuscripts extends Component {
                         <th
                           className="interactive-th"
                           scope="col"
-                          onClick={() => sortManuscripts("title")}
+                          onClick={() => sortManuscripts('title')}
                         >
                           Название работы
                           {areTitlesSortedByIncrease ? (
@@ -311,14 +287,16 @@ class Manuscripts extends Component {
                           ) : (
                             <SortIcon
                               className="ml-1"
-                              style={{ transform: "scale(1, -1)" }}
+                              style={{
+                                transform: 'scale(1, -1)',
+                              }}
                             />
                           )}
                         </th>
                         <th
                           className="interactive-th"
                           scope="col"
-                          onClick={() => sortManuscripts("author")}
+                          onClick={() => sortManuscripts('author')}
                         >
                           Автор
                           {areAuthorsSortedByIncrease ? (
@@ -326,14 +304,16 @@ class Manuscripts extends Component {
                           ) : (
                             <SortIcon
                               className="ml-1"
-                              style={{ transform: "scale(1, -1)" }}
+                              style={{
+                                transform: 'scale(1, -1)',
+                              }}
                             />
                           )}
                         </th>
                         <th
                           className="interactive-th"
                           scope="col"
-                          onClick={() => sortManuscripts("type")}
+                          onClick={() => sortManuscripts('type')}
                         >
                           Тип рукописи
                           {areTypesSortedByIncrease ? (
@@ -341,7 +321,9 @@ class Manuscripts extends Component {
                           ) : (
                             <SortIcon
                               className="ml-1"
-                              style={{ transform: "scale(1, -1)" }}
+                              style={{
+                                transform: 'scale(1, -1)',
+                              }}
                             />
                           )}
                         </th>
@@ -358,7 +340,9 @@ class Manuscripts extends Component {
                           ) : (
                             <SortIcon
                               className="ml-1"
-                              style={{ transform: "scale(1, -1)" }}
+                              style={{
+                                transform: 'scale(1, -1)',
+                              }}
                             />
                           )}
                         </th>
@@ -415,24 +399,27 @@ class Manuscripts extends Component {
                                     <td key={uuidv4()}>
                                       {manuscript.title
                                         ? manuscript.title.toString()
-                                        : "–"}
+                                        : '–'}
                                     </td>
                                     <td key={uuidv4()}>
                                       {manuscript.author
                                         ? manuscript.author.toString()
-                                        : "–"}
+                                        : '–'}
                                     </td>
                                     <td key={uuidv4()}>
                                       {manuscript.type
-                                        ? utils.getLabelById(manuscript.type, MANUSCRIPT_TYPES)
-                                        : "–"}
+                                        ? utils.getLabelById(
+                                            manuscript.type,
+                                            MANUSCRIPT_TYPES
+                                          )
+                                        : '–'}
                                     </td>
                                     <td key={uuidv4()}>
                                       {manuscript.creationDate
                                         ? utils.convertDateToCustom(
                                             manuscript.creationDate
                                           )
-                                        : "–"}
+                                        : '–'}
                                     </td>
                                     <td key={uuidv4()}>
                                       <Box
@@ -442,7 +429,9 @@ class Manuscripts extends Component {
                                       >
                                         <span
                                           key={uuidv4()}
-                                          style={{ cursor: "pointer" }}
+                                          style={{
+                                            cursor: 'pointer',
+                                          }}
                                           onClick={() => {
                                             this.handleUpdatingManuscript(
                                               isUpdatingDialogOpen,
@@ -454,7 +443,9 @@ class Manuscripts extends Component {
                                         </span>
                                         <span
                                           key={uuidv4()}
-                                          style={{ cursor: "pointer" }}
+                                          style={{
+                                            cursor: 'pointer',
+                                          }}
                                           onClick={() =>
                                             this.handleDeletingManuscript(
                                               isDeletingDialogOpen,
@@ -475,10 +466,7 @@ class Manuscripts extends Component {
                           return (
                             <tr key={uuidv4()}>
                               <th key={uuidv4()} scope="row" colSpan="6">
-                                <p
-                                  key={uuidv4()}
-                                  className="m-0 text-center"
-                                >
+                                <p key={uuidv4()} className="m-0 text-center">
                                   К сожалению, ничего не найдено...
                                 </p>
                               </th>
@@ -493,10 +481,14 @@ class Manuscripts extends Component {
             </div>
             <Dialog
               open={isUpdatingDialogOpen}
-              onClose={() => this.handleUpdatingManuscript(isUpdatingDialogOpen)}
+              onClose={() =>
+                this.handleUpdatingManuscript(isUpdatingDialogOpen)
+              }
               aria-labelledby="form-dialog-title"
             >
-              <DialogTitle id="form-dialog-title">Информация о рукописи</DialogTitle>
+              <DialogTitle id="form-dialog-title">
+                Информация о рукописи
+              </DialogTitle>
               <DialogContent>
                 <TextField
                   margin="dense"
@@ -526,16 +518,24 @@ class Manuscripts extends Component {
               </DialogContent>
               <DialogActions>
                 <Button
-                  onClose={() => this.handleUpdatingManuscript(isUpdatingDialogOpen)}
+                  onClose={() =>
+                    this.handleUpdatingManuscript(isUpdatingDialogOpen)
+                  }
                   color="primary"
-                  onClick={() => this.handleUpdatingManuscript(isUpdatingDialogOpen)}
+                  onClick={() =>
+                    this.handleUpdatingManuscript(isUpdatingDialogOpen)
+                  }
                 >
                   Отмена
                 </Button>
                 <Button
-                  onClose={() => this.handleUpdatingManuscript(isUpdatingDialogOpen)}
+                  onClose={() =>
+                    this.handleUpdatingManuscript(isUpdatingDialogOpen)
+                  }
                   color="primary"
-                  onClick={() => this.updateManuscript(activeManuscript.manuscriptId)}
+                  onClick={() =>
+                    this.updateManuscript(activeManuscript.manuscriptId)
+                  }
                 >
                   Обновить
                 </Button>
@@ -543,11 +543,13 @@ class Manuscripts extends Component {
             </Dialog>
             <Dialog
               open={isDeletingDialogOpen}
-              onClose={() => this.handleDeletingManuscript(isDeletingDialogOpen)}
+              onClose={() =>
+                this.handleDeletingManuscript(isDeletingDialogOpen)
+              }
               aria-labelledby="alert-dialog-title"
               aria-describedby="alert-dialog-description"
             >
-              <DialogTitle id="alert-dialog-title">{"Уведомление"}</DialogTitle>
+              <DialogTitle id="alert-dialog-title">{'Уведомление'}</DialogTitle>
               <DialogContent>
                 <DialogContentText id="alert-dialog-description">
                   Вы уверены, что хотите <b>навсегда</b> удалить рукопись? В
@@ -559,7 +561,9 @@ class Manuscripts extends Component {
                   variant="outlined"
                   color="primary"
                   size="small"
-                  onClick={() => this.handleDeletingManuscript(isDeletingDialogOpen)}
+                  onClick={() =>
+                    this.handleDeletingManuscript(isDeletingDialogOpen)
+                  }
                 >
                   Отменить действие
                 </Button>
@@ -567,7 +571,9 @@ class Manuscripts extends Component {
                   variant="outlined"
                   color="secondary"
                   size="small"
-                  onClick={() => this.deleteManuscript(activeManuscript.manuscriptId)}
+                  onClick={() =>
+                    this.deleteManuscript(activeManuscript.manuscriptId)
+                  }
                 >
                   Удалить рукопись
                 </Button>

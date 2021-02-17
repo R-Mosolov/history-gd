@@ -1,8 +1,8 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Link } from 'react-router-dom';
 import { Formik, Field, Form, FormikHelpers } from 'formik';
 
-import { utils } from "../../../utils";
+import { utils } from '../../../utils';
 import {
   BASIC_INFO,
   PROF_INFO,
@@ -18,10 +18,10 @@ import {
   PHONE,
   PASSWORD,
   REPEAT_PASSWORD,
-} from "../../../constants";
-import TopNavigation from "../../../components/top-navigation/top-navigation";
+} from '../../../constants';
+import TopNavigation from '../../../components/top-navigation/top-navigation';
 
-import "./registration.css";
+import './registration.css';
 
 interface RegistrationFormValues {
   lastName: string;
@@ -44,7 +44,7 @@ function addInputLabel(id: string, obj: object) {
   return (
     <label htmlFor={id}>
       {`${inputsCounter}. ${utils.getLabelById(id, obj, false)}${
-        utils.getRequiredById(id, obj) ? " (обязательное)" : ""
+        utils.getRequiredById(id, obj) ? ' (обязательное)' : ''
       }`}
     </label>
   );
@@ -104,7 +104,9 @@ function Registration() {
                   minlength="2"
                   maxlength="75"
                   placeholder={utils.getPlaceholderById(LAST_NAME, BASIC_INFO)}
-                  required={utils.getRequiredById(LAST_NAME, BASIC_INFO) ? true : false}
+                  required={
+                    utils.getRequiredById(LAST_NAME, BASIC_INFO) ? true : false
+                  }
                 />
               </div>
               <div className="d-flex flex-column mb-3">
@@ -117,7 +119,9 @@ function Registration() {
                   minlength="2"
                   maxlength="75"
                   placeholder={utils.getPlaceholderById(FIRST_NAME, BASIC_INFO)}
-                  required={utils.getRequiredById(FIRST_NAME, BASIC_INFO) ? true : false}
+                  required={
+                    utils.getRequiredById(FIRST_NAME, BASIC_INFO) ? true : false
+                  }
                 />
               </div>
               <div className="d-flex flex-column mb-3">
@@ -129,8 +133,15 @@ function Registration() {
                   type="text"
                   minlength="2"
                   maxlength="75"
-                  placeholder={utils.getPlaceholderById(MIDDLE_NAME, BASIC_INFO)}
-                  required={utils.getRequiredById(MIDDLE_NAME, BASIC_INFO) ? true : false}
+                  placeholder={utils.getPlaceholderById(
+                    MIDDLE_NAME,
+                    BASIC_INFO
+                  )}
+                  required={
+                    utils.getRequiredById(MIDDLE_NAME, BASIC_INFO)
+                      ? true
+                      : false
+                  }
                 />
               </div>
             </fieldset>
@@ -147,7 +158,9 @@ function Registration() {
                   minlength="3"
                   maxlength="75"
                   placeholder={utils.getPlaceholderById(UNIVERSITY, PROF_INFO)}
-                  required={utils.getRequiredById(UNIVERSITY, PROF_INFO) ? true : false}
+                  required={
+                    utils.getRequiredById(UNIVERSITY, PROF_INFO) ? true : false
+                  }
                 />
               </div>
               <div className="d-flex flex-column mb-3">
@@ -160,7 +173,9 @@ function Registration() {
                   minlength="3"
                   maxlength="75"
                   placeholder={utils.getPlaceholderById(PROF_DEGREE, PROF_INFO)}
-                  required={utils.getRequiredById(PROF_DEGREE, PROF_INFO) ? true : false}
+                  required={
+                    utils.getRequiredById(PROF_DEGREE, PROF_INFO) ? true : false
+                  }
                 />
               </div>
               <div className="d-flex flex-column mb-3">
@@ -172,8 +187,15 @@ function Registration() {
                   type="text"
                   minlength="3"
                   maxlength="75"
-                  placeholder={utils.getPlaceholderById(ACADEMIC_DEGREE, PROF_INFO)}
-                  required={utils.getRequiredById(ACADEMIC_DEGREE, PROF_INFO) ? true : false}
+                  placeholder={utils.getPlaceholderById(
+                    ACADEMIC_DEGREE,
+                    PROF_INFO
+                  )}
+                  required={
+                    utils.getRequiredById(ACADEMIC_DEGREE, PROF_INFO)
+                      ? true
+                      : false
+                  }
                 />
               </div>
               <div className="d-flex flex-column mb-3">
@@ -184,8 +206,15 @@ function Registration() {
                   name={RESEARCH_INTERESTS}
                   className="form-control"
                   as="textarea"
-                  placeholder={utils.getPlaceholderById(RESEARCH_INTERESTS, PROF_INFO)}
-                  required={utils.getRequiredById(RESEARCH_INTERESTS, PROF_INFO) ? true : false}
+                  placeholder={utils.getPlaceholderById(
+                    RESEARCH_INTERESTS,
+                    PROF_INFO
+                  )}
+                  required={
+                    utils.getRequiredById(RESEARCH_INTERESTS, PROF_INFO)
+                      ? true
+                      : false
+                  }
                 />
               </div>
             </fieldset>
@@ -201,8 +230,15 @@ function Registration() {
                   type="email"
                   minlength="3"
                   maxlength="75"
-                  placeholder={utils.getPlaceholderById(REGISTRATION_EMAIL, SERVICE_INFO)}
-                  required={utils.getRequiredById(REGISTRATION_EMAIL, SERVICE_INFO) ? true : false}
+                  placeholder={utils.getPlaceholderById(
+                    REGISTRATION_EMAIL,
+                    SERVICE_INFO
+                  )}
+                  required={
+                    utils.getRequiredById(REGISTRATION_EMAIL, SERVICE_INFO)
+                      ? true
+                      : false
+                  }
                 />
               </div>
               <div className="d-flex flex-column mb-3">
@@ -215,7 +251,9 @@ function Registration() {
                   minlength="11"
                   maxlength="11"
                   placeholder={utils.getPlaceholderById(PHONE, SERVICE_INFO)}
-                  required={utils.getRequiredById(PHONE, SERVICE_INFO) ? true : false}
+                  required={
+                    utils.getRequiredById(PHONE, SERVICE_INFO) ? true : false
+                  }
                 />
               </div>
               <div className="d-flex flex-column mb-3">
@@ -228,7 +266,9 @@ function Registration() {
                   minlength="6"
                   maxlength="50"
                   placeholder={utils.getPlaceholderById(PASSWORD, SERVICE_INFO)}
-                  required={utils.getRequiredById(PASSWORD, SERVICE_INFO) ? true : false}
+                  required={
+                    utils.getRequiredById(PASSWORD, SERVICE_INFO) ? true : false
+                  }
                 />
               </div>
               <div className="d-flex flex-column mb-3">
@@ -240,12 +280,19 @@ function Registration() {
                   type="password"
                   minlength="6"
                   maxlength="50"
-                  placeholder={utils.getPlaceholderById(REPEAT_PASSWORD, SERVICE_INFO)}
-                  required={utils.getRequiredById(REPEAT_PASSWORD, SERVICE_INFO) ? true : false}
+                  placeholder={utils.getPlaceholderById(
+                    REPEAT_PASSWORD,
+                    SERVICE_INFO
+                  )}
+                  required={
+                    utils.getRequiredById(REPEAT_PASSWORD, SERVICE_INFO)
+                      ? true
+                      : false
+                  }
                 />
               </div>
             </fieldset>
-            
+
             <button
               id="registration-button"
               className="mt-3 btn btn-success btn-block"

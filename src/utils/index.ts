@@ -3,7 +3,9 @@ interface UtilsConfig {
 }
 
 const getLabelById: UtilsConfig = (id, obj, isType = true) =>
-  obj.find((item: any) => item[(isType) ? "typeId" : "id"] === id)[(isType) ? "typeLabel" : "label"];
+  obj.find((item: any) => item[isType ? 'typeId' : 'id'] === id)[
+    isType ? 'typeLabel' : 'label'
+  ];
 const getPlaceholderById: UtilsConfig = (id, obj) =>
   obj.find((item: any) => item.id === id).placeholder;
 const getRequiredById: UtilsConfig = (id, obj) =>
@@ -13,7 +15,7 @@ const getIdByLabel: UtilsConfig = (typeLabel, obj) =>
 
 const convertDateToCustom = (date: Date) => {
   // Set the initial epoch
-  const dateClone = new Date("January 01, 1970 00:00:00 UTC");
+  const dateClone = new Date('January 01, 1970 00:00:00 UTC');
   dateClone.setSeconds(Object(date).seconds);
 
   const day = dateClone.getDate();
@@ -26,7 +28,7 @@ const convertDateToCustom = (date: Date) => {
     `${day > 9 ? day : `0${day}`}.` +
     `${month > 9 ? month : `0${month}`}.` +
     `${year}` +
-    ", " +
+    ', ' +
     `${hour > 9 ? hour : `0${hour}`}` +
     `:${minute > 9 ? minute : `0${minute}`} (МСК)`
   );

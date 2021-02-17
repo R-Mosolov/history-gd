@@ -1,8 +1,8 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
-import "./error-message.css";
-import "../../../lib/form-validator/render-error";
-import TopNavigation from "../../../components/top-navigation/top-navigation";
+import './error-message.css';
+import '../../../lib/form-validator/render-error';
+import TopNavigation from '../../../components/top-navigation/top-navigation';
 
 class ErrorMessage extends Component {
   render() {

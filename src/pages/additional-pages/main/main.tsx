@@ -1,12 +1,12 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-import "./main.css";
-import TopNavigation from "../../../components/top-navigation/top-navigation";
+import './main.css';
+import TopNavigation from '../../../components/top-navigation/top-navigation';
 
 interface Props {
-  store: any,
+  store: any;
 }
 
 const mapStateToProps = (state: object) => {
@@ -23,9 +23,9 @@ class Main extends Component<Props, {}> {
       <div className="main mb-5">
         <TopNavigation
           btnOnWorkArea={
-            <Link to={(isAuthenticated) ? '/manuscripts' : '/login'}>
+            <Link to={isAuthenticated ? '/manuscripts' : '/login'}>
               <button className="on-work-table mr-lg-4 btn btn-warning">
-                {(isAuthenticated) ? 'Рабочий стол' : 'Войти в систему'}
+                {isAuthenticated ? 'Рабочий стол' : 'Войти в систему'}
               </button>
             </Link>
           }
@@ -40,9 +40,9 @@ class Main extends Component<Props, {}> {
 
         <div className="mt-5 container about-service">
           <p>
-            <b>«История гениального открытия»</b> (сокр. <i>«history-gd»</i> или{" "}
-            <i>«GitHub для ученых»</i>) – это бесплатный, научный сервис, который
-            был создан в стенах Казанского (Приволжского) федерального
+            <b>«История гениального открытия»</b> (сокр. <i>«history-gd»</i> или{' '}
+            <i>«GitHub для ученых»</i>) – это бесплатный, научный сервис,
+            который был создан в стенах Казанского (Приволжского) федерального
             университета для помощи учёным в хранении собственных рукописей
             (например, научных статей, университетских учебников и монографий).
           </p>
@@ -61,19 +61,17 @@ class Main extends Component<Props, {}> {
             <li>и др.</li>
           </ul>
 
-          {
-            (isAuthenticated)
-              ? null
-              : <div className="d-flex justify-content-center">
-                <Link to="/registration">
-                  <button className="btn btn-success">Зарегистрироваться</button>
-                </Link>
-              </div>
-          }
+          {isAuthenticated ? null : (
+            <div className="d-flex justify-content-center">
+              <Link to="/registration">
+                <button className="btn btn-success">Зарегистрироваться</button>
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     );
-  };
+  }
 }
 
 export default connect(mapStateToProps)(Main);

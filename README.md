@@ -4,7 +4,7 @@ scientists to keep own manuscripts (e.g., scientific articles,
 university manuals, and monographs).
 
 # The Test Access for Guests
-<p><b>Email</b>: guest@history-gd.ru</p>
+<p><b>Email</b>: M.V.Lomonosov@history-gd.ru</p>
 <p><b>Password</b>: 123456</p>
 
 # The Prerequisites of Creation

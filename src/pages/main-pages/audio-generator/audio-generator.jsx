@@ -1,10 +1,10 @@
-import React from "react";
+import React from 'react';
 
-import "./audio-generator.css";
+import './audio-generator.css';
 
-import * as LeftNavigation from "../../../components/left-navigation/left-navigation";
-import * as TopNavigation from "../../../components/top-navigation/top-navigation";
-import Figure from "./images/figure.jpeg";
+import * as LeftNavigation from '../../../components/left-navigation/left-navigation';
+import * as TopNavigation from '../../../components/top-navigation/top-navigation';
+import Figure from './images/figure.jpeg';
 
 function AudioGenerator() {
   return (
@@ -27,7 +27,7 @@ function AudioGenerator() {
               аудиоформате Вы можете изучать объёмную научную литературу
               паралельно с др. видами деятельности, например, поездкой в
               автомобиле или готовкой ужина. Иными словами, аудиоформат
-              монографий позволяет распараллеливать действия,{" "}
+              монографий позволяет распараллеливать действия,{' '}
               <b>увеличивая Вашу производительность как учёного</b> (см. табл.
               1)!
             </p>

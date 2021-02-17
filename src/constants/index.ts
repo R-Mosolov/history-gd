@@ -1,39 +1,39 @@
 // Registration form data
-export const FIRST_NAME: string = "firstName";
-export const MIDDLE_NAME: string = "middleName";
-export const LAST_NAME: string = "lastName";
+export const FIRST_NAME: string = 'firstName';
+export const MIDDLE_NAME: string = 'middleName';
+export const LAST_NAME: string = 'lastName';
 
-export const UNIVERSITY: string = "university";
-export const PROF_DEGREE: string = "profDegree";
-export const ACADEMIC_DEGREE: string = "academicDegree";
-export const RESEARCH_INTERESTS: string = "researchInterests";
+export const UNIVERSITY: string = 'university';
+export const PROF_DEGREE: string = 'profDegree';
+export const ACADEMIC_DEGREE: string = 'academicDegree';
+export const RESEARCH_INTERESTS: string = 'researchInterests';
 
-export const REGISTRATION_EMAIL: string = "registrationEmail";
-export const PHONE: string = "phone";
-export const PASSWORD: string = "password";
-export const REPEAT_PASSWORD: string = "repeatPassword";
+export const REGISTRATION_EMAIL: string = 'registrationEmail';
+export const PHONE: string = 'phone';
+export const PASSWORD: string = 'password';
+export const REPEAT_PASSWORD: string = 'repeatPassword';
 
 // Database collections
-export const USERS: string = "users";
-export const MANUSCRIPTS: string = "manuscripts";
+export const USERS: string = 'users';
+export const MANUSCRIPTS: string = 'manuscripts';
 
 // Manuscript types
-export const MONOGRAPH: string = "monograph";
-export const TEACHING_AID: string = "teaching-aid";
-export const SCIENCE_PUBLICATION: string = "science-publication";
-export const CONFERENCE_THESES: string = "conference-theses";
-export const OTHER: string = "other";
-export const LARGE: string = "large";
-export const SMALL: string = "small";
+export const MONOGRAPH: string = 'monograph';
+export const TEACHING_AID: string = 'teaching-aid';
+export const SCIENCE_PUBLICATION: string = 'science-publication';
+export const CONFERENCE_THESES: string = 'conference-theses';
+export const OTHER: string = 'other';
+export const LARGE: string = 'large';
+export const SMALL: string = 'small';
 
 // Redux
-export const LARGE_MANUSCRIPTS: string = "largeManuscripts";
-export const SMALL_MANUSCRIPTS: string = "smallManuscripts";
-export const FETCHED_MANUSCRIPTS: string = "fetchedManuscripts";
-export const INTERSECTED_MANUSCRIPTS: string = "intersectedManuscripts";
-export const SORTED_MANUSCRIPTS: string = "sortedManuscripts";
-export const FILTERED_MANUSCRIPTS: string = "filteredManuscripts";
-export const SEARCHED_MANUSCRIPTS: string = "searchedManuscripts";
+export const LARGE_MANUSCRIPTS: string = 'largeManuscripts';
+export const SMALL_MANUSCRIPTS: string = 'smallManuscripts';
+export const FETCHED_MANUSCRIPTS: string = 'fetchedManuscripts';
+export const INTERSECTED_MANUSCRIPTS: string = 'intersectedManuscripts';
+export const SORTED_MANUSCRIPTS: string = 'sortedManuscripts';
+export const FILTERED_MANUSCRIPTS: string = 'filteredManuscripts';
+export const SEARCHED_MANUSCRIPTS: string = 'searchedManuscripts';
 
 /**
  * Set the interface (types of keys values)
@@ -63,20 +63,20 @@ interface ManuscriptTypesConfig {
 export const BASIC_INFO: RegistrationConfig = [
   {
     id: FIRST_NAME,
-    label: "Имя",
-    placeholder: "Михаил",
+    label: 'Имя',
+    placeholder: 'Михаил',
     isRequired: true,
   },
   {
     id: MIDDLE_NAME,
-    label: "Отчество",
-    placeholder: "Васильевич",
+    label: 'Отчество',
+    placeholder: 'Васильевич',
     isRequired: false,
   },
   {
     id: LAST_NAME,
-    label: "Фамилия",
-    placeholder: "Ломоносов",
+    label: 'Фамилия',
+    placeholder: 'Ломоносов',
     isRequired: true,
   },
 ];
@@ -84,26 +84,26 @@ export const BASIC_INFO: RegistrationConfig = [
 export const PROF_INFO: RegistrationConfig = [
   {
     id: UNIVERSITY,
-    label: "Полное название ВУЗ-а, в котором Вы учитесь/работаете",
-    placeholder: "Московский государственный университет",
+    label: 'Полное название ВУЗ-а, в котором Вы учитесь/работаете',
+    placeholder: 'Московский государственный университет',
     isRequired: false,
   },
   {
     id: PROF_DEGREE,
-    label: "Учёное звание",
-    placeholder: "Профессор",
+    label: 'Учёное звание',
+    placeholder: 'Профессор',
     isRequired: false,
   },
   {
     id: ACADEMIC_DEGREE,
-    label: "Учёная степень",
-    placeholder: "Академик СПбАН",
+    label: 'Учёная степень',
+    placeholder: 'Академик СПбАН',
     isRequired: false,
   },
   {
     id: RESEARCH_INTERESTS,
-    label: "Научно-исследовательские интересы",
-    placeholder: "Мозаичное дело, изобретение ночезрительных труб",
+    label: 'Научно-исследовательские интересы',
+    placeholder: 'Мозаичное дело, изобретение ночезрительных труб',
     isRequired: false,
   },
 ];
@@ -111,26 +111,26 @@ export const PROF_INFO: RegistrationConfig = [
 export const SERVICE_INFO: RegistrationConfig = [
   {
     id: REGISTRATION_EMAIL,
-    label: "Эл. почта",
-    placeholder: "MV.Lomonosov@msu.ru",
+    label: 'Эл. почта',
+    placeholder: 'MV.Lomonosov@msu.ru',
     isRequired: true,
   },
   {
     id: PHONE,
-    label: "Моб. телефон",
-    placeholder: "89999999999",
+    label: 'Моб. телефон',
+    placeholder: '89999999999',
     isRequired: true,
   },
   {
     id: PASSWORD,
-    label: "Пароль",
-    placeholder: "******",
+    label: 'Пароль',
+    placeholder: '******',
     isRequired: true,
   },
   {
     id: REPEAT_PASSWORD,
-    label: "Повторите пароль",
-    placeholder: "******",
+    label: 'Повторите пароль',
+    placeholder: '******',
     isRequired: true,
   },
 ];
@@ -138,27 +138,27 @@ export const SERVICE_INFO: RegistrationConfig = [
 export const MANUSCRIPT_TYPES: ManuscriptTypesConfig = [
   {
     typeId: MONOGRAPH,
-    typeLabel: "Монография",
+    typeLabel: 'Монография',
     type: LARGE,
   },
   {
     typeId: TEACHING_AID,
-    typeLabel: "Учебное пособие",
+    typeLabel: 'Учебное пособие',
     type: LARGE,
   },
   {
     typeId: SCIENCE_PUBLICATION,
-    typeLabel: "Научная публикация",
+    typeLabel: 'Научная публикация',
     type: SMALL,
   },
   {
     typeId: CONFERENCE_THESES,
-    typeLabel: "Тезисы конференции",
+    typeLabel: 'Тезисы конференции',
     type: SMALL,
   },
   {
     typeId: OTHER,
-    typeLabel: "Другое",
+    typeLabel: 'Другое',
     type: SMALL,
   },
 ];

@@ -1,9 +1,9 @@
-import * as React from "react";
+import * as React from 'react';
 
-import { connect } from "react-redux";
-import TYPES from "../../store/types";
+import { connect } from 'react-redux';
+import TYPES from '../../store/types';
 
-import Logo from "./logo/logo";
+import Logo from './logo/logo';
 
 export interface Props {
   btnOnWorkArea?: any;
@@ -38,16 +38,16 @@ class TopNavigation extends React.Component<Props, {}> {
 
           <div className="mr-3">
             {btnOnWorkArea}
-            {
-              (isWorkArea)
-                ? <button
-                  className="on-work-table mr-lg-4 btn btn-secondary"
-                  onClick={this.props.setAuthentication}
-                >
-                  Выйти
-                </button>
-                : <></>
-            }
+            {isWorkArea ? (
+              <button
+                className="on-work-table mr-lg-4 btn btn-secondary"
+                onClick={this.props.setAuthentication}
+              >
+                Выйти
+              </button>
+            ) : (
+              <></>
+            )}
           </div>
         </div>
       </header>

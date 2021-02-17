@@ -1,29 +1,29 @@
-import React from "react";
+import React from 'react';
 
-import MaterialTable from "material-table";
+import MaterialTable from 'material-table';
 
 // Table icons
-import { forwardRef } from "react";
-import AddBox from "@material-ui/icons/AddBox";
-import ArrowDownward from "@material-ui/icons/ArrowDownward";
-import Check from "@material-ui/icons/Check";
-import ChevronLeft from "@material-ui/icons/ChevronLeft";
-import ChevronRight from "@material-ui/icons/ChevronRight";
-import Clear from "@material-ui/icons/Clear";
-import DeleteOutline from "@material-ui/icons/DeleteOutline";
-import Edit from "@material-ui/icons/Edit";
-import FilterList from "@material-ui/icons/FilterList";
-import FirstPage from "@material-ui/icons/FirstPage";
-import LastPage from "@material-ui/icons/LastPage";
-import Remove from "@material-ui/icons/Remove";
-import SaveAlt from "@material-ui/icons/SaveAlt";
-import Search from "@material-ui/icons/Search";
-import ViewColumn from "@material-ui/icons/ViewColumn";
-import OpenInBrowserIcon from "@material-ui/icons/OpenInBrowser";
-import DeleteIcon from "@material-ui/icons/Delete";
+import { forwardRef } from 'react';
+import AddBox from '@material-ui/icons/AddBox';
+import ArrowDownward from '@material-ui/icons/ArrowDownward';
+import Check from '@material-ui/icons/Check';
+import ChevronLeft from '@material-ui/icons/ChevronLeft';
+import ChevronRight from '@material-ui/icons/ChevronRight';
+import Clear from '@material-ui/icons/Clear';
+import DeleteOutline from '@material-ui/icons/DeleteOutline';
+import Edit from '@material-ui/icons/Edit';
+import FilterList from '@material-ui/icons/FilterList';
+import FirstPage from '@material-ui/icons/FirstPage';
+import LastPage from '@material-ui/icons/LastPage';
+import Remove from '@material-ui/icons/Remove';
+import SaveAlt from '@material-ui/icons/SaveAlt';
+import Search from '@material-ui/icons/Search';
+import ViewColumn from '@material-ui/icons/ViewColumn';
+import OpenInBrowserIcon from '@material-ui/icons/OpenInBrowser';
+import DeleteIcon from '@material-ui/icons/Delete';
 
-import LeftNavigation from "../../../components/left-navigation/left-navigation";
-import TopNavigation from "../../../components/top-navigation/top-navigation";
+import LeftNavigation from '../../../components/left-navigation/left-navigation';
+import TopNavigation from '../../../components/top-navigation/top-navigation';
 
 const tableIcons = {
   Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -70,43 +70,55 @@ function Diary() {
                 <MaterialTable
                   icons={tableIcons}
                   columns={[
-                    { title: "№", field: "diaryDirectoryNumber" },
-                    { title: "Тематика дневника", field: "diaryDirectory" },
-                    { title: "Дата создания", field: "diaryCreationDate" },
-                    { title: "Последнее обновление", field: "diaryLastUpdate" },
+                    {
+                      title: '№',
+                      field: 'diaryDirectoryNumber',
+                    },
+                    {
+                      title: 'Тематика дневника',
+                      field: 'diaryDirectory',
+                    },
+                    {
+                      title: 'Дата создания',
+                      field: 'diaryCreationDate',
+                    },
+                    {
+                      title: 'Последнее обновление',
+                      field: 'diaryLastUpdate',
+                    },
                   ]}
                   data={[
                     {
                       diaryDirectoryNumber: 1,
-                      diaryDirectory: "Научное становление",
-                      diaryCreationDate: "01/31/2021, 11:11 PM",
-                      diaryLastUpdate: "01/31/2021, 11:11 PM",
+                      diaryDirectory: 'Научное становление',
+                      diaryCreationDate: '01/31/2021, 11:11 PM',
+                      diaryLastUpdate: '01/31/2021, 11:11 PM',
                     },
                     {
                       diaryDirectoryNumber: 2,
-                      diaryDirectory: "Первые успехи учеников",
-                      diaryCreationDate: "01/31/2021, 11:11 PM",
-                      diaryLastUpdate: "01/31/2021, 11:11 PM",
+                      diaryDirectory: 'Первые успехи учеников',
+                      diaryCreationDate: '01/31/2021, 11:11 PM',
+                      diaryLastUpdate: '01/31/2021, 11:11 PM',
                     },
                     {
                       diaryDirectoryNumber: 3,
-                      diaryDirectory: "Хобби",
-                      diaryCreationDate: "01/31/2021, 11:11 PM",
-                      diaryLastUpdate: "01/31/2021, 11:11 PM",
+                      diaryDirectory: 'Хобби',
+                      diaryCreationDate: '01/31/2021, 11:11 PM',
+                      diaryLastUpdate: '01/31/2021, 11:11 PM',
                     },
                   ]}
                   actions={[
                     {
                       icon: () => <OpenInBrowserIcon />,
-                      tooltip: "Открыть тематику",
+                      tooltip: 'Открыть тематику',
                       onClick: (event, rowData) =>
-                        alert("You saved " + rowData.name),
+                        alert('You saved ' + rowData.name),
                     },
                     {
                       icon: () => <DeleteIcon />,
-                      tooltip: "Удалить тематику",
+                      tooltip: 'Удалить тематику',
                       onClick: (event, rowData) =>
-                        alert("You saved " + rowData.name),
+                        alert('You saved ' + rowData.name),
                     },
                   ]}
                   options={{
@@ -121,14 +133,14 @@ function Diary() {
                       columnDef
                     ) => {
                       return new Promise((resolve, reject) => {
-                        console.log("newValue: " + newValue);
+                        console.log('newValue: ' + newValue);
                         setTimeout(resolve, 1000);
                       });
                     },
                   }}
                   localization={{
                     pagination: {
-                      labelRowsSelect: "строк",
+                      labelRowsSelect: 'строк',
                       // labelDisplayedRows: `${from}-${to} из ${count}`
                     },
                   }}

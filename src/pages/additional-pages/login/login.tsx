@@ -1,26 +1,25 @@
 // Core
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import firebase from "firebase/app";
-import "firebase/auth";
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { auth } from '../../../server';
 
 // Material UI components
 import Box from '@material-ui/core/Box';
-import { Typography } from "@material-ui/core";
+import { Typography } from '@material-ui/core';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 // Custom components
-import TopNavigation from "../../../components/top-navigation/top-navigation";
+import TopNavigation from '../../../components/top-navigation/top-navigation';
 
 // Data
-import { connect } from "react-redux";
-import TYPES from "../../../store/types";
-import { bindActionCreators } from "redux";
-import { readAllManuscripts } from "../../../store/action-creators";
+import { connect } from 'react-redux';
+import TYPES from '../../../store/types';
+import { bindActionCreators } from 'redux';
+import { readAllManuscripts } from '../../../store/action-creators';
 
 // Styles
-import "./login.css";
+import './login.css';
 
 interface Props {
   setAuthentication: () => {};
@@ -44,7 +43,7 @@ const mapDispatchToProps: any = (dispatch: any) => {
   };
 };
 
-class Login extends Component<Props, { email: string, password: string }> {
+class Login extends Component<Props, { email: string; password: string }> {
   static defaultProps = {
     actions: {
       readAllManuscripts: () => {},
@@ -63,11 +62,11 @@ class Login extends Component<Props, { email: string, password: string }> {
   }
 
   handleEmailChange(event: React.ChangeEvent<HTMLInputElement>) {
-    this.setState({email: event.target.value});
+    this.setState({ email: event.target.value });
   }
 
   handlePasswordChange(event: React.ChangeEvent<HTMLInputElement>) {
-    this.setState({password: event.target.value});
+    this.setState({ password: event.target.value });
   }
 
   handleAuth() {
@@ -78,15 +77,7 @@ class Login extends Component<Props, { email: string, password: string }> {
     const password = this.state.password;
 
     if (email !== '' && password !== '') {
-      Promise.resolve(firebase.auth().signInWithEmailAndPassword(email, password))
-        .then(() => console.log('Authenticated successfully!'))
-        .then(() => setAuthentication())
-        .then(() => readAllManuscripts())
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          console.error(errorCode, errorMessage);
-        });
+      auth.checkAuth(email, password, setAuthentication, readAllManuscripts);
     }
   }
 
@@ -106,7 +97,9 @@ class Login extends Component<Props, { email: string, password: string }> {
 
         <Box className="w-50">
           <Box mb={3}>
-            <h1 className="pt-5" style={{ textAlign: "center" }}>Вход в систему</h1>
+            <h1 className="pt-5" style={{ textAlign: 'center' }}>
+              Вход в систему
+            </h1>
           </Box>
 
           <form id="login-form">
@@ -146,14 +139,16 @@ class Login extends Component<Props, { email: string, password: string }> {
           >
             Войти
           </button>
-          
+
           <Box display="flex" justifyContent="center" mt={2}>
             <Box>
               <FormControlLabel
                 control={
                   <Checkbox
                     color="primary"
-                    inputProps={{ 'aria-label': 'secondary checkbox' }}
+                    inputProps={{
+                      'aria-label': 'secondary checkbox',
+                    }}
                   />
                 }
                 label="Запомнить этот компьютер"
@@ -165,7 +160,7 @@ class Login extends Component<Props, { email: string, password: string }> {
               variant="subtitle1"
               style={{
                 textDecoration: 'underline',
-                cursor: "pointer",
+                cursor: 'pointer',
               }}
               gutterBottom
             >

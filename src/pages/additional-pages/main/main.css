@@ -3,12 +3,12 @@
   background: linear-gradient(lightblue, lightcyan);
 }
 .main .title {
-  font-family: "Cormorant SC", "Times New Roman", serif;
+  font-family: 'Cormorant SC', 'Times New Roman', serif;
   font-size: 64px;
   color: rgba(0, 0, 0, 0.8);
 }
 .main .about-service {
-  font-family: "Times New Roman", serif;
+  font-family: 'Times New Roman', serif;
   font-size: 18px;
   text-align: justify;
 }

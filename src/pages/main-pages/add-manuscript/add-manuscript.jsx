@@ -1,29 +1,27 @@
 // Core
-import React from "react";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import firebase from "firebase/app";
-import "firebase/storage";
+import React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-import LeftNavigation from "../../../components/left-navigation/left-navigation";
-import TopNavigation from "../../../components/top-navigation/top-navigation";
+import LeftNavigation from '../../../components/left-navigation/left-navigation';
+import TopNavigation from '../../../components/top-navigation/top-navigation';
 
 // The dialog window
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 // Data
-import db from "../../../server/crud";
-import { v4 as uuidv4 } from "uuid";
-import { readAllManuscripts } from "../../../store/action-creators";
-import { MANUSCRIPT_TYPES, OTHER } from "../../../constants";
-import { utils } from "../../../utils";
+import { firestore, storage } from '../../../server';
+import { v4 as uuidv4 } from 'uuid';
+import { readAllManuscripts } from '../../../store/action-creators';
+import { MANUSCRIPT_TYPES, OTHER } from '../../../constants';
+import { utils } from '../../../utils';
 
-import "./add-manuscript.css";
+import './add-manuscript.css';
 
 const mapStateToProps = (state) => {
   return {
@@ -51,14 +49,15 @@ function AddManuscript({ store, actions: { readAllManuscripts = () => {} } }) {
   function createManuscript() {
     const { userId } = store;
     const manuscriptId = uuidv4();
-    const title = document.getElementById("manuscript-title").value;
-    const author = document.getElementById("manuscript-author").value;
-    const typeId = document.getElementById("manuscript-type").value;
-    const content = document.getElementById("manuscript-content").value;
+    // TODO: Embed these values with the page state
+    const title = document.getElementById('manuscript-title').value;
+    const author = document.getElementById('manuscript-author').value;
+    const typeId = document.getElementById('manuscript-type').value;
+    const content = document.getElementById('manuscript-content').value;
 
     // Send a manuscript meta to the DB
     // TODO: Set more strong conditions (validation) to send a manuscript to the DB
-    db.createOne("manuscripts", {
+    firestore.createManuscript('manuscripts', {
       userId: userId,
       manuscriptId: manuscriptId,
       title: title ? title.toString() : null,
@@ -69,24 +68,7 @@ function AddManuscript({ store, actions: { readAllManuscripts = () => {} } }) {
 
     // Send a manuscript meta to the DB
     if (content) {
-      const storage = firebase.storage();
-      const storageRef = storage.ref();
-      var manuscriptsRef = storageRef.child(
-        `manuscripts-content/manuscript-content-${manuscriptId}.json`
-      );
-
-      const manuscriptContent = {
-        manuscriptId: manuscriptId,
-        content: content,
-      };
-      const manuscriptContentInJSON = new Blob([
-        JSON.stringify(manuscriptContent, null, 2)],
-        { type : 'application/json' },
-      );
-
-      Promise.resolve(manuscriptsRef.put(manuscriptContentInJSON))
-        .then(() => console.log('Uploaded a manuscript content!'))
-        .catch((err) => console.log(err));
+      storage.createManuscriptContent(manuscriptId, content);
     }
 
     // Update global the application state (store)
@@ -115,16 +97,17 @@ function AddManuscript({ store, actions: { readAllManuscripts = () => {} } }) {
                   Тип работы
                 </label>
               </div>
-              <select defaultValue="other" id="manuscript-type" className="custom-select">
+              <select
+                defaultValue="other"
+                id="manuscript-type"
+                className="custom-select"
+              >
                 <option value="" disabled>
                   Выбрать...
                 </option>
                 {MANUSCRIPT_TYPES.map((manuscript) => {
                   return (
-                    <option
-                      key={uuidv4()}
-                      value={manuscript.typeId}
-                    >
+                    <option key={uuidv4()} value={manuscript.typeId}>
                       {utils.getLabelById(manuscript.typeId, MANUSCRIPT_TYPES)}
                     </option>
                   );
@@ -188,7 +171,10 @@ function AddManuscript({ store, actions: { readAllManuscripts = () => {} } }) {
             </div>
 
             <div className="d-flex justify-content-center">
-              <button className="mt-3 btn btn-success" onClick={createManuscript}>
+              <button
+                className="mt-3 btn btn-success"
+                onClick={createManuscript}
+              >
                 Создать рукопись
               </button>
             </div>
@@ -203,7 +189,7 @@ function AddManuscript({ store, actions: { readAllManuscripts = () => {} } }) {
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
-          <DialogTitle id="alert-dialog-title">{"Уведомление"}</DialogTitle>
+          <DialogTitle id="alert-dialog-title">{'Уведомление'}</DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
               Ваша рукопись была успешно создана. Теперь Вы можете её увидеть в

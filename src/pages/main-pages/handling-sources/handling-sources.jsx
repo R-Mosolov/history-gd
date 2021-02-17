@@ -1,11 +1,11 @@
-import React from "react";
+import React from 'react';
 
-import LeftNavigation from "../../../components/left-navigation/left-navigation";
-import TopNavigation from "../../../components/top-navigation/top-navigation";
+import LeftNavigation from '../../../components/left-navigation/left-navigation';
+import TopNavigation from '../../../components/top-navigation/top-navigation';
 
 function HandlingSources() {
-  const marginTopFour = "mt-4";
-  const marginTopFive = "mt-5";
+  const marginTopFour = 'mt-4';
+  const marginTopFive = 'mt-5';
 
   return (
     <div className="full-manuscript">

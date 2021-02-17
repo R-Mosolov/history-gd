@@ -6,7 +6,7 @@ h5,
 h6,
 button,
 legend {
-  font-family: "Cormorant SC", "Times New Roman", serif;
+  font-family: 'Cormorant SC', 'Times New Roman', serif;
 }
 p,
 li,
@@ -19,14 +19,14 @@ select,
 textarea,
 div,
 .alert {
-  font-family: "Times New Roman", serif;
+  font-family: 'Times New Roman', serif;
   font-size: 18px;
 }
 .btn {
   font-size: 21px;
 }
 .custom-font {
-  font-family: "Cormorant SC", "Times New Roman", serif;
+  font-family: 'Cormorant SC', 'Times New Roman', serif;
 }
 input,
 textarea {

@@ -1,4 +1,4 @@
-import { InitialStateConfig } from "../configs";
+import { InitialStateConfig } from '../configs';
 
 const initialState: InitialStateConfig = {
   userId: undefined,
