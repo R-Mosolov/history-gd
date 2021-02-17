@@ -86,7 +86,7 @@ const reducer = (store = initialState, action) => {
           areManuscriptsIntersected: false,
           intersectedManuscripts: store.searchedManuscripts,
         };
-      }  else if (manuscriptsOnlySorted) {
+      } else if (manuscriptsOnlySorted) {
         return {
           ...store,
           areManuscriptsIntersected: false,
@@ -100,14 +100,15 @@ const reducer = (store = initialState, action) => {
             // TODO: Add searching by date
             const { title, author, type } = manuscript;
             const filterParam = store.intersectionParams.filter;
+            const searcherParam = store.intersectionParams.searcher;
 
             if (filterParam === LARGE_MANUSCRIPTS) {
               if (
                 (type === MONOGRAPH || type === TEACHING_AID)
                 && (
-                  title.includes(store.intersectionParams.searcher.toString().toLowerCase())
-                  || author.includes(store.intersectionParams.searcher.toString().toLowerCase())
-                  || utils.getLabelById(type, MANUSCRIPT_TYPES).toLowerCase()
+                  title.toString().toLowerCase().includes(store.intersectionParams.searcher.toString().toLowerCase())
+                  || author.toString().toLowerCase().includes(store.intersectionParams.searcher.toString().toLowerCase())
+                  || utils.getLabelById(type, MANUSCRIPT_TYPES).toString().toLowerCase()
                     .includes(store.intersectionParams.searcher.toString().toLowerCase())
                 )
               ) {
@@ -117,9 +118,9 @@ const reducer = (store = initialState, action) => {
               if (
                 (type === SCIENCE_PUBLICATION || type === CONFERENCE_THESES || type === OTHER)
                 && (
-                  title.includes(store.intersectionParams.searcher.toString().toLowerCase())
-                  || author.includes(store.intersectionParams.searcher.toString().toLowerCase())
-                  || utils.getLabelById(type, MANUSCRIPT_TYPES).toLowerCase()
+                  title.toString().toLowerCase().includes(store.intersectionParams.searcher.toString().toLowerCase())
+                  || author.toString().toLowerCase().includes(store.intersectionParams.searcher.toString().toLowerCase())
+                  || utils.getLabelById(type, MANUSCRIPT_TYPES).toString().toLowerCase()
                     .includes(store.intersectionParams.searcher.toString().toLowerCase())
                 )
               ) {
@@ -132,12 +133,24 @@ const reducer = (store = initialState, action) => {
 
     case SORT_MANUSCRIPTS:
       const sorterParam = action.payload;
+      let sortedStoreChunk = FETCHED_MANUSCRIPTS;
+
+      if (store.areManuscriptsIntersected) {
+        sortedStoreChunk = INTERSECTED_MANUSCRIPTS;
+      } else {
+        if (store.areManuscriptsFiltered.isActive && !store.areManuscriptsSearched) {
+          sortedStoreChunk = FILTERED_MANUSCRIPTS;
+        } else if (!store.areManuscriptsFiltered.isActive && store.areManuscriptsSearched) {
+          sortedStoreChunk = SEARCHED_MANUSCRIPTS;
+        }
+      }
+
       return {
         ...store,
         // TODO: Change Any type
-        sortedManuscripts: store[FETCHED_MANUSCRIPTS].sort((a, b) => {
-          const aParam = a[`${sorterParam}`].toUpperCase();
-          const bParam = b[`${sorterParam}`].toUpperCase();
+        sortedManuscripts: store[sortedStoreChunk].sort((a, b) => {
+          const aParam = a[`${sorterParam}`].toLowerCase();
+          const bParam = b[`${sorterParam}`].toLowerCase();
 
           if (store.areManuscriptsSorted.byDecrease) {
             if (aParam < bParam) return -1;
@@ -182,7 +195,8 @@ const reducer = (store = initialState, action) => {
           } else if (filterParam === SMALL_MANUSCRIPTS) {
             if (
               manuscript.type === SCIENCE_PUBLICATION ||
-              manuscript.type === CONFERENCE_THESES
+              manuscript.type === CONFERENCE_THESES ||
+              manuscript.type === OTHER
             ) {
               return true;
             }
@@ -201,7 +215,7 @@ const reducer = (store = initialState, action) => {
       };
 
     case SEARCH_MANUSCRIPTS:
-      const searcherParam = action.payload.toString().toLowerCase();
+      const searcherParam = action.payload.toString().toLowerCase().trim();
       let searchedStoreChunk = FETCHED_MANUSCRIPTS;
 
       if (store.areManuscriptsIntersected) {
@@ -216,14 +230,14 @@ const reducer = (store = initialState, action) => {
 
       return {
         ...store,
-        searchedManuscripts: store[searchedStoreChunk].filter((manuscript) => {
+        searchedManuscripts: store[FETCHED_MANUSCRIPTS].filter((manuscript) => {
           // TODO: Add searching by date
           const { title, author, type } = manuscript;
 
           if (
             title.toString().toLowerCase().includes(searcherParam) ||
             author.toString().toLowerCase().includes(searcherParam) ||
-            type.toString().toLowerCase().includes(searcherParam)
+            utils.getLabelById(type, MANUSCRIPT_TYPES).toString().toLowerCase().includes(searcherParam)
           ) {
             return true;
           }

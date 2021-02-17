@@ -397,79 +397,94 @@ class Manuscripts extends Component {
                           }
                         }
 
-                        return [
-                          // TODO: Add handler for full not matching (empty) values
-                          ...store[selectedStoreChunk].map(
-                            (manuscript, index) => {
-                              return (
-                                <tr key={uuidv4()}>
-                                  <th key={uuidv4()} scope="row">
-                                    <p
-                                      key={uuidv4()}
-                                      className="m-0 text-center"
-                                    >
-                                      {(index += 1)}
-                                    </p>
-                                  </th>
-                                  <td key={uuidv4()}>
-                                    {manuscript.title
-                                      ? manuscript.title.toString()
-                                      : "–"}
-                                  </td>
-                                  <td key={uuidv4()}>
-                                    {manuscript.author
-                                      ? manuscript.author.toString()
-                                      : "–"}
-                                  </td>
-                                  <td key={uuidv4()}>
-                                    {manuscript.type
-                                      ? utils.getLabelById(manuscript.type, MANUSCRIPT_TYPES)
-                                      : "–"}
-                                  </td>
-                                  <td key={uuidv4()}>
-                                    {manuscript.creationDate
-                                      ? utils.convertDateToCustom(
-                                          manuscript.creationDate
-                                        )
-                                      : "–"}
-                                  </td>
-                                  <td key={uuidv4()}>
-                                    <Box
-                                      key={uuidv4()}
-                                      display="flex"
-                                      justifyContent="space-around"
-                                    >
-                                      <span
+                        if (store[selectedStoreChunk].length > 0) {
+                          return [
+                            // TODO: Add handler for full not matching (empty) values
+                            ...store[selectedStoreChunk].map(
+                              (manuscript, index) => {
+                                return (
+                                  <tr key={uuidv4()}>
+                                    <th key={uuidv4()} scope="row">
+                                      <p
                                         key={uuidv4()}
-                                        style={{ cursor: "pointer" }}
-                                        onClick={() => {
-                                          this.handleUpdatingManuscript(
-                                            isUpdatingDialogOpen,
-                                            manuscript
-                                          );
-                                        }}
+                                        className="m-0 text-center"
                                       >
-                                        {<EditIcon />}
-                                      </span>
-                                      <span
-                                        key={uuidv4()}
-                                        style={{ cursor: "pointer" }}
-                                        onClick={() =>
-                                          this.handleDeletingManuscript(
-                                            isDeletingDialogOpen,
-                                            manuscript
+                                        {(index += 1)}
+                                      </p>
+                                    </th>
+                                    <td key={uuidv4()}>
+                                      {manuscript.title
+                                        ? manuscript.title.toString()
+                                        : "–"}
+                                    </td>
+                                    <td key={uuidv4()}>
+                                      {manuscript.author
+                                        ? manuscript.author.toString()
+                                        : "–"}
+                                    </td>
+                                    <td key={uuidv4()}>
+                                      {manuscript.type
+                                        ? utils.getLabelById(manuscript.type, MANUSCRIPT_TYPES)
+                                        : "–"}
+                                    </td>
+                                    <td key={uuidv4()}>
+                                      {manuscript.creationDate
+                                        ? utils.convertDateToCustom(
+                                            manuscript.creationDate
                                           )
-                                        }
+                                        : "–"}
+                                    </td>
+                                    <td key={uuidv4()}>
+                                      <Box
+                                        key={uuidv4()}
+                                        display="flex"
+                                        justifyContent="space-around"
                                       >
-                                        {<DeleteIcon />}
-                                      </span>
-                                    </Box>
-                                  </td>
-                                </tr>
-                              );
-                            }
-                          ),
-                        ];
+                                        <span
+                                          key={uuidv4()}
+                                          style={{ cursor: "pointer" }}
+                                          onClick={() => {
+                                            this.handleUpdatingManuscript(
+                                              isUpdatingDialogOpen,
+                                              manuscript
+                                            );
+                                          }}
+                                        >
+                                          {<EditIcon />}
+                                        </span>
+                                        <span
+                                          key={uuidv4()}
+                                          style={{ cursor: "pointer" }}
+                                          onClick={() =>
+                                            this.handleDeletingManuscript(
+                                              isDeletingDialogOpen,
+                                              manuscript
+                                            )
+                                          }
+                                        >
+                                          {<DeleteIcon />}
+                                        </span>
+                                      </Box>
+                                    </td>
+                                  </tr>
+                                );
+                              }
+                            ),
+                          ];
+                        } else {
+                          return (
+                            <tr key={uuidv4()}>
+                              <th key={uuidv4()} scope="row" colSpan="6">
+                                <p
+                                  key={uuidv4()}
+                                  className="m-0 text-center"
+                                >
+                                  К сожалению, ничего не найдено...
+                                </p>
+                              </th>
+                            </tr>
+                          );
+                        }
                       })()}
                     </tbody>
                   </table>
