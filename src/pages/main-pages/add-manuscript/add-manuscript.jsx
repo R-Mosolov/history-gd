@@ -2,6 +2,8 @@
 import React from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import firebase from "firebase/app";
+import "firebase/storage";
 
 import LeftNavigation from "../../../components/left-navigation/left-navigation";
 import TopNavigation from "../../../components/top-navigation/top-navigation";
@@ -48,20 +50,46 @@ function AddManuscript({ store, actions: { readAllManuscripts = () => {} } }) {
 
   function createManuscript() {
     const { userId } = store;
+    const manuscriptId = uuidv4();
     const title = document.getElementById("manuscript-title").value;
     const author = document.getElementById("manuscript-author").value;
     const typeId = document.getElementById("manuscript-type").value;
+    const content = document.getElementById("manuscript-content").value;
 
-    // Send data to the DB
+    // Send a manuscript meta to the DB
+    // TODO: Set more strong conditions (validation) to send a manuscript to the DB
     db.createOne("manuscripts", {
       userId: userId,
-      manuscriptId: uuidv4(),
+      manuscriptId: manuscriptId,
       title: title ? title.toString() : null,
       author: author ? author.toString() : null,
       creationDate: new Date(),
       type: typeId ? typeId : OTHER,
     });
 
+    // Send a manuscript meta to the DB
+    if (content) {
+      const storage = firebase.storage();
+      const storageRef = storage.ref();
+      var manuscriptsRef = storageRef.child(
+        `manuscripts-content/manuscript-content-${manuscriptId}.json`
+      );
+
+      const manuscriptContent = {
+        manuscriptId: manuscriptId,
+        content: content,
+      };
+      const manuscriptContentInJSON = new Blob([
+        JSON.stringify(manuscriptContent, null, 2)],
+        { type : 'application/json' },
+      );
+
+      Promise.resolve(manuscriptsRef.put(manuscriptContentInJSON))
+        .then(() => console.log('Uploaded a manuscript content!'))
+        .catch((err) => console.log(err));
+    }
+
+    // Update global the application state (store)
     readAllManuscripts();
 
     return handleClickOpen();
