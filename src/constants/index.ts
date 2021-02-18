@@ -112,7 +112,7 @@ export const SERVICE_INFO: RegistrationConfig = [
   {
     id: REGISTRATION_EMAIL,
     label: 'Эл. почта',
-    placeholder: 'MV.Lomonosov@msu.ru',
+    placeholder: 'M.V.Lomonosov@history-gd.ru',
     isRequired: true,
   },
   {

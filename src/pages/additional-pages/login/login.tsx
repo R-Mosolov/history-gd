@@ -9,14 +9,25 @@ import { Typography } from '@material-ui/core';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
+// Dialog window
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+
 // Custom components
 import TopNavigation from '../../../components/top-navigation/top-navigation';
 
 // Data
+import { Formik, Field, Form, FormikHelpers } from 'formik';
+import { utils } from '../../../utils';
 import { connect } from 'react-redux';
 import TYPES from '../../../store/types';
 import { bindActionCreators } from 'redux';
 import { readAllManuscripts } from '../../../store/action-creators';
+import { REGISTRATION_EMAIL, SERVICE_INFO, PASSWORD } from '../../../constants';
 
 // Styles
 import './login.css';
@@ -28,7 +39,11 @@ interface Props {
   };
 }
 
-const { SET_AUTHENTICATION, READ_ALL_MANUSCRIPTS } = TYPES;
+interface ResetFormValues {
+  emailToResetPassword: string;
+}
+
+const { SET_AUTHENTICATION } = TYPES;
 
 const mapStateToProps = (state: object) => {
   return {
@@ -43,7 +58,15 @@ const mapDispatchToProps: any = (dispatch: any) => {
   };
 };
 
-class Login extends Component<Props, { email: string; password: string }> {
+class Login extends Component<
+  Props,
+  {
+    emailToSignIn: string;
+    emailToResetPassword: string;
+    password: string;
+    isResetDialog: boolean;
+  }
+> {
   static defaultProps = {
     actions: {
       readAllManuscripts: () => {},
@@ -53,8 +76,10 @@ class Login extends Component<Props, { email: string; password: string }> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      email: '',
+      emailToSignIn: '',
+      emailToResetPassword: '',
       password: '',
+      isResetDialog: false,
     };
 
     this.handleEmailChange = this.handleEmailChange.bind(this);
@@ -62,7 +87,7 @@ class Login extends Component<Props, { email: string; password: string }> {
   }
 
   handleEmailChange(event: React.ChangeEvent<HTMLInputElement>) {
-    this.setState({ email: event.target.value });
+    this.setState({ emailToSignIn: event.target.value });
   }
 
   handlePasswordChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -73,7 +98,7 @@ class Login extends Component<Props, { email: string; password: string }> {
     const { setAuthentication } = this.props;
     const { readAllManuscripts } = this.props.actions;
 
-    const email = this.state.email;
+    const email = this.state.emailToSignIn;
     const password = this.state.password;
 
     if (email !== '' && password !== '') {
@@ -82,6 +107,8 @@ class Login extends Component<Props, { email: string; password: string }> {
   }
 
   render() {
+    const { isResetDialog, emailToResetPassword } = this.state;
+
     return (
       <Box className="login mt-5 mb-5 d-flex justify-content-center align-items-center container">
         <TopNavigation
@@ -106,13 +133,16 @@ class Login extends Component<Props, { email: string; password: string }> {
             <Box className="d-flex flex-column mb-2">
               <label>Email (электронная почта)</label>
               <input
-                value={this.state.email}
+                value={this.state.emailToSignIn}
                 id="login-page__email"
                 className="form-control"
                 type="email"
                 min="3"
                 max="75"
-                placeholder="MV.Lomonosov@msu.ru"
+                placeholder={utils.getPlaceholderById(
+                  REGISTRATION_EMAIL,
+                  SERVICE_INFO
+                )}
                 onChange={this.handleEmailChange}
               />
             </Box>
@@ -126,7 +156,7 @@ class Login extends Component<Props, { email: string; password: string }> {
                 type="password"
                 min="8"
                 max="50"
-                placeholder="********"
+                placeholder={utils.getPlaceholderById(PASSWORD, SERVICE_INFO)}
                 onChange={this.handlePasswordChange}
               />
             </Box>
@@ -163,10 +193,85 @@ class Login extends Component<Props, { email: string; password: string }> {
                 cursor: 'pointer',
               }}
               gutterBottom
+              onClick={() =>
+                this.setState({ isResetDialog: isResetDialog ? false : true })
+              }
             >
               Забыли пароль?
             </Typography>
           </Box>
+
+          <Dialog
+            open={isResetDialog}
+            onClose={() =>
+              this.setState({ isResetDialog: isResetDialog ? false : true })
+            }
+            aria-labelledby="form-dialog-title"
+          >
+            <DialogTitle id="form-dialog-title">Сброс пароля</DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                Вы уверены, что хотите сбросить пароль? Если да, введите,
+                пожалуйста, в поле ниже электронную почту, на которую
+                зарегистрирован Ваш аккаунт в программном обеспечении.
+              </DialogContentText>
+              <Formik
+                initialValues={{
+                  emailToResetPassword: '',
+                }}
+                onSubmit={(
+                  values: ResetFormValues,
+                  { setSubmitting }: FormikHelpers<ResetFormValues>
+                ) => {
+                  auth.resetPassword(values.emailToResetPassword);
+                  this.setState({
+                    isResetDialog: isResetDialog ? false : true,
+                  });
+                  setSubmitting(false);
+                }}
+              >
+                <Form>
+                  <Field
+                    id="emailToResetPassword"
+                    name="emailToResetPassword"
+                    className="form-control"
+                    type="email"
+                    minlength="3"
+                    maxlength="75"
+                    placeholder={utils.getPlaceholderById(
+                      REGISTRATION_EMAIL,
+                      SERVICE_INFO
+                    )}
+                    required={true}
+                  />
+                  <Box mt={2} mb={1}>
+                    <DialogActions>
+                      <Button
+                        variant="outlined"
+                        color="primary"
+                        size="small"
+                        onClick={() =>
+                          this.setState({
+                            isResetDialog: isResetDialog ? false : true,
+                          })
+                        }
+                      >
+                        Отменить
+                      </Button>
+                      <Button
+                        type="submit"
+                        variant="outlined"
+                        color="secondary"
+                        size="small"
+                      >
+                        Сбросить пароль
+                      </Button>
+                    </DialogActions>
+                  </Box>
+                </Form>
+              </Formik>
+            </DialogContent>
+          </Dialog>
         </Box>
       </Box>
     );
