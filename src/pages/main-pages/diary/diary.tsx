@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ElementType } from 'react';
 
 import MaterialTable from 'material-table';
 
@@ -25,28 +25,50 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import LeftNavigation from '../../../components/left-navigation/left-navigation';
 import TopNavigation from '../../../components/top-navigation/top-navigation';
 
+interface Props {
+  component: ElementType<any>;
+}
+
 const tableIcons = {
-  Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
-  Check: forwardRef((props, ref) => <Check {...props} ref={ref} />),
-  Clear: forwardRef((props, ref) => <Clear {...props} ref={ref} />),
-  Delete: forwardRef((props, ref) => <DeleteOutline {...props} ref={ref} />),
-  DetailPanel: forwardRef((props, ref) => (
+  Add: forwardRef((props: Props, ref) => <AddBox {...props} ref={ref} />),
+  Check: forwardRef((props: Props, ref) => <Check {...props} ref={ref} />),
+  Clear: forwardRef((props: Props, ref) => <Clear {...props} ref={ref} />),
+  Delete: forwardRef((props: Props, ref) => (
+    <DeleteOutline {...props} ref={ref} />
+  )),
+  DetailPanel: forwardRef((props: Props, ref) => (
     <ChevronRight {...props} ref={ref} />
   )),
-  Edit: forwardRef((props, ref) => <Edit {...props} ref={ref} />),
-  Export: forwardRef((props, ref) => <SaveAlt {...props} ref={ref} />),
-  Filter: forwardRef((props, ref) => <FilterList {...props} ref={ref} />),
-  FirstPage: forwardRef((props, ref) => <FirstPage {...props} ref={ref} />),
-  LastPage: forwardRef((props, ref) => <LastPage {...props} ref={ref} />),
-  NextPage: forwardRef((props, ref) => <ChevronRight {...props} ref={ref} />),
-  PreviousPage: forwardRef((props, ref) => (
+  Edit: forwardRef((props: Props, ref) => <Edit {...props} ref={ref} />),
+  Export: forwardRef((props: Props, ref) => <SaveAlt {...props} ref={ref} />),
+  Filter: forwardRef((props: Props, ref) => (
+    <FilterList {...props} ref={ref} />
+  )),
+  FirstPage: forwardRef((props: Props, ref) => (
+    <FirstPage {...props} ref={ref} />
+  )),
+  LastPage: forwardRef((props: Props, ref) => (
+    <LastPage {...props} ref={ref} />
+  )),
+  NextPage: forwardRef((props: Props, ref) => (
+    <ChevronRight {...props} ref={ref} />
+  )),
+  PreviousPage: forwardRef((props: Props, ref) => (
     <ChevronLeft {...props} ref={ref} />
   )),
-  ResetSearch: forwardRef((props, ref) => <Clear {...props} ref={ref} />),
-  Search: forwardRef((props, ref) => <Search {...props} ref={ref} />),
-  SortArrow: forwardRef((props, ref) => <ArrowDownward {...props} ref={ref} />),
-  ThirdStateCheck: forwardRef((props, ref) => <Remove {...props} ref={ref} />),
-  ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />),
+  ResetSearch: forwardRef((props: Props, ref) => (
+    <Clear {...props} ref={ref} />
+  )),
+  Search: forwardRef((props: Props, ref) => <Search {...props} ref={ref} />),
+  SortArrow: forwardRef((props: Props, ref) => (
+    <ArrowDownward {...props} ref={ref} />
+  )),
+  ThirdStateCheck: forwardRef((props: Props, ref) => (
+    <Remove {...props} ref={ref} />
+  )),
+  ViewColumn: forwardRef((props: Props, ref) => (
+    <ViewColumn {...props} ref={ref} />
+  )),
 };
 
 function Diary() {
@@ -111,14 +133,12 @@ function Diary() {
                     {
                       icon: () => <OpenInBrowserIcon />,
                       tooltip: 'Открыть тематику',
-                      onClick: (event, rowData) =>
-                        alert('You saved ' + rowData.name),
+                      onClick: (event, rowData) => alert('You saved!'),
                     },
                     {
                       icon: () => <DeleteIcon />,
                       tooltip: 'Удалить тематику',
-                      onClick: (event, rowData) =>
-                        alert('You saved ' + rowData.name),
+                      onClick: (event, rowData) => alert('You saved!'),
                     },
                   ]}
                   options={{

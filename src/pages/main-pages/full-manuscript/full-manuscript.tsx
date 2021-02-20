@@ -7,7 +7,7 @@ import manuscriptsDetails from '../../../data/manuscripts/manuscripts-details';
 import LeftNavigation from '../../../components/left-navigation/left-navigation';
 import TopNavigation from '../../../components/top-navigation/top-navigation';
 
-function FullManuscript({ addNewText, deleteAllText }) {
+function FullManuscript() {
   return (
     <div className="full-manuscript">
       <TopNavigation />
@@ -23,7 +23,7 @@ function FullManuscript({ addNewText, deleteAllText }) {
               {manuscriptsBase[2].author}, {manuscriptsBase[2].creationDate}
             </h3>
 
-            {manuscriptsDetails.map((manuscript) => {
+            {manuscriptsDetails.map((manuscript: any) => {
               return (
                 <p key={uuidv4()} className="mt-4 text-justify">
                   {manuscript.content}
