@@ -1,8 +1,8 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-import LogoIcon from "../../../assets/logo.svg";
-import "./logo.css";
+import LogoIcon from '../../../assets/logo.svg';
+import './logo.css';
 
 function Logo() {
   return (
@@ -11,7 +11,7 @@ function Logo() {
         <img
           alt="Logo"
           src={LogoIcon}
-          style={{ height: 50 + "px", width: 50 + "px" }}
+          style={{ height: 50 + 'px', width: 50 + 'px' }}
         />
         <div className="d-flex align-items-center">
           <span className="logo-title">История гениального открытия</span>

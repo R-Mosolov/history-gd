@@ -3,12 +3,13 @@ export interface TypesConfig {
 }
 
 export interface InitialStateConfig {
+  userId: string | null | undefined;
   isAuthenticated: boolean;
   // TODO: Change Any type
   fetchedManuscripts: any;
   intersectionParams: {
-    filter: string | null,
-    searcher: string | null,
+    filter: string | null;
+    searcher: string | null;
   };
   intersectedManuscripts: Array<object>;
   filteredManuscripts: Array<object>;

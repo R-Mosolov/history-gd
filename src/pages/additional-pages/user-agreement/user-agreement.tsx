@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 
-import LeftNavigation from "../../../components/left-navigation/left-navigation";
-import TopNavigation from "../../../components/top-navigation/top-navigation";
+import LeftNavigation from '../../../components/left-navigation/left-navigation';
+import TopNavigation from '../../../components/top-navigation/top-navigation';
 
 function UserAgreement() {
   return (
@@ -86,30 +86,30 @@ function UserAgreement() {
             </p>
 
             <h3 className="mt-4 text-center">3. Ключевые условия</h3>
-            <p className="mt-4 text-justify" style={{ fontWeight: "bold" }}>
+            <p className="mt-4 text-justify" style={{ fontWeight: 'bold' }}>
               3.8. Пользователь даёт согласие на то, что если он в течение 3
               (трёх) лет не заходил в программу (не авторизовывался в ней), то
               по прошествии данного времени:
             </p>
-            <p className="mt-4 text-justify" style={{ fontWeight: "bold" }}>
+            <p className="mt-4 text-justify" style={{ fontWeight: 'bold' }}>
               3.8.1. программа делает 3 оповещения Пользователя с просьбой зайти
               на сайт с интервалами в 1 неделю по контактам, оставленным при
               регистрации на сайте Пользователем;
             </p>
-            <p className="mt-4 text-justify" style={{ fontWeight: "bold" }}>
+            <p className="mt-4 text-justify" style={{ fontWeight: 'bold' }}>
               3.8.2. если пользователь не реагирует на 3 оповещения, то
               программа начинает определять Пользователя как ушедшего из жизни;
             </p>
-            <p className="mt-4 text-justify" style={{ fontWeight: "bold" }}>
+            <p className="mt-4 text-justify" style={{ fontWeight: 'bold' }}>
               3.8.3. все Рукописи Пользователя (в том числе дневниковые записи)
               собираются в один единый ZIP-архив;
             </p>
-            <p className="mt-4 text-justify" style={{ fontWeight: "bold" }}>
+            <p className="mt-4 text-justify" style={{ fontWeight: 'bold' }}>
               3.8.4. ZIP-архив с рукописями Пользователя направляется письмом на
               эл. почту РАН, а также тем, кого пользователь добавил в раздел
               «Наследники рукописей» Сайта;
             </p>
-            <p className="mt-4 text-justify" style={{ fontWeight: "bold" }}>
+            <p className="mt-4 text-justify" style={{ fontWeight: 'bold' }}>
               3.8.5. дополнительно ZIP-архив с Рукописями Пользователя может
               быть отправлен ряду других экспертов из предметной области
               Пользователя с просьбой оценить значение оставленных Пользователем
@@ -185,7 +185,7 @@ function UserAgreement() {
               5.2. Администрация Сайта обязуется хранить в тайне все Рукописи
               Пользователя, являющиеся дневниковыми записями, и ни при каких
               условиях не обнародовать их преждевременно (до ухода Пользователя
-              из жизни, где фактом ухода будет считаться прошествие <b>3 лет</b>{" "}
+              из жизни, где фактом ухода будет считаться прошествие <b>3 лет</b>{' '}
               с момента последней авторизации Пользователя на Сайте).
             </p>
             <p className="mt-4 text-justify">
@@ -212,7 +212,7 @@ function UserAgreement() {
               распространяются на них.
             </p>
 
-            <p className="mt-4 text-justify" style={{ fontWeight: "bold" }}>
+            <p className="mt-4 text-justify" style={{ fontWeight: 'bold' }}>
               Пользователь подтверждает, что ознакомлен со всеми пунктами
               настоящего Соглашения и безусловно принимает их.
             </p>

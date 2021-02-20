@@ -1,25 +1,41 @@
-import React from "react";
+// Core
+import React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-import LeftNavigation from "../../../components/left-navigation/left-navigation";
-import TopNavigation from "../../../components/top-navigation/top-navigation";
+import LeftNavigation from '../../../components/left-navigation/left-navigation';
+import TopNavigation from '../../../components/top-navigation/top-navigation';
 
 // The dialog window
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
-import { v4 as uuidv4 } from "uuid";
+// Data
+import { firestore, storage } from '../../../server';
+import { v4 as uuidv4 } from 'uuid';
+import { readAllManuscripts } from '../../../store/action-creators';
+import { MANUSCRIPT_TYPES, OTHER } from '../../../constants';
+import { utils } from '../../../utils';
 
-import db from "../../../server/crud";
-import { MANUSCRIPT_TYPES } from "../../../constants";
-import { utils } from "../../../utils";
+import './add-manuscript.css';
 
-import "./add-manuscript.css";
+const mapStateToProps = (state) => {
+  return {
+    store: state,
+  };
+};
 
-function AddManuscript() {
+const mapDispatchToProps = (dispatch) => {
+  return {
+    actions: bindActionCreators({ readAllManuscripts }, dispatch),
+  };
+};
+
+function AddManuscript({ store, actions: { readAllManuscripts = () => {} } }) {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -30,19 +46,33 @@ function AddManuscript() {
     setOpen(false);
   };
 
-  function sendDataToDB() {
-    const title = document.getElementById("manuscript-title").value;
-    const author = document.getElementById("manuscript-author").value;
-    const type = document.getElementById("manuscript-type").value;
+  function createManuscript() {
+    const { userId } = store;
+    const manuscriptId = uuidv4();
+    // TODO: Embed these values with the page state
+    const title = document.getElementById('manuscript-title').value;
+    const author = document.getElementById('manuscript-author').value;
+    const typeId = document.getElementById('manuscript-type').value;
+    const content = document.getElementById('manuscript-content').value;
 
-    // Send data to the DB
-    db.createOne("manuscripts", {
-      id: uuidv4(),
+    // Send a manuscript meta to the DB
+    // TODO: Set more strong conditions (validation) to send a manuscript to the DB
+    firestore.createManuscript('manuscripts', {
+      userId: userId,
+      manuscriptId: manuscriptId,
       title: title ? title.toString() : null,
       author: author ? author.toString() : null,
       creationDate: new Date(),
-      type: type ? utils.getLabelById(type, MANUSCRIPT_TYPES) : null,
+      type: typeId ? typeId : OTHER,
     });
+
+    // Send a manuscript meta to the DB
+    if (content) {
+      storage.createManuscriptContent(manuscriptId, content);
+    }
+
+    // Update global the application state (store)
+    readAllManuscripts();
 
     return handleClickOpen();
   }
@@ -67,14 +97,18 @@ function AddManuscript() {
                   Тип работы
                 </label>
               </div>
-              <select id="manuscript-type" className="custom-select">
-                <option value="" disabled selected>
+              <select
+                defaultValue="other"
+                id="manuscript-type"
+                className="custom-select"
+              >
+                <option value="" disabled>
                   Выбрать...
                 </option>
                 {MANUSCRIPT_TYPES.map((manuscript) => {
                   return (
-                    <option value={manuscript.id}>
-                      {utils.getLabelById(manuscript.id, MANUSCRIPT_TYPES)}
+                    <option key={uuidv4()} value={manuscript.typeId}>
+                      {utils.getLabelById(manuscript.typeId, MANUSCRIPT_TYPES)}
                     </option>
                   );
                 })}
@@ -137,7 +171,10 @@ function AddManuscript() {
             </div>
 
             <div className="d-flex justify-content-center">
-              <button className="mt-3 btn btn-success" onClick={sendDataToDB}>
+              <button
+                className="mt-3 btn btn-success"
+                onClick={createManuscript}
+              >
                 Создать рукопись
               </button>
             </div>
@@ -152,7 +189,7 @@ function AddManuscript() {
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
-          <DialogTitle id="alert-dialog-title">{"Уведомление"}</DialogTitle>
+          <DialogTitle id="alert-dialog-title">{'Уведомление'}</DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
               Ваша рукопись была успешно создана. Теперь Вы можете её увидеть в
@@ -175,4 +212,4 @@ function AddManuscript() {
   );
 }
 
-export default AddManuscript;
+export default connect(mapStateToProps, mapDispatchToProps)(AddManuscript);

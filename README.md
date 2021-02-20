@@ -3,6 +3,10 @@
 scientists to keep own manuscripts (e.g., scientific articles, 
 university manuals, and monographs).
 
+# The Test Access for Guests
+<p><b>Email</b>: M.V.Lomonosov@history-gd.ru</p>
+<p><b>Password</b>: 123456</p>
+
 # The Prerequisites of Creation
 The software is based on following scientific article
 containing main software targets and the conception:
@@ -46,12 +50,13 @@ of scientific discoveries;
 The additional technological stack: Reselect.
 
 ## Backend
-| # | Technology      | Role                                  |
-| - |:---------------:|:-------------------------------------:|
-| 1 | Node.js         | Server PL                             |
-| 2 | Express.js      | Main high-level library for Node.js   |
-| 3 | Google Firebase | NoSQL DBMS and hosting for SPA        |
-| 4 | Jest            | Tests modules code quality            |
+| # | Technology      | Role                                            |
+| - |:---------------:|:-----------------------------------------------:|
+| 1 | Node.js         | Server PL                                       |
+| 2 | Express.js      | Main high-level library for Node.js             |
+| 3 | Google Firebase | NoSQL DBMS and hosting for SPA                  |
+| 4 | JWT             | Creates tokens to authenticate an user session  |
+| 5 | Jest            | Tests modules code quality                      |
 
 # The Instructions
 ## How to Run the SPA (for guests)
@@ -59,11 +64,10 @@ Run following terminal commands from root directory:
 1. `npm install`
 2. `npm run build && npm start`
 
-Then open a browser on: http://localhost:3000/
+Then open a browser at: http://localhost:3000/
 
 ## How to Run the SPA (for workers)
-1. For 1st Terminal window: `clear && npm start`
-2. For 2nd Terminal window: `clear && tsc ./src/**/*`
+`clear && npm run build && npm start`
 
 ## How to Check Syntax Quality into Modules (using Prettier)
 `clear && cd src && npx prettier --write .`

@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 
-import LeftNavigation from "../../../components/left-navigation/left-navigation";
-import TopNavigation from "../../../components/top-navigation/top-navigation";
+import LeftNavigation from '../../../components/left-navigation/left-navigation';
+import TopNavigation from '../../../components/top-navigation/top-navigation';
 
 function Heritage() {
   return (
@@ -134,7 +134,7 @@ function Heritage() {
                 className="btn btn-success"
                 id="btn-to-send-email"
                 onClick={
-                  () => localStorage.setItem("isReadyToSend", "end")
+                  () => localStorage.setItem('isReadyToSend', 'end')
 
                   // emailSender.sendByNodemailer(
                   //   "Test Name",

@@ -1,19 +1,19 @@
-import manuscriptsBase from "../../../../data/manuscripts/manuscripts-base";
-import manuscriptsDetails from "../../../../data/manuscripts/manuscripts-details";
+import manuscriptsBase from '../../../../data/manuscripts/manuscripts-base';
+import manuscriptsDetails from '../../../../data/manuscripts/manuscripts-details';
 
 function expandManuscripts(): void {
   // Initializing variables
   const manuscriptType: string = (<HTMLInputElement>(
-    document.getElementById("manuscript-type")
+    document.getElementById('manuscript-type')
   )).value;
   const manuscriptTitle: string = (<HTMLInputElement>(
-    document.getElementById("manuscript-title")
+    document.getElementById('manuscript-title')
   )).value;
   const manuscriptAuthor: string = (<HTMLInputElement>(
-    document.getElementById("manuscript-author")
+    document.getElementById('manuscript-author')
   )).value;
   const manuscriptContent: string = (<HTMLInputElement>(
-    document.getElementById("manuscript-content")
+    document.getElementById('manuscript-content')
   )).value;
 
   // Adding new data to project's general data
@@ -31,7 +31,7 @@ function expandManuscripts(): void {
     });
   }
 
-  alert("Рукопись успешно создана!");
+  alert('Рукопись успешно создана!');
 }
 
 export default expandManuscripts;
