@@ -23,7 +23,7 @@ import {
   MESSAGING_SENDER_ID,
   APP_ID,
   MEASUREMENT_ID,
-} from '../env';
+} from '../.env';
 
 interface FirebaseTypes {
   [key: string]: string | undefined;

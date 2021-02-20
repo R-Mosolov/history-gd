@@ -64,11 +64,10 @@ Run following terminal commands from root directory:
 1. `npm install`
 2. `npm run build && npm start`
 
-Then open a browser on: http://localhost:3000/
+Then open a browser at: http://localhost:3000/
 
 ## How to Run the SPA (for workers)
-1. For 1st Terminal window: `clear && npm run build && npm start`
-2. For 2nd Terminal window: `clear && tsc ./src/**/*`
+`clear && npm run build && npm start`
 
 ## How to Check Syntax Quality into Modules (using Prettier)
 `clear && cd src && npx prettier --write .`

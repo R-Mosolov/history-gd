@@ -1,6 +1,7 @@
 [
   {
-    "email": "M.V.Lomonosov@history-gd.ru",
-    "password": "123456"
+    "fullName": "Михаил Васильевич Ломоносов",
+    "email": "admin@test.ru",
+    "password": 12345678
   }
 ]
