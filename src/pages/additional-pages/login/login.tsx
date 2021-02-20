@@ -65,6 +65,7 @@ class Login extends Component<
     emailToResetPassword: string;
     password: string;
     isResetDialog: boolean;
+    test: string;
   }
 > {
   static defaultProps = {
@@ -80,10 +81,18 @@ class Login extends Component<
       emailToResetPassword: '',
       password: '',
       isResetDialog: false,
+      test: '',
     };
 
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
+  }
+
+  componentDidMount() {
+    Promise.resolve(fetch('http://localhost:9999'))
+      .then((res) => res.json())
+      .then((res) => this.setState({ test: res.text }))
+      .catch((err) => console.error(err));
   }
 
   handleEmailChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -125,7 +134,8 @@ class Login extends Component<
         <Box className="w-50">
           <Box mb={3}>
             <h1 className="pt-5" style={{ textAlign: 'center' }}>
-              Вход в систему
+              {/* Вход в систему */}
+              {this.state.test}
             </h1>
           </Box>
 
@@ -181,7 +191,7 @@ class Login extends Component<
                     }}
                   />
                 }
-                label="Запомнить этот компьютер"
+                label="Доверять этому компьютеру"
               />
             </Box>
           </Box>
