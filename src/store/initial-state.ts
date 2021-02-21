@@ -2,7 +2,7 @@ import { InitialStateConfig } from '../configs';
 
 const initialState: InitialStateConfig = {
   userId: undefined,
-  isAuthenticated: false,
+  isAuthenticated: true,
   // TODO: Add the feature to save an user manuscripts in LS
   fetchedManuscripts: [],
   intersectionParams: {

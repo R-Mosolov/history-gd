@@ -3,8 +3,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
+// Custom components
 import LeftNavigation from '../../../components/left-navigation/left-navigation';
 import TopNavigation from '../../../components/top-navigation/top-navigation';
+import Dropzone from '../../../components/dropzone/dropzone';
 
 // The dialog window
 import Button from '@material-ui/core/Button';
@@ -46,7 +48,7 @@ function AddManuscript({ store, actions: { readAllManuscripts = () => {} } }) {
     setOpen(false);
   };
 
-  function createManuscript() {
+  const createManuscript = () => {
     const { userId } = store;
     const manuscriptId = uuidv4();
     // TODO: Embed these values with the page state
@@ -169,6 +171,8 @@ function AddManuscript({ store, actions: { readAllManuscripts = () => {} } }) {
                 изменяться, обычно продолжает изменяться в течение многих поколений. <...>."
               />
             </div>
+
+            <Dropzone />
 
             <div className="d-flex justify-content-center">
               <button
