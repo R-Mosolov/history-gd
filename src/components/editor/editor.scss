@@ -3,23 +3,44 @@
   border: 1px solid lightgray;
   border-radius: 3px;
 
-  .editor__container {
+  &__icon {
+    margin: 10px;
+    cursor: pointer;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  }
+
+  &__container {
     margin-left: auto;
     margin-right: auto;
     max-width: 900px;
+  }
 
-    .editor__tools {
-      display: flex;
+  &__tools {
+    height: 60px;
+    width: 100%;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+  }
 
-      .editor__tools_container {
-        margin-right: 10px;
-      }
+  &__content {
+    display: flex;
+    margin-top: 15px;
 
-      .editor__tools_active-input {
-        width: 100%;
-        border: 1px solid lightgray;
-        border-radius: 5px;
-      }
+    &_container {
+      margin-right: 10px;
     }
+
+    &_active-input {
+      padding-top: 5px;
+      padding-left: 5px;
+      min-height: 40px;
+      width: 100%;
+      border: 1px solid lightgray;
+      border-radius: 5px;
+    }
+  }
+
+  &__actions_button {
+    margin-top: 15px;
   }
 }
