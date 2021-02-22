@@ -1,4 +1,25 @@
 .editor {
+  min-height: 300px;
   border: 1px solid lightgray;
   border-radius: 3px;
+
+  .editor__container {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 900px;
+
+    .editor__tools {
+      display: flex;
+
+      .editor__tools_container {
+        margin-right: 10px;
+      }
+
+      .editor__tools_active-input {
+        width: 100%;
+        border: 1px solid lightgray;
+        border-radius: 5px;
+      }
+    }
+  }
 }
