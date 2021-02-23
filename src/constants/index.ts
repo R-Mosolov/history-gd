@@ -38,7 +38,6 @@ export const SEARCHED_MANUSCRIPTS: string = 'searchedManuscripts';
 /**
  * Set the interface (types of keys values)
  */
-
 interface RegistrationConfig {
   [index: number]: {
     id: string;
@@ -46,6 +45,7 @@ interface RegistrationConfig {
     placeholder: string;
     isRequired: boolean;
   };
+  map: (obj: any) => object;
 }
 
 interface ManuscriptTypesConfig {
@@ -54,12 +54,12 @@ interface ManuscriptTypesConfig {
     typeLabel: string;
     type: string;
   };
+  map: (obj: any) => object;
 }
 
 /**
  * Create constants
  */
-
 export const BASIC_INFO: RegistrationConfig = [
   {
     id: FIRST_NAME,
@@ -162,3 +162,11 @@ export const MANUSCRIPT_TYPES: ManuscriptTypesConfig = [
     type: SMALL,
   },
 ];
+
+/**
+ * Set immutability for all constant objects
+ */
+BASIC_INFO.map((obj: object) => Object.freeze(obj));
+PROF_INFO.map((obj: object) => Object.freeze(obj));
+SERVICE_INFO.map((obj: object) => Object.freeze(obj));
+MANUSCRIPT_TYPES.map((obj: object) => Object.freeze(obj));
