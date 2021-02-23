@@ -12,6 +12,7 @@ import TableChartIcon from '@material-ui/icons/TableChart';
 import CropOriginalIcon from '@material-ui/icons/CropOriginal';
 
 // Right click menu
+import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Grow from '@material-ui/core/Grow';
@@ -73,129 +74,125 @@ export default function Editor() {
   const makeTextUnderline = () => document.execCommand('underline');
 
   const returnInJson = () => {
-    const result = document
-      .getElementsByClassName('editor__content_active-input')[0]
-      .innerHTML;
-    
-    console.log('returnInJson');
-    console.log(result);
-  }
-  
+    const result = document.getElementsByClassName(
+      'editor__content_active-input'
+    )[0].innerHTML;
+  };
+
   const [inputs, setInputs] = React.useState([
-    <div className="d-flex editor__content_last-input">
-      { isActiveInput && (
-        <div className="editor__content_container">
-          <Button
-            ref={anchorRef}
-            aria-controls={open ? 'menu-list-grow' : undefined}
-            aria-haspopup="true"
-            onClick={handleToggle}
-          />
-          <AddBoxIcon fontSize="large" onClick={handleToggle} />
-        </div>
-      )}
-      <div
-        className="editor__content_active-input"
-        contentEditable
-      >
-        <b>Bold</b> and <i>italic</i>
-      </div>
-    </div>
+    <div className="editor__content_active-input" contentEditable />,
   ]);
 
   const addNewInput = () => {
+    setOpen(false);
     setInputs([
-      ...(() => {
-        setActiveInput(false);
-        return inputs.map((input) => {
-          return input;
-        });
-      })(),
-      (() => {
-        setActiveInput(true);
-        return (
-          <div className="d-flex editor__content_last-input">
-            {
-              isActiveInput && (
-                <div className="editor__content_container">
-                  <Button
-                    ref={anchorRef}
-                    aria-controls={open ? 'menu-list-grow' : undefined}
-                    aria-haspopup="true"
-                    onClick={handleToggle}
-                  />
-                  <AddBoxIcon fontSize="large" onClick={handleToggle} />
-                </div>
-              )
-            }
-            <div
-              className="editor__content_active-input"
-              contentEditable
-            >
-              <b>Bold</b> and <i>italic</i>
-            </div>
-          </div>
-        );
-      })(),
+      [...inputs],
+      <div className="editor__content_active-input" contentEditable />,
     ]);
   };
 
   return (
     <section className={`editor`}>
-      <div className="editor__container">
-        <section className="editor__tools">
-          <FormatBoldIcon
-            fontSize="large"
-            className="editor__icon"
-            onClick={makeTextBold}
-          />
-          <FormatItalicIcon
-            fontSize="large"
-            className="editor__icon"
-            onClick={makeTextItalic}
-          />
-          <FormatUnderlinedIcon
-            fontSize="large"
-            className="editor__icon"
-            onClick={makeTextUnderline}
-          />
-        </section>
-        
-        <section className="editor__content">
-          {inputs.map((input) => input)}
-        </section>
-        
-        <section className="editor__actions">
-          <button
-            className="editor__actions_button"
-            onClick={returnInJson}
-          >
-            Вернуть в JSON
-          </button>
-        </section>
+      <Box pt={3} pb={3}>
+        <div className="editor__container">
+          <section className="editor__tools">
+            <FormatBoldIcon
+              fontSize="large"
+              className="editor__icon"
+              onClick={makeTextBold}
+            />
+            <FormatItalicIcon
+              fontSize="large"
+              className="editor__icon"
+              onClick={makeTextItalic}
+            />
+            <FormatUnderlinedIcon
+              fontSize="large"
+              className="editor__icon"
+              onClick={makeTextUnderline}
+            />
+          </section>
 
-        <section className="editor__right-click-menu">
-          <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
-            {({ TransitionProps, placement }) => (
-              <Grow
-                {...TransitionProps}
-                style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
-              >
-                <Paper>
-                  <ClickAwayListener onClickAway={handleClose}>
-                    <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                      <MenuItem onClick={addNewInput}><TitleIcon />Заголовок</MenuItem>
-                      <MenuItem onClick={addNewInput}><TextFieldsIcon />Параграф</MenuItem>
-                      <MenuItem onClick={addNewInput}><TableChartIcon />Таблица</MenuItem>
-                      <MenuItem onClick={addNewInput}><CropOriginalIcon />Рисунок</MenuItem>
-                    </MenuList>
-                  </ClickAwayListener>
-                </Paper>
-              </Grow>
-            )}
-          </Popper>
-        </section>
-      </div>
+          <section className="editor__content">
+            {inputs.map((input, idx) => {
+              const isLastIdx = idx === inputs.length - 1;
+
+              if (isLastIdx) {
+                return (
+                  <div className="d-flex editor__content_last-input">
+                    {isActiveInput && (
+                      <div className="editor__content_container">
+                        <Button
+                          ref={anchorRef}
+                          aria-controls={open ? 'menu-list-grow' : undefined}
+                          aria-haspopup="true"
+                          onClick={handleToggle}
+                          style={{ position: 'absolute' }}
+                        />
+                        <AddBoxIcon
+                          fontSize="large"
+                          onClick={handleToggle}
+                          style={{ marginTop: 17 + 'px', cursor: 'pointer' }}
+                        />
+                      </div>
+                    )}
+                    {input}
+                  </div>
+                );
+              } else {
+                return <>{input}</>;
+              }
+            })}
+          </section>
+
+          <section className="editor__right-click-menu">
+            <Popper
+              open={open}
+              anchorEl={anchorRef.current}
+              role={undefined}
+              transition
+              disablePortal
+            >
+              {({ TransitionProps, placement }) => (
+                <Grow
+                  {...TransitionProps}
+                  style={{
+                    transformOrigin:
+                      placement === 'bottom' ? 'center top' : 'center bottom',
+                  }}
+                >
+                  <Paper>
+                    <ClickAwayListener onClickAway={handleClose}>
+                      <MenuList
+                        autoFocusItem={open}
+                        id="menu-list-grow"
+                        onKeyDown={handleListKeyDown}
+                      >
+                        <MenuItem onClick={addNewInput}>
+                          <TitleIcon style={{ marginRight: '5px' }} />
+                          Заголовок
+                        </MenuItem>
+                        <MenuItem onClick={addNewInput}>
+                          <TextFieldsIcon style={{ marginRight: '5px' }} />
+                          Параграф
+                        </MenuItem>
+                        <MenuItem onClick={addNewInput}>
+                          <TableChartIcon style={{ marginRight: '5px' }} />
+                          Таблица
+                        </MenuItem>
+                        <MenuItem onClick={addNewInput}>
+                          <CropOriginalIcon style={{ marginRight: '5px' }} />
+                          Рисунок
+                        </MenuItem>
+                      </MenuList>
+                    </ClickAwayListener>
+                  </Paper>
+                </Grow>
+              )}
+            </Popper>
+          </section>
+        </div>
+      </Box>
     </section>
   );
 }
