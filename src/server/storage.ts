@@ -25,8 +25,29 @@ const createManuscriptContent: (
     .catch((err) => console.log(err));
 };
 
+const createManuscriptContentFile = (
+  manuscriptId: string,
+  manuscriptFile: any,
+  fileType: string,
+  fileExtension: string
+) => {
+  const storageRef = db.ref();
+  const metadata: object = {
+    contentType: fileType,
+  };
+
+  const manuscriptsRef = storageRef.child(
+    `manuscripts-content/manuscript-content-${manuscriptId.toString()}.${fileExtension}`
+  );
+
+  return Promise.resolve(manuscriptsRef.put(manuscriptFile, metadata))
+    .then(() => console.log('Uploaded a manuscript content file!'))
+    .catch((err) => console.log(err));
+};
+
 const auth: object = {
   createManuscriptContent,
+  createManuscriptContentFile,
 };
 
 export default auth;

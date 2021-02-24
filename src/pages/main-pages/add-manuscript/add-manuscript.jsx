@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-// The dialog window
+// Dialog window
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -15,6 +15,8 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import LeftNavigation from '../../../components/left-navigation/left-navigation';
 import TopNavigation from '../../../components/top-navigation/top-navigation';
 import Editor from '../../../components/editor/editor';
+import Tab from '../../../components/tab';
+import DragAndDrop from '../../../components/drag-and-drop';
 
 // Data
 import { firestore, storage } from '../../../server';
@@ -149,7 +151,7 @@ function AddManuscript({ store, actions: { readAllManuscripts = () => {} } }) {
               />
             </div>
 
-            <Editor />
+            <Tab editor={<Editor />} dragAndDrop={<DragAndDrop />} />
 
             <div className="d-flex justify-content-center">
               <button

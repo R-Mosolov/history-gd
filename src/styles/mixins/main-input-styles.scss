@@ -1,0 +1,10 @@
+@mixin main-input-styles($padding-top, $padding-bottom) {
+  margin-top: 15px;
+  padding-top: $padding-top;
+  padding-bottom: $padding-bottom;
+  padding-left: 5px;
+  min-height: 40px;
+  width: 100%;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+}

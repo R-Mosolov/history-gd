@@ -10,6 +10,7 @@ import TitleIcon from '@material-ui/icons/Title';
 import TextFieldsIcon from '@material-ui/icons/TextFields';
 import TableChartIcon from '@material-ui/icons/TableChart';
 import CropOriginalIcon from '@material-ui/icons/CropOriginal';
+import FunctionsIcon from '@material-ui/icons/Functions';
 
 // Right click menu
 import Box from '@material-ui/core/Box';
@@ -22,8 +23,20 @@ import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import { makeStyles } from '@material-ui/core/styles';
 
+// Dialog
+import TextField from '@material-ui/core/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+
+// Checkbox
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+
 // Styles
-import './editor.scss';
+import '../../styles/components/editor.scss';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,6 +51,7 @@ export default function Editor() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [isActiveInput, setActiveInput] = React.useState(true);
+  const [isTableDialog, setTableDialog] = React.useState(false);
   const anchorRef = React.useRef(null);
 
   const handleToggle = () => {
@@ -73,23 +87,59 @@ export default function Editor() {
   const makeTextItalic = () => document.execCommand('italic');
   const makeTextUnderline = () => document.execCommand('underline');
 
-  const returnInJson = () => {
-    const result = document.getElementsByClassName(
-      'editor__content_active-input'
-    )[0].innerHTML;
-  };
-
   const [inputs, setInputs] = React.useState([
-    <div className="editor__content_active-input" contentEditable />,
+    <div className="editor__content_paragraph" contentEditable />,
+    // ...addTable(),
   ]);
 
-  const addNewInput = () => {
+  const addTitle = () => {
     setOpen(false);
     setInputs([
       [...inputs],
-      <div className="editor__content_active-input" contentEditable />,
+      <input
+        className="editor__content_title"
+        placeholder="Заголовок"
+        style={{ fontWeight: 'bold', fontSize: '24px' }}
+      />,
     ]);
   };
+
+  const addParagraph = () => {
+    setOpen(false);
+    setInputs([
+      [...inputs],
+      <div className="editor__content_paragraph" contentEditable>
+        Параграф
+      </div>,
+    ]);
+  };
+
+  const toggleTableDialog = () => {
+    setTableDialog(isTableDialog ? false : true);
+  };
+
+  function addTable() {
+    return (
+      <div className="editor__content_table">
+        <p className="table__number">Таблица N</p>
+        <h2 className="table__title">Название таблицы</h2>
+        <table className="table__container">
+          <tr>
+            <th className="table__cell">Название колонки 1</th>
+            <th className="table__cell">Название колонки 2</th>
+          </tr>
+          <tr>
+            <td className="table__cell">Ячейка 1</td>
+            <td className="table__cell">Ячейка 2</td>
+          </tr>
+          <tr>
+            <td className="table__cell">Ячейка 3</td>
+            <td className="table__cell">Ячейка 4</td>
+          </tr>
+        </table>
+      </div>
+    );
+  }
 
   return (
     <section className={`editor`}>
@@ -143,6 +193,7 @@ export default function Editor() {
                 return <>{input}</>;
               }
             })}
+            {addTable()}
           </section>
 
           <section className="editor__right-click-menu">
@@ -168,21 +219,25 @@ export default function Editor() {
                         id="menu-list-grow"
                         onKeyDown={handleListKeyDown}
                       >
-                        <MenuItem onClick={addNewInput}>
+                        <MenuItem onClick={addTitle}>
                           <TitleIcon style={{ marginRight: '5px' }} />
                           Заголовок
                         </MenuItem>
-                        <MenuItem onClick={addNewInput}>
+                        <MenuItem onClick={addParagraph}>
                           <TextFieldsIcon style={{ marginRight: '5px' }} />
                           Параграф
                         </MenuItem>
-                        <MenuItem onClick={addNewInput}>
+                        <MenuItem onClick={toggleTableDialog}>
                           <TableChartIcon style={{ marginRight: '5px' }} />
                           Таблица
                         </MenuItem>
-                        <MenuItem onClick={addNewInput}>
+                        <MenuItem onClick={addParagraph}>
                           <CropOriginalIcon style={{ marginRight: '5px' }} />
                           Рисунок
+                        </MenuItem>
+                        <MenuItem onClick={addParagraph}>
+                          <FunctionsIcon style={{ marginRight: '5px' }} />
+                          Формула
                         </MenuItem>
                       </MenuList>
                     </ClickAwayListener>
@@ -190,6 +245,76 @@ export default function Editor() {
                 </Grow>
               )}
             </Popper>
+          </section>
+
+          <section className="editor__hidden_instrument">
+            <Dialog
+              open={isTableDialog}
+              aria-labelledby="form-dialog-title"
+              onClose={toggleTableDialog}
+            >
+              <DialogTitle id="form-dialog-title">Новая таблица</DialogTitle>
+              <DialogContent>
+                <DialogContentText>
+                  Чтобы создать новую таблицу, пожалуйста, введите её название.
+                  Для ускорения процесса создания, можете также сразу ввести
+                  количество необходимых строк и столбцов или добавить их
+                  позднее вручную. Номер талицы будет установлен автоматически.
+                </DialogContentText>
+                {/* TODO: Add here validation using Formik library */}
+                <TextField
+                  autoFocus
+                  margin="dense"
+                  id="editor-table-name"
+                  label="Название таблицы (обязательное)"
+                  type="email"
+                  fullWidth
+                />
+                <TextField
+                  margin="dense"
+                  id="editor-table-columns-count"
+                  label="Кол-во колонок (с учётом шапки)"
+                  type="number"
+                  fullWidth
+                />
+                <TextField
+                  margin="dense"
+                  id="editor-table-rows-count"
+                  label="Кол-во строк"
+                  type="number"
+                  fullWidth
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      // checked={state.checkedB}
+                      // onChange={handleChange}
+                      name="checkedB"
+                      color="primary"
+                    />
+                  }
+                  label="Включить нумерацию строк"
+                />
+              </DialogContent>
+              <DialogActions>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  size="small"
+                  onClick={toggleTableDialog}
+                >
+                  Отменить
+                </Button>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  size="small"
+                  onClick={toggleTableDialog}
+                >
+                  Создать
+                </Button>
+              </DialogActions>
+            </Dialog>
           </section>
         </div>
       </Box>
