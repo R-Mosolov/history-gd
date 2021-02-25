@@ -154,10 +154,7 @@ function AddManuscript({ store, actions: { readAllManuscripts = () => {} } }) {
             <Tab editor={<Editor />} dragAndDrop={<DragAndDrop />} />
 
             <div className="d-flex justify-content-center">
-              <button
-                className="mt-3 btn btn-success"
-                onClick={createManuscript}
-              >
+              <button className="btn btn-success" onClick={createManuscript}>
                 Создать рукопись
               </button>
             </div>

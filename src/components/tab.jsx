@@ -57,8 +57,8 @@ export default function Tab(props) {
           textColor="primary"
           centered
         >
-          <TabItem label="Создание рукописи" />
-          <TabItem label="Загрузка рукописи" />
+          <TabItem label="Конструктор рукописи" />
+          <TabItem label="Загрузчик рукописи" />
         </Tabs>
       </Paper>
       <TabPanel value={value} index={0}>
