@@ -24,6 +24,7 @@ import MenuList from '@material-ui/core/MenuList';
 import { makeStyles } from '@material-ui/core/styles';
 
 // Dialog
+import Box from '@material-ui/core/Box';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -35,9 +36,11 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
+// Custom components
+import DragAndDrop from '../drag-and-drop';
+
 // Styles
 import '../../styles/components/editor.scss';
-import { Collapse } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -53,12 +56,19 @@ export default function Editor() {
   const [isRightClickMenu, setRightClickMenu] = useState(false);
   const [isActiveInput, setActiveInput] = useState(true);
   const [isTableDialog, setTableDialog] = useState(false);
+  const [isPictureDialog, setPictureDialog] = useState(false);
   const [tableConfig, setTableConfig] = useState({
     number: 1,
     title: 'Название таблицы',
     colsCount: 2,
     rowsCount: 3,
     isNumeration: false,
+  });
+  const [pictureConfig, setPictureConfig] = useState({
+    number: 1,
+    title: 'Название рисунка',
+    link: 'https://media.wired.com/photos/5d09594a62bcb0c9752779d9/'
+      + 'master/w_2560%2Cc_limit/Transpo_G70_TA-518126.jpg',
   });
   const anchorRef = React.useRef(null);
 
@@ -96,7 +106,11 @@ export default function Editor() {
   const makeTextUnderline = () => document.execCommand('underline');
 
   const [inputs, setInputs] = useState([
-    <div className="editor__content_paragraph" contentEditable />,
+    <input
+      className="editor__content_title"
+      placeholder="Заголовок"
+      style={{ fontWeight: 'bold', fontSize: '24px' }}
+    />,
   ]);
 
   const addTitle = () => {
@@ -140,8 +154,8 @@ export default function Editor() {
               if (isColumnNames(i)) {
                 tableCols.push(
                   // Add <thead> tag in start and end of a table head
-                  <th className="table__cell">
-                    <div className="table__cell_editable" contentEditable>
+                  <th className="attachment__cell">
+                    <div className="attachment__cell_editable" contentEditable>
                       Название колонки
                     </div>
                   </th>
@@ -149,8 +163,8 @@ export default function Editor() {
               } else {
                 tableCols.push(
                   // Add <tbody> tag in start and end of a main table part
-                  <td className="table__cell">
-                    <div className="table__cell_editable" contentEditable>
+                  <td className="attachment__cell">
+                    <div className="attachment__cell_editable" contentEditable>
                       Ячейка
                     </div>
                   </td>
@@ -172,10 +186,10 @@ export default function Editor() {
     setTableConfig({ ...tableConfig, number: number + 1 });
 
     return (
-      <div className="editor__content_table">
-        <p className="table__number">Таблица {number}</p>
-        <p className="table__title">{title}</p>
-        <table className="table__container">
+      <div className="editor__content_attachment">
+        <p className="attachment__number">Таблица {number}</p>
+        <p className="attachment__title">{title}</p>
+        <table className="attachment__container">
           {generateTableStructure(colsCount, rowsCount)}
         </table>
       </div>
@@ -184,7 +198,35 @@ export default function Editor() {
 
   function addTable() {
     setTableDialog(false);
-    setInputs([[...inputs], createTable()]);
+    setInputs([...inputs, createTable()]);
+  }
+
+  const togglePictureDialog = () => {
+    setRightClickMenu(false);
+    setPictureDialog(isPictureDialog ? false : true);
+  };
+
+  const createPicture = () => {
+    const { number, title } = pictureConfig;
+
+    setPictureConfig({ ...pictureConfig, number: number + 1 });
+
+    return (
+      <div className="editor__content_attachment">
+        <p className="attachment__number">Рисунок {number}</p>
+        <p className="attachment__title">{title}</p>
+        <img
+          src={`https://media.wired.com/photos/5d09594a62bcb0c9752779d9/
+          master/w_2560%2Cc_limit/Transpo_G70_TA-518126.jpg`}
+          style={{ maxWidth: 100 + '%' }}
+        />
+      </div>
+    );
+  };
+
+  const addPicture = () => {
+    setPictureDialog(false);
+    setInputs([...inputs, createPicture()]);
   }
 
   return (
@@ -281,7 +323,7 @@ export default function Editor() {
                         <TableChartIcon style={{ marginRight: '5px' }} />
                         Таблица
                       </MenuItem>
-                      <MenuItem onClick={addParagraph}>
+                      <MenuItem onClick={togglePictureDialog}>
                         <CropOriginalIcon style={{ marginRight: '5px' }} />
                         Рисунок
                       </MenuItem>
@@ -384,11 +426,76 @@ export default function Editor() {
                 variant="outlined"
                 color="primary"
                 size="small"
-                // color=
                 onClick={() => {
                   addTable();
-                  console.log(tableConfig);
-                  console.log(tableConfig.title);
+                }}
+                style={{
+                  color: 'white',
+                  backgroundColor: green[600],
+                  border: 'none'
+                }}
+              >
+                Создать
+              </Button>
+            </DialogActions>
+          </Dialog>
+
+          <Dialog
+            open={isPictureDialog}
+            aria-labelledby="form-dialog-title"
+            onClose={togglePictureDialog}
+          >
+            <DialogTitle id="form-dialog-title">Новый рисунок/схема</DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                Чтобы создать новый рисунок/схему, пожалуйста, введите его название.
+                Номер рисунка будет установлен автоматически.
+              </DialogContentText>
+              {/* TODO: Add here validation using Formik library */}
+              <TextField
+                autoFocus
+                margin="dense"
+                id="editor-table-name"
+                label="Название рисунка (обязательное)"
+                type="text"
+                onChange={(evt) =>
+                  setPictureConfig({
+                    ...pictureConfig,
+                    title: evt.target.value
+                      ? evt.target.value
+                      : 'Название рисунка',
+                  })
+                }
+                fullWidth
+              />
+              <Box mt={3}>
+                <DragAndDrop
+                  computerFormats='image/jpeg, image/png'
+                  humanFormats={['JPG', 'JPEG', 'PNG']}
+                  maxFileSizeInMB='4'
+                />
+              </Box>
+            </DialogContent>
+            <DialogActions>
+              <Button
+                variant="outlined"
+                color="primary"
+                size="small"
+                onClick={togglePictureDialog}
+                style={{
+                  color: 'white',
+                  backgroundColor: red[700],
+                  border: 'none'
+                }}
+              >
+                Отменить
+              </Button>
+              <Button
+                variant="outlined"
+                color="primary"
+                size="small"
+                onClick={() => {
+                  addPicture();
                 }}
                 style={{
                   color: 'white',

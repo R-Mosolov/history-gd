@@ -15,7 +15,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import LeftNavigation from '../../../components/left-navigation/left-navigation';
 import TopNavigation from '../../../components/top-navigation/top-navigation';
 import Editor from '../../../components/editor/editor';
-import Tab from '../../../components/tab';
+import PageTabs from '../../../components/page-tabs';
 import DragAndDrop from '../../../components/drag-and-drop';
 
 // Data
@@ -151,7 +151,14 @@ function AddManuscript({ store, actions: { readAllManuscripts = () => {} } }) {
               />
             </div>
 
-            <Tab editor={<Editor />} dragAndDrop={<DragAndDrop />} />
+            <PageTabs
+              editor={<Editor />}
+              dragAndDrop={<DragAndDrop
+                computerFormats={`application/pdf, .doc, .docx, application/msword, 
+                application/vnd.openxmlformats-officedocument.wordprocessingml.document`}
+                humanFormats={['DOC', 'DOCX', 'PDF']}
+              />}
+            />
 
             <div className="d-flex justify-content-center">
               <button className="btn btn-success" onClick={createManuscript}>

@@ -8,8 +8,10 @@ import { storage } from '../server';
 // Styles
 import '../styles/components/drag-and-drop.scss';
 
-export default function DragAndDrop(props) {
-  const { acceptedFiles, getRootProps, getInputProps } = useDropzone();
+export default function DragAndDrop({ computerFormats, humanFormats, maxFileSizeInMB = null }) {
+  const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
+    accept: computerFormats // The value should be a string, ex.: 'image/jpeg, image/png'
+  });
 
   const files = acceptedFiles.map((file) => (
     <p key={file.path}>
@@ -31,6 +33,18 @@ export default function DragAndDrop(props) {
     );
   };
 
+  const renderFormatsToAccept = (humanFormats) => {
+    // TODO: Move this function to Utils directory
+    const isLastIdx = (arr, idx) => (arr.length - 1) === idx;
+    let result = '';
+
+    humanFormats.forEach((item, idx) => {
+      (isLastIdx(humanFormats, idx)) ? result += item + '.' : result += item + ', ';
+    });
+    
+    return result;
+  };
+
   return (
     <section className="container field-to-upload">
       <div {...getRootProps({ className: 'dropzone' })}>
@@ -39,8 +53,10 @@ export default function DragAndDrop(props) {
           Чтобы загрузить файл, кликните на это поле или перенесите сюда файл.
         </p>
         <p>
-          Принимается <b>только 1 файл</b> в следующем формате: <b>DOCX</b>,{' '}
-          <b>PDF</b> или <b>PPTX</b>.
+          Принимается <b>только 1 файл</b>
+          {maxFileSizeInMB && ` размером не более ${maxFileSizeInMB} Мб`}
+          {' '} в следующем формате:
+          {' ' + renderFormatsToAccept(humanFormats)}
         </p>
       </div>
       <aside>

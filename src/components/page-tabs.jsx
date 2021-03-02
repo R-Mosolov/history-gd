@@ -39,7 +39,7 @@ function a11yProps(index) {
   };
 }
 
-export default function Tab(props) {
+export default function PageTabs(props) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
