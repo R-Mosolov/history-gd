@@ -153,11 +153,13 @@ function AddManuscript({ store, actions: { readAllManuscripts = () => {} } }) {
 
             <PageTabs
               editor={<Editor />}
-              dragAndDrop={<DragAndDrop
-                computerFormats={`application/pdf, .doc, .docx, application/msword, 
+              dragAndDrop={
+                <DragAndDrop
+                  computerFormats={`application/pdf, .doc, .docx, application/msword, 
                 application/vnd.openxmlformats-officedocument.wordprocessingml.document`}
-                humanFormats={['DOC', 'DOCX', 'PDF']}
-              />}
+                  humanFormats={['DOC', 'DOCX', 'PDF']}
+                />
+              }
             />
 
             <div className="d-flex justify-content-center">

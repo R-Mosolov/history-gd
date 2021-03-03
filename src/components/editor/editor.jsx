@@ -36,8 +36,9 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
-// Custom components
+// Custom components (and OLOO classes)
 import DragAndDrop from '../drag-and-drop';
+import { TableAttachment, PictureAttachment } from '../../classes';
 
 // Styles
 import '../../styles/components/editor.scss';
@@ -67,8 +68,9 @@ export default function Editor() {
   const [pictureConfig, setPictureConfig] = useState({
     number: 1,
     title: 'Название рисунка',
-    link: 'https://media.wired.com/photos/5d09594a62bcb0c9752779d9/'
-      + 'master/w_2560%2Cc_limit/Transpo_G70_TA-518126.jpg',
+    link:
+      'https://media.wired.com/photos/5d09594a62bcb0c9752779d9/' +
+      'master/w_2560%2Cc_limit/Transpo_G70_TA-518126.jpg',
   });
   const anchorRef = React.useRef(null);
 
@@ -144,7 +146,7 @@ export default function Editor() {
     let tableCols = [];
     let tableRows = [];
     const isColumnNames = (rowNumber) => rowNumber === 0;
-    
+
     for (let i = 0; i < rowsCount; i++) {
       tableRows.push(
         <tr>
@@ -185,15 +187,14 @@ export default function Editor() {
 
     setTableConfig({ ...tableConfig, number: number + 1 });
 
-    return (
-      <div className="editor__content_attachment">
-        <p className="attachment__number">Таблица {number}</p>
-        <p className="attachment__title">{title}</p>
-        <table className="attachment__container">
-          {generateTableStructure(colsCount, rowsCount)}
-        </table>
-      </div>
-    );
+    TableAttachment.setTableType();
+    TableAttachment.setTableNumber(number);
+    TableAttachment.setTableTitle(title);
+    TableAttachment.setTableColsCount(colsCount);
+    TableAttachment.setTableRowsCount(rowsCount);
+    TableAttachment.setTableHTMLStructure(generateTableStructure);
+
+    return TableAttachment.getTableHTMLStructure();
   };
 
   function addTable() {
@@ -211,23 +212,18 @@ export default function Editor() {
 
     setPictureConfig({ ...pictureConfig, number: number + 1 });
 
-    return (
-      <div className="editor__content_attachment">
-        <p className="attachment__number">Рисунок {number}</p>
-        <p className="attachment__title">{title}</p>
-        <img
-          src={`https://media.wired.com/photos/5d09594a62bcb0c9752779d9/
-          master/w_2560%2Cc_limit/Transpo_G70_TA-518126.jpg`}
-          style={{ maxWidth: 100 + '%' }}
-        />
-      </div>
-    );
+    PictureAttachment.setPictureType();
+    PictureAttachment.setPictureNumber(number);
+    PictureAttachment.setPictureTitle(title);
+    PictureAttachment.setPictureHTMLStructure(generateTableStructure);
+
+    return PictureAttachment.getPictureHTMLStructure();
   };
 
   const addPicture = () => {
     setPictureDialog(false);
     setInputs([...inputs, createPicture()]);
-  }
+  };
 
   return (
     <section className={`editor`}>
@@ -417,7 +413,7 @@ export default function Editor() {
                 style={{
                   color: 'white',
                   backgroundColor: red[700],
-                  border: 'none'
+                  border: 'none',
                 }}
               >
                 Отменить
@@ -432,7 +428,7 @@ export default function Editor() {
                 style={{
                   color: 'white',
                   backgroundColor: green[600],
-                  border: 'none'
+                  border: 'none',
                 }}
               >
                 Создать
@@ -445,11 +441,13 @@ export default function Editor() {
             aria-labelledby="form-dialog-title"
             onClose={togglePictureDialog}
           >
-            <DialogTitle id="form-dialog-title">Новый рисунок/схема</DialogTitle>
+            <DialogTitle id="form-dialog-title">
+              Новый рисунок/схема
+            </DialogTitle>
             <DialogContent>
               <DialogContentText>
-                Чтобы создать новый рисунок/схему, пожалуйста, введите его название.
-                Номер рисунка будет установлен автоматически.
+                Чтобы создать новый рисунок/схему, пожалуйста, введите его
+                название. Номер рисунка будет установлен автоматически.
               </DialogContentText>
               {/* TODO: Add here validation using Formik library */}
               <TextField
@@ -470,9 +468,9 @@ export default function Editor() {
               />
               <Box mt={3}>
                 <DragAndDrop
-                  computerFormats='image/jpeg, image/png'
+                  computerFormats="image/jpeg, image/png"
                   humanFormats={['JPG', 'JPEG', 'PNG']}
-                  maxFileSizeInMB='4'
+                  maxFileSizeInMB="4"
                 />
               </Box>
             </DialogContent>
@@ -485,7 +483,7 @@ export default function Editor() {
                 style={{
                   color: 'white',
                   backgroundColor: red[700],
-                  border: 'none'
+                  border: 'none',
                 }}
               >
                 Отменить
@@ -500,7 +498,7 @@ export default function Editor() {
                 style={{
                   color: 'white',
                   backgroundColor: green[600],
-                  border: 'none'
+                  border: 'none',
                 }}
               >
                 Создать

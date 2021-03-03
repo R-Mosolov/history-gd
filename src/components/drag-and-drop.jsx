@@ -8,9 +8,13 @@ import { storage } from '../server';
 // Styles
 import '../styles/components/drag-and-drop.scss';
 
-export default function DragAndDrop({ computerFormats, humanFormats, maxFileSizeInMB = null }) {
+export default function DragAndDrop({
+  computerFormats,
+  humanFormats,
+  maxFileSizeInMB = null,
+}) {
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
-    accept: computerFormats // The value should be a string, ex.: 'image/jpeg, image/png'
+    accept: computerFormats, // The value should be a string, ex.: 'image/jpeg, image/png'
   });
 
   const files = acceptedFiles.map((file) => (
@@ -35,13 +39,15 @@ export default function DragAndDrop({ computerFormats, humanFormats, maxFileSize
 
   const renderFormatsToAccept = (humanFormats) => {
     // TODO: Move this function to Utils directory
-    const isLastIdx = (arr, idx) => (arr.length - 1) === idx;
+    const isLastIdx = (arr, idx) => arr.length - 1 === idx;
     let result = '';
 
     humanFormats.forEach((item, idx) => {
-      (isLastIdx(humanFormats, idx)) ? result += item + '.' : result += item + ', ';
+      isLastIdx(humanFormats, idx)
+        ? (result += item + '.')
+        : (result += item + ', ');
     });
-    
+
     return result;
   };
 
@@ -54,8 +60,8 @@ export default function DragAndDrop({ computerFormats, humanFormats, maxFileSize
         </p>
         <p>
           Принимается <b>только 1 файл</b>
-          {maxFileSizeInMB && ` размером не более ${maxFileSizeInMB} Мб`}
-          {' '} в следующем формате:
+          {maxFileSizeInMB && ` размером не более ${maxFileSizeInMB} Мб`} в
+          следующем формате:
           {' ' + renderFormatsToAccept(humanFormats)}
         </p>
       </div>
