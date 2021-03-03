@@ -1,9 +1,19 @@
-import React from 'react';
+// Core
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Formik, Field, Form, FormikHelpers } from 'formik';
 
+// UI libraries
+import { Formik, Field, Form, FormikHelpers } from 'formik';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+
+// Custom components
+import TopNavigation from '../../../components/top-navigation/top-navigation';
+
+// Data
 import { utils } from '../../../utils';
+import { auth, firestore } from '../../../server';
 import {
+  USERS,
   BASIC_INFO,
   PROF_INFO,
   SERVICE_INFO,
@@ -19,8 +29,8 @@ import {
   PASSWORD,
   REPEAT_PASSWORD,
 } from '../../../constants';
-import TopNavigation from '../../../components/top-navigation/top-navigation';
 
+// Styles
 import './registration.css';
 
 interface RegistrationFormValues {
@@ -33,6 +43,7 @@ interface RegistrationFormValues {
   researchInterests: string;
   phone: any;
   registrationEmail: string;
+  password: string;
 }
 
 let inputsCounter: number = 0;
@@ -51,6 +62,8 @@ function addInputLabel(id: string, obj: object) {
 }
 
 function Registration() {
+  const [isOpenedPassword, setPasswordVisibility] = useState(false);
+
   inputsCounter = 0;
 
   return (
@@ -80,15 +93,46 @@ function Registration() {
             researchInterests: '',
             phone: '',
             registrationEmail: '',
+            password: '',
           }}
           onSubmit={(
             values: RegistrationFormValues,
             { setSubmitting }: FormikHelpers<RegistrationFormValues>
           ) => {
-            setTimeout(() => {
-              alert(JSON.stringify(values, null, 2));
-              setSubmitting(false);
-            }, 500);
+            const {
+              lastName, firstName, middleName,
+              academicDegree, profDegree, researchInterests, university,
+              phone, registrationEmail, password,
+            } = values;
+            
+            Promise.all([
+              // Add main info about an user to Authentication
+              auth.createUser(registrationEmail, password),
+
+              // Add additional info about an user to Firestore
+              firestore.createManuscript(USERS, {
+                basicInfo: {
+                  lastName: lastName,
+                  firstName: firstName,
+                  middleName: middleName,
+                },
+                profInfo: {
+                  academicDegree: academicDegree,
+                  profDegree: profDegree,
+                  researchInterests: researchInterests,
+                  university: university,
+                },
+                serviceInfo: {
+                  userId: auth.getUserId(),
+                  phone: phone,
+                }
+              }),
+            ]);
+            
+            // setTimeout(() => {
+            //   alert(JSON.stringify(values, null, 2));
+            //   setSubmitting(false);
+            // }, 500);
           }}
         >
           <Form>
@@ -262,7 +306,7 @@ function Registration() {
                   id={PASSWORD}
                   name={PASSWORD}
                   className="form-control"
-                  type="password"
+                  type={(isOpenedPassword) ?  "text" : "password"}
                   minlength="6"
                   maxlength="50"
                   placeholder={utils.getPlaceholderById(PASSWORD, SERVICE_INFO)}
@@ -270,25 +314,14 @@ function Registration() {
                     utils.getRequiredById(PASSWORD, SERVICE_INFO) ? true : false
                   }
                 />
-              </div>
-              <div className="d-flex flex-column mb-3">
-                {addInputLabel(REPEAT_PASSWORD, SERVICE_INFO)}
-                <Field
-                  id={REPEAT_PASSWORD}
-                  name={REPEAT_PASSWORD}
-                  className="form-control"
-                  type="password"
-                  minlength="6"
-                  maxlength="50"
-                  placeholder={utils.getPlaceholderById(
-                    REPEAT_PASSWORD,
-                    SERVICE_INFO
-                  )}
-                  required={
-                    utils.getRequiredById(REPEAT_PASSWORD, SERVICE_INFO)
-                      ? true
-                      : false
-                  }
+                <VisibilityIcon
+                  style={{
+                    position: 'absolute',
+                    marginTop: '42px',
+                    marginLeft: '425px',
+                    cursor: 'pointer',
+                  }}
+                  onClick={() => setPasswordVisibility((isOpenedPassword) ? false : true)}
                 />
               </div>
             </fieldset>

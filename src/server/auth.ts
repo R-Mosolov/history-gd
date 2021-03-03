@@ -5,6 +5,21 @@ const db = dbConfig.auth;
 const getUserId: () => string | null | undefined = () => db.currentUser?.uid;
 const getUserEmail: () => any = () => db.currentUser?.email;
 
+const createUser = (email: string, password: string) => {
+  Promise.resolve(db.createUserWithEmailAndPassword(email, password))
+    .then((userCredential) => {
+      const user = userCredential.user;
+      if (user) {
+        console.info(`Added the user with id ${user.uid} successfully.`);
+      }
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.error(`${errorCode}: ${errorMessage}`)
+    });
+};
+
 const checkAuth = (
   email: string,
   password: string,
@@ -35,6 +50,7 @@ const resetPassword: (email: any) => Promise<void> = (email) => {
 const auth = {
   getUserId,
   getUserEmail,
+  createUser,
   checkAuth,
   resetPassword,
 };
