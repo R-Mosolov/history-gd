@@ -1,5 +1,6 @@
 // Core
 import React, { useState } from 'react';
+import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 
 // UI libraries
@@ -10,8 +11,10 @@ import VisibilityIcon from '@material-ui/icons/Visibility';
 import TopNavigation from '../../../components/top-navigation/top-navigation';
 
 // Data
+import { connect } from 'react-redux';
 import { utils } from '../../../utils';
 import { auth, firestore } from '../../../server';
+import TYPES from '../../../store/types';
 import {
   USERS,
   BASIC_INFO,
@@ -46,6 +49,20 @@ interface RegistrationFormValues {
   password: string;
 }
 
+const { SET_REGISTRATION } = TYPES;
+
+const mapStateToProps = (state: object) => {
+  return {
+    store: state,
+  };
+};
+
+const mapDispatchToProps: any = (dispatch: any) => {
+  return {
+    setRegistration: () => dispatch({ type: SET_REGISTRATION }),
+  };
+};
+
 let inputsCounter: number = 0;
 
 function addInputLabel(id: string, obj: object) {
@@ -61,7 +78,7 @@ function addInputLabel(id: string, obj: object) {
   );
 }
 
-function Registration() {
+function Registration(props: any) {
   const [isOpenedPassword, setPasswordVisibility] = useState(false);
 
   inputsCounter = 0;
@@ -111,6 +128,7 @@ function Registration() {
               registrationEmail,
               password,
             } = values;
+            const { setRegistration } = props;
 
             // TODO: Add checking that an account exists yet
             Promise.resolve()
@@ -138,8 +156,9 @@ function Registration() {
                   },
                 });
               })
-              .then(() => alert('Ваш аккаунт успешно создан!'));
-              // TODO: Add redirect on Login page here
+              .then(() => alert('Ваш аккаунт успешно создан!'))
+              .then(() => setRegistration());
+            // TODO: Add redirect on Login page here
           }}
         >
           <Form>
@@ -349,4 +368,4 @@ function Registration() {
   );
 }
 
-export default Registration;
+export default connect(mapStateToProps, mapDispatchToProps)(Registration);

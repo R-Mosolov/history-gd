@@ -42,7 +42,7 @@ const mapDispatchToProps = (dispatch) => {
 
 class App extends Component {
   render() {
-    const { isAuthenticated } = this.props.store;
+    const { isAuthenticated, isRegistered } = this.props.store;
 
     return (
       <Router>
@@ -75,9 +75,10 @@ class App extends Component {
                 <Route path="/" exact component={Main} />
                 <Route path="/registration" component={Registration} />
                 <Route path="/login" component={Login} />
-                <Redirect
-                  to={isAuthenticated ? '/manuscripts' : '/registration'}
-                >
+                <Redirect to={isAuthenticated ? '/manuscripts' : '/login'}>
+                  <Route path="/login" component={Login} />
+                </Redirect>
+                <Redirect to={isRegistered ? '/login' : '/registration'}>
                   <Route path="/login" component={Login} />
                 </Redirect>
 
