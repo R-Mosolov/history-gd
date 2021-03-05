@@ -1,62 +1,77 @@
 [
   {
     "name": "Список рукописей",
-    "link": "/manuscripts"
+    "link": "/manuscripts",
+    "done": true
   },
   {
     "name": "Добавить рукопись",
-    "link": "/add-manuscript"
+    "link": "/add-manuscript",
+    "done": true
   },
   {
     "name": "Полная рукопись",
-    "link": "/full-manuscript"
+    "link": "/full-manuscript",
+    "done": true
   },
   {
     "name": "Личный дневник",
-    "link": "/diary"
+    "link": "/diary",
+    "done": true
   },
   {
     "name": "Обработка источников",
-    "link": "/handling-sources"
+    "link": "/handling-sources",
+    "done": true
   },
   {
     "name": "Наследники рукописей",
-    "link": "/heritage"
+    "link": "/heritage",
+    "done": true
   },
   {
     "name": "Исследовательские заметки",
-    "link": "/manuscripts"
+    "link": "/manuscripts",
+    "done": false
   },
   {
     "name": "Научная переписка",
-    "link": "/manuscripts"
+    "link": "/manuscripts",
+    "done": false
   },
   {
     "name": "Научное становление",
-    "link": "/manuscripts"
+    "link": "/manuscripts",
+    "done": false
   },
   {
     "name": "Рукописи коллег",
-    "link": "/manuscripts"
+    "link": "/manuscripts",
+    "done": false
   },
   {
     "name": "Научный самоанализ",
-    "link": "/manuscripts"
+    "link": "/manuscripts",
+    "done": false
   },
   {
     "name": "Контакты коллег",
-    "link": "/manuscripts"
+    "link": "/manuscripts",
+    "done": false
   },
   {
     "name": "Научный коллектив",
-    "link": "/manuscripts"
+    "link": "/manuscripts",
+    "done": false
   },
   {
     "name": "Мультимедийные факты",
-    "link": "/manuscripts"
+    "link": "/manuscripts",
+    "done": false
   },
   {
     "name": "Генератор аудиомонографий",
-    "link": "/manuscripts"
+    "link": "/manuscripts",
+    "done": false
   }
 ]
