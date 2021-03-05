@@ -100,39 +100,46 @@ function Registration() {
             { setSubmitting }: FormikHelpers<RegistrationFormValues>
           ) => {
             const {
-              lastName, firstName, middleName,
-              academicDegree, profDegree, researchInterests, university,
-              phone, registrationEmail, password,
+              lastName,
+              firstName,
+              middleName,
+              academicDegree,
+              profDegree,
+              researchInterests,
+              university,
+              phone,
+              registrationEmail,
+              password,
             } = values;
-            
-            Promise.all([
-              // Add main info about an user to Authentication
-              auth.createUser(registrationEmail, password),
 
-              // Add additional info about an user to Firestore
-              firestore.createManuscript(USERS, {
-                basicInfo: {
-                  lastName: lastName,
-                  firstName: firstName,
-                  middleName: middleName,
-                },
-                profInfo: {
-                  academicDegree: academicDegree,
-                  profDegree: profDegree,
-                  researchInterests: researchInterests,
-                  university: university,
-                },
-                serviceInfo: {
-                  userId: auth.getUserId(),
-                  phone: phone,
-                }
-              }),
-            ]);
-            
-            // setTimeout(() => {
-            //   alert(JSON.stringify(values, null, 2));
-            //   setSubmitting(false);
-            // }, 500);
+            // TODO: Add checking that an account exists yet
+            Promise.resolve()
+              .then(() => {
+                // Add main info about an user to Authentication
+                return auth.createUser(registrationEmail, password);
+              })
+              .then(() => {
+                // Add additional info about an user to Firestore
+                return firestore.createManuscript(USERS, {
+                  basicInfo: {
+                    lastName: lastName,
+                    firstName: firstName,
+                    middleName: middleName || null,
+                  },
+                  profInfo: {
+                    academicDegree: academicDegree || null,
+                    profDegree: profDegree || null,
+                    researchInterests: researchInterests || null,
+                    university: university || null,
+                  },
+                  serviceInfo: {
+                    email: registrationEmail.toLowerCase(),
+                    phone: phone,
+                  },
+                });
+              })
+              .then(() => alert('Ваш аккаунт успешно создан!'));
+              // TODO: Add redirect on Login page here
           }}
         >
           <Form>
@@ -306,7 +313,7 @@ function Registration() {
                   id={PASSWORD}
                   name={PASSWORD}
                   className="form-control"
-                  type={(isOpenedPassword) ?  "text" : "password"}
+                  type={isOpenedPassword ? 'text' : 'password'}
                   minlength="6"
                   maxlength="50"
                   placeholder={utils.getPlaceholderById(PASSWORD, SERVICE_INFO)}
@@ -321,7 +328,9 @@ function Registration() {
                     marginLeft: '425px',
                     cursor: 'pointer',
                   }}
-                  onClick={() => setPasswordVisibility((isOpenedPassword) ? false : true)}
+                  onClick={() =>
+                    setPasswordVisibility(isOpenedPassword ? false : true)
+                  }
                 />
               </div>
             </fieldset>

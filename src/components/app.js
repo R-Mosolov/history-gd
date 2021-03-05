@@ -75,7 +75,9 @@ class App extends Component {
                 <Route path="/" exact component={Main} />
                 <Route path="/registration" component={Registration} />
                 <Route path="/login" component={Login} />
-                <Redirect to={isAuthenticated ? '/manuscripts' : '/registration'}>
+                <Redirect
+                  to={isAuthenticated ? '/manuscripts' : '/registration'}
+                >
                   <Route path="/login" component={Login} />
                 </Redirect>
 
