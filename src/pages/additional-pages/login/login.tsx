@@ -21,9 +21,9 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import TopNavigation from '../../../components/top-navigation/top-navigation';
 
 // Data
+import { connect } from 'react-redux';
 import { Formik, Field, Form, FormikHelpers } from 'formik';
 import { utils } from '../../../utils';
-import { connect } from 'react-redux';
 import TYPES from '../../../store/types';
 import { bindActionCreators } from 'redux';
 import { readAllManuscripts } from '../../../store/action-creators';

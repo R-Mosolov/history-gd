@@ -4,6 +4,7 @@ export interface TypesConfig {
 
 export interface InitialStateConfig {
   userId: string | null | undefined;
+  isRegistered: boolean;
   isAuthenticated: boolean;
   // TODO: Change Any type
   fetchedManuscripts: any;

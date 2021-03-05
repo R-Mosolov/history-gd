@@ -1,9 +1,22 @@
-import React from 'react';
+// Core
+import React, { useState } from 'react';
+import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
-import { Formik, Field, Form, FormikHelpers } from 'formik';
 
+// UI libraries
+import { Formik, Field, Form, FormikHelpers } from 'formik';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+
+// Custom components
+import TopNavigation from '../../../components/top-navigation/top-navigation';
+
+// Data
+import { connect } from 'react-redux';
 import { utils } from '../../../utils';
+import { auth, firestore } from '../../../server';
+import TYPES from '../../../store/types';
 import {
+  USERS,
   BASIC_INFO,
   PROF_INFO,
   SERVICE_INFO,
@@ -19,8 +32,8 @@ import {
   PASSWORD,
   REPEAT_PASSWORD,
 } from '../../../constants';
-import TopNavigation from '../../../components/top-navigation/top-navigation';
 
+// Styles
 import './registration.css';
 
 interface RegistrationFormValues {
@@ -33,7 +46,22 @@ interface RegistrationFormValues {
   researchInterests: string;
   phone: any;
   registrationEmail: string;
+  password: string;
 }
+
+const { SET_REGISTRATION } = TYPES;
+
+const mapStateToProps = (state: object) => {
+  return {
+    store: state,
+  };
+};
+
+const mapDispatchToProps: any = (dispatch: any) => {
+  return {
+    setRegistration: () => dispatch({ type: SET_REGISTRATION }),
+  };
+};
 
 let inputsCounter: number = 0;
 
@@ -50,7 +78,9 @@ function addInputLabel(id: string, obj: object) {
   );
 }
 
-function Registration() {
+function Registration(props: any) {
+  const [isOpenedPassword, setPasswordVisibility] = useState(false);
+
   inputsCounter = 0;
 
   return (
@@ -80,15 +110,55 @@ function Registration() {
             researchInterests: '',
             phone: '',
             registrationEmail: '',
+            password: '',
           }}
           onSubmit={(
             values: RegistrationFormValues,
             { setSubmitting }: FormikHelpers<RegistrationFormValues>
           ) => {
-            setTimeout(() => {
-              alert(JSON.stringify(values, null, 2));
-              setSubmitting(false);
-            }, 500);
+            const {
+              lastName,
+              firstName,
+              middleName,
+              academicDegree,
+              profDegree,
+              researchInterests,
+              university,
+              phone,
+              registrationEmail,
+              password,
+            } = values;
+            const { setRegistration } = props;
+
+            // TODO: Add checking that an account exists yet
+            Promise.resolve()
+              .then(() => {
+                // Add main info about an user to Authentication
+                return auth.createUser(registrationEmail, password);
+              })
+              .then(() => {
+                // Add additional info about an user to Firestore
+                return firestore.createManuscript(USERS, {
+                  basicInfo: {
+                    lastName: lastName,
+                    firstName: firstName,
+                    middleName: middleName || null,
+                  },
+                  profInfo: {
+                    academicDegree: academicDegree || null,
+                    profDegree: profDegree || null,
+                    researchInterests: researchInterests || null,
+                    university: university || null,
+                  },
+                  serviceInfo: {
+                    email: registrationEmail.toLowerCase(),
+                    phone: phone,
+                  },
+                });
+              })
+              .then(() => alert('Ваш аккаунт успешно создан!'))
+              .then(() => setRegistration());
+            // TODO: Add redirect on Login page here
           }}
         >
           <Form>
@@ -262,7 +332,7 @@ function Registration() {
                   id={PASSWORD}
                   name={PASSWORD}
                   className="form-control"
-                  type="password"
+                  type={isOpenedPassword ? 'text' : 'password'}
                   minlength="6"
                   maxlength="50"
                   placeholder={utils.getPlaceholderById(PASSWORD, SERVICE_INFO)}
@@ -270,24 +340,15 @@ function Registration() {
                     utils.getRequiredById(PASSWORD, SERVICE_INFO) ? true : false
                   }
                 />
-              </div>
-              <div className="d-flex flex-column mb-3">
-                {addInputLabel(REPEAT_PASSWORD, SERVICE_INFO)}
-                <Field
-                  id={REPEAT_PASSWORD}
-                  name={REPEAT_PASSWORD}
-                  className="form-control"
-                  type="password"
-                  minlength="6"
-                  maxlength="50"
-                  placeholder={utils.getPlaceholderById(
-                    REPEAT_PASSWORD,
-                    SERVICE_INFO
-                  )}
-                  required={
-                    utils.getRequiredById(REPEAT_PASSWORD, SERVICE_INFO)
-                      ? true
-                      : false
+                <VisibilityIcon
+                  style={{
+                    position: 'absolute',
+                    marginTop: '42px',
+                    marginLeft: '425px',
+                    cursor: 'pointer',
+                  }}
+                  onClick={() =>
+                    setPasswordVisibility(isOpenedPassword ? false : true)
                   }
                 />
               </div>
@@ -307,4 +368,4 @@ function Registration() {
   );
 }
 
-export default Registration;
+export default connect(mapStateToProps, mapDispatchToProps)(Registration);

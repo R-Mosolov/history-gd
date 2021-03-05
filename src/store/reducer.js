@@ -22,6 +22,7 @@ import { utils } from '../utils';
 // Restructure types
 const {
   UPDATE_ALL_MANUSCRIPTS,
+  SET_REGISTRATION,
   SET_AUTHENTICATION,
   CHECK_INTERSECTIONS,
   SORT_MANUSCRIPTS,
@@ -33,6 +34,7 @@ const {
 // Create the reducer
 const reducer = (store = initialState, action) => {
   const {
+    isRegistered,
     isAuthenticated,
     intersectionParams,
     areManuscriptsIntersected,
@@ -51,6 +53,11 @@ const reducer = (store = initialState, action) => {
     /**
      * App
      */
+    case SET_REGISTRATION:
+      return {
+        ...store,
+        isRegistered: true,
+      };
     case SET_AUTHENTICATION:
       return {
         ...store,
