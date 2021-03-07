@@ -12,6 +12,8 @@ import TextFieldsIcon from '@material-ui/icons/TextFields';
 import TableChartIcon from '@material-ui/icons/TableChart';
 import CropOriginalIcon from '@material-ui/icons/CropOriginal';
 import FunctionsIcon from '@material-ui/icons/Functions';
+import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
+import LinkIcon from '@material-ui/icons/Link';
 
 // Right click menu
 import Button from '@material-ui/core/Button';
@@ -58,6 +60,7 @@ export default function Editor() {
   const [isActiveInput, setActiveInput] = useState(true);
   const [isTableDialog, setTableDialog] = useState(false);
   const [isPictureDialog, setPictureDialog] = useState(false);
+  const [isFootnoteDialog, setFootnoteDialog] = useState(false);
   const [tableConfig, setTableConfig] = useState({
     number: 1,
     title: 'Название таблицы',
@@ -225,6 +228,15 @@ export default function Editor() {
     setInputs([...inputs, createPicture()]);
   };
 
+  const toggleFootnoteDialog = () => {
+    setFootnoteDialog(isFootnoteDialog ? false : true);
+  };
+
+  const addFootnote = () => {
+    isFootnoteDialog(false);
+    setInputs([...inputs, createPicture()]);
+  };
+
   return (
     <section className={`editor`}>
       <div className="editor__container">
@@ -244,6 +256,8 @@ export default function Editor() {
             className="editor__icon"
             onClick={makeTextUnderline}
           />
+          <span className="editor__icon editor__custom-icon">* Прим. авт.</span>
+          <span className="editor__icon editor__custom-icon" onClick={toggleFootnoteDialog}>[Сноска]</span>
         </section>
 
         <section className="editor__content">
@@ -314,6 +328,10 @@ export default function Editor() {
                       <MenuItem onClick={addParagraph}>
                         <TextFieldsIcon style={{ marginRight: '5px' }} />
                         Параграф
+                      </MenuItem>
+                      <MenuItem onClick={() => alert('Логика списков пока не готова.')}>
+                        <FormatListBulletedIcon style={{ marginRight: '5px' }} />
+                        Список
                       </MenuItem>
                       <MenuItem onClick={toggleTableDialog}>
                         <TableChartIcon style={{ marginRight: '5px' }} />
@@ -441,7 +459,7 @@ export default function Editor() {
             aria-labelledby="form-dialog-title"
             onClose={togglePictureDialog}
           >
-            <DialogTitle id="form-dialog-title">
+            <DialogTitle id="picture-dialog__title">
               Новый рисунок/схема
             </DialogTitle>
             <DialogContent>
@@ -453,7 +471,7 @@ export default function Editor() {
               <TextField
                 autoFocus
                 margin="dense"
-                id="editor-table-name"
+                id="picture-dialog__name"
                 label="Название рисунка (обязательное)"
                 type="text"
                 onChange={(evt) =>
@@ -480,6 +498,68 @@ export default function Editor() {
                 color="primary"
                 size="small"
                 onClick={togglePictureDialog}
+                style={{
+                  color: 'white',
+                  backgroundColor: red[700],
+                  border: 'none',
+                }}
+              >
+                Отменить
+              </Button>
+              <Button
+                variant="outlined"
+                color="primary"
+                size="small"
+                onClick={() => {
+                  addPicture();
+                }}
+                style={{
+                  color: 'white',
+                  backgroundColor: green[600],
+                  border: 'none',
+                }}
+              >
+                Создать
+              </Button>
+            </DialogActions>
+          </Dialog>
+
+          <Dialog
+            open={isFootnoteDialog}
+            aria-labelledby="form-dialog-title"
+            onClose={toggleFootnoteDialog}
+          >
+            <DialogTitle id="footnote-dialog__title">
+              Новая сноска
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                Чтобы создать новую затекстовую сноску.
+              </DialogContentText>
+              {/* TODO: Add here validation using Formik library */}
+              <TextField
+                autoFocus
+                margin="dense"
+                id="footnote-dialog__name"
+                label="Название рисунка (обязательное)"
+                type="text"
+                onChange={(evt) =>
+                  setPictureConfig({
+                    ...pictureConfig,
+                    title: evt.target.value
+                      ? evt.target.value
+                      : 'Название рисунка',
+                  })
+                }
+                fullWidth
+              />
+            </DialogContent>
+            <DialogActions>
+              <Button
+                variant="outlined"
+                color="primary"
+                size="small"
+                onClick={toggleFootnoteDialog}
                 style={{
                   color: 'white',
                   backgroundColor: red[700],
