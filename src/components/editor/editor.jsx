@@ -1,6 +1,6 @@
 // Core
 import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
+import { useDropzone } from 'react-dropzone';
 
 // Icons
 import { red, green } from '@material-ui/core/colors';
@@ -39,7 +39,6 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
 // Custom components (and OLOO classes)
-import DragAndDrop from '../drag-and-drop';
 import { TableAttachment, PictureAttachment } from '../../classes';
 
 // Data
@@ -57,13 +56,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const mapStateToProps = (state) => {
-  return {
-    store: state,
-  };
-};
-
-function Editor({ activePictureLink }) {
+export default function Editor(props) {
   const classes = useStyles();
   const [isRightClickMenu, setRightClickMenu] = useState(false);
   const [isActiveInput, setActiveInput] = useState(true);
@@ -115,6 +108,9 @@ function Editor({ activePictureLink }) {
     prevOpen.current = isRightClickMenu;
   }, [isRightClickMenu]);
 
+  /**
+   * Functions to create a manuscript blocks
+   */
   const makeTextBold = () => document.execCommand('bold');
   const makeTextItalic = () => document.execCommand('italic');
   const makeTextUnderline = () => document.execCommand('underline');
@@ -151,7 +147,7 @@ function Editor({ activePictureLink }) {
 
   const toggleTableDialog = () => {
     setRightClickMenu(false);
-    setTableDialog(isTableDialog ? false : true);
+    return setTableDialog(isTableDialog ? false : true);
   };
 
   const generateTableStructure = (colsCount, rowsCount) => {
@@ -211,12 +207,12 @@ function Editor({ activePictureLink }) {
 
   function addTable() {
     setTableDialog(false);
-    setInputs([...inputs, createTable()]);
+    return setInputs([...inputs, createTable()]);
   }
 
   const togglePictureDialog = () => {
     setRightClickMenu(false);
-    setPictureDialog(isPictureDialog ? false : true);
+    return setPictureDialog(isPictureDialog ? false : true);
   };
 
   const createPicture = (pictureURL) => {
@@ -233,24 +229,71 @@ function Editor({ activePictureLink }) {
     return PictureAttachment.getPictureHTMLStructure();
   };
 
-  const addPicture = () => {
+  const addPicture = (fileId, fileExtension) => {
+    const activePictureLink = `manuscripts-content/manuscript-content-${fileId}.${fileExtension.toLowerCase()}`;
+
     setPictureDialog(false);
-    Promise.resolve(
-      storage.getPictureLink(
-        'manuscripts-content/manuscript-content-1615119811914.jpg'
-      )
-    )
+
+    return Promise.resolve()
+      .then(() => storage.getPictureLink(activePictureLink))
       .then((pictureURL) => setInputs([...inputs, createPicture(pictureURL)]))
       .catch((err) => console.error(err));
   };
 
   const toggleFootnoteDialog = () => {
-    setFootnoteDialog(isFootnoteDialog ? false : true);
+    return setFootnoteDialog(isFootnoteDialog ? false : true);
   };
 
   const addFootnote = () => {
     isFootnoteDialog(false);
-    setInputs([...inputs, createPicture()]);
+    return setInputs([...inputs, createPicture()]);
+  };
+
+  /**
+   * Functions to create drag-n-drop field
+   */
+  const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
+    accept: 'image/jpeg, image/png', // The value should be a string, ex.: 'image/jpeg, image/png'
+  });
+
+  const files = acceptedFiles.map((file) => (
+    <p key={file.path}>
+      Файл: "{file.path}". Размер: {file.size} байт.
+    </p>
+  ));
+
+  const createDroppedFile = () => {
+    const fileId = Date.now().toString();
+    const lastIdx = acceptedFiles[0].name.split('.').length - 1;
+    const fileExtension = acceptedFiles[0].name.split('.')[lastIdx];
+    const fileType = acceptedFiles.type;
+    const fileInBlob = new Blob(acceptedFiles, { type: fileType });
+
+    return Promise.resolve(
+      storage.createManuscriptContentFile(
+        fileId,
+        fileInBlob,
+        fileType,
+        fileExtension
+      )
+    ).then(() => ({
+      fileId: fileId,
+      fileExtension: fileExtension,
+    }));
+  };
+
+  const renderFormatsToAccept = (humanFormats) => {
+    // TODO: Move this function to Utils directory
+    const isLastIdx = (arr, idx) => arr.length - 1 === idx;
+    let result = '';
+
+    humanFormats.forEach((item, idx) => {
+      isLastIdx(humanFormats, idx)
+        ? (result += item + '.')
+        : (result += item + ', ');
+    });
+
+    return result;
   };
 
   return (
@@ -510,11 +553,30 @@ function Editor({ activePictureLink }) {
                 fullWidth
               />
               <Box mt={3}>
-                <DragAndDrop
-                  computerFormats="image/jpeg, image/png"
-                  humanFormats={['JPG', 'JPEG', 'PNG']}
-                  maxFileSizeInMB="4"
-                />
+                <section className="container field-to-upload">
+                  <div {...getRootProps({ className: 'dropzone' })}>
+                    <input {...getInputProps()} />
+                    <p>
+                      Чтобы загрузить файл, кликните на это поле или перенесите
+                      файл сюда.
+                    </p>
+                    <p>
+                      Принимается <b>только 1 файл</b>
+                      {` размером не более 4 Мб`} в следующем формате:
+                      {' ' + renderFormatsToAccept(['JPG', 'JPEG', 'PNG'])}
+                    </p>
+                  </div>
+                  <aside>
+                    <ul>{files}</ul>
+                    <button
+                      id="btn-to-upload-image"
+                      onClick={createDroppedFile}
+                      style={{ display: 'none' }}
+                    >
+                      Загрузить файл на сервер
+                    </button>
+                  </aside>
+                </section>
               </Box>
             </DialogContent>
             <DialogActions>
@@ -536,11 +598,10 @@ function Editor({ activePictureLink }) {
                 color="primary"
                 size="small"
                 onClick={() => {
-                  const btnToUploadImage = document.getElementById(
-                    'btn-to-upload-image'
-                  );
-                  return Promise.resolve(btnToUploadImage.click()).then(() =>
-                    addPicture()
+                  return Promise.resolve(
+                    createDroppedFile()
+                  ).then(({ fileId, fileExtension }) =>
+                    addPicture(fileId, fileExtension)
                   );
                 }}
                 style={{
@@ -601,7 +662,7 @@ function Editor({ activePictureLink }) {
                 color="primary"
                 size="small"
                 onClick={() => {
-                  addPicture();
+                  return;
                 }}
                 style={{
                   color: 'white',
@@ -618,5 +679,3 @@ function Editor({ activePictureLink }) {
     </section>
   );
 }
-
-export default connect(mapStateToProps, {})(Editor);

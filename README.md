@@ -67,10 +67,10 @@ Run following terminal commands from root directory:
 Then open a browser at: http://localhost:3000/
 
 ## How to Run the SPA (for workers)
-`clear && npm run build && npm start`
+`npm run start`
 
 ## How to Check Syntax Quality into Modules (using Prettier)
-`clear && cd src && npx prettier --write .`
+`npm run pretty`
 
 # The Project Technical Task and Timekeeping in Russian
 More information about project's technical details, planned 

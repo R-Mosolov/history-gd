@@ -1,33 +1,14 @@
 // Core
 import React from 'react';
-import { connect } from 'react-redux';
 import { useDropzone } from 'react-dropzone';
 
 // Data
-import TYPES from '../store/types';
 import { storage } from '../server';
 
 // Styles
 import '../styles/components/drag-and-drop.scss';
 
-const { SET_ACTIVE_PICTURE_LINK } = TYPES;
-
-const mapStateToProps = (state) => {
-  return {
-    store: state,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setActivePictureLink: (fileId, fileExtension) => dispatch({ type: SET_ACTIVE_PICTURE_LINK, payload: {
-      fileId: fileId,
-      fileExtension: fileExtension,
-    } }),
-  };
-};
-
-function DragAndDrop({
+export default function DragAndDrop({
   computerFormats,
   humanFormats,
   maxFileSizeInMB = null,
@@ -50,12 +31,14 @@ function DragAndDrop({
     const fileType = acceptedFiles.type;
     const fileInBlob = new Blob(acceptedFiles, { type: fileType });
 
-    return Promise.resolve(storage.createManuscriptContentFile(
+    return Promise.resolve(
+      storage.createManuscriptContentFile(
         fileId,
         fileInBlob,
         fileType,
         fileExtension
-      )).then(() => setActivePictureLink(fileId, fileExtension));
+      )
+    );
   };
 
   const renderFormatsToAccept = (humanFormats) => {
@@ -99,5 +82,3 @@ function DragAndDrop({
     </section>
   );
 }
-
-export default connect(mapStateToProps, mapDispatchToProps)(DragAndDrop);

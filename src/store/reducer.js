@@ -323,6 +323,9 @@ const reducer = (store = initialState, action) => {
         activePictureLink: activePictureLink,
       };
 
+    case 'GET_ACTIVE_PICTURE_LINK':
+      return store;
+
     default:
       return initialState;
   }
