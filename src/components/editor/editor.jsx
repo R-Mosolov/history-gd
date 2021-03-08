@@ -1,5 +1,6 @@
 // Core
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 
 // Icons
 import { red, green } from '@material-ui/core/colors';
@@ -13,7 +14,6 @@ import TableChartIcon from '@material-ui/icons/TableChart';
 import CropOriginalIcon from '@material-ui/icons/CropOriginal';
 import FunctionsIcon from '@material-ui/icons/Functions';
 import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
-import LinkIcon from '@material-ui/icons/Link';
 
 // Right click menu
 import Button from '@material-ui/core/Button';
@@ -42,6 +42,9 @@ import Checkbox from '@material-ui/core/Checkbox';
 import DragAndDrop from '../drag-and-drop';
 import { TableAttachment, PictureAttachment } from '../../classes';
 
+// Data
+import { storage } from '../../server';
+
 // Styles
 import '../../styles/components/editor.scss';
 
@@ -54,7 +57,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Editor() {
+const mapStateToProps = (state) => {
+  return {
+    store: state,
+  };
+};
+
+function Editor({ activePictureLink }) {
   const classes = useStyles();
   const [isRightClickMenu, setRightClickMenu] = useState(false);
   const [isActiveInput, setActiveInput] = useState(true);
@@ -210,7 +219,7 @@ export default function Editor() {
     setPictureDialog(isPictureDialog ? false : true);
   };
 
-  const createPicture = () => {
+  const createPicture = (pictureURL) => {
     const { number, title } = pictureConfig;
 
     setPictureConfig({ ...pictureConfig, number: number + 1 });
@@ -218,6 +227,7 @@ export default function Editor() {
     PictureAttachment.setPictureType();
     PictureAttachment.setPictureNumber(number);
     PictureAttachment.setPictureTitle(title);
+    PictureAttachment.setPictureSrc(pictureURL);
     PictureAttachment.setPictureHTMLStructure(generateTableStructure);
 
     return PictureAttachment.getPictureHTMLStructure();
@@ -225,7 +235,13 @@ export default function Editor() {
 
   const addPicture = () => {
     setPictureDialog(false);
-    setInputs([...inputs, createPicture()]);
+    Promise.resolve(
+      storage.getPictureLink(
+        'manuscripts-content/manuscript-content-1615119811914.jpg'
+      )
+    )
+      .then((pictureURL) => setInputs([...inputs, createPicture(pictureURL)]))
+      .catch((err) => console.error(err));
   };
 
   const toggleFootnoteDialog = () => {
@@ -257,7 +273,12 @@ export default function Editor() {
             onClick={makeTextUnderline}
           />
           <span className="editor__icon editor__custom-icon">* Прим. авт.</span>
-          <span className="editor__icon editor__custom-icon" onClick={toggleFootnoteDialog}>[Сноска]</span>
+          <span
+            className="editor__icon editor__custom-icon"
+            onClick={toggleFootnoteDialog}
+          >
+            [Сноска]
+          </span>
         </section>
 
         <section className="editor__content">
@@ -329,8 +350,12 @@ export default function Editor() {
                         <TextFieldsIcon style={{ marginRight: '5px' }} />
                         Параграф
                       </MenuItem>
-                      <MenuItem onClick={() => alert('Логика списков пока не готова.')}>
-                        <FormatListBulletedIcon style={{ marginRight: '5px' }} />
+                      <MenuItem
+                        onClick={() => alert('Логика списков пока не готова.')}
+                      >
+                        <FormatListBulletedIcon
+                          style={{ marginRight: '5px' }}
+                        />
                         Список
                       </MenuItem>
                       <MenuItem onClick={toggleTableDialog}>
@@ -511,7 +536,12 @@ export default function Editor() {
                 color="primary"
                 size="small"
                 onClick={() => {
-                  addPicture();
+                  const btnToUploadImage = document.getElementById(
+                    'btn-to-upload-image'
+                  );
+                  return Promise.resolve(btnToUploadImage.click()).then(() =>
+                    addPicture()
+                  );
                 }}
                 style={{
                   color: 'white',
@@ -529,9 +559,7 @@ export default function Editor() {
             aria-labelledby="form-dialog-title"
             onClose={toggleFootnoteDialog}
           >
-            <DialogTitle id="footnote-dialog__title">
-              Новая сноска
-            </DialogTitle>
+            <DialogTitle id="footnote-dialog__title">Новая сноска</DialogTitle>
             <DialogContent>
               <DialogContentText>
                 Чтобы создать новую затекстовую сноску.
@@ -590,3 +618,5 @@ export default function Editor() {
     </section>
   );
 }
+
+export default connect(mapStateToProps, {})(Editor);

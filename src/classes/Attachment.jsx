@@ -3,7 +3,6 @@ import React from 'react';
 /**
  * Create abstract OLOO class
  */
-
 const Attachment = {
   // Create setters
   setType: function (type) {
@@ -18,7 +17,6 @@ const Attachment = {
   setHTMLStructure: function (HTMLStructure) {
     return (this.HTMLStructure = HTMLStructure);
   },
-
   // Create getters
   getType: function () {
     return this.type;
@@ -37,10 +35,8 @@ const Attachment = {
 /**
  * Create Table OLOO class
  */
-
 // Inherit main logic from abstract OLOO class
 const TableAttachment = Object.create(Attachment);
-
 // Create setters
 TableAttachment.setTableType = function () {
   return this.setType('Таблица');
@@ -68,7 +64,6 @@ TableAttachment.setTableHTMLStructure = function (callback) {
     </div>
   );
 };
-
 // Create getters
 TableAttachment.getTableType = function () {
   return this.type;
@@ -92,10 +87,8 @@ TableAttachment.getTableHTMLStructure = function () {
 /**
  * Create Picture OLOO class
  */
-
 // Inherit main logic from abstract OLOO class
 const PictureAttachment = Object.create(Attachment);
-
 // Create setters
 PictureAttachment.setPictureType = function () {
   return this.setType('Рисунок');
@@ -106,20 +99,21 @@ PictureAttachment.setPictureNumber = function (number) {
 PictureAttachment.setPictureTitle = function (title) {
   return this.setTitle(title || 'Название рисунка');
 };
+PictureAttachment.setPictureSrc = function (pictureSrc) {
+  return (this.pictureSrc =
+    pictureSrc ||
+    'https://media.wired.com/photos/5d09594a62bcb0c9752779d9/' +
+      'master/w_2560%2Cc_limit/Transpo_G70_TA-518126.jpg');
+};
 PictureAttachment.setPictureHTMLStructure = function () {
   return this.setHTMLStructure(
     <div className="editor__content_attachment">
       <p className="attachment__number">{`${this.getPictureType()} ${this.getPictureNumber()}`}</p>
       <p className="attachment__title">{this.getPictureTitle()}</p>
-      <img
-        src={`https://media.wired.com/photos/5d09594a62bcb0c9752779d9/
-        master/w_2560%2Cc_limit/Transpo_G70_TA-518126.jpg`}
-        style={{ maxWidth: 100 + '%' }}
-      />
+      <img src={this.getPictureSrc()} style={{ maxWidth: 100 + '%' }} />
     </div>
   );
 };
-
 // Create getters
 PictureAttachment.getPictureType = function () {
   return this.type;
@@ -129,6 +123,9 @@ PictureAttachment.getPictureNumber = function () {
 };
 PictureAttachment.getPictureTitle = function () {
   return this.title;
+};
+PictureAttachment.getPictureSrc = function () {
+  return this.pictureSrc;
 };
 PictureAttachment.getPictureHTMLStructure = function () {
   return this.HTMLStructure;

@@ -21,13 +21,19 @@ import { utils } from '../utils';
 
 // Restructure types
 const {
+  // App
   UPDATE_ALL_MANUSCRIPTS,
   SET_AUTHENTICATION,
+
+  // Manuscripts page
   CHECK_INTERSECTIONS,
   SORT_MANUSCRIPTS,
   FILTER_MANUSCRIPTS,
   SEARCH_MANUSCRIPTS,
   RESET_STATE,
+
+  // Add Manuscript page
+  SET_ACTIVE_PICTURE_LINK,
 } = TYPES;
 
 // Create the reducer
@@ -301,6 +307,20 @@ const reducer = (store = initialState, action) => {
           ...areManuscriptsFiltered,
           isActive: false,
         },
+      };
+
+    /**
+     * Add Manuscript page
+     */
+    case SET_ACTIVE_PICTURE_LINK:
+      const { fileId, fileExtension } = action.payload;
+      const activePictureLink =
+        'manuscripts-content/manuscript-content-' +
+        `${fileId.toString()}.${fileExtension.toLowerCase()}`;
+
+      return {
+        ...store,
+        activePictureLink: activePictureLink,
       };
 
     default:
