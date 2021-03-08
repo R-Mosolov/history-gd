@@ -4,10 +4,11 @@
   "description": "The repository contains a SPA for keeping scientific manuscripts and searching genius patterns.",
   "main": "index.js",
   "scripts": {
-    "start": "react-scripts start",
+    "start": "clear && npm run build && react-scripts start",
     "build": "tsc",
     "test": "jest",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "pretty": "clear && cd src && npx prettier --write ."
   },
   "keywords": [
     "history-gd",

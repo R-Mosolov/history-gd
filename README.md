@@ -58,13 +58,16 @@ The additional technological stack: Reselect.
 
 ## Backend
 
-| #   |   Technology    |                      Role                      |
-| --- | :-------------: | :--------------------------------------------: |
-| 1   |     Node.js     |                   Server PL                    |
-| 2   |   Express.js    |      Main high-level library for Node.js       |
-| 3   | Google Firebase |         NoSQL DBMS and hosting for SPA         |
-| 4   |       JWT       | Creates tokens to authenticate an user session |
-| 5   |      Jest       |           Tests modules code quality           |
+| #   |   Technology    |                        Role                          |
+| --- | :-------------: | :---------------------------------------------------:|
+| 1   |     Node.js     |                   Main server PL                     |
+| 1   |     Python      | Server PL to integrate GUI with scientific libraries |
+| 2   |   Express.js    |      Main high-level library for Node.js             |
+| 3   | Google Firebase |          Main DBMS and hosting for SPA               |
+| 4   |     MongoDB     |          2nd DBMS for saving backups                 |
+| 5   |   PostgreSQL    |          3rd DBMS for saving backups                 |
+| 6   |       JWT       | Creates tokens to authenticate an user session       |
+| 7   |      Jest       |           Tests modules code quality                 |
 
 # The Instructions
 
@@ -79,11 +82,11 @@ Then open a browser at: http://localhost:3000/
 
 ## How to Run the SPA (for workers)
 
-`clear && npm run build && npm start`
+`npm run start`
 
 ## How to Check Syntax Quality into Modules (using Prettier)
 
-`clear && cd src && npx prettier --write .`
+`npm run pretty`
 
 # The Project Technical Task and Timekeeping in Russian
 
