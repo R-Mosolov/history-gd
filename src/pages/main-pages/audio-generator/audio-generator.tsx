@@ -2,8 +2,8 @@ import React from 'react';
 
 import './audio-generator.css';
 
-import * as LeftNavigation from '../../../components/left-navigation/left-navigation';
-import * as TopNavigation from '../../../components/top-navigation/top-navigation';
+import LeftNavigation from '../../../components/left-navigation/left-navigation';
+import TopNavigation from '../../../components/top-navigation/top-navigation';
 import Figure from './images/figure.jpeg';
 
 function AudioGenerator() {

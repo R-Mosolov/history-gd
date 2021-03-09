@@ -31,6 +31,13 @@ export interface InitialStateConfig {
   areManuscriptsSearched: boolean;
 }
 
+export interface ManuscriptConfig {
+  manuscriptId: string;
+  title: string;
+  author: string;
+  type: string;
+}
+
 // TODO: Change Any type
 export interface ActionConfig {
   [key: string]: any;

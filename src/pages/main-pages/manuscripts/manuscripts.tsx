@@ -3,8 +3,9 @@
 // Core
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { bindActionCreators, AnyAction } from 'redux';
 import { readAllManuscripts } from '../../../store/action-creators';
+import { ThunkDispatch } from 'redux-thunk';
 
 // Icons
 import Box from '@material-ui/core/Box';
@@ -21,6 +22,9 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+
+// Configs
+import { ManuscriptConfig } from '../../../configs';
 
 // Components
 import LeftNavigation from '../../../components/left-navigation/left-navigation';
@@ -47,6 +51,45 @@ import {
 // Styles
 import './manuscripts.css';
 
+interface Props {
+  actions: {
+    readAllManuscripts: () => object;
+  };
+  store: {
+    [key: string]: any;
+    areManuscriptsIntersected: boolean;
+    areManuscriptsSorted: {
+      isActive: false;
+      byDecrease: false;
+    };
+    areManuscriptsFiltered: {
+      isActive: false;
+      byLargeManuscripts: false;
+    };
+    areManuscriptsSearched: boolean;
+  };
+  sortManuscripts: (payload: string) => object;
+  filterManuscripts: (payload: string) => object;
+  searchManuscripts: (payload: string) => object;
+  resetState: () => object;
+  areManuscriptsLoading: boolean;
+}
+
+interface States {
+  title: string;
+  author: string;
+  type: string;
+  activeManuscript: {
+    manuscriptId: string;
+  };
+  isUpdatingDialogOpen: boolean;
+  isDeletingDialogOpen: boolean;
+  areTitlesSortedByIncrease: boolean;
+  areAuthorsSortedByIncrease: boolean;
+  areTypesSortedByIncrease: boolean;
+  areCreationDatesSortedByIncrease: boolean;
+}
+
 const {
   CHECK_INTERSECTIONS,
   SORT_MANUSCRIPTS,
@@ -55,25 +98,27 @@ const {
   RESET_STATE,
 } = TYPES;
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: object) => {
   return {
     store: state,
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (
+  dispatch: ThunkDispatch<States, void, AnyAction>
+) => {
   return {
     // TODO: Add only finished actions instead of a dispatcher here
     actions: bindActionCreators({ readAllManuscripts }, dispatch),
-    sortManuscripts: (payload) => {
+    sortManuscripts: (payload: string) => {
       dispatch({ type: SORT_MANUSCRIPTS, payload: payload });
       dispatch({ type: CHECK_INTERSECTIONS });
     },
-    filterManuscripts: (payload) => {
+    filterManuscripts: (payload: string) => {
       dispatch({ type: FILTER_MANUSCRIPTS, payload: payload });
       dispatch({ type: CHECK_INTERSECTIONS });
     },
-    searchManuscripts: (payload) => {
+    searchManuscripts: (payload: string) => {
       dispatch({ type: SEARCH_MANUSCRIPTS, payload: payload });
       dispatch({ type: CHECK_INTERSECTIONS, payload: payload });
     },
@@ -81,23 +126,29 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-class Manuscripts extends Component {
+class Manuscripts extends Component<Props, States> {
   static defaultProps = {
     actions: {
       readAllManuscripts: () => {},
     },
   };
 
-  constructor(props) {
+  constructor(props: Props) {
     super(props);
 
     this.state = {
       title: '',
       author: '',
       type: '',
-      activeManuscript: '',
+      activeManuscript: {
+        manuscriptId: '',
+      },
       isUpdatingDialogOpen: false,
       isDeletingDialogOpen: false,
+      areTitlesSortedByIncrease: false,
+      areAuthorsSortedByIncrease: false,
+      areTypesSortedByIncrease: false,
+      areCreationDatesSortedByIncrease: false,
     };
 
     this.handleTitleChange = this.handleTitleChange.bind(this);
@@ -105,15 +156,23 @@ class Manuscripts extends Component {
     this.handleTypeChange = this.handleTypeChange.bind(this);
   }
 
-  handleTitleChange = (event) => this.setState({ title: event.target.value });
-  handleAuthorChange = (event) => this.setState({ author: event.target.value });
-  handleTypeChange = (type) => this.setState({ type: type });
+  handleTitleChange: (event: any) => void = (event) =>
+    this.setState({ title: event.target.value });
+  handleAuthorChange: (event: any) => void = (event) =>
+    this.setState({ author: event.target.value });
+  handleTypeChange: (type: string) => void = (type) =>
+    this.setState({ type: type });
 
   /**
    * Handle editing and deleting a manuscript
    */
-  handleUpdatingManuscript(isUpdatingDialogOpen, manuscript) {
-    this.setState({ activeManuscript: manuscript });
+  handleUpdatingManuscript(
+    isUpdatingDialogOpen: boolean,
+    manuscript?: ManuscriptConfig
+  ) {
+    if (manuscript) {
+      this.setState({ activeManuscript: manuscript });
+    }
 
     if (isUpdatingDialogOpen) {
       this.setState({ isUpdatingDialogOpen: false });
@@ -121,14 +180,14 @@ class Manuscripts extends Component {
       this.setState({
         isUpdatingDialogOpen: true,
 
-        title: manuscript.title ? manuscript.title : '',
-        author: manuscript.author ? manuscript.author : '',
-        type: manuscript.type ? manuscript.type : '',
+        title: manuscript?.title ? manuscript.title : '',
+        author: manuscript?.author ? manuscript.author : '',
+        type: manuscript?.type ? manuscript.type : '',
       });
     }
   }
 
-  updateManuscript(manuscriptId) {
+  updateManuscript(manuscriptId: string) {
     const { readAllManuscripts } = this.props.actions;
 
     firestore
@@ -144,8 +203,13 @@ class Manuscripts extends Component {
       });
   }
 
-  handleDeletingManuscript(isDeletingDialogOpen, manuscript) {
-    this.setState({ activeManuscript: manuscript });
+  handleDeletingManuscript(
+    isDeletingDialogOpen: boolean,
+    manuscript?: ManuscriptConfig
+  ) {
+    if (manuscript) {
+      this.setState({ activeManuscript: manuscript });
+    }
 
     if (isDeletingDialogOpen) {
       this.setState({ isDeletingDialogOpen: false });
@@ -154,12 +218,12 @@ class Manuscripts extends Component {
     }
   }
 
-  deleteManuscript(manuscriptId) {
+  deleteManuscript(manuscriptId: string) {
     const { readAllManuscripts } = this.props.actions;
 
     firestore
       .deleteManuscript(MANUSCRIPTS, manuscriptId, readAllManuscripts)
-      .then((res) => {
+      .then((res: string) => {
         if (res === 'SUCCESS') {
           this.setState({ isDeletingDialogOpen: false });
         }
@@ -209,7 +273,7 @@ class Manuscripts extends Component {
                     textDecoration: 'underline',
                     cursor: 'pointer',
                   }}
-                  onClick={resetState}
+                  onClick={() => resetState()}
                 >
                   Сбросить все фильтры
                 </span>
@@ -327,13 +391,7 @@ class Manuscripts extends Component {
                             />
                           )}
                         </th>
-                        <th
-                          className="interactive-th"
-                          scope="col"
-                          onClick={() => {
-                            this.sortByCreationDate();
-                          }}
-                        >
+                        <th className="interactive-th" scope="col">
                           Дата добавления
                           {areCreationDatesSortedByIncrease ? (
                             <SortIcon className="ml-1" />
@@ -385,7 +443,7 @@ class Manuscripts extends Component {
                           return [
                             // TODO: Add handler for full not matching (empty) values
                             ...store[selectedStoreChunk].map(
-                              (manuscript, index) => {
+                              (manuscript: any, index: number) => {
                                 return (
                                   <tr key={uuidv4()}>
                                     <th key={uuidv4()} scope="row">
@@ -465,7 +523,7 @@ class Manuscripts extends Component {
                         } else {
                           return (
                             <tr key={uuidv4()}>
-                              <th key={uuidv4()} scope="row" colSpan="6">
+                              <th key={uuidv4()} scope="row" colSpan={6}>
                                 <p key={uuidv4()} className="m-0 text-center">
                                   К сожалению, ничего не найдено...
                                 </p>
