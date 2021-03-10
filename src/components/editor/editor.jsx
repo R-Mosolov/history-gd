@@ -62,7 +62,7 @@ export default function Editor(props) {
   const [isActiveInput, setActiveInput] = useState(true);
   const [isTableDialog, setTableDialog] = useState(false);
   const [isPictureDialog, setPictureDialog] = useState(false);
-  const [isFootnoteDialog, setFootnoteDialog] = useState(false);
+  const [isReferenceDialog, setReferenceDialog] = useState(false);
   const [tableConfig, setTableConfig] = useState({
     number: 1,
     title: 'Название таблицы',
@@ -73,9 +73,11 @@ export default function Editor(props) {
   const [pictureConfig, setPictureConfig] = useState({
     number: 1,
     title: 'Название рисунка',
-    link:
-      'https://media.wired.com/photos/5d09594a62bcb0c9752779d9/' +
-      'master/w_2560%2Cc_limit/Transpo_G70_TA-518126.jpg',
+    link: '',
+  });
+  const [referenceConfig, setReferenceConfig] = useState({
+    number: 1,
+    title: 'Информация об источнике',
   });
   const anchorRef = React.useRef(null);
 
@@ -118,7 +120,7 @@ export default function Editor(props) {
   const [inputs, setInputs] = useState([
     <input
       className="editor__content_title"
-      placeholder="Заголовок"
+      value="Заголовок"
       style={{ fontWeight: 'bold', fontSize: '24px' }}
     />,
   ]);
@@ -126,10 +128,10 @@ export default function Editor(props) {
   const addTitle = () => {
     setRightClickMenu(false);
     setInputs([
-      [...inputs],
+      ...inputs,
       <input
         className="editor__content_title"
-        placeholder="Заголовок"
+        value="Заголовок"
         style={{ fontWeight: 'bold', fontSize: '24px' }}
       />,
     ]);
@@ -138,7 +140,7 @@ export default function Editor(props) {
   const addParagraph = () => {
     setRightClickMenu(false);
     setInputs([
-      [...inputs],
+      ...inputs,
       <div className="editor__content_paragraph" contentEditable>
         Параграф
       </div>,
@@ -234,19 +236,46 @@ export default function Editor(props) {
 
     setPictureDialog(false);
 
-    return Promise.resolve()
-      .then(() => storage.getPictureLink(activePictureLink))
+    return Promise.resolve(storage.getPictureLink(activePictureLink))
       .then((pictureURL) => setInputs([...inputs, createPicture(pictureURL)]))
       .catch((err) => console.error(err));
   };
 
-  const toggleFootnoteDialog = () => {
-    return setFootnoteDialog(isFootnoteDialog ? false : true);
+  const toggleReferenceDialog = () => {
+    return setReferenceDialog(isReferenceDialog ? false : true);
   };
 
-  const addFootnote = () => {
-    isFootnoteDialog(false);
-    return setInputs([...inputs, createPicture()]);
+  const addReferenceToText = () => {
+    console.log('document.activeElement');
+    return console.log(document.activeElement);
+  };
+
+  const addReferenceToEnd = () => {
+    const { number, title } = referenceConfig;
+    const isFirstRef = number === 1;
+
+    setReferenceDialog(false);
+
+    setInputs([
+      ...inputs,
+      isFirstRef ? (
+        <input
+          className="editor__content_title"
+          value="Список использованных источников"
+          style={{ fontWeight: 'bold', fontSize: '24px' }}
+        />
+      ) : (
+        <></>
+      ),
+      <div className="editor__content_paragraph" contentEditable>
+        {`${number}. ${title}`}
+      </div>,
+    ]);
+
+    return setReferenceConfig({
+      number: number + 1,
+      title: 'Информация об источнике',
+    });
   };
 
   /**
@@ -318,7 +347,7 @@ export default function Editor(props) {
           <span className="editor__icon editor__custom-icon">* Прим. авт.</span>
           <span
             className="editor__icon editor__custom-icon"
-            onClick={toggleFootnoteDialog}
+            onClick={toggleReferenceDialog}
           >
             [Сноска]
           </span>
@@ -616,28 +645,29 @@ export default function Editor(props) {
           </Dialog>
 
           <Dialog
-            open={isFootnoteDialog}
+            open={isReferenceDialog}
             aria-labelledby="form-dialog-title"
-            onClose={toggleFootnoteDialog}
+            onClose={toggleReferenceDialog}
           >
             <DialogTitle id="footnote-dialog__title">Новая сноска</DialogTitle>
             <DialogContent>
               <DialogContentText>
-                Чтобы создать новую затекстовую сноску.
+                Чтобы создать новую затекстовую сноску, введите, пожалуйста, её
+                название в поле ниже.
               </DialogContentText>
               {/* TODO: Add here validation using Formik library */}
               <TextField
                 autoFocus
                 margin="dense"
                 id="footnote-dialog__name"
-                label="Название рисунка (обязательное)"
+                label="Информация об источнике (обязательное)"
                 type="text"
                 onChange={(evt) =>
-                  setPictureConfig({
-                    ...pictureConfig,
+                  setReferenceConfig({
+                    ...referenceConfig,
                     title: evt.target.value
                       ? evt.target.value
-                      : 'Название рисунка',
+                      : 'Информация об источнике',
                   })
                 }
                 fullWidth
@@ -648,7 +678,7 @@ export default function Editor(props) {
                 variant="outlined"
                 color="primary"
                 size="small"
-                onClick={toggleFootnoteDialog}
+                onClick={toggleReferenceDialog}
                 style={{
                   color: 'white',
                   backgroundColor: red[700],
@@ -661,9 +691,7 @@ export default function Editor(props) {
                 variant="outlined"
                 color="primary"
                 size="small"
-                onClick={() => {
-                  return;
-                }}
+                onClick={addReferenceToEnd}
                 style={{
                   color: 'white',
                   backgroundColor: green[600],
