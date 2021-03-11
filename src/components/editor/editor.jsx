@@ -121,7 +121,8 @@ export default function Editor() {
 
   const getCaretPosition = (editableDiv) => {
     var caretPos = 0,
-      sel, range;
+      sel,
+      range;
     if (window.getSelection) {
       sel = window.getSelection();
       if (sel.rangeCount) {
@@ -133,20 +134,20 @@ export default function Editor() {
     } else if (document.selection && document.selection.createRange) {
       range = document.selection.createRange();
       if (range.parentElement() == editableDiv) {
-        var tempEl = document.createElement("span");
+        var tempEl = document.createElement('span');
         editableDiv.insertBefore(tempEl, editableDiv.firstChild);
         var tempRange = range.duplicate();
         tempRange.moveToElementText(tempEl);
-        tempRange.setEndPoint("EndToEnd", range);
+        tempRange.setEndPoint('EndToEnd', range);
         caretPos = tempRange.text.length;
       }
     }
-    return caretPosition = caretPos;
-  }
+    return (caretPosition = caretPos);
+  };
 
   const [inputs, setInputs] = useState([
     <div
-      id='start-input'
+      id="start-input"
       className="editor__content_paragraph"
       contentEditable
       onClick={() => {
@@ -283,11 +284,11 @@ export default function Editor() {
     const startInput = document.getElementById('start-input');
     let value = startInput.innerText;
     let result;
-    
+
     result = `${value.slice(0, caretPosition)} [${number}]
     ${value.slice(caretPosition, value.length - 1)}`;
-    
-    return startInput.innerHTML = result;
+
+    return (startInput.innerHTML = result);
   };
 
   const addReferenceToEnd = () => {
