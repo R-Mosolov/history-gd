@@ -56,7 +56,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Editor(props) {
+let caretPosition;
+
+export default function Editor() {
   const classes = useStyles();
   const [isRightClickMenu, setRightClickMenu] = useState(false);
   const [isActiveInput, setActiveInput] = useState(true);
@@ -117,12 +119,43 @@ export default function Editor(props) {
   const makeTextItalic = () => document.execCommand('italic');
   const makeTextUnderline = () => document.execCommand('underline');
 
+  const getCaretPosition = (editableDiv) => {
+    var caretPos = 0,
+      sel, range;
+    if (window.getSelection) {
+      sel = window.getSelection();
+      if (sel.rangeCount) {
+        range = sel.getRangeAt(0);
+        if (range.commonAncestorContainer.parentNode == editableDiv) {
+          caretPos = range.endOffset;
+        }
+      }
+    } else if (document.selection && document.selection.createRange) {
+      range = document.selection.createRange();
+      if (range.parentElement() == editableDiv) {
+        var tempEl = document.createElement("span");
+        editableDiv.insertBefore(tempEl, editableDiv.firstChild);
+        var tempRange = range.duplicate();
+        tempRange.moveToElementText(tempEl);
+        tempRange.setEndPoint("EndToEnd", range);
+        caretPos = tempRange.text.length;
+      }
+    }
+    return caretPosition = caretPos;
+  }
+
   const [inputs, setInputs] = useState([
-    <input
-      className="editor__content_title"
-      value="Заголовок"
-      style={{ fontWeight: 'bold', fontSize: '24px' }}
-    />,
+    <div
+      id='start-input'
+      className="editor__content_paragraph"
+      contentEditable
+      onClick={() => {
+        const startInput = document.getElementById('start-input');
+        return getCaretPosition(startInput);
+      }}
+    >
+      Параграф
+    </div>,
   ]);
 
   const addTitle = () => {
@@ -246,8 +279,15 @@ export default function Editor(props) {
   };
 
   const addReferenceToText = () => {
-    console.log('document.activeElement');
-    return console.log(document.activeElement);
+    const { number } = referenceConfig;
+    const startInput = document.getElementById('start-input');
+    let value = startInput.innerText;
+    let result;
+    
+    result = `${value.slice(0, caretPosition)} [${number}]
+    ${value.slice(caretPosition, value.length - 1)}`;
+    
+    return startInput.innerHTML = result;
   };
 
   const addReferenceToEnd = () => {
@@ -691,7 +731,10 @@ export default function Editor(props) {
                 variant="outlined"
                 color="primary"
                 size="small"
-                onClick={addReferenceToEnd}
+                onClick={() => {
+                  addReferenceToText();
+                  addReferenceToEnd();
+                }}
                 style={{
                   color: 'white',
                   backgroundColor: green[600],
