@@ -8,7 +8,7 @@
     "build": "tsc",
     "test": "jest",
     "eject": "react-scripts eject",
-    "pretty": "clear && cd src && npx prettier --write ."
+    "pretty": "clear && npx prettier --write ."
   },
   "keywords": [
     "history-gd",
