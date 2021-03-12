@@ -1,0 +1,46 @@
+.formula {
+  display: flex;
+  flex-direction: row;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  background-color: floralwhite;
+  z-index: 10000;
+
+  &__symbols {
+    display: flex;
+    flex-basis: 50%;
+    border: 1px solid black;
+    border-radius: 20px;
+  }
+
+  &__dynamic-block {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 50%;
+
+    &_input {
+      flex-basis: 50%;
+      border: 1px solid black;
+      border-radius: 20px;
+    }
+
+    &_output {
+      flex-basis: 50%;
+      border: 1px solid black;
+      border-radius: 20px;
+    }
+  }
+
+  &__close {
+    top: 0;
+    right: 0;
+    position: absolute;
+
+    &_icon {
+      cursor: pointer;
+    }
+  }
+}

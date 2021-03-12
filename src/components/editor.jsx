@@ -39,13 +39,14 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
 // Custom components (and OLOO classes)
-import { TableAttachment, PictureAttachment } from '../../classes';
+import { TableAttachment, PictureAttachment } from '../classes';
+import Formula from '../components/formula';
 
 // Data
-import { storage } from '../../server';
+import { storage } from '../server';
 
 // Styles
-import '../../styles/components/editor.scss';
+import '../styles/components/editor.scss';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -65,6 +66,7 @@ export default function Editor() {
   const [isTableDialog, setTableDialog] = useState(false);
   const [isPictureDialog, setPictureDialog] = useState(false);
   const [isReferenceDialog, setReferenceDialog] = useState(false);
+  const [isFormulaDialog, setFormulaDialog] = useState(true);
   const [tableConfig, setTableConfig] = useState({
     number: 1,
     title: 'Название таблицы',
@@ -366,6 +368,11 @@ export default function Editor() {
     return result;
   };
 
+  const toggleFormulaDialog = () => {
+    setRightClickMenu(false);
+    setFormulaDialog((isFormulaDialog) ? false : true);
+  };
+
   return (
     <section className={`editor`}>
       <div className="editor__container">
@@ -479,7 +486,7 @@ export default function Editor() {
                         <CropOriginalIcon style={{ marginRight: '5px' }} />
                         Рисунок
                       </MenuItem>
-                      <MenuItem onClick={addParagraph}>
+                      <MenuItem onClick={toggleFormulaDialog}>
                         <FunctionsIcon style={{ marginRight: '5px' }} />
                         Формула
                       </MenuItem>
@@ -491,7 +498,7 @@ export default function Editor() {
           </Popper>
         </section>
 
-        <section className="editor__hidden_instrument">
+        <section className="editor__dialogs">
           <Dialog
             open={isTableDialog}
             aria-labelledby="form-dialog-title"
@@ -746,6 +753,10 @@ export default function Editor() {
               </Button>
             </DialogActions>
           </Dialog>
+        </section>
+
+        <section className="editor__plugins">
+          {isFormulaDialog && <Formula setFormulaDialog={toggleFormulaDialog} />}
         </section>
       </div>
     </section>
