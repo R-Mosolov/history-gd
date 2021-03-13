@@ -1,7 +1,7 @@
-@import '../mixins/main-input-styles.scss', '../mixins/container-border.scss';
+@import '../../mixins/main-input-styles.scss',
+  '../../mixins/container-border.scss';
 
 .editor {
-  // @include container-border;
   min-height: 300px;
 
   &__icon {

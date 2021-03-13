@@ -9,11 +9,20 @@
   background-color: floralwhite;
   z-index: 10000;
 
+  // Global styles
+  &__title {
+    margin-top: 10px;
+    width: 100%;
+    text-align: center;
+  }
+
+  // Main sections
   &__symbols {
     display: flex;
+    flex-direction: column;
     flex-basis: 50%;
     border: 1px solid black;
-    border-radius: 20px;
+    border-radius: 20px 20px 0 0;
   }
 
   &__dynamic-block {
@@ -34,6 +43,7 @@
     }
   }
 
+  // Close icon
   &__close {
     top: 0;
     right: 0;

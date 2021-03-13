@@ -14,7 +14,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 // Custom components
 import LeftNavigation from '../../../components/left-navigation/left-navigation';
 import TopNavigation from '../../../components/top-navigation/top-navigation';
-import Editor from '../../../components/editor';
+import { Editor } from '../../../components/editor';
 import PageTabs from '../../../components/page-tabs';
 import DragAndDrop from '../../../components/drag-and-drop';
 

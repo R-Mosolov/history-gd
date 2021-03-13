@@ -39,14 +39,14 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
 // Custom components (and OLOO classes)
-import { TableAttachment, PictureAttachment } from '../classes';
-import Formula from '../components/formula';
+import { TableAttachment, PictureAttachment } from '../../classes';
+import { Formula } from './formula';
 
 // Data
-import { storage } from '../server';
+import { storage } from '../../server';
 
 // Styles
-import '../styles/components/editor.scss';
+import '../../styles/components/editor/editor.scss';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -370,7 +370,7 @@ export default function Editor() {
 
   const toggleFormulaDialog = () => {
     setRightClickMenu(false);
-    setFormulaDialog((isFormulaDialog) ? false : true);
+    setFormulaDialog(isFormulaDialog ? false : true);
   };
 
   return (
@@ -756,7 +756,9 @@ export default function Editor() {
         </section>
 
         <section className="editor__plugins">
-          {isFormulaDialog && <Formula setFormulaDialog={toggleFormulaDialog} />}
+          {isFormulaDialog && (
+            <Formula setFormulaDialog={toggleFormulaDialog} />
+          )}
         </section>
       </div>
     </section>

@@ -1,0 +1,17 @@
+[
+  {
+    "title": {
+      "ru": "Акценты",
+      "en": "Accents",
+      "isSubtitle": false
+    },
+    "content": [
+      "a'",
+      "a''",
+      "a^{\\prime}",
+      "\\acute{a}",
+      "\\bar{y}",
+      "\\breve{a}"
+    ]
+  }
+]
