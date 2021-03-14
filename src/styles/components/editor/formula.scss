@@ -18,6 +18,8 @@
 
   // Main sections
   &__symbols {
+    padding-top: 20px;
+    padding-left: 20px;
     display: flex;
     flex-direction: column;
     flex-basis: 50%;
@@ -31,12 +33,16 @@
     flex-basis: 50%;
 
     &_input {
+      padding-top: 20px;
+      padding-left: 20px;
       flex-basis: 50%;
       border: 1px solid black;
       border-radius: 20px;
     }
 
     &_output {
+      padding-top: 20px;
+      padding-left: 20px;
       flex-basis: 50%;
       border: 1px solid black;
       border-radius: 20px;
