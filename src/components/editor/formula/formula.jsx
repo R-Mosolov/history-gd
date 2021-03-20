@@ -22,13 +22,17 @@ import Symbols from './symbols';
 import '../../../styles/components/editor/formula.scss';
 
 export default function Formula(props) {
-  const { setFormulaDialog } = props;
-  const [inputValue, setInputValue] = useState('E=mc^{2}');
+  const {
+    toggleFormulaDialog,
+    formulaValue,
+    setFormulaValue,
+    addFormula,
+  } = props;
   const [isAlertOnClear, setAlertOnClear] = useState(false);
 
   const element = document.getElementById('katex');
   if (element) {
-    katex.render(inputValue, element, {
+    katex.render(formulaValue, element, {
       throwOnError: false,
     });
   }
@@ -45,8 +49,8 @@ export default function Formula(props) {
           <div className="input__container">
             <textarea
               className="input__field"
-              value={inputValue}
-              onChange={(event) => setInputValue(event.target.value)}
+              value={formulaValue}
+              onChange={(event) => setFormulaValue(event.target.value)}
             />
             <Box display="flex" justifyContent="space-between" mt={1}>
               <Button
@@ -57,7 +61,16 @@ export default function Formula(props) {
               >
                 Очистить формулу
               </Button>
-              <Button variant="contained" color="primary" size="small">
+              {/* TODO: Add checking of an empty input value */}
+              <Button
+                variant="contained"
+                color="primary"
+                size="small"
+                onClick={() => {
+                  toggleFormulaDialog(false);
+                  addFormula();
+                }}
+              >
                 Добавить в рукопись
               </Button>
             </Box>
@@ -65,14 +78,14 @@ export default function Formula(props) {
         </div>
         <div className="formula__dynamic-block_output">
           <h2 className="formula__title">Предпросмотр формулы</h2>
-          <div contentEditable id="katex" />
+          <div id="katex" />
         </div>
       </div>
       <div className="formula__close">
         <CloseIcon
           className="formula__close_icon"
           style={{ fontSize: '72px' }}
-          onClick={setFormulaDialog}
+          onClick={toggleFormulaDialog}
         />
       </div>
       <div>
@@ -83,11 +96,11 @@ export default function Formula(props) {
           aria-describedby="alert-dialog-description"
           style={{ zIndex: '10000' }}
         >
-          <DialogTitle id="alert-dialog-title">
+          <DialogTitle id="formula-alert-title">
             {'Очистить формулу?'}
           </DialogTitle>
           <DialogContent>
-            <DialogContentText id="alert-dialog-description">
+            <DialogContentText id="formula-alert-description">
               Вы уверены, что хотите полностью очистить формулу? Всё её
               содержимое будет удалено.
             </DialogContentText>
@@ -104,7 +117,7 @@ export default function Formula(props) {
             </Button>
             <Button
               onClick={() => {
-                setInputValue('');
+                setFormulaValue('');
                 setAlertOnClear(false);
               }}
               color="secondary"

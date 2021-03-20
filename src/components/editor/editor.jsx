@@ -38,6 +38,10 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
+// TeX language by D. Knuth (for mathematical formulas)
+import katex from 'katex';
+import 'katex/dist/katex.min.css';
+
 // Custom components (and OLOO classes)
 import { TableAttachment, PictureAttachment } from '../../classes';
 import { Formula } from './formula';
@@ -66,6 +70,7 @@ export default function Editor() {
   const [isTableDialog, setTableDialog] = useState(false);
   const [isPictureDialog, setPictureDialog] = useState(false);
   const [isReferenceDialog, setReferenceDialog] = useState(false);
+  const [formulaValue, setFormulaValue] = useState('e^{i\\pi} + 1 = 0');
   const [isFormulaDialog, setFormulaDialog] = useState(true);
   const [tableConfig, setTableConfig] = useState({
     number: 1,
@@ -373,8 +378,22 @@ export default function Editor() {
     setFormulaDialog(isFormulaDialog ? false : true);
   };
 
+  const element = document.getElementById('editor-katex');
+  if (element) {
+    katex.render(formulaValue, element, {
+      throwOnError: false,
+    });
+  }
+
+  const addFormula = () => {
+    setInputs([
+      ...inputs,
+      <div id="editor-katex" className="editor__content_paragraph" contentEditable />,
+    ]);
+  };
+
   return (
-    <section className={`editor`}>
+    <section className="editor">
       <div className="editor__container">
         <section className="editor__tools">
           <FormatBoldIcon
@@ -757,7 +776,13 @@ export default function Editor() {
 
         <section className="editor__plugins">
           {isFormulaDialog && (
-            <Formula setFormulaDialog={toggleFormulaDialog} />
+            <Formula
+              toggleFormulaDialog={toggleFormulaDialog}
+              isFormulaDialog={isFormulaDialog}
+              formulaValue={formulaValue}
+              setFormulaValue={setFormulaValue}
+              addFormula={addFormula}
+            />
           )}
         </section>
       </div>
