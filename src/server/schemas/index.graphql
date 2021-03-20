@@ -1,0 +1,9 @@
+type Query {
+  id: ID!
+  author: String!
+  creationDate: String!
+  manuscriptId: String!
+  title: String!
+  type: String!
+  userId: String!
+}
