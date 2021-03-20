@@ -80,30 +80,10 @@
       "isSubtitle": false
     },
     "content": [
-      [
-        "\\begin{matrix}",
-        "a & b \\\\",
-        "c & d",
-        "\\end{matrix}"
-      ],
-      [
-        "\\begin{pmatrix}",
-        "a & b \\\\",
-        "c & d",
-        "\\end{pmatrix}"
-      ],
-      [
-        "\\begin{vmatrix}",
-        "a & b \\\\",
-        "c & d",
-        "\\end{vmatrix}"
-      ],
-      [
-        "\\begin{Bmatrix}",
-        "a & b \\\\",
-        "c & d",
-        "\\end{Bmatrix}"
-      ],
+      ["\\begin{matrix}", "a & b \\\\", "c & d", "\\end{matrix}"],
+      ["\\begin{pmatrix}", "a & b \\\\", "c & d", "\\end{pmatrix}"],
+      ["\\begin{vmatrix}", "a & b \\\\", "c & d", "\\end{vmatrix}"],
+      ["\\begin{Bmatrix}", "a & b \\\\", "c & d", "\\end{Bmatrix}"],
       [
         "x = \\begin{cases}",
         "a &\\text{if } b ",
@@ -111,29 +91,14 @@
         "c &\\text{if } d",
         "\\end{cases}"
       ],
-      [
-        "\\begin{array}{cc}",
-        "a & b \\\\",
-        "c & d",
-        "\\end{array}"
-      ],
-      [
-        "\\begin{bmatrix}",
-        "a & b \\\\",
-        "c & d",
-        "\\end{bmatrix}"
-      ],
-      [
-        "\\begin{Vmatrix}",
-        "a & b \\\\",
-        "c & d",
-        "\\end{Vmatrix}"
-      ]
+      ["\\begin{array}{cc}", "a & b \\\\", "c & d", "\\end{array}"],
+      ["\\begin{bmatrix}", "a & b \\\\", "c & d", "\\end{bmatrix}"],
+      ["\\begin{Vmatrix}", "a & b \\\\", "c & d", "\\end{Vmatrix}"]
     ]
   },
   {
     "title": {
-      "ru": "Буквы и код",
+      "ru": "Буквы и символы",
       "en": "Letters and Unicode",
       "isSubtitle": false
     },

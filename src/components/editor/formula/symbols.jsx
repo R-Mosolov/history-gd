@@ -32,8 +32,12 @@ export default function Symbols() {
             <thead>
               <tr>
                 <th className="symbols__column-title symbols__cell">Символ</th>
-                <th className="symbols__column-title symbols__cell">Код символа</th>
-                <th className="symbols__column-title symbols__cell">Действия</th>
+                <th className="symbols__column-title symbols__cell">
+                  Код символа
+                </th>
+                <th className="symbols__column-title symbols__cell">
+                  Действия
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -41,7 +45,7 @@ export default function Symbols() {
                 const symbolID = utils.addID();
 
                 if (document.getElementById(symbolID)) {
-                  document.getElementById(symbolID).innerHTML = "Test 2";
+                  document.getElementById(symbolID).innerHTML = 'Test 2';
                 }
 
                 return (
