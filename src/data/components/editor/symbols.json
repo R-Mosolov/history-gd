@@ -16,6 +16,7 @@
       "\\dot{a}",
       "\\ddot{a}",
       "\\grave{a}",
+      "\\hat{\\theta}",
       "\\widehat{ac}",
       "\\tilde{a}",
       "\\widetilde{ac}",
@@ -68,7 +69,8 @@
       "\\Uparrow",
       "\\Downarrow",
       "\\Updownarrow",
-      "\\backslash"
+      "\\backslash",
+      "\\lBrace \\rBrace"
     ]
   },
   {

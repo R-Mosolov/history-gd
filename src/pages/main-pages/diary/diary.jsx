@@ -1,6 +1,6 @@
 import React from 'react';
 
-import MaterialTable from 'material-table';
+// import MaterialTable from 'material-table';
 
 // Table icons
 import { forwardRef } from 'react';
@@ -66,7 +66,8 @@ function Diary() {
                 <h2>Тематики дневника</h2>
                 <button className="btn btn-success">Создать тематику</button>
               </div>
-              <div className="mt-3">
+              <p>Здесь будет список дневниковых записей учёного...</p>
+              {/* <div className="mt-3">
                 <MaterialTable
                   icons={tableIcons}
                   columns={[
@@ -145,7 +146,7 @@ function Diary() {
                     },
                   }}
                 />
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

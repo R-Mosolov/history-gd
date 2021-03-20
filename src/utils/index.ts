@@ -57,10 +57,10 @@ const addID = () => {
   for (let i = 0; i < MAX_ID_LENGTH; i++) {
     if (i === 0 || i === 2 || i === 4) {
       idx = Math.round(Math.random() * (ENGLISH_LETTERS_NUMBER - 1));
-      result += LETTERS[idx];
+      result += String(LETTERS[idx]);
     } else if (i === 1 || i === 3) {
       idx = Math.round(Math.random() * (DIGITS_NUMBER - 1));
-      result += DIGITS[idx];
+      result += String(DIGITS[idx]);
     }
   }
 

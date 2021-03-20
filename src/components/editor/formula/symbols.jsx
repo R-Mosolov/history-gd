@@ -1,38 +1,23 @@
 // Core
-import React from 'react';
+import React, { useState } from 'react';
 
 // Icons
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import EditIcon from '@material-ui/icons/Edit';
 
 // TeX language by D. Knuth (for mathematical formulas)
-import { InlineMath } from 'react-katex';
+import katex from 'katex';
 import 'katex/dist/katex.min.css';
 
 // Data
+import { utils } from '../../../utils';
 import symbols from '../../../data/components/editor/symbols.json';
 
 // Styles
 import '../../../styles/components/editor/symbols.scss';
 
 export default function Symbols() {
-  // const renderFormulaCompactly = (_symbol) => {
-  //   const haveSymbolFewLines = typeof _symbol === 'object';
-
-  //   return (
-  //     <td className="symbols__cell">
-  //       {
-  //         (haveSymbolFewLines)
-  //           ? _symbol.forEach((item) => {
-  //             return (
-  //               {item}
-  //             );
-  //           })
-  //           : {_symbol}
-  //       }
-  //     </td>
-  //   );
-  // };
+  const [activeSymbol, setActiveSymbol] = useState('\\Alpha');
 
   const renderAllSymbols = () => {
     return symbols.map((symbol) => {
@@ -53,14 +38,16 @@ export default function Symbols() {
             </thead>
             <tbody>
               {content.map((_symbol) => {
+                const symbolID = utils.addID();
+
+                if (document.getElementById(symbolID)) {
+                  document.getElementById(symbolID).innerHTML = "Test 2";
+                }
+
                 return (
                   <tr>
                     <td className="symbols__cell">
-                      {
-                        (typeof _symbol === 'object')
-                          ? <InlineMath math={_symbol.join(' ')} />
-                          : <InlineMath math={_symbol} />
-                      }
+                      <span id={symbolID}>Test</span>
                     </td>
                     <td className="symbols__cell">{_symbol}</td>
                     <td className="symbols__cell">

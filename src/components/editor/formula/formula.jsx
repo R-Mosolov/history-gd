@@ -16,11 +16,11 @@ import '../../../styles/components/editor/formula.scss';
 
 export default function Formula(props) {
   const { setFormulaDialog } = props;
-  const [inputValue, setInputValue] = useState('\E=mc^{2}');
-
+  const [inputValue, setInputValue] = useState('E=mc^{2}');
+  
   const element = document.getElementById('katex');
   if (element) {
-    katex.render("\\begin{rcases} a &\\text{if } b \\\\ c &\\text{if } d \\end{rcases}⇒…", element, {
+    katex.render(inputValue, element, {
       throwOnError: false
     });
   }
@@ -42,7 +42,6 @@ export default function Formula(props) {
         <div className="formula__dynamic-block_output">
           <h2 className="formula__title">Предпросмотр формулы</h2>
           <div contentEditable id="katex" />
-          {/* <InlineMath math={inputValue} /> */}
         </div>
       </div>
       <div className="formula__close">
