@@ -40,6 +40,7 @@ export interface InitialStateConfig {
    * Add Manuscript page
    */
   activePictureLink: string | null;
+  activeManuscriptContent: Array<object>;
 }
 
 // TODO: Change Any type

@@ -16,6 +16,7 @@ import {
   FILTERED_MANUSCRIPTS,
   SEARCHED_MANUSCRIPTS,
   SORTED_MANUSCRIPTS,
+  CREATE,
 } from '../constants';
 import { utils } from '../utils';
 
@@ -34,6 +35,7 @@ const {
 
   // Add Manuscript page
   SET_ACTIVE_PICTURE_LINK,
+  UPDATE_ACTIVE_MANUSCRIPT,
 } = TYPES;
 
 // Create the reducer
@@ -49,6 +51,7 @@ const reducer = (store = initialState, action) => {
     searchedManuscripts,
     sortedManuscripts,
     fetchedManuscripts,
+    activeManuscriptContent,
   } = store;
   const { filter, searcher } = intersectionParams;
   const userId = auth.getUserId();
@@ -323,8 +326,23 @@ const reducer = (store = initialState, action) => {
         activePictureLink: activePictureLink,
       };
 
-    case 'GET_ACTIVE_PICTURE_LINK':
-      return store;
+    case UPDATE_ACTIVE_MANUSCRIPT:
+      const payload = action.payload;
+
+      return {
+        ...store,
+        activeManuscriptContent: (payload.operation === CREATE)
+          ? (activeManuscriptContent.push({
+            id: payload.id,
+            content: payload.content
+          }), activeManuscriptContent)
+          : (
+            activeManuscriptContent
+              .filter(content => content.id === payload.id)[0]
+              .content = payload.content,
+            activeManuscriptContent
+          ),
+      };
 
     default:
       return initialState;

@@ -1,5 +1,6 @@
 // Core
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { useDropzone } from 'react-dropzone';
 
 // Icons
@@ -47,10 +48,13 @@ import { TableAttachment, PictureAttachment } from '../../classes';
 import { Formula } from './formula';
 
 // Data
+import { CREATE, UPDATE } from '../../constants';
 import { storage } from '../../server';
+import TYPES from '../../store/types';
 
 // Styles
 import '../../styles/components/editor/editor.scss';
+import { utils } from '../../utils';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -61,17 +65,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const { UPDATE_ACTIVE_MANUSCRIPT } = TYPES;
 let caretPosition;
 
 export default function Editor() {
   const classes = useStyles();
+  const state = useSelector((state) => state);
+  const dispatch = useDispatch();
   const [isRightClickMenu, setRightClickMenu] = useState(false);
   const [isActiveInput, setActiveInput] = useState(true);
   const [isTableDialog, setTableDialog] = useState(false);
   const [isPictureDialog, setPictureDialog] = useState(false);
   const [isReferenceDialog, setReferenceDialog] = useState(false);
   const [formulaValue, setFormulaValue] = useState('e^{i\\pi} + 1 = 0');
-  const [isFormulaDialog, setFormulaDialog] = useState(true);
+  const [isFormulaDialog, setFormulaDialog] = useState(false);
   const [tableConfig, setTableConfig] = useState({
     number: 1,
     title: 'Название таблицы',
@@ -88,7 +95,7 @@ export default function Editor() {
     number: 1,
     title: 'Информация об источнике',
   });
-  const anchorRef = React.useRef(null);
+  const anchorRef = useRef(null);
 
   const handleToggle = () => {
     setRightClickMenu((prevOpen) => !prevOpen);
@@ -162,7 +169,7 @@ export default function Editor() {
         return getCaretPosition(startInput);
       }}
     >
-      Параграф
+      <b>Параграф</b>
     </div>,
   ]);
 
@@ -179,13 +186,40 @@ export default function Editor() {
   };
 
   const addParagraph = () => {
+    const id = utils.addID();
+    const content = 'Параграф';
+
     setRightClickMenu(false);
     setInputs([
       ...inputs,
-      <div className="editor__content_paragraph" contentEditable>
+      <div
+        id={id}
+        className="editor__content_paragraph"
+        contentEditable
+        onInput={() => {
+          const element = document.getElementById(id);
+          dispatch({
+            type: UPDATE_ACTIVE_MANUSCRIPT,
+            payload: {
+              id: id,
+              content: element.innerHTML,
+              operation: UPDATE,
+            },
+          });
+        }}
+      >
         Параграф
       </div>,
     ]);
+
+    dispatch({
+      type: UPDATE_ACTIVE_MANUSCRIPT,
+      payload: {
+        id: id,
+        content: content,
+        operation: CREATE,
+      },
+    });
   };
 
   const toggleTableDialog = () => {
@@ -388,7 +422,11 @@ export default function Editor() {
   const addFormula = () => {
     setInputs([
       ...inputs,
-      <div id="editor-katex" className="editor__content_paragraph" contentEditable />,
+      <div
+        id="editor-katex"
+        className="editor__content_paragraph"
+        contentEditable
+      />,
     ]);
   };
 

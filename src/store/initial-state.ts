@@ -38,6 +38,7 @@ const initialState: InitialStateConfig = {
    * Add Manuscript page
    */
   activePictureLink: null,
+  activeManuscriptContent: [],
 };
 
 export default initialState;

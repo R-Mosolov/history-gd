@@ -17,6 +17,7 @@ const TYPES: TypesConfig = {
 
   // Add Manuscript page
   SET_ACTIVE_PICTURE_LINK: 'SET_ACTIVE_PICTURE_LINK',
+  UPDATE_ACTIVE_MANUSCRIPT: 'UPDATE_ACTIVE_MANUSCRIPT',
 };
 
 export default TYPES;

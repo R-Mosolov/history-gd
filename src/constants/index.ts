@@ -34,6 +34,8 @@ export const INTERSECTED_MANUSCRIPTS: string = 'intersectedManuscripts';
 export const SORTED_MANUSCRIPTS: string = 'sortedManuscripts';
 export const FILTERED_MANUSCRIPTS: string = 'filteredManuscripts';
 export const SEARCHED_MANUSCRIPTS: string = 'searchedManuscripts';
+export const CREATE = 'create';
+export const UPDATE = 'update';
 
 /**
  * Set the interface (types of keys values)
