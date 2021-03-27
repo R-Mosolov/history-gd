@@ -1,9 +1,11 @@
 // Core
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 
-import reducer from './reducer.js';
+import reducer from './reducer';
+import appReducer from './reducers/app-reducer';
+import manuscriptsReducer from './reducers/manuscripts-reducer';
 
 // Set up logger
 // TODO: Add writing logs for only dev mode
@@ -20,8 +22,9 @@ const logger = createLogger({
 });
 
 const middleware = [thunk, logger];
+const rootReducer = combineReducers({ appReducer, manuscriptsReducer });
 
 // TODO: Create dependency with localStorage
-const store: any = createStore(reducer, applyMiddleware(...middleware));
+const store: any = createStore(rootReducer, applyMiddleware(...middleware));
 
 export default store;
