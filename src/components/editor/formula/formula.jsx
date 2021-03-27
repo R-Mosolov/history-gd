@@ -1,5 +1,6 @@
 // Core
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 // Material UI
 import Box from '@material-ui/core/Box';
@@ -18,6 +19,11 @@ import 'katex/dist/katex.min.css';
 // Custom components
 import Symbols from './symbols';
 
+// Data
+import TYPES from '../../../store/types';
+import { CREATE, FORMULA } from '../../../constants';
+import { utils } from '../../../utils';
+
 // Styles
 import '../../../styles/components/editor/formula.scss';
 
@@ -28,7 +34,9 @@ export default function Formula(props) {
     setFormulaValue,
     addFormula,
   } = props;
+  const { UPDATE_ACTIVE_MANUSCRIPT } = TYPES;
   const [isAlertOnClear, setAlertOnClear] = useState(false);
+  const dispatch = useDispatch();
 
   const element = document.getElementById('katex');
   if (element) {
@@ -69,6 +77,15 @@ export default function Formula(props) {
                 onClick={() => {
                   toggleFormulaDialog(false);
                   addFormula();
+                  dispatch({
+                    type: UPDATE_ACTIVE_MANUSCRIPT,
+                    payload: {
+                      id: utils.addID(),
+                      type: FORMULA,
+                      content: formulaValue,
+                      operation: CREATE,
+                    },
+                  });
                 }}
               >
                 Добавить в рукопись

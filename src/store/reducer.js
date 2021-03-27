@@ -334,6 +334,7 @@ const reducer = (store = initialState, action) => {
         activeManuscriptContent: (payload.operation === CREATE)
           ? (activeManuscriptContent.push({
             id: payload.id,
+            type: payload.type,
             content: payload.content
           }), activeManuscriptContent)
           : (

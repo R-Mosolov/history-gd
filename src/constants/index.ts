@@ -26,7 +26,7 @@ export const OTHER: string = 'other';
 export const LARGE: string = 'large';
 export const SMALL: string = 'small';
 
-// Redux
+// Redux: Manuscripts page
 export const LARGE_MANUSCRIPTS: string = 'largeManuscripts';
 export const SMALL_MANUSCRIPTS: string = 'smallManuscripts';
 export const FETCHED_MANUSCRIPTS: string = 'fetchedManuscripts';
@@ -34,8 +34,18 @@ export const INTERSECTED_MANUSCRIPTS: string = 'intersectedManuscripts';
 export const SORTED_MANUSCRIPTS: string = 'sortedManuscripts';
 export const FILTERED_MANUSCRIPTS: string = 'filteredManuscripts';
 export const SEARCHED_MANUSCRIPTS: string = 'searchedManuscripts';
+
+// Redux: Add Manuscript page
 export const CREATE = 'create';
 export const UPDATE = 'update';
+export const TITLE = 'title';
+export const SUBTITLE = 'subtitle';
+export const PARAGRAPH = 'paragraph';
+export const ORDERED_LIST = 'orderedList';
+export const UNORDERED_LIST = 'unorderedList';
+export const TABLE = 'table';
+export const PICTURE = 'picture';
+export const FORMULA = 'formula';
 
 /**
  * Set the interface (types of keys values)

@@ -48,7 +48,7 @@ import { TableAttachment, PictureAttachment } from '../../classes';
 import { Formula } from './formula';
 
 // Data
-import { CREATE, UPDATE } from '../../constants';
+import { CREATE, UPDATE, SUBTITLE, PARAGRAPH, PICTURE } from '../../constants';
 import { storage } from '../../server';
 import TYPES from '../../store/types';
 
@@ -173,16 +173,27 @@ export default function Editor() {
     </div>,
   ]);
 
-  const addTitle = () => {
+  const addSubtitle = () => {
+    const initialValue = 'Подзаголовок';
+
     setRightClickMenu(false);
     setInputs([
       ...inputs,
       <input
         className="editor__content_title"
-        value="Заголовок"
+        value={initialValue}
         style={{ fontWeight: 'bold', fontSize: '24px' }}
       />,
     ]);
+    dispatch({
+      type: UPDATE_ACTIVE_MANUSCRIPT,
+      payload: {
+        id: utils.addID(),
+        type: SUBTITLE,
+        content: initialValue,
+        operation: CREATE,
+      },
+    });
   };
 
   const addParagraph = () => {
@@ -202,6 +213,7 @@ export default function Editor() {
             type: UPDATE_ACTIVE_MANUSCRIPT,
             payload: {
               id: id,
+              type: PARAGRAPH,
               content: element.innerHTML,
               operation: UPDATE,
             },
@@ -216,6 +228,7 @@ export default function Editor() {
       type: UPDATE_ACTIVE_MANUSCRIPT,
       payload: {
         id: id,
+        type: PARAGRAPH,
         content: content,
         operation: CREATE,
       },
@@ -307,12 +320,24 @@ export default function Editor() {
   };
 
   const addPicture = (fileId, fileExtension) => {
-    const activePictureLink = `manuscripts-content/manuscript-content-${fileId}.${fileExtension.toLowerCase()}`;
+    const activePictureLink = `manuscripts-content/manuscript-content-${fileId}.`
+    + `${fileExtension.toLowerCase()}`;
 
     setPictureDialog(false);
 
     return Promise.resolve(storage.getPictureLink(activePictureLink))
-      .then((pictureURL) => setInputs([...inputs, createPicture(pictureURL)]))
+      .then((pictureURL) => {
+        setInputs([...inputs, createPicture(pictureURL)]);
+        dispatch({
+          type: UPDATE_ACTIVE_MANUSCRIPT,
+          payload: {
+            id: utils.addID(),
+            type: PICTURE,
+            content: pictureURL,
+            operation: CREATE,
+          },
+        });
+      })
       .catch((err) => console.error(err));
   };
 
@@ -519,7 +544,7 @@ export default function Editor() {
                       id="menu-list-grow"
                       onKeyDown={handleListKeyDown}
                     >
-                      <MenuItem onClick={addTitle}>
+                      <MenuItem onClick={addSubtitle}>
                         <TitleIcon style={{ marginRight: '5px' }} />
                         Заголовок
                       </MenuItem>
