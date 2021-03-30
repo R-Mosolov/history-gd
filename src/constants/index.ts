@@ -47,6 +47,16 @@ export const TABLE = 'table';
 export const PICTURE = 'picture';
 export const FORMULA = 'formula';
 
+// Texts by default
+export const DEFAULT_TITLE_CONTENT = 'Заголовок';
+export const DEFAULT_SUBTITLE_CONTENT = 'Подзаголовок';
+export const DEFAULT_PARAGRAPH_CONTENT = 'Параграф';
+export const DEFAULT_TABLE_TITLE = 'Название таблицы';
+export const DEFAULT_PICTURE_TITLE = 'Название рисунка';
+export const DEFAULT_TABLE_HEAD_CONTENT = 'Название колонки';
+export const DEFAULT_CELL_CONTENT = 'Ячейка';
+export const DEFAULT_REFERENCE_CONTENT = 'Информация об источнике';
+
 /**
  * Set the interface (types of keys values)
  */

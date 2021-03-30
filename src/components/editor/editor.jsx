@@ -48,7 +48,22 @@ import { TableAttachment, PictureAttachment } from '../../classes';
 import { Formula } from './formula';
 
 // Data
-import { CREATE, UPDATE, SUBTITLE, PARAGRAPH, PICTURE } from '../../constants';
+import {
+  CREATE,
+  UPDATE,
+  SUBTITLE,
+  PARAGRAPH,
+  TABLE,
+  PICTURE,
+  DEFAULT_TITLE_CONTENT,
+  DEFAULT_SUBTITLE_CONTENT,
+  DEFAULT_PARAGRAPH_CONTENT,
+  DEFAULT_TABLE_HEAD_CONTENT,
+  DEFAULT_CELL_CONTENT,
+  DEFAULT_TABLE_TITLE,
+  DEFAULT_PICTURE_TITLE,
+  DEFAULT_REFERENCE_CONTENT,
+} from '../../constants';
 import { storage } from '../../server';
 import TYPES from '../../store/types';
 
@@ -81,19 +96,19 @@ export default function Editor() {
   const [isFormulaDialog, setFormulaDialog] = useState(false);
   const [tableConfig, setTableConfig] = useState({
     number: 1,
-    title: 'Название таблицы',
+    title: DEFAULT_TABLE_TITLE,
     colsCount: 2,
     rowsCount: 3,
     isNumeration: false,
   });
   const [pictureConfig, setPictureConfig] = useState({
     number: 1,
-    title: 'Название рисунка',
+    title: DEFAULT_PICTURE_TITLE,
     link: '',
   });
   const [referenceConfig, setReferenceConfig] = useState({
     number: 1,
-    title: 'Информация об источнике',
+    title: DEFAULT_REFERENCE_CONTENT,
   });
   const anchorRef = useRef(null);
 
@@ -169,19 +184,17 @@ export default function Editor() {
         return getCaretPosition(startInput);
       }}
     >
-      <b>Параграф</b>
+      <b>{DEFAULT_PARAGRAPH_CONTENT}</b>
     </div>,
   ]);
 
   const addSubtitle = () => {
-    const initialValue = 'Подзаголовок';
-
     setRightClickMenu(false);
     setInputs([
       ...inputs,
       <input
         className="editor__content_title"
-        value={initialValue}
+        value={DEFAULT_SUBTITLE_CONTENT}
         style={{ fontWeight: 'bold', fontSize: '24px' }}
       />,
     ]);
@@ -190,7 +203,7 @@ export default function Editor() {
       payload: {
         id: utils.addID(),
         type: SUBTITLE,
-        content: initialValue,
+        content: DEFAULT_SUBTITLE_CONTENT,
         operation: CREATE,
       },
     });
@@ -198,7 +211,6 @@ export default function Editor() {
 
   const addParagraph = () => {
     const id = utils.addID();
-    const content = 'Параграф';
 
     setRightClickMenu(false);
     setInputs([
@@ -220,7 +232,7 @@ export default function Editor() {
           });
         }}
       >
-        Параграф
+        {DEFAULT_PARAGRAPH_CONTENT}
       </div>,
     ]);
 
@@ -229,7 +241,7 @@ export default function Editor() {
       payload: {
         id: id,
         type: PARAGRAPH,
-        content: content,
+        content: DEFAULT_PARAGRAPH_CONTENT,
         operation: CREATE,
       },
     });
@@ -245,7 +257,7 @@ export default function Editor() {
     let tableRows = [];
     const isColumnNames = (rowNumber) => rowNumber === 0;
 
-    for (let i = 0; i < rowsCount; i++) {
+    for (let i = 0; i <= rowsCount; i++) {
       tableRows.push(
         <tr>
           {(() => {
@@ -256,7 +268,7 @@ export default function Editor() {
                   // Add <thead> tag in start and end of a table head
                   <th className="attachment__cell">
                     <div className="attachment__cell_editable" contentEditable>
-                      Название колонки
+                      {DEFAULT_TABLE_HEAD_CONTENT}
                     </div>
                   </th>
                 );
@@ -265,7 +277,7 @@ export default function Editor() {
                   // Add <tbody> tag in start and end of a main table part
                   <td className="attachment__cell">
                     <div className="attachment__cell_editable" contentEditable>
-                      Ячейка
+                      {DEFAULT_CELL_CONTENT}
                     </div>
                   </td>
                 );
@@ -282,6 +294,25 @@ export default function Editor() {
 
   const createTable = () => {
     const { number, title, colsCount, rowsCount } = tableConfig;
+    const defaultColNames = Array(colsCount).fill(DEFAULT_TABLE_HEAD_CONTENT);
+    const defaultRowNames = Array(rowsCount).fill(
+      Array(colsCount).fill(DEFAULT_CELL_CONTENT)
+    );
+
+    dispatch({
+      type: UPDATE_ACTIVE_MANUSCRIPT,
+      payload: {
+        id: utils.addID(),
+        type: TABLE,
+        content: {
+          number: number,
+          title: title,
+          colNames: defaultColNames,
+          rows: defaultRowNames,
+        },
+        operation: CREATE,
+      },
+    });
 
     setTableConfig({ ...tableConfig, number: number + 1 });
 
@@ -320,8 +351,9 @@ export default function Editor() {
   };
 
   const addPicture = (fileId, fileExtension) => {
-    const activePictureLink = `manuscripts-content/manuscript-content-${fileId}.`
-    + `${fileExtension.toLowerCase()}`;
+    const activePictureLink =
+      `manuscripts-content/manuscript-content-${fileId}.` +
+      `${fileExtension.toLowerCase()}`;
 
     setPictureDialog(false);
 
@@ -381,7 +413,7 @@ export default function Editor() {
 
     return setReferenceConfig({
       number: number + 1,
-      title: 'Информация об источнике',
+      title: DEFAULT_REFERENCE_CONTENT,
     });
   };
 
@@ -606,7 +638,7 @@ export default function Editor() {
                     ...tableConfig,
                     title: evt.target.value
                       ? evt.target.value
-                      : 'Название таблицы',
+                      : { DEFAULT_TABLE_TITLE },
                   })
                 }
                 fullWidth
@@ -614,12 +646,12 @@ export default function Editor() {
               <TextField
                 margin="dense"
                 id="editor-table-columns-count"
-                label="Кол-во колонок (с учётом шапки)"
+                label="Кол-во колонок)"
                 type="number"
                 onChange={(evt) =>
                   setTableConfig({
                     ...tableConfig,
-                    colsCount: evt.target.value ? evt.target.value : 2,
+                    colsCount: evt.target.value ? Number(evt.target.value) : 2,
                   })
                 }
                 fullWidth
@@ -627,11 +659,11 @@ export default function Editor() {
               <TextField
                 margin="dense"
                 id="editor-table-rows-count"
-                label="Кол-во строк"
+                label="Кол-во строк (без учёта шапки)"
                 onChange={(evt) =>
                   setTableConfig({
                     ...tableConfig,
-                    rowsCount: evt.target.value ? evt.target.value : 3,
+                    rowsCount: evt.target.value ? Number(evt.target.value) : 3,
                   })
                 }
                 type="number"
@@ -706,7 +738,7 @@ export default function Editor() {
                     ...pictureConfig,
                     title: evt.target.value
                       ? evt.target.value
-                      : 'Название рисунка',
+                      : { DEFAULT_PICTURE_TITLE },
                   })
                 }
                 fullWidth
@@ -797,7 +829,7 @@ export default function Editor() {
                     ...referenceConfig,
                     title: evt.target.value
                       ? evt.target.value
-                      : 'Информация об источнике',
+                      : { DEFAULT_REFERENCE_CONTENT },
                   })
                 }
                 fullWidth

@@ -1,4 +1,5 @@
 import React from 'react';
+import { DEFAULT_TABLE_TITLE, DEFAULT_PICTURE_TITLE } from '../constants';
 
 /**
  * Create abstract OLOO class
@@ -45,7 +46,7 @@ TableAttachment.setTableNumber = function (number) {
   return this.setNumber(number);
 };
 TableAttachment.setTableTitle = function (title) {
-  return this.setTitle(title || 'Название таблицы');
+  return this.setTitle(title || DEFAULT_TABLE_TITLE);
 };
 TableAttachment.setTableColsCount = function (colsCount) {
   return (this.colsCount = colsCount || 2);
@@ -97,7 +98,7 @@ PictureAttachment.setPictureNumber = function (number) {
   return this.setNumber(number);
 };
 PictureAttachment.setPictureTitle = function (title) {
-  return this.setTitle(title || 'Название рисунка');
+  return this.setTitle(title || DEFAULT_PICTURE_TITLE);
 };
 PictureAttachment.setPictureSrc = function (pictureSrc) {
   return (this.pictureSrc =

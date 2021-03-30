@@ -331,18 +331,18 @@ const reducer = (store = initialState, action) => {
 
       return {
         ...store,
-        activeManuscriptContent: (payload.operation === CREATE)
-          ? (activeManuscriptContent.push({
-            id: payload.id,
-            type: payload.type,
-            content: payload.content
-          }), activeManuscriptContent)
-          : (
-            activeManuscriptContent
-              .filter(content => content.id === payload.id)[0]
-              .content = payload.content,
-            activeManuscriptContent
-          ),
+        activeManuscriptContent:
+          payload.operation === CREATE
+            ? (activeManuscriptContent.push({
+                id: payload.id,
+                type: payload.type,
+                content: payload.content,
+              }),
+              activeManuscriptContent)
+            : ((activeManuscriptContent.filter(
+                (content) => content.id === payload.id
+              )[0].content = payload.content),
+              activeManuscriptContent),
       };
 
     default:
