@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "clear && npm run build && react-scripts start",
-    "build": "tsc",
-    "test": "jest",
+    "build": "clear && tsc",
+    "test": "clear && jest",
     "eject": "react-scripts eject",
     "pretty": "clear && npx prettier --write ."
   },
@@ -68,12 +68,18 @@
     ]
   },
   "devDependencies": {
+    "@babel/core": "^7.13.14",
+    "@babel/preset-env": "^7.13.12",
+    "@babel/preset-typescript": "^7.9.0",
+    "@types/jest": "^26.0.22",
     "@types/react-redux": "^7.1.16",
     "@types/redux-logger": "^3.0.8",
+    "babel-jest": "^24.9.0",
     "cosmiconfig": "^7.0.0",
+    "jest": "^24.9.0",
     "jsdoc": "^3.6.4",
     "prettier": "2.0.2",
     "redux-logger": "^3.0.6",
-    "typescript": "^3.9.7"
+    "typescript": "^3.9.9"
   }
 }
