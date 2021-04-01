@@ -85,6 +85,8 @@ let caretPosition;
 
 export default function Editor() {
   const classes = useStyles();
+  const editorKatex = useRef(null);
+  const anchorRef = useRef(null);
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
   const [isRightClickMenu, setRightClickMenu] = useState(false);
@@ -110,7 +112,13 @@ export default function Editor() {
     number: 1,
     title: DEFAULT_REFERENCE_CONTENT,
   });
-  const anchorRef = useRef(null);
+  useEffect(() => {
+    if (editorKatex.current) {
+      katex.render(formulaValue, editorKatex.current, {
+        throwOnError: false,
+      });
+    }
+  });
 
   const handleToggle = () => {
     setRightClickMenu((prevOpen) => !prevOpen);
@@ -469,17 +477,11 @@ export default function Editor() {
     setFormulaDialog(isFormulaDialog ? false : true);
   };
 
-  const element = document.getElementById('editor-katex');
-  if (element) {
-    katex.render(formulaValue, element, {
-      throwOnError: false,
-    });
-  }
-
   const addFormula = () => {
     setInputs([
       ...inputs,
       <div
+        ref={editorKatex}
         id="editor-katex"
         className="editor__content_paragraph"
         contentEditable
