@@ -3,7 +3,10 @@
     "outDir": "build",
     "module": "esnext",
     "target": "es5",
-    "lib": ["es6", "dom"],
+    "lib": [
+      "es6",
+      "dom"
+    ],
     "sourceMap": true,
     "allowJs": true,
     "jsx": "react",
@@ -20,7 +23,8 @@
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true
+    "noEmit": true,
+    "noFallthroughCasesInSwitch": true
   },
   "exclude": [
     "node_modules",
@@ -31,6 +35,10 @@
     "jest",
     "src/setupTests.ts"
   ],
-  "types": ["typePatches"],
-  "include": ["src"]
+  "types": [
+    "typePatches"
+  ],
+  "include": [
+    "src"
+  ]
 }

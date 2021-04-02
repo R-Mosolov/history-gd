@@ -75,8 +75,9 @@ The additional technological stack: Reselect.
 
 Run following terminal commands from root directory:
 
-1. `npm install`
-2. `npm run build && npm start`
+1. `npm run install`
+1. `npm run client`
+1. `npm run server`
 
 Then open a browser at: http://localhost:3000/
 
