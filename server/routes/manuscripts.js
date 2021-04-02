@@ -7,7 +7,8 @@ const db = dbConfig.firestore;
 /* GET Manuscripts page. */
 router.get('/', function (req, res) {
   let data = [];
-  db.collection("manuscripts").get()
+  db.collection('manuscripts')
+    .get()
     .then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
         data.push(doc.data());

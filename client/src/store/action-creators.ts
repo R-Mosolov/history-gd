@@ -15,7 +15,7 @@ export const readAllManuscripts: any = () => async (dispatch: any) => {
   let manuscriptsList: Array<object> = [];
   Promise.resolve(fetch('http://localhost:4000/manuscripts'))
     .then((res) => res.json())
-    .then((res) => manuscriptsList = res)
+    .then((res) => (manuscriptsList = res))
     .then(() =>
       dispatch({ type: UPDATE_ALL_MANUSCRIPTS, payload: manuscriptsList })
     )

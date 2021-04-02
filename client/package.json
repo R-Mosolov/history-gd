@@ -8,8 +8,7 @@
     "start": "npm run client",
     "build": "tsc",
     "test": "jest",
-    "eject": "react-scripts eject",
-    "pretty": "clear && npx prettier --write ."
+    "eject": "react-scripts eject"
   },
   "keywords": [
     "history-gd",
