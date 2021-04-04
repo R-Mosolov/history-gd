@@ -5,6 +5,7 @@
   position: fixed;
   height: calc(100vh - 65px);
   background-color: rgba(0, 0, 0, 0.05);
+  overflow-y: auto;
 }
 .left-nav__container--item {
   margin: 5px 20px;

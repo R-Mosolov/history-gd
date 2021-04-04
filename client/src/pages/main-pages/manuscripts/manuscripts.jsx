@@ -42,6 +42,8 @@ import {
   FILTERED_MANUSCRIPTS,
   SEARCHED_MANUSCRIPTS,
   SORTED_MANUSCRIPTS,
+  MANUSCRIPTS_ENDPOINT,
+  DELETE,
 } from '../../../constants';
 
 // Styles
@@ -157,13 +159,35 @@ class Manuscripts extends Component {
   deleteManuscript(manuscriptId) {
     const { readAllManuscripts } = this.props.actions;
 
-    firestore
-      .deleteManuscript(MANUSCRIPTS, manuscriptId, readAllManuscripts)
+    const url = new URL(MANUSCRIPTS_ENDPOINT);
+    const params = {
+      collection: MANUSCRIPTS,
+      id: manuscriptId,
+    };
+    Object.keys(params).forEach((key) =>
+      url.searchParams.append(key, params[key])
+    );
+    Promise.resolve(
+      fetch(url, {
+        method: DELETE,
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          cbToUpdateStore: readAllManuscripts,
+        }),
+      })
+    )
       .then((res) => {
-        if (res === 'SUCCESS') {
+        // TODO: Add logic for Else scenarios
+        if (res.ok) {
+          readAllManuscripts();
           this.setState({ isDeletingDialogOpen: false });
+          console.log(`Document ${manuscriptId} successfully deleted`);
         }
-      });
+      })
+      .catch((err) => console.error(err));
   }
 
   render() {

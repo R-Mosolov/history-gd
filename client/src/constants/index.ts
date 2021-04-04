@@ -35,7 +35,13 @@ export const SORTED_MANUSCRIPTS: string = 'sortedManuscripts';
 export const FILTERED_MANUSCRIPTS: string = 'filteredManuscripts';
 export const SEARCHED_MANUSCRIPTS: string = 'searchedManuscripts';
 
-// API endpoints
+// API: methods
+export const GET = 'GET';
+export const POST = 'POST';
+export const UPDATE = 'UPDATE';
+export const DELETE = 'DELETE';
+
+// API: endpoints
 export const MANUSCRIPTS_ENDPOINT = 'http://localhost:4000/manuscripts';
 
 /**

@@ -23,6 +23,7 @@ import {
   OTHER,
   MANUSCRIPTS,
   MANUSCRIPTS_ENDPOINT,
+  POST,
 } from '../../../constants';
 import { utils } from '../../../utils';
 
@@ -67,7 +68,7 @@ function AddManuscript({ store, actions: { readAllManuscripts = () => {} } }) {
       url.searchParams.append(key, params[key])
     );
     fetch(url, {
-      method: 'POST',
+      method: POST,
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
