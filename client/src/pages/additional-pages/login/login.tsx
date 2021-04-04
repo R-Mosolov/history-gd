@@ -27,7 +27,13 @@ import { utils } from '../../../utils';
 import TYPES from '../../../store/types';
 import { bindActionCreators } from 'redux';
 import { readAllManuscripts } from '../../../store/action-creators';
-import { REGISTRATION_EMAIL, SERVICE_INFO, PASSWORD } from '../../../constants';
+import {
+  REGISTRATION_EMAIL,
+  SERVICE_INFO,
+  PASSWORD,
+  AUTH_ENDPOINT,
+  POST,
+} from '../../../constants';
 
 // Styles
 import './login.css';
@@ -223,7 +229,19 @@ class Login extends Component<
                   values: ResetFormValues,
                   { setSubmitting }: FormikHelpers<ResetFormValues>
                 ) => {
-                  auth.resetPassword(values.emailToResetPassword);
+                  const url: any = new URL(AUTH_ENDPOINT);
+                  const params: any = { email: values.emailToResetPassword };
+                  Object.keys(params).forEach((key) =>
+                    url.searchParams.append(key, params[key])
+                  );
+                  fetch(url, {
+                    method: POST,
+                    headers: {
+                      Accept: 'application/json',
+                      'Content-Type': 'application/json',
+                    },
+                  });
+
                   this.setState({
                     isResetDialog: isResetDialog ? false : true,
                   });

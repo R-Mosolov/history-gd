@@ -43,6 +43,7 @@ export const DELETE = 'DELETE';
 
 // API: endpoints
 export const MANUSCRIPTS_ENDPOINT = 'http://localhost:4000/manuscripts';
+export const AUTH_ENDPOINT = 'http://localhost:4000/auth';
 
 /**
  * Set the interface (types of keys values)
