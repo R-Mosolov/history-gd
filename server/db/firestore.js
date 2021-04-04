@@ -22,6 +22,30 @@ const postOne = (collection, data) => {
     .catch((err) => console.log(err));
 };
 
+const putOne = (collection, manuscriptId, body) => {
+  return Promise.resolve(
+    db.collection(collection).where('manuscriptId', '==', manuscriptId).get()
+  )
+    .then((querySnapshot) => {
+      let docId = '';
+      querySnapshot.forEach((doc) => {
+        docId = doc.id;
+      });
+      return docId;
+    })
+    .then((docId) => {
+      return db.collection(collection).doc(docId).set(
+        {
+          author: body.author,
+          title: body.title,
+          // TODO: Fix this bug
+          // type: utils.getIdByLabel(this.state.type, MANUSCRIPT_TYPES),
+        },
+        { merge: true }
+      );
+    });
+};
+
 const deleteOne = (collection, manuscriptId) => {
   return Promise.resolve(db.collection(collection).get())
     .then((res) =>
@@ -35,6 +59,9 @@ const deleteOne = (collection, manuscriptId) => {
     .catch((err) => console.log(err));
 };
 
-exports.getAll = getAll;
-exports.postOne = postOne;
-exports.deleteOne = deleteOne;
+module.exports = {
+  getAll,
+  postOne,
+  putOne,
+  deleteOne,
+};

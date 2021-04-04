@@ -38,7 +38,7 @@ export const SEARCHED_MANUSCRIPTS: string = 'searchedManuscripts';
 // API: methods
 export const GET = 'GET';
 export const POST = 'POST';
-export const UPDATE = 'UPDATE';
+export const PUT = 'PUT';
 export const DELETE = 'DELETE';
 
 // API: endpoints

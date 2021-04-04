@@ -43,6 +43,7 @@ import {
   SEARCHED_MANUSCRIPTS,
   SORTED_MANUSCRIPTS,
   MANUSCRIPTS_ENDPOINT,
+  PUT,
   DELETE,
 } from '../../../constants';
 
@@ -133,17 +134,28 @@ class Manuscripts extends Component {
   updateManuscript(manuscriptId) {
     const { readAllManuscripts } = this.props.actions;
 
-    firestore
-      .updateManuscript(
-        MANUSCRIPTS,
-        manuscriptId,
-        this.state.author.toString(),
-        this.state.title.toString(),
-        readAllManuscripts
-      )
-      .then(() => {
-        this.setState({ isUpdatingDialogOpen: false });
-      });
+    const url = new URL(MANUSCRIPTS_ENDPOINT);
+    const params = {
+      collection: MANUSCRIPTS,
+      id: manuscriptId,
+    };
+    Object.keys(params).forEach((key) => {
+      return url.searchParams.append(key, params[key]);
+    });
+    fetch(url, {
+      method: PUT,
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        author: this.state.author.toString(),
+        title: this.state.title.toString(),
+      }),
+    });
+
+    readAllManuscripts();
+    this.setState({ isUpdatingDialogOpen: false });
   }
 
   handleDeletingManuscript(isDeletingDialogOpen, manuscript) {
@@ -167,27 +179,17 @@ class Manuscripts extends Component {
     Object.keys(params).forEach((key) =>
       url.searchParams.append(key, params[key])
     );
-    Promise.resolve(
-      fetch(url, {
-        method: DELETE,
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          cbToUpdateStore: readAllManuscripts,
-        }),
-      })
-    )
-      .then((res) => {
-        // TODO: Add logic for Else scenarios
-        if (res.ok) {
-          readAllManuscripts();
-          this.setState({ isDeletingDialogOpen: false });
-          console.log(`Document ${manuscriptId} successfully deleted`);
-        }
-      })
-      .catch((err) => console.error(err));
+    fetch(url, {
+      method: DELETE,
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    });
+
+    readAllManuscripts();
+    this.setState({ isDeletingDialogOpen: false });
+    console.log(`Document ${manuscriptId} successfully deleted`);
   }
 
   render() {
