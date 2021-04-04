@@ -1,20 +1,19 @@
 var express = require('express');
 var router = express.Router();
-var dbConfig = require('../db/db-config.js');
+var firestore = require('../db/firestore');
 
-const db = dbConfig.firestore;
+var getAll = firestore.getAll;
+var postOne = firestore.postOne;
 
-/* GET Manuscripts page. */
 router.get('/', function (req, res) {
-  let data = [];
-  db.collection('manuscripts')
-    .get()
-    .then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        data.push(doc.data());
-      });
-    })
-    .then(() => res.send(data))
+  Promise.resolve(getAll())
+    .then((data) => res.send(data))
+    .catch((err) => res.send(err));
+});
+
+router.post('/', function (req, res) {
+  Promise.resolve(postOne(req.query.collection, req.body))
+    .then((data) => res.send(data))
     .catch((err) => res.send(err));
 });
 

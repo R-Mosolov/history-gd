@@ -35,6 +35,9 @@ export const SORTED_MANUSCRIPTS: string = 'sortedManuscripts';
 export const FILTERED_MANUSCRIPTS: string = 'filteredManuscripts';
 export const SEARCHED_MANUSCRIPTS: string = 'searchedManuscripts';
 
+// API endpoints
+export const MANUSCRIPTS_ENDPOINT = 'http://localhost:4000/manuscripts';
+
 /**
  * Set the interface (types of keys values)
  */
