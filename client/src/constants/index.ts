@@ -42,6 +42,7 @@ export const PUT = 'PUT';
 export const DELETE = 'DELETE';
 
 // API: endpoints
+export const BASE_URL = 'http://localhost:4000/';
 export const MANUSCRIPTS_ENDPOINT = 'http://localhost:4000/manuscripts';
 export const AUTH_ENDPOINT = 'http://localhost:4000/auth';
 

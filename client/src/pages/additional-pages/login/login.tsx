@@ -31,9 +31,11 @@ import {
   REGISTRATION_EMAIL,
   SERVICE_INFO,
   PASSWORD,
-  AUTH_ENDPOINT,
   POST,
+  BASE_URL,
+  AUTH_ENDPOINT,
 } from '../../../constants';
+import axios from 'axios';
 
 // Styles
 import './login.css';
@@ -108,7 +110,71 @@ class Login extends Component<
     const password = this.state.password;
 
     if (email !== '' && password !== '') {
-      auth.checkAuth(email, password, setAuthentication, readAllManuscripts);
+      // DRAFT 1
+      // auth.checkAuth(email, password, setAuthentication, readAllManuscripts);
+
+      // DRAFT 2
+      // const url: any = new URL(AUTH_ENDPOINT);
+      // const params: any = { email: email };
+      // Object.keys(params).forEach((key) =>
+      //   url.searchParams.append(key, params[key])
+      // );
+      // const response = fetch(url, {
+      //   method: POST,
+      //   headers: {
+      //     Accept: 'application/json',
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify({
+      //     password: password,
+      //   }),
+      // }).then(res => res.json());
+
+      // Promise.resolve(response)
+      //   .then((res) => res.ok && console.info('Authenticated successfully!'))
+      //   .catch((err) => console.error(err));
+
+      // setAuthentication();
+      // readAllManuscripts();
+
+      // DRAFT 3
+      // axios({
+      //   url: '/auth',
+      //   baseURL: BASE_URL,
+      //   data: {
+      //     email: email,
+      //     password: password,
+      //   }
+      // })
+      //   // .then(() => console.info('Authenticated successfully!'))
+      //   // .then(() => setAuthentication())
+      //   // .then(() => readAllManuscripts())
+      //   // .catch((err) => console.error(err));
+      //   .then(function (response) {
+      //     console.info(response);
+      //   })
+      //   .catch(function (error) {
+      //     console.error(error);
+      //   });
+
+      // DRAFT 4
+      Promise.resolve(
+        fetch(`${AUTH_ENDPOINT}/check-auth`, {
+          method: POST,
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: email,
+            password: password,
+          }),
+        })
+      )
+        .then(() =>
+          Promise.resolve(setAuthentication()).then(() => readAllManuscripts())
+        )
+        .catch((errorText) => console.error(errorText));
     }
   }
 

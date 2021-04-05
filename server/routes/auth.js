@@ -1,11 +1,30 @@
 var express = require('express');
 var router = express.Router();
-var auth = require('../db/auth');
+var { auth } = require('../db/db-config');
 
-var resetPassword = auth.resetPassword;
-
+// TODO: Reset / on /reset-password on client side
 router.post('/', function (req, res) {
-  Promise.resolve(resetPassword(req.query.email));
+  auth
+    .sendPasswordResetEmail(req.query.email)
+    .then(function () {
+      res.send({ success: `Email sent to ${req.query.email} successfully!` });
+    })
+    .catch(function (errorText) {
+      res.send({ error: errorText });
+    });
+});
+
+router.post('/check-auth', function (req, res) {
+  auth
+    .signInWithEmailAndPassword(req.body.email, req.body.password)
+    .then(function () {
+      res.send({
+        success: `The user with email ${req.body.email} authenticated successfully!`,
+      });
+    })
+    .catch(function (errorText) {
+      res.send({ error: errorText });
+    });
 });
 
 module.exports = router;
