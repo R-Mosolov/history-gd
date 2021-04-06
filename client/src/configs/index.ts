@@ -1,3 +1,8 @@
+export interface ObjConfig {
+  [key: string]: any;
+}
+
+// TODO: Delete this config saving only ObjConfig instead
 export interface TypesConfig {
   [key: string]: string;
 }
@@ -38,6 +43,7 @@ export interface ManuscriptConfig {
   type: string;
 }
 
+// TODO: Delete this config saving only ObjConfig instead
 // TODO: Change Any type
 export interface ActionConfig {
   [key: string]: any;

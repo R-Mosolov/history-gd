@@ -1,3 +1,5 @@
+import alertTexts from '../data/alert-texts.json';
+
 interface UtilsConfig {
   (manuscriptId: string, obj: Array<object> | any, isType?: boolean): string;
 }
@@ -55,10 +57,37 @@ const convertDateToCustom = (date: Date) => {
   }
 };
 
+const findDebugText = (alertId: string) => {
+  return alertTexts.filter((item) => item.id === alertId)[0].textForDebug;
+};
+
+const findAlertTitle = (alertId: string) => {
+  return alertTexts.filter((item) => item.id === alertId)[0].textForUser.title;
+};
+
+const findAlertContent = (alertId: string) => {
+  const unfinishedAlertContent = alertTexts.filter(
+    (item) => item.id === alertId
+  )[0].textForUser.content;
+  const { fact, solution } = unfinishedAlertContent;
+  const alertContent = `${fact}. ${solution}.`;
+
+  return alertContent;
+};
+
+const findAlertActions = (alertId: string) => {
+  return alertTexts.filter((item) => item.id === alertId)[0].textForUser
+    .actions;
+};
+
 export const utils = {
   getLabelById,
   getPlaceholderById,
   getRequiredById,
   getIdByLabel,
   convertDateToCustom,
+  findDebugText,
+  findAlertTitle,
+  findAlertContent,
+  findAlertActions,
 };

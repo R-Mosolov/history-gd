@@ -1,7 +1,6 @@
 // Core
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { auth } from '../../../server';
 
 // Material UI components
 import Box from '@material-ui/core/Box';
@@ -19,9 +18,11 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 // Custom components
 import TopNavigation from '../../../components/top-navigation/top-navigation';
+import AlertDialog from '../../../components/alert-dialog';
 
 // Data
 import { connect } from 'react-redux';
+import axios from 'axios';
 import { Formik, Field, Form, FormikHelpers } from 'formik';
 import { utils } from '../../../utils';
 import TYPES from '../../../store/types';
@@ -32,10 +33,11 @@ import {
   SERVICE_INFO,
   PASSWORD,
   POST,
+  SUCCESS,
+  ERROR,
   BASE_URL,
   AUTH_ENDPOINT,
 } from '../../../constants';
-import axios from 'axios';
 
 // Styles
 import './login.css';
@@ -45,6 +47,14 @@ interface Props {
   actions: {
     readAllManuscripts: any;
   };
+}
+
+interface State {
+  emailToSignIn: string;
+  emailToResetPassword: string;
+  password: string;
+  isResetDialog: boolean;
+  isAlertDialog: boolean;
 }
 
 interface ResetFormValues {
@@ -66,15 +76,7 @@ const mapDispatchToProps: any = (dispatch: any) => {
   };
 };
 
-class Login extends Component<
-  Props,
-  {
-    emailToSignIn: string;
-    emailToResetPassword: string;
-    password: string;
-    isResetDialog: boolean;
-  }
-> {
+class Login extends Component<Props, State> {
   static defaultProps = {
     actions: {
       readAllManuscripts: () => {},
@@ -88,6 +90,7 @@ class Login extends Component<
       emailToResetPassword: '',
       password: '',
       isResetDialog: false,
+      isAlertDialog: false,
     };
 
     this.handleEmailChange = this.handleEmailChange.bind(this);
@@ -105,81 +108,37 @@ class Login extends Component<
   handleAuth() {
     const { setAuthentication } = this.props;
     const { readAllManuscripts } = this.props.actions;
+    const { isAlertDialog } = this.state;
 
     const email = this.state.emailToSignIn;
     const password = this.state.password;
 
     if (email !== '' && password !== '') {
-      // DRAFT 1
-      // auth.checkAuth(email, password, setAuthentication, readAllManuscripts);
-
-      // DRAFT 2
-      // const url: any = new URL(AUTH_ENDPOINT);
-      // const params: any = { email: email };
-      // Object.keys(params).forEach((key) =>
-      //   url.searchParams.append(key, params[key])
-      // );
-      // const response = fetch(url, {
-      //   method: POST,
-      //   headers: {
-      //     Accept: 'application/json',
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify({
-      //     password: password,
-      //   }),
-      // }).then(res => res.json());
-
-      // Promise.resolve(response)
-      //   .then((res) => res.ok && console.info('Authenticated successfully!'))
-      //   .catch((err) => console.error(err));
-
-      // setAuthentication();
-      // readAllManuscripts();
-
-      // DRAFT 3
-      // axios({
-      //   url: '/auth',
-      //   baseURL: BASE_URL,
-      //   data: {
-      //     email: email,
-      //     password: password,
-      //   }
-      // })
-      //   // .then(() => console.info('Authenticated successfully!'))
-      //   // .then(() => setAuthentication())
-      //   // .then(() => readAllManuscripts())
-      //   // .catch((err) => console.error(err));
-      //   .then(function (response) {
-      //     console.info(response);
-      //   })
-      //   .catch(function (error) {
-      //     console.error(error);
-      //   });
-
-      // DRAFT 4
-      Promise.resolve(
-        fetch(`${AUTH_ENDPOINT}/check-auth`, {
-          method: POST,
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            email: email,
-            password: password,
-          }),
+      axios
+        .post(`${BASE_URL}auth/check-auth`, {
+          email: email,
+          password: password,
         })
-      )
-        .then(() =>
-          Promise.resolve(setAuthentication()).then(() => readAllManuscripts())
-        )
-        .catch((errorText) => console.error(errorText));
+        .then((res) => {
+          const isSuccess = res.data.hasOwnProperty(SUCCESS);
+          const isError = res.data.hasOwnProperty(ERROR);
+
+          if (isSuccess) {
+            setAuthentication();
+            readAllManuscripts();
+          } else if (isError) {
+            this.setState({ isAlertDialog: isAlertDialog ? false : true });
+            return console.error(
+              utils.findDebugText('wrong-email-or-password')
+            );
+          }
+        })
+        .catch((err) => console.error(err));
     }
   }
 
   render() {
-    const { isResetDialog, emailToResetPassword } = this.state;
+    const { isResetDialog, emailToResetPassword, isAlertDialog } = this.state;
 
     return (
       <Box className="login mt-5 mb-5 d-flex justify-content-center align-items-center container">
@@ -295,23 +254,27 @@ class Login extends Component<
                   values: ResetFormValues,
                   { setSubmitting }: FormikHelpers<ResetFormValues>
                 ) => {
-                  const url: any = new URL(AUTH_ENDPOINT);
-                  const params: any = { email: values.emailToResetPassword };
-                  Object.keys(params).forEach((key) =>
-                    url.searchParams.append(key, params[key])
-                  );
-                  fetch(url, {
-                    method: POST,
-                    headers: {
-                      Accept: 'application/json',
-                      'Content-Type': 'application/json',
-                    },
-                  });
+                  axios
+                    .post(AUTH_ENDPOINT, { email: values.emailToResetPassword })
+                    .then((res) => {
+                      const isSuccess = res.data.hasOwnProperty(SUCCESS);
+                      const isError = res.data.hasOwnProperty(ERROR);
 
-                  this.setState({
-                    isResetDialog: isResetDialog ? false : true,
-                  });
-                  setSubmitting(false);
+                      if (isSuccess) {
+                        this.setState({
+                          isResetDialog: isResetDialog ? false : true,
+                        });
+                        setSubmitting(false);
+                      } else if (isError) {
+                        this.setState({
+                          isAlertDialog: isAlertDialog ? false : true,
+                        });
+                        return console.error(
+                          `ERROR: The email ${emailToResetPassword} is not valid`
+                        );
+                      }
+                    })
+                    .catch((err) => console.error(err));
                 }}
               >
                 <Form>
@@ -356,6 +319,18 @@ class Login extends Component<
               </Formik>
             </DialogContent>
           </Dialog>
+
+          <AlertDialog
+            alertTitle={utils.findAlertTitle('wrong-email-or-password')}
+            alertContent={utils.findAlertContent('wrong-email-or-password')}
+            alertActions={utils.findAlertActions('wrong-email-or-password')}
+            isAlertDialog={isAlertDialog}
+            setAlertDialog={() =>
+              this.setState({
+                isAlertDialog: isAlertDialog ? false : true,
+              })
+            }
+          />
         </Box>
       </Box>
     );
