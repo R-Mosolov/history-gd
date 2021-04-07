@@ -2,8 +2,7 @@ var express = require('express');
 var router = express.Router();
 var { auth, firestore } = require('../db/db-config');
 
-// TODO: Reset / on /reset-password on client side
-router.post('/', function (req, res) {
+router.post('/reset-password', function (req, res) {
   const { email } = req.body;
   auth
     .sendPasswordResetEmail(email)

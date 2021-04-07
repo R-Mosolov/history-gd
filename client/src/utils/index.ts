@@ -72,7 +72,7 @@ const findAlertContent = (alertId: string) => {
     (item) => item.id === alertId
   )[0].textForUser.content;
   const { fact, solution } = unfinishedAlertContent;
-  const alertContent = `${fact}. ${solution}.`;
+  const alertContent = solution ? `${fact}. ${solution}.` : `${fact}.`;
 
   return alertContent;
 };

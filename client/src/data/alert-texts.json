@@ -3,7 +3,7 @@
     "id": "wrong-email-or-password",
     "textForDebug": "An user with these email and password not found",
     "textForUser": {
-      "title": "Уведомление об ошибке",
+      "title": "Уведомление",
       "content": {
         "fact": "К сожалению, пользователь с такой комбинацией логина и пароля не найден",
         "solution": "Пожалуйста, попробуйте перепроверить логин и пароль. Также Вы можете сбросить прежний пароль и создать новый"
@@ -20,10 +20,27 @@
     "id": "wrong-registration-data",
     "textForDebug": "An user registration data are not valid",
     "textForUser": {
-      "title": "Уведомление об ошибке",
+      "title": "Уведомление",
       "content": {
         "fact": "К сожалению, что-то пошло не так",
         "solution": "Пожалуйста, попробуйте перепроверить регистрационные данные. Возможно, что пользователь с такими данными уже зарегистрирован в системе"
+      },
+      "actions": [
+        {
+          "type": "success",
+          "text": "Хорошо"
+        }
+      ]
+    }
+  },
+  {
+    "id": "sent-email-to-reset-password",
+    "textForDebug": null,
+    "textForUser": {
+      "title": "Уведомление",
+      "content": {
+        "fact": "На Вашу электронную почту успешно отправлено письмо с информацией, необходимой для сброса пароля",
+        "solution": null
       },
       "actions": [
         {

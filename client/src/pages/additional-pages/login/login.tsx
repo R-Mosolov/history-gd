@@ -32,12 +32,12 @@ import {
   REGISTRATION_EMAIL,
   SERVICE_INFO,
   PASSWORD,
-  POST,
   SUCCESS,
   ERROR,
   BASE_URL,
   AUTH_ENDPOINT,
   WRONG_EMAIL_OR_PASSWORD,
+  SENT_EMAIL_TO_RESET_PASSWORD,
 } from '../../../constants';
 
 // Styles
@@ -56,6 +56,7 @@ interface State {
   password: string;
   isResetDialog: boolean;
   isAlertDialog: boolean;
+  alertID: string;
 }
 
 interface ResetFormValues {
@@ -92,6 +93,7 @@ class Login extends Component<Props, State> {
       password: '',
       isResetDialog: false,
       isAlertDialog: false,
+      alertID: WRONG_EMAIL_OR_PASSWORD,
     };
 
     this.handleEmailChange = this.handleEmailChange.bind(this);
@@ -137,7 +139,12 @@ class Login extends Component<Props, State> {
   }
 
   render() {
-    const { isResetDialog, emailToResetPassword, isAlertDialog } = this.state;
+    const {
+      isResetDialog,
+      emailToResetPassword,
+      isAlertDialog,
+      alertID,
+    } = this.state;
 
     return (
       <Box className="login mt-5 mb-5 d-flex justify-content-center align-items-center container">
@@ -254,7 +261,9 @@ class Login extends Component<Props, State> {
                   { setSubmitting }: FormikHelpers<ResetFormValues>
                 ) => {
                   axios
-                    .post(AUTH_ENDPOINT, { email: values.emailToResetPassword })
+                    .post(`${AUTH_ENDPOINT}/reset-password`, {
+                      email: values.emailToResetPassword,
+                    })
                     .then((res) => {
                       const isSuccess = res.data.hasOwnProperty(SUCCESS);
                       const isError = res.data.hasOwnProperty(ERROR);
@@ -264,9 +273,14 @@ class Login extends Component<Props, State> {
                           isResetDialog: isResetDialog ? false : true,
                         });
                         setSubmitting(false);
+                        this.setState({
+                          isAlertDialog: true,
+                          alertID: SENT_EMAIL_TO_RESET_PASSWORD,
+                        });
                       } else if (isError) {
                         this.setState({
-                          isAlertDialog: isAlertDialog ? false : true,
+                          isAlertDialog: true,
+                          alertID: WRONG_EMAIL_OR_PASSWORD,
                         });
                         return console.error(
                           `ERROR: The email ${emailToResetPassword} is not valid`
@@ -320,9 +334,9 @@ class Login extends Component<Props, State> {
           </Dialog>
 
           <AlertDialog
-            alertTitle={utils.findAlertTitle(WRONG_EMAIL_OR_PASSWORD)}
-            alertContent={utils.findAlertContent(WRONG_EMAIL_OR_PASSWORD)}
-            alertActions={utils.findAlertActions(WRONG_EMAIL_OR_PASSWORD)}
+            alertTitle={utils.findAlertTitle(alertID)}
+            alertContent={utils.findAlertContent(alertID)}
+            alertActions={utils.findAlertActions(alertID)}
             isAlertDialog={isAlertDialog}
             setAlertDialog={() =>
               this.setState({
