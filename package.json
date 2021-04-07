@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "install": "npm i && cd client && npm i && cd ../server && npm i && cd ..",
+    "install-global": "npm i",
+    "install-client": "cd client && npm i",
+    "install-server": "cd server && npm i",
     "client": "clear && cd client && npm run build && react-scripts start",
     "server": "clear && cd server && nodemon",
     "pretty": "clear && npx prettier --write ."

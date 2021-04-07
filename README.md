@@ -75,7 +75,10 @@ The additional technological stack: Reselect.
 
 Run following terminal commands from root directory:
 
-1. Firstable, install all the project dependencies: `npm run install`
+1. Firstable, install all the project dependencies:
+   1. `npm run install-global`
+   1. `npm run install-client`
+   1. `npm run install-server`
 1. Type in 1st terminal window `npm run client` to render GUI
 1. Type in 2nd window terminal `npm run server` to run the server
 

@@ -1,6 +1,5 @@
 // Core
 import React, { useState } from 'react';
-import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 
 // UI libraries
@@ -9,14 +8,14 @@ import VisibilityIcon from '@material-ui/icons/Visibility';
 
 // Custom components
 import TopNavigation from '../../../components/top-navigation/top-navigation';
+import AlertDialog from '../../../components/alert-dialog';
 
 // Data
 import { connect } from 'react-redux';
+import axios from 'axios';
 import { utils } from '../../../utils';
-import { auth, firestore } from '../../../server';
 import TYPES from '../../../store/types';
 import {
-  USERS,
   BASIC_INFO,
   PROF_INFO,
   SERVICE_INFO,
@@ -30,7 +29,10 @@ import {
   REGISTRATION_EMAIL,
   PHONE,
   PASSWORD,
-  REPEAT_PASSWORD,
+  AUTH_ENDPOINT,
+  SUCCESS,
+  ERROR,
+  WRONG_REGISTRATION_DATA,
 } from '../../../constants';
 
 // Styles
@@ -80,6 +82,7 @@ function addInputLabel(id: string, obj: object) {
 
 function Registration(props: any) {
   const [isOpenedPassword, setPasswordVisibility] = useState(false);
+  const [isAlertDialog, setAlertDialog] = useState(false);
 
   inputsCounter = 0;
 
@@ -131,34 +134,63 @@ function Registration(props: any) {
             const { setRegistration } = props;
 
             // TODO: Add checking that an account exists yet
-            Promise.resolve()
-              .then(() => {
-                // Add main info about an user to Authentication
-                return auth.createUser(registrationEmail, password);
-              })
-              .then(() => {
-                // Add additional info about an user to Firestore
-                return firestore.createManuscript(USERS, {
-                  basicInfo: {
-                    lastName: lastName,
-                    firstName: firstName,
-                    middleName: middleName || null,
-                  },
-                  profInfo: {
-                    academicDegree: academicDegree || null,
-                    profDegree: profDegree || null,
-                    researchInterests: researchInterests || null,
-                    university: university || null,
-                  },
-                  serviceInfo: {
-                    email: registrationEmail.toLowerCase(),
-                    phone: phone,
-                  },
-                });
-              })
-              .then(() => alert('Ваш аккаунт успешно создан!'))
-              .then(() => setRegistration());
-            // TODO: Add redirect on Login page here
+            Promise.resolve(
+              // Add service info about an user for Authentication
+              axios
+                .post(`${AUTH_ENDPOINT}/user-main-info`, {
+                  email: registrationEmail,
+                  password: password,
+                })
+                .then((res) => {
+                  const isSuccess = res.data.hasOwnProperty(SUCCESS);
+                  const isError = res.data.hasOwnProperty(ERROR);
+
+                  console.log('res:');
+                  console.log(res);
+
+                  // TODO: Handle the condition for registered users
+                  if (isSuccess) {
+                    return axios
+                      .post(`${AUTH_ENDPOINT}/user-additional-info`, {
+                        basicInfo: {
+                          lastName: lastName,
+                          firstName: firstName,
+                          middleName: middleName || null,
+                        },
+                        profInfo: {
+                          academicDegree: academicDegree || null,
+                          profDegree: profDegree || null,
+                          researchInterests: researchInterests || null,
+                          university: university || null,
+                        },
+                        serviceInfo: {
+                          email: registrationEmail.toLowerCase(),
+                          phone: phone,
+                        },
+                      })
+                      .then((res) => {
+                        const isSuccess = res.data.hasOwnProperty(SUCCESS);
+                        const isError = res.data.hasOwnProperty(ERROR);
+
+                        if (isSuccess) {
+                          alert('Ваш аккаунт успешно создан!');
+                          setRegistration();
+                        } else if (isError) {
+                          return console.error(
+                            utils.findDebugText(WRONG_REGISTRATION_DATA)
+                          );
+                        }
+                      });
+                  } else if (isError) {
+                    setAlertDialog(true);
+                    return console.error(
+                      utils.findDebugText(WRONG_REGISTRATION_DATA)
+                    );
+                  }
+                })
+                // TODO: Add redirect on Login page here
+                .catch((err) => console.error(err))
+            );
           }}
         >
           <Form>
@@ -364,6 +396,13 @@ function Registration(props: any) {
           </Form>
         </Formik>
       </div>
+      <AlertDialog
+        alertTitle={utils.findAlertTitle('wrong-registration-data')}
+        alertContent={utils.findAlertContent('wrong-registration-data')}
+        alertActions={utils.findAlertActions('wrong-registration-data')}
+        isAlertDialog={isAlertDialog}
+        setAlertDialog={() => setAlertDialog(isAlertDialog ? false : true)}
+      />
     </div>
   );
 }

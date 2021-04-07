@@ -58,7 +58,9 @@ const convertDateToCustom = (date: Date) => {
 };
 
 const findDebugText = (alertId: string) => {
-  return alertTexts.filter((item) => item.id === alertId)[0].textForDebug;
+  return `CUSTOM_ERROR: ${
+    alertTexts.filter((item) => item.id === alertId)[0].textForDebug
+  }`;
 };
 
 const findAlertTitle = (alertId: string) => {

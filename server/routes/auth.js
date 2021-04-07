@@ -1,13 +1,14 @@
 var express = require('express');
 var router = express.Router();
-var { auth } = require('../db/db-config');
+var { auth, firestore } = require('../db/db-config');
 
 // TODO: Reset / on /reset-password on client side
 router.post('/', function (req, res) {
+  const { email } = req.body;
   auth
-    .sendPasswordResetEmail(req.body.email)
+    .sendPasswordResetEmail(email)
     .then(function () {
-      res.send({ success: `Email sent to ${req.body.email} successfully!` });
+      res.send({ success: `Email sent to ${email} successfully!` });
     })
     .catch(function (errorText) {
       res.send({ error: errorText });
@@ -15,15 +16,45 @@ router.post('/', function (req, res) {
 });
 
 router.post('/check-auth', function (req, res) {
+  const { email, password } = req.body;
   auth
-    .signInWithEmailAndPassword(req.body.email, req.body.password)
+    .signInWithEmailAndPassword(email, password)
     .then(function () {
       res.send({
-        success: `The user with email ${req.body.email} authenticated successfully!`,
+        success: `The user with email ${email} authenticated successfully!`,
       });
     })
     .catch(function (errorText) {
       res.send({ error: errorText });
+    });
+});
+
+router.post('/user-main-info', function (req, res) {
+  const { email, password } = req.body;
+  Promise.resolve(auth.createUserWithEmailAndPassword(email, password))
+    .then(function (userCredential) {
+      const user = userCredential.user;
+      if (user) {
+        res.send({
+          success: `Added the user with id ${user.uid} successfully.`,
+        });
+      }
+    })
+    .catch(function (error) {
+      const { code, message } = error;
+      res.send({ error: `${code}: ${message}` });
+    });
+});
+
+router.post('/user-additional-info', function (req, res) {
+  Promise.resolve(firestore.collection('users').add(req.body))
+    .then((docRef) => {
+      res.send({
+        success: `Document written with ID: ${docRef.id}`,
+      });
+    })
+    .catch((error) => {
+      res.send({ error: `Error adding document: ${error}` });
     });
 });
 

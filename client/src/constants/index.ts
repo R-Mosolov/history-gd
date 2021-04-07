@@ -50,6 +50,10 @@ export const AUTH_ENDPOINT = 'http://localhost:4000/auth';
 export const SUCCESS = 'success';
 export const ERROR = 'error';
 
+// Error texts IDs
+export const WRONG_EMAIL_OR_PASSWORD = 'wrong-email-or-password';
+export const WRONG_REGISTRATION_DATA = 'wrong-registration-data';
+
 /**
  * Set the interface (types of keys values)
  */

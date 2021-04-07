@@ -14,16 +14,7 @@ import 'firebase/firestore';
 import 'firebase/auth';
 import 'firebase/storage';
 
-import {
-  API_KEY,
-  AUTH_DOMAIN,
-  DATABASE_URL,
-  PROJECT_ID,
-  STORAGE_BUCKET,
-  MESSAGING_SENDER_ID,
-  APP_ID,
-  MEASUREMENT_ID,
-} from '../.env';
+import env from '../.env';
 
 interface FirebaseTypes {
   [key: string]: string | undefined;
@@ -31,14 +22,14 @@ interface FirebaseTypes {
 
 // For Firebase JavaScript SDK v7.20.0 and later, `measurementId` is an optional field
 const firebaseConfig: FirebaseTypes = {
-  apiKey: API_KEY,
-  authDomain: AUTH_DOMAIN,
-  databaseURL: DATABASE_URL,
-  projectId: PROJECT_ID,
-  storageBucket: STORAGE_BUCKET,
-  messagingSenderId: MESSAGING_SENDER_ID,
-  appId: APP_ID,
-  measurementId: MEASUREMENT_ID,
+  apiKey: env.apiKey,
+  authDomain: env.authDomain,
+  databaseURL: env.databaseURL,
+  projectId: env.projectId,
+  storageBucket: env.storageBucket,
+  messagingSenderId: env.messagingSenderId,
+  appId: env.appId,
+  measurementId: env.measurementId,
 };
 
 // Initialize Firebase

@@ -2,6 +2,7 @@ import { dbConfig } from '.';
 
 const db = dbConfig.auth;
 
+// ATTENTION: Remember about this 2 functions transfer before deleting the module
 const getUserId: () => string | null | undefined = () => db.currentUser?.uid;
 const getUserEmail: () => any = () => db.currentUser?.email;
 

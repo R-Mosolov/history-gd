@@ -37,6 +37,7 @@ import {
   ERROR,
   BASE_URL,
   AUTH_ENDPOINT,
+  WRONG_EMAIL_OR_PASSWORD,
 } from '../../../constants';
 
 // Styles
@@ -128,9 +129,7 @@ class Login extends Component<Props, State> {
             readAllManuscripts();
           } else if (isError) {
             this.setState({ isAlertDialog: isAlertDialog ? false : true });
-            return console.error(
-              utils.findDebugText('wrong-email-or-password')
-            );
+            return console.error(utils.findDebugText(WRONG_EMAIL_OR_PASSWORD));
           }
         })
         .catch((err) => console.error(err));
@@ -321,9 +320,9 @@ class Login extends Component<Props, State> {
           </Dialog>
 
           <AlertDialog
-            alertTitle={utils.findAlertTitle('wrong-email-or-password')}
-            alertContent={utils.findAlertContent('wrong-email-or-password')}
-            alertActions={utils.findAlertActions('wrong-email-or-password')}
+            alertTitle={utils.findAlertTitle(WRONG_EMAIL_OR_PASSWORD)}
+            alertContent={utils.findAlertContent(WRONG_EMAIL_OR_PASSWORD)}
+            alertActions={utils.findAlertActions(WRONG_EMAIL_OR_PASSWORD)}
             isAlertDialog={isAlertDialog}
             setAlertDialog={() =>
               this.setState({
