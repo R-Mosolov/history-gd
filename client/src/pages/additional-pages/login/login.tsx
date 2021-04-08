@@ -34,8 +34,7 @@ import {
   PASSWORD,
   SUCCESS,
   ERROR,
-  BASE_URL,
-  AUTH_ENDPOINT,
+  USERS_ENDPOINT,
   WRONG_EMAIL_OR_PASSWORD,
   SENT_EMAIL_TO_RESET_PASSWORD,
 } from '../../../constants';
@@ -118,7 +117,7 @@ class Login extends Component<Props, State> {
 
     if (email !== '' && password !== '') {
       axios
-        .post(`${BASE_URL}auth/check-auth`, {
+        .post(`${USERS_ENDPOINT}/check-auth`, {
           email: email,
           password: password,
         })
@@ -261,7 +260,7 @@ class Login extends Component<Props, State> {
                   { setSubmitting }: FormikHelpers<ResetFormValues>
                 ) => {
                   axios
-                    .post(`${AUTH_ENDPOINT}/reset-password`, {
+                    .post(`${USERS_ENDPOINT}/reset-password`, {
                       email: values.emailToResetPassword,
                     })
                     .then((res) => {

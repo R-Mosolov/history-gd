@@ -29,10 +29,11 @@ import {
   REGISTRATION_EMAIL,
   PHONE,
   PASSWORD,
-  AUTH_ENDPOINT,
+  USERS_ENDPOINT,
   SUCCESS,
   ERROR,
   WRONG_REGISTRATION_DATA,
+  USER_WAS_CREATED,
 } from '../../../constants';
 
 // Styles
@@ -81,8 +82,10 @@ function addInputLabel(id: string, obj: object) {
 }
 
 function Registration(props: any) {
+  const { setRegistration } = props;
   const [isOpenedPassword, setPasswordVisibility] = useState(false);
   const [isAlertDialog, setAlertDialog] = useState(false);
+  const [alertID, setAlertID] = useState(WRONG_REGISTRATION_DATA);
 
   inputsCounter = 0;
 
@@ -131,13 +134,12 @@ function Registration(props: any) {
               registrationEmail,
               password,
             } = values;
-            const { setRegistration } = props;
 
             // TODO: Add checking that an account exists yet
             Promise.resolve(
               // Add service info about an user for Authentication
               axios
-                .post(`${AUTH_ENDPOINT}/user-main-info`, {
+                .post(`${USERS_ENDPOINT}/main-info`, {
                   email: registrationEmail,
                   password: password,
                 })
@@ -151,7 +153,7 @@ function Registration(props: any) {
                   // TODO: Handle the condition for registered users
                   if (isSuccess) {
                     return axios
-                      .post(`${AUTH_ENDPOINT}/user-additional-info`, {
+                      .post(`${USERS_ENDPOINT}/additional-info`, {
                         basicInfo: {
                           lastName: lastName,
                           firstName: firstName,
@@ -173,8 +175,8 @@ function Registration(props: any) {
                         const isError = res.data.hasOwnProperty(ERROR);
 
                         if (isSuccess) {
-                          alert('Ваш аккаунт успешно создан!');
-                          setRegistration();
+                          setAlertID(USER_WAS_CREATED);
+                          setAlertDialog(true);
                         } else if (isError) {
                           return console.error(
                             utils.findDebugText(WRONG_REGISTRATION_DATA)
@@ -182,6 +184,7 @@ function Registration(props: any) {
                         }
                       });
                   } else if (isError) {
+                    setAlertID(WRONG_REGISTRATION_DATA);
                     setAlertDialog(true);
                     return console.error(
                       utils.findDebugText(WRONG_REGISTRATION_DATA)
@@ -397,11 +400,12 @@ function Registration(props: any) {
         </Formik>
       </div>
       <AlertDialog
-        alertTitle={utils.findAlertTitle('wrong-registration-data')}
-        alertContent={utils.findAlertContent('wrong-registration-data')}
-        alertActions={utils.findAlertActions('wrong-registration-data')}
+        alertTitle={utils.findAlertTitle(alertID)}
+        alertContent={utils.findAlertContent(alertID)}
+        alertActions={utils.findAlertActions(alertID)}
         isAlertDialog={isAlertDialog}
-        setAlertDialog={() => setAlertDialog(isAlertDialog ? false : true)}
+        setAlertDialog={() => setAlertDialog(false)}
+        alertCallback={() => setRegistration()}
       />
     </div>
   );

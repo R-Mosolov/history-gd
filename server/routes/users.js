@@ -4,8 +4,7 @@ var { auth, firestore } = require('../db/db-config');
 
 router.post('/reset-password', function (req, res) {
   const { email } = req.body;
-  auth
-    .sendPasswordResetEmail(email)
+  Promise.resolve(auth.sendPasswordResetEmail(email))
     .then(function () {
       res.send({ success: `Email sent to ${email} successfully!` });
     })
@@ -16,8 +15,7 @@ router.post('/reset-password', function (req, res) {
 
 router.post('/check-auth', function (req, res) {
   const { email, password } = req.body;
-  auth
-    .signInWithEmailAndPassword(email, password)
+  Promise.resolve(auth.signInWithEmailAndPassword(email, password))
     .then(function () {
       res.send({
         success: `The user with email ${email} authenticated successfully!`,
@@ -28,7 +26,7 @@ router.post('/check-auth', function (req, res) {
     });
 });
 
-router.post('/user-main-info', function (req, res) {
+router.post('/main-info', function (req, res) {
   const { email, password } = req.body;
   Promise.resolve(auth.createUserWithEmailAndPassword(email, password))
     .then(function (userCredential) {
@@ -45,7 +43,7 @@ router.post('/user-main-info', function (req, res) {
     });
 });
 
-router.post('/user-additional-info', function (req, res) {
+router.post('/additional-info', function (req, res) {
   Promise.resolve(firestore.collection('users').add(req.body))
     .then((docRef) => {
       res.send({

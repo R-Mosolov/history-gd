@@ -60,7 +60,7 @@ The additional technological stack: Reselect.
 
 | #   |   Technology    |                         Role                         |
 | --- | :-------------: | :--------------------------------------------------: |
-| 1   |     Node.js     |                    Main server PL                    |
+| 1   |     Node.js     |          Main server platform on JS syntax           |
 | 1   |     Python      | Server PL to integrate GUI with scientific libraries |
 | 2   |   Express.js    |         Main high-level library for Node.js          |
 | 3   | Google Firebase |            Main DBMS and hosting for SPA             |

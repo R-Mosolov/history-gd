@@ -49,5 +49,22 @@
         }
       ]
     }
+  },
+  {
+    "id": "user-was-created",
+    "textForDebug": null,
+    "textForUser": {
+      "title": "Уведомление",
+      "content": {
+        "fact": "Ваш аккант был успешно создан! Теперь Вы можете войти в систему",
+        "solution": null
+      },
+      "actions": [
+        {
+          "type": "success",
+          "text": "Хорошо"
+        }
+      ]
+    }
   }
 ]

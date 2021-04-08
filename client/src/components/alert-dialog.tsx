@@ -15,6 +15,7 @@ interface Props {
   alertActions: Array<object>;
   isAlertDialog: boolean;
   setAlertDialog: () => {} | void;
+  alertCallback?: any;
 }
 
 export default function AlertDialog(props: Props) {
@@ -24,6 +25,7 @@ export default function AlertDialog(props: Props) {
     alertActions,
     isAlertDialog,
     setAlertDialog,
+    alertCallback = null,
   } = props;
 
   const handleClose = () => {
@@ -47,7 +49,18 @@ export default function AlertDialog(props: Props) {
         <DialogActions>
           {alertActions.map((item: ObjConfig) => {
             return (
-              <Button onClick={handleClose} color="primary">
+              <Button
+                onClick={() => {
+                  handleClose();
+                  if (
+                    alertCallback !== null &&
+                    typeof alertCallback === 'function'
+                  ) {
+                    alertCallback();
+                  }
+                }}
+                color="primary"
+              >
                 {item.text}
               </Button>
             );

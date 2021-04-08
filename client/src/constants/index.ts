@@ -44,7 +44,7 @@ export const DELETE = 'DELETE';
 // API: endpoints
 export const BASE_URL = 'http://localhost:4000/';
 export const MANUSCRIPTS_ENDPOINT = 'http://localhost:4000/manuscripts';
-export const AUTH_ENDPOINT = 'http://localhost:4000/auth';
+export const USERS_ENDPOINT = 'http://localhost:4000/users';
 
 // API: statuses
 export const SUCCESS = 'success';
@@ -54,6 +54,7 @@ export const ERROR = 'error';
 export const WRONG_EMAIL_OR_PASSWORD = 'wrong-email-or-password';
 export const WRONG_REGISTRATION_DATA = 'wrong-registration-data';
 export const SENT_EMAIL_TO_RESET_PASSWORD = 'sent-email-to-reset-password';
+export const USER_WAS_CREATED = 'user-was-created';
 
 /**
  * Set the interface (types of keys values)
