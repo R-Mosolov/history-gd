@@ -1,0 +1,15 @@
+# IDE
+.idea
+
+# MacOS file
+.DS_Store
+
+# Dependencies
+node_modules
+
+# Enviroment variables
+.env
+.env.js
+
+# JS bundle
+build
