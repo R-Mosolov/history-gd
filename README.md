@@ -21,17 +21,17 @@ Elektronnyye biblioteki. 2020. V. 23. No 6. https://doi.org/10.26907/1562-5419-2
 
 At current time, GUI looks so as shown below. This GUI presents
 part of project's worked functionality on 04.05.2020 on the left.
-![File:GUI at 04.05.2020](src/assets/gui-at-04.05.2020.png 'GUI at 04.05.2020')
+![File:GUI at 04.05.2020](./client/src/assets/gui-at-04.05.2020.png 'GUI at 04.05.2020')
 
 # The List of Planned SPA Functionality
 
 1. creating manuscripts;
-2. keeping manuscripts as reserve copies in Internet;
-3. generating manuscripts to PDF to print them;
-4. accumulating big data about manuscripts to search regularities
+1. keeping manuscripts as reserve copies in Internet;
+1. generating manuscripts to PDF to print them;
+1. accumulating big data about manuscripts to search regularities
    of scientific discoveries;
-5. scientific self-analysis;
-6. et al.
+1. scientific self-analysis;
+1. et al.
 
 # The List of Planned Technological Stack
 
@@ -58,31 +58,33 @@ The additional technological stack: Reselect.
 
 ## Backend
 
-| #   |   Technology    |                        Role                          |
-| --- | :-------------: | :---------------------------------------------------:|
-| 1   |     Node.js     |                   Main server PL                     |
+| #   |   Technology    |                         Role                         |
+| --- | :-------------: | :--------------------------------------------------: |
+| 1   |     Node.js     |          Main server platform on JS syntax           |
 | 1   |     Python      | Server PL to integrate GUI with scientific libraries |
-| 2   |   Express.js    |      Main high-level library for Node.js             |
-| 3   | Google Firebase |          Main DBMS and hosting for SPA               |
-| 4   |     MongoDB     |          2nd DBMS for saving backups                 |
-| 5   |   PostgreSQL    |          3rd DBMS for saving backups                 |
-| 6   |       JWT       | Creates tokens to authenticate an user session       |
-| 7   |      Jest       |           Tests modules code quality                 |
+| 2   |   Express.js    |         Main high-level library for Node.js          |
+| 3   | Google Firebase |            Main DBMS and hosting for SPA             |
+| 4   |     MongoDB     |             2nd DBMS for saving backups              |
+| 5   |   PostgreSQL    |             3rd DBMS for saving backups              |
+| 6   |       JWT       |    Creates tokens to authenticate an user session    |
+| 7   |      Jest       |              Tests modules code quality              |
 
 # The Instructions
 
-## How to Run the SPA (for guests)
+## How to Run the SPA
+
+**ATTENTION**: The commands to run the SPA do not work without environment files.
 
 Run following terminal commands from root directory:
 
-1. `npm install`
-2. `npm run build && npm start`
+1. Firstable, install all the project dependencies:
+   1. `npm run install-global`
+   1. `npm run install-client`
+   1. `npm run install-server`
+1. Type in 1st terminal window `npm run client` to render GUI
+1. Type in 2nd window terminal `npm run server` to run the server
 
-Then open a browser at: http://localhost:3000/
-
-## How to Run the SPA (for workers)
-
-`npm run start`
+Finally, open a browser at: http://localhost:3000/
 
 ## How to Check Syntax Quality into Modules (using Prettier)
 

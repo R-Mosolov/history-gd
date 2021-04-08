@@ -1,0 +1,14 @@
+[
+  {
+    "userId": "XXXX-XXXX-XXXX-XXXX",
+    "diariesMeta": [
+      {
+        "diaryId": "YYYY-YYYY-YYYY-YYYY",
+        "directory": "Научное становление",
+        "title": "Название 1",
+        "creationDate": 1609757204761,
+        "lastUpdate": 1609757204761
+      }
+    ]
+  }
+]

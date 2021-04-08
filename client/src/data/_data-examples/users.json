@@ -1,0 +1,21 @@
+[
+  {
+    "userId": "XXXX-XXXX-XXXX-XXXX",
+    "fullName": {
+      "firstName": "Михаил",
+      "middleName": "Васильевич",
+      "lastName": "Ломоносов"
+    },
+    "profInfo": {
+      "academicDegree": "Академик СПбАН",
+      "profDegree": "Профессор",
+      "researchInterests": "Мозаичное дело, изобретение ночезрительных труб",
+      "highSchool": "Московский государственный университет"
+    },
+    "serviceInfo": {
+      "email": "admin@test.ru",
+      "password": "12345678",
+      "phone": 79999999999
+    }
+  }
+]

@@ -20,7 +20,8 @@
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true
+    "noEmit": true,
+    "noFallthroughCasesInSwitch": true
   },
   "exclude": [
     "node_modules",
@@ -32,5 +33,5 @@
     "src/setupTests.ts"
   ],
   "types": ["typePatches"],
-  "include": ["src"]
+  "include": ["src", "src/.env.js"]
 }
