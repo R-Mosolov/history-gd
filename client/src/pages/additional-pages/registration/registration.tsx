@@ -30,6 +30,7 @@ import {
   PHONE,
   PASSWORD,
   USERS_ENDPOINT,
+  GRAPHQL_ENDPOINT,
   SUCCESS,
   ERROR,
   WRONG_REGISTRATION_DATA,
@@ -103,7 +104,19 @@ function Registration(props: any) {
       />
 
       <div className="w-lg-50">
-        <h1 className="pt-5">Регистрация на сайте</h1>
+        <h1
+          className="pt-5"
+          style={{ cursor: 'pointer' }}
+          onClick={() => {
+            return axios
+              .post(GRAPHQL_ENDPOINT, {
+                query: '{ hello }',
+              })
+              .then((res) => console.log(res.data.data.hello));
+          }}
+        >
+          Регистрация на сайте
+        </h1>
 
         <Formik
           initialValues={{

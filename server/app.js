@@ -4,10 +4,26 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors');
+var { graphqlHTTP } = require('express-graphql');
+var { buildSchema } = require('graphql');
 
 var indexRouter = require('./routes/index');
 var manuscriptsRouter = require('./routes/manuscripts');
 var usersRouter = require('./routes/users');
+
+// Construct a schema, using GraphQL schema language
+var schema = buildSchema(`
+  type Query {
+    hello: String
+  }
+`);
+
+// The root provides a resolver function for each API endpoint
+var root = {
+  hello: () => {
+    return 'Hello world!';
+  },
+};
 
 var app = express();
 
@@ -25,6 +41,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/manuscripts', manuscriptsRouter);
 app.use('/users', usersRouter);
+app.use(
+  '/graphql',
+  graphqlHTTP({
+    schema: schema,
+    rootValue: root,
+    graphiql: true,
+  })
+);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
