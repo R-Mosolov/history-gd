@@ -6,6 +6,7 @@ var logger = require('morgan');
 var cors = require('cors');
 var { graphqlHTTP } = require('express-graphql');
 var { buildSchema } = require('graphql');
+var { firestore } = require('./db/db-config');
 
 var indexRouter = require('./routes/index');
 var manuscriptsRouter = require('./routes/manuscripts');
@@ -14,14 +15,38 @@ var usersRouter = require('./routes/users');
 // Construct a schema, using GraphQL schema language
 var schema = buildSchema(`
   type Query {
-    hello: String
+    userId(idx: Int!): String
+    manuscriptId: String
+    title: String
+    author: String
+    type: String
   }
 `);
 
 // The root provides a resolver function for each API endpoint
 var root = {
-  hello: () => {
-    return 'Hello world!';
+  userId: ({ idx }) => {
+    let data = [];
+    return Promise.resolve(firestore.collection('manuscripts').get())
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          data.push(doc.data());
+        });
+      })
+      .then(() => data[idx].userId)
+      .catch((err) => err);
+  },
+  manuscriptId: () => {
+    return 'Test manuscriptId';
+  },
+  title: () => {
+    return 'Test title';
+  },
+  author: () => {
+    return 'Test author';
+  },
+  type: () => {
+    return 'Test type';
   },
 };
 

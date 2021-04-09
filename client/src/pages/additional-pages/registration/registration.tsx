@@ -110,9 +110,9 @@ function Registration(props: any) {
           onClick={() => {
             return axios
               .post(GRAPHQL_ENDPOINT, {
-                query: '{ hello }',
+                query: '{ userId(idx: 1) }',
               })
-              .then((res) => console.log(res.data.data.hello));
+              .then(({ data: { data } }) => console.log(data.userId));
           }}
         >
           Регистрация на сайте
