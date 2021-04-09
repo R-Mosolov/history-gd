@@ -1,6 +1,6 @@
-# History GD API
+# History GD's API
 
-## Manuscripts Page
+## Manuscripts Server Route
 
 | #   | Method |   Endpoint   |     Query      |           Body           |        Role         |
 | --- | :----: | :----------: | :------------: | :----------------------: | :-----------------: |
@@ -10,20 +10,25 @@
 | 4   | UPDATE | /manuscripts | collection, id |      title, author       | Update a manuscript |
 | 5   | DELETE | /manuscripts | collection, id |            –             | Delete a manuscript |
 
-- A manuscript meta info may contains: userId, manuscriptId, title, author, creationDate, type.
+- _A manuscript meta info may contains: userId, manuscriptId, title, author, creationDate, type._
 
-## Auth Process
+## Users Server Route
 
-| #   | Method |        Endpoint        | Query |        Body         |           Role           |
-| --- | :----: | :--------------------: | :---: | :-----------------: | :----------------------: |
-| 1   |  POST  | /users/reset-password  |   –   |        email        | Reset an user's password |
-| 2   |  POST  |   /users/check-auth    |   –   |   email, password   |   Authenticate an user   |
-| 3   |  POST  |    /users/main-info    |   –   |   email, password   |   Authenticate an user   |
-| 4   |  POST  | /users/additional-info |   –   | An user full info\* |   Authenticate an user   |
+| #   | Method |        Endpoint        | Query |        Body         |                   Role                   |
+| --- | :----: | :--------------------: | :---: | :-----------------: | :--------------------------------------: |
+| 1   |  POST  | /users/reset-password  |   –   |        email        |         Reset an user's password         |
+| 2   |  POST  |   /users/check-auth    |   –   |   email, password   |      Check user email and password       |
+| 3   |  POST  |    /users/main-info    |   –   |   email, password   |    Send main info about an user to DB    |
+| 4   |  POST  | /users/additional-info |   –   | An user full info\* | Send main additional about an user to DB |
 
-...
+- _An user full info may contains: lastName, firstName, middleName, academicDegree, profDegree, researchInterests, university._
 
-- An user full info may contains: lastName, firstName, middleName, academicDegree, profDegree, researchInterests, university.
+## Sessions Server Route
+
+| #   | Method |        Endpoint        | Query |      Body       |                      Role                      |
+| --- | :----: | :--------------------: | :---: | :-------------: | :--------------------------------------------: |
+| 1   |  POST  | /sessions/create-token |   –   | email, password | Create a new token to verify an user's session |
+| 2   |  GET   | /sessions/check-token  | token |        –        |  Check that an user's session is not expired   |
 
 ## Cases When Should Be Used Authentication Process
 
