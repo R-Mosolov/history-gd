@@ -11,42 +11,69 @@ var { firestore } = require('./db/db-config');
 var indexRouter = require('./routes/index');
 var manuscriptsRouter = require('./routes/manuscripts');
 var usersRouter = require('./routes/users');
+const axios = require('axios');
 
 // Construct a schema, using GraphQL schema language
 var schema = buildSchema(`
-  type Query {
-    userId(idx: Int!): String
-    manuscriptId: String
+  type Manuscript {
+    userId: String
     title: String
     author: String
     type: String
+    creationDate: String
+  }
+
+  type Query {
+    manuscripts(idx: Int!): Manuscript
   }
 `);
 
-// The root provides a resolver function for each API endpoint
+class Manuscript {
+  constructor(idx) {
+    this.idx = idx;
+  }
+
+  getAllManuscripts() {
+    return axios
+      .get('http://localhost:4000/manuscripts')
+      .then(({ data }) => data)
+      .then((err) => err);
+  }
+
+  userId() {
+    return Promise.resolve(this.getAllManuscripts()).then(
+      (res) => res[this.idx].userId
+    );
+  }
+
+  title() {
+    return Promise.resolve(this.getAllManuscripts()).then(
+      (res) => res[this.idx].title
+    );
+  }
+
+  author() {
+    return Promise.resolve(this.getAllManuscripts()).then(
+      (res) => res[this.idx].author
+    );
+  }
+
+  type() {
+    return Promise.resolve(this.getAllManuscripts()).then(
+      (res) => res[this.idx].type
+    );
+  }
+
+  creationDate() {
+    return Promise.resolve(this.getAllManuscripts()).then((res) =>
+      String(res[this.idx].creationDate)
+    );
+  }
+}
+
 var root = {
-  userId: ({ idx }) => {
-    let data = [];
-    return Promise.resolve(firestore.collection('manuscripts').get())
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          data.push(doc.data());
-        });
-      })
-      .then(() => data[idx].userId)
-      .catch((err) => err);
-  },
-  manuscriptId: () => {
-    return 'Test manuscriptId';
-  },
-  title: () => {
-    return 'Test title';
-  },
-  author: () => {
-    return 'Test author';
-  },
-  type: () => {
-    return 'Test type';
+  manuscripts: ({ idx }) => {
+    return new Manuscript(idx);
   },
 };
 

@@ -104,19 +104,7 @@ function Registration(props: any) {
       />
 
       <div className="w-lg-50">
-        <h1
-          className="pt-5"
-          style={{ cursor: 'pointer' }}
-          onClick={() => {
-            return axios
-              .post(GRAPHQL_ENDPOINT, {
-                query: '{ userId(idx: 1) }',
-              })
-              .then(({ data: { data } }) => console.log(data.userId));
-          }}
-        >
-          Регистрация на сайте
-        </h1>
+        <h1 className="pt-5">Регистрация на сайте</h1>
 
         <Formik
           initialValues={{
