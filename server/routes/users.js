@@ -16,9 +16,10 @@ router.post('/reset-password', function (req, res) {
 router.post('/check-auth', function (req, res) {
   const { email, password } = req.body;
   Promise.resolve(auth.signInWithEmailAndPassword(email, password))
-    .then(function () {
+    .then(function (userCredential) {
+      var user = userCredential.user;
       res.send({
-        success: `The user with email ${email} authenticated successfully!`,
+        success: user.uid,
       });
     })
     .catch(function (errorText) {

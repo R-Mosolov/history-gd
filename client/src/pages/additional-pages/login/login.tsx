@@ -35,6 +35,7 @@ import {
   SUCCESS,
   ERROR,
   USERS_ENDPOINT,
+  SESSIONS_ENDPOINT,
   WRONG_EMAIL_OR_PASSWORD,
   SENT_EMAIL_TO_RESET_PASSWORD,
 } from '../../../constants';
@@ -43,7 +44,7 @@ import {
 import './login.css';
 
 interface Props {
-  setAuthentication: () => {};
+  setAuthentication: (userId: string) => {};
   actions: {
     readAllManuscripts: any;
   };
@@ -73,7 +74,7 @@ const mapStateToProps = (state: object) => {
 const mapDispatchToProps: any = (dispatch: any) => {
   return {
     actions: bindActionCreators({ readAllManuscripts }, dispatch),
-    setAuthentication: () => dispatch({ type: SET_AUTHENTICATION }),
+    setAuthentication: (userId: string) => dispatch({ type: SET_AUTHENTICATION, payload: userId }),
   };
 };
 
@@ -126,8 +127,25 @@ class Login extends Component<Props, State> {
           const isError = res.data.hasOwnProperty(ERROR);
 
           if (isSuccess) {
-            setAuthentication();
-            readAllManuscripts();
+            Promise.resolve(setAuthentication(String(res.data.success)))
+              .then(() => readAllManuscripts())
+              .then(() => {
+                axios.post(`${SESSIONS_ENDPOINT}/create-token`, {
+                  email: email,
+                  password: password,
+                })
+                  .then((res) => {
+                    if (isSuccess) {
+                      document.cookie = `session-token=${res.data.success}`;
+                      console.log('document.cookie: ', document.cookie);
+                    } else {
+                      // TODO: Add error handler for this condition
+                    }
+                  })
+                  // .then(() => setAuthentication())
+                  // .then(() => readAllManuscripts())
+                  .catch((err) => console.error(err));
+              });
           } else if (isError) {
             this.setState({ isAlertDialog: isAlertDialog ? false : true });
             return console.error(utils.findDebugText(WRONG_EMAIL_OR_PASSWORD));

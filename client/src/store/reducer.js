@@ -34,6 +34,7 @@ const {
 // Create the reducer
 const reducer = (store = initialState, action) => {
   const {
+    userId,
     isRegistered,
     isAuthenticated,
     intersectionParams,
@@ -47,7 +48,7 @@ const reducer = (store = initialState, action) => {
     fetchedManuscripts,
   } = store;
   const { filter, searcher } = intersectionParams;
-  const userId = auth.getUserId();
+  // const userId = auth.getUserId();
 
   switch (action.type) {
     /**
@@ -59,9 +60,10 @@ const reducer = (store = initialState, action) => {
         isRegistered: true,
       };
     case SET_AUTHENTICATION:
+      const initialUserId = action.payload;
       return {
         ...store,
-        userId: isAuthenticated ? undefined : userId,
+        userId: isAuthenticated ? undefined : initialUserId,
         isAuthenticated: isAuthenticated ? false : true,
       };
     case UPDATE_ALL_MANUSCRIPTS:
@@ -69,7 +71,7 @@ const reducer = (store = initialState, action) => {
         ...store,
         userId: userId,
         isAuthenticated: true,
-        fetchedManuscripts: userId
+        fetchedManuscripts: isAuthenticated
           ? action.payload.filter((manuscript) => manuscript.userId === userId)
           : action.payload,
         areManuscriptsLoading: false,

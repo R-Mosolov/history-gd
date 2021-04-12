@@ -45,6 +45,7 @@ export const DELETE = 'DELETE';
 export const BASE_URL = 'http://localhost:4000/';
 export const MANUSCRIPTS_ENDPOINT = 'http://localhost:4000/manuscripts';
 export const USERS_ENDPOINT = 'http://localhost:4000/users';
+export const SESSIONS_ENDPOINT = 'http://localhost:4000/sessions';
 
 // API: statuses
 export const SUCCESS = 'success';
