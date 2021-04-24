@@ -35,6 +35,11 @@
     "done": false
   },
   {
+    "name": "Анализ статистических данных",
+    "link": "/manuscripts",
+    "done": false
+  },
+  {
     "name": "Научная переписка",
     "link": "/manuscripts",
     "done": false
@@ -66,6 +71,16 @@
   },
   {
     "name": "Мультимедийные факты",
+    "link": "/manuscripts",
+    "done": false
+  },
+  {
+    "name": "Генератор отчётов о научно-исследовательской работе",
+    "link": "/manuscripts",
+    "done": false
+  },
+  {
+    "name": "Генератор презентаций для докладов",
     "link": "/manuscripts",
     "done": false
   },

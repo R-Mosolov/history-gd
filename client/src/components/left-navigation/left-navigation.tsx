@@ -45,8 +45,19 @@ function LeftNavigation() {
 
   return (
     <div className="left-nav col-lg-3">
-      <div className="left-nav__container pt-5 d-flex flex-column col-lg-3">
+      <div className="left-nav__container pt-5 pb-5 d-flex flex-column col-lg-3">
         <ul className="list-unstyled">{renderLeftNav()}</ul>
+        <Link style={{ color: 'rgba(0, 0, 0, 0.7)' }} to="/user-agreement">
+          <span
+            style={{
+              marginLeft: '22px',
+              textDecoration: 'underline',
+              cursor: 'pointer',
+            }}
+          >
+            Руководства пользователя
+          </span>
+        </Link>
         <Link style={{ color: 'rgba(0, 0, 0, 0.7)' }} to="/user-agreement">
           <span
             style={{
