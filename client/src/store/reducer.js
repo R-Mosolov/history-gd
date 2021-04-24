@@ -16,19 +16,27 @@ import {
   FILTERED_MANUSCRIPTS,
   SEARCHED_MANUSCRIPTS,
   SORTED_MANUSCRIPTS,
+  CREATE,
 } from '../constants';
 import { utils } from '../utils';
 
 // Restructure types
 const {
+  // App
   UPDATE_ALL_MANUSCRIPTS,
-  SET_REGISTRATION,
   SET_AUTHENTICATION,
+  SET_REGISTRATION,
+
+  // Manuscripts page
   CHECK_INTERSECTIONS,
   SORT_MANUSCRIPTS,
   FILTER_MANUSCRIPTS,
   SEARCH_MANUSCRIPTS,
   RESET_STATE,
+
+  // Add Manuscript page
+  SET_ACTIVE_PICTURE_LINK,
+  UPDATE_ACTIVE_MANUSCRIPT,
 } = TYPES;
 
 // Create the reducer
@@ -45,6 +53,7 @@ const reducer = (store = initialState, action) => {
     searchedManuscripts,
     sortedManuscripts,
     fetchedManuscripts,
+    activeManuscriptContent,
   } = store;
   const { filter, searcher } = intersectionParams;
   const userId = auth.getUserId();
@@ -308,6 +317,39 @@ const reducer = (store = initialState, action) => {
           ...areManuscriptsFiltered,
           isActive: false,
         },
+      };
+
+    /**
+     * Add Manuscript page
+     */
+     case SET_ACTIVE_PICTURE_LINK:
+      const { fileId, fileExtension } = action.payload;
+      const activePictureLink =
+        'manuscripts-content/manuscript-content-' +
+        `${fileId.toString()}.${fileExtension.toLowerCase()}`;
+
+      return {
+        ...store,
+        activePictureLink: activePictureLink,
+      };
+
+    case UPDATE_ACTIVE_MANUSCRIPT:
+      const payload = action.payload;
+
+      return {
+        ...store,
+        activeManuscriptContent:
+          payload.operation === CREATE
+            ? (activeManuscriptContent.push({
+                id: payload.id,
+                type: payload.type,
+                content: payload.content,
+              }),
+              activeManuscriptContent)
+            : ((activeManuscriptContent.filter(
+                (content) => content.id === payload.id
+              )[0].content = payload.content),
+              activeManuscriptContent),
       };
 
     default:

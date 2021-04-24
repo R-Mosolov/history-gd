@@ -8,9 +8,15 @@ export interface TypesConfig {
 }
 
 export interface InitialStateConfig {
+  /**
+   * App
+   */
   userId: string | null | undefined;
-  isRegistered: boolean;
   isAuthenticated: boolean;
+
+  /**
+   * Manuscripts page
+   */
   // TODO: Change Any type
   fetchedManuscripts: any;
   intersectionParams: {
@@ -34,6 +40,12 @@ export interface InitialStateConfig {
     byLargeManuscripts: boolean;
   };
   areManuscriptsSearched: boolean;
+
+  /**
+   * Add Manuscript page
+   */
+  activePictureLink: string | null;
+  activeManuscriptContent: Array<object>;
 }
 
 export interface ManuscriptConfig {
