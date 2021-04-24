@@ -30,12 +30,12 @@
     "done": true
   },
   {
-    "name": "Исследовательские заметки",
-    "link": "/manuscripts",
-    "done": false
+    "name": "Анализ статистических данных",
+    "link": "/data-analysis",
+    "done": true
   },
   {
-    "name": "Анализ статистических данных",
+    "name": "Исследовательские заметки",
     "link": "/manuscripts",
     "done": false
   },

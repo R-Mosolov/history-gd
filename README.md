@@ -101,7 +101,8 @@ Run following terminal commands from root directory:
    1. `npm run install-client`
    1. `npm run install-server`
 1. Type in 1st terminal window `npm run client` to render GUI
-1. Type in 2nd window terminal `npm run server` to run the server
+1. Type in 2nd window terminal `npm run js-server` to run the server in JS
+1. Type in 3rd window terminal `npm run py-server` to run the server in Python
 
 Finally, open a browser at: http://localhost:3000/
 

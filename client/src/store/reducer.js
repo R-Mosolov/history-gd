@@ -322,7 +322,7 @@ const reducer = (store = initialState, action) => {
     /**
      * Add Manuscript page
      */
-     case SET_ACTIVE_PICTURE_LINK:
+    case SET_ACTIVE_PICTURE_LINK:
       const { fileId, fileExtension } = action.payload;
       const activePictureLink =
         'manuscripts-content/manuscript-content-' +

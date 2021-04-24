@@ -93,7 +93,7 @@ const findAlertActions = (alertId: string) => {
  * 5 - 26 [a-z]
  * The variability of getting non-unique value: 1 / 1.757.600
  */
- const addID = () => {
+const addID = () => {
   const DIGITS: Array<number> = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
   const ENGLISH_LETTERS_NUMBER: number = 26;
   const DIGITS_NUMBER: number = 10;

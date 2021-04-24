@@ -1,5 +1,6 @@
 # IDE
 .idea
+.vscode
 
 # MacOS file
 .DS_Store
@@ -13,3 +14,9 @@ node_modules
 
 # JS bundle
 build
+
+# Python cache
+__pycache__
+
+# Python dependencies
+venv

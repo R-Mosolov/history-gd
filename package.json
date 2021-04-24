@@ -6,9 +6,10 @@
   "scripts": {
     "install-global": "npm i",
     "install-client": "cd client && npm i",
-    "install-server": "cd server && npm i",
+    "install-server": "cd server/js && npm i",
     "client": "clear && cd client && npm run build && react-scripts start",
-    "server": "clear && cd server && nodemon",
+    "js-server": "clear && cd server/js && nodemon",
+    "py-server": "clear && cd server/python && venv/bin/flask run --no-debugger",
     "pretty": "clear && npx prettier --write ."
   },
   "keywords": [],

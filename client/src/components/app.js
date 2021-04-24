@@ -16,15 +16,19 @@ import Registration from '../pages/additional-pages/registration/registration';
 import Login from '../pages/additional-pages/login/login';
 
 // Private pages
+// TODO: Create index.js to resize a path to each of components
 import LeftNavigation from './left-navigation/left-navigation';
-import Manuscripts from '../pages/main-pages/manuscripts/manuscripts';
-import FullManuscript from '../pages/main-pages/full-manuscript/full-manuscript';
-import HandlingSources from '../pages/main-pages/handling-sources/handling-sources';
-import AddManuscript from '../pages/main-pages/add-manuscript/add-manuscript';
-import AudioGenerator from '../pages/main-pages/audio-generator/audio-generator';
-import Diary from '../pages/main-pages/diary/diary';
-import Heritage from '../pages/main-pages/heritage/heritage';
-import UserAgreement from '../pages/additional-pages/user-agreement/user-agreement';
+import { UserAgreement } from '../pages/additional-pages';
+import {
+  Manuscripts,
+  FullManuscript,
+  HandlingSources,
+  AddManuscript,
+  DataAnalysis,
+  AudioGenerator,
+  Diary,
+  Heritage,
+} from '../pages/main-pages';
 
 // Redux
 import { connect } from 'react-redux';
@@ -85,6 +89,7 @@ class App extends Component {
                   <Route path="/full-manuscript" component={FullManuscript} />
                   <Route path="/handling-sources" component={HandlingSources} />
                   <Route path="/add-manuscript" component={AddManuscript} />
+                  <Route path="/data-analysis" component={DataAnalysis} />
                   <Route path="/audio-generator" component={AudioGenerator} />
                   <Route path="/diary" component={Diary} />
                   <Route path="/heritage" component={Heritage} />

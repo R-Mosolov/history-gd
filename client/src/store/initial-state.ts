@@ -5,7 +5,7 @@ const initialState: InitialStateConfig = {
    * App
    */
   userId: undefined,
-  isAuthenticated: false,
+  isAuthenticated: true,
 
   /**
    * Manuscripts page
