@@ -9,8 +9,7 @@
     "install-server": "cd server && npm i",
     "client": "clear && cd client && npm run build && react-scripts start",
     "server": "clear && cd server && nodemon",
-    "pretty": "clear && npx prettier --write .",
-    "prepare": "husky install"
+    "pretty": "clear && npx prettier --write ."
   },
   "keywords": [],
   "author": "",
@@ -18,8 +17,5 @@
   "dependencies": {
     "express": "^4.17.1",
     "react-scripts": "^4.0.3"
-  },
-  "devDependencies": {
-    "husky": "^6.0.0"
   }
 }
