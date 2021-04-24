@@ -9,7 +9,8 @@
     "install-server": "cd server && npm i",
     "client": "clear && cd client && npm run build && react-scripts start",
     "server": "clear && cd server && nodemon",
-    "pretty": "clear && npx prettier --write ."
+    "pretty": "clear && npx prettier --write .",
+    "prepare": "husky install"
   },
   "keywords": [],
   "author": "",
