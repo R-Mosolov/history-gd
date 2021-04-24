@@ -35,6 +35,28 @@ export const SORTED_MANUSCRIPTS: string = 'sortedManuscripts';
 export const FILTERED_MANUSCRIPTS: string = 'filteredManuscripts';
 export const SEARCHED_MANUSCRIPTS: string = 'searchedManuscripts';
 
+// Redux: Add Manuscript page
+export const CREATE = 'create';
+export const UPDATE = 'update';
+export const TITLE = 'title';
+export const SUBTITLE = 'subtitle';
+export const PARAGRAPH = 'paragraph';
+export const ORDERED_LIST = 'orderedList';
+export const UNORDERED_LIST = 'unorderedList';
+export const TABLE = 'table';
+export const PICTURE = 'picture';
+export const FORMULA = 'formula';
+
+// Texts by default
+export const DEFAULT_TITLE_CONTENT = 'Заголовок';
+export const DEFAULT_SUBTITLE_CONTENT = 'Подзаголовок';
+export const DEFAULT_PARAGRAPH_CONTENT = 'Параграф';
+export const DEFAULT_TABLE_TITLE = 'Название таблицы';
+export const DEFAULT_PICTURE_TITLE = 'Название рисунка';
+export const DEFAULT_TABLE_HEAD_CONTENT = 'Название колонки';
+export const DEFAULT_CELL_CONTENT = 'Ячейка';
+export const DEFAULT_REFERENCE_CONTENT = 'Информация об источнике';
+
 // API: methods
 export const GET = 'GET';
 export const POST = 'POST';

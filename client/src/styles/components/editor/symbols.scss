@@ -1,0 +1,33 @@
+.symbols {
+  overflow-y: auto;
+
+  &__section-title {
+    padding-top: 30px;
+  }
+
+  &__column-title {
+    text-align: center;
+  }
+
+  &__cell {
+    padding-left: 10px;
+    padding-right: 10px;
+    border: 1px solid black;
+
+    &_actions {
+      display: flex;
+
+      .icons-container {
+        cursor: pointer;
+
+        &_icon {
+          margin-right: 3px;
+
+          &:last-child {
+            margin-left: 10px;
+          }
+        }
+      }
+    }
+  }
+}

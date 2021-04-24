@@ -1,0 +1,78 @@
+@import '../../mixins/main-input-styles.scss',
+  '../../mixins/container-border.scss';
+
+.editor {
+  min-height: 300px;
+
+  &__icon {
+    @include container-border;
+    margin: 10px;
+    cursor: pointer;
+  }
+
+  &__custom-icon {
+    @include container-border;
+    padding: 5px 5px 7px 5px;
+    height: 35px;
+  }
+
+  &__container {
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+  }
+
+  &__tools {
+    @include container-border;
+    height: 60px;
+    width: 100%;
+  }
+
+  &__content {
+    &_container {
+      margin-right: 10px;
+    }
+
+    &_paragraph {
+      @include main-input-styles(5px, 0px);
+    }
+
+    &_title {
+      @include main-input-styles(2.5px, 2.5px);
+    }
+
+    &_attachment {
+      width: 100%;
+      margin-top: 15px;
+
+      .attachment {
+        &__number {
+          margin-bottom: -5px;
+          font-style: italic;
+          text-align: right;
+        }
+
+        &__title {
+          margin-bottom: 15px;
+          font-family: 'Times New Roman', Times, serif;
+          font-size: 24px;
+          font-weight: bold;
+          text-align: center;
+        }
+
+        &__container {
+          width: 100%;
+        }
+
+        &__cell {
+          padding-left: 5px;
+          border: 1px solid lightgray;
+        }
+      }
+    }
+  }
+
+  &__actions_button {
+    margin-top: 15px;
+  }
+}

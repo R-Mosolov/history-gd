@@ -1,0 +1,141 @@
+[
+  {
+    "title": {
+      "ru": "Акценты",
+      "en": "Accents",
+      "isSubtitle": false
+    },
+    "content": [
+      "a'",
+      "a''",
+      "a^{\\prime}",
+      "\\acute{a}",
+      "\\bar{y}",
+      "\\breve{a}",
+      "\\check{a}",
+      "\\dot{a}",
+      "\\ddot{a}",
+      "\\grave{a}",
+      "\\hat{\\theta}",
+      "\\widehat{ac}",
+      "\\tilde{a}",
+      "\\widetilde{ac}",
+      "\\utilde{AB}",
+      "\\vec{F}",
+      "\\overleftarrow{AB}",
+      "\\underleftarrow{AB}",
+      "\\overleftharpoon{ac}",
+      "\\overleftrightarrow{AB}",
+      "\\underleftrightarrow{AB}",
+      "\\overline{AB}",
+      "\\underline{AB}",
+      "\\mathring{g}",
+      "\\overgroup{AB}",
+      "\\undergroup{AB}",
+      "\\Overrightarrow{AB}",
+      "\\overrightarrow{AB}",
+      "\\underrightarrow{AB}",
+      "\\overrightharpoon{ac}",
+      "\\overbrace{AB}",
+      "\\underbrace{AB}",
+      "\\overlinesegment{AB}",
+      "\\underlinesegment{AB}"
+    ]
+  },
+  {
+    "title": {
+      "ru": "Разделители",
+      "en": "Delimiters",
+      "isSubtitle": false
+    },
+    "content": [
+      "( )",
+      "[ ]",
+      "\\{ \\}",
+      "⟨ ⟩",
+      "|",
+      "\\|",
+      "\\lvert \\rvert",
+      "\\lt \\gt",
+      "\\lceil \\rceil",
+      "\\lfloor \\rfloor",
+      "\\lmoustache \\rmoustache",
+      "\\lgroup \\rgroup",
+      "\\ulcorner \\urcorner",
+      "\\llcorner \\lrcorner",
+      "\\uparrow",
+      "\\downarrow",
+      "\\updownarrow",
+      "\\Uparrow",
+      "\\Downarrow",
+      "\\Updownarrow",
+      "\\backslash",
+      "\\lBrace \\rBrace"
+    ]
+  },
+  {
+    "title": {
+      "ru": "Окружения",
+      "en": "Environments",
+      "isSubtitle": false
+    },
+    "content": [
+      ["\\begin{matrix}", "a & b \\\\", "c & d", "\\end{matrix}"],
+      ["\\begin{pmatrix}", "a & b \\\\", "c & d", "\\end{pmatrix}"],
+      ["\\begin{vmatrix}", "a & b \\\\", "c & d", "\\end{vmatrix}"],
+      ["\\begin{Bmatrix}", "a & b \\\\", "c & d", "\\end{Bmatrix}"],
+      [
+        "x = \\begin{cases}",
+        "a &\\text{if } b ",
+        "\\\\",
+        "c &\\text{if } d",
+        "\\end{cases}"
+      ],
+      ["\\begin{array}{cc}", "a & b \\\\", "c & d", "\\end{array}"],
+      ["\\begin{bmatrix}", "a & b \\\\", "c & d", "\\end{bmatrix}"],
+      ["\\begin{Vmatrix}", "a & b \\\\", "c & d", "\\end{Vmatrix}"]
+    ]
+  },
+  {
+    "title": {
+      "ru": "Буквы и символы",
+      "en": "Letters and Unicode",
+      "isSubtitle": false
+    },
+    "content": [
+      "\\arcsin",
+      "\\Beta",
+      "\\Gamma",
+      "\\Delta",
+      "\\Epsilon",
+      "\\Zeta",
+      "\\Eta",
+      "\\Theta",
+      "\\Iota",
+      "\\Kappa",
+      "\\Lambda",
+      "\\Mu",
+      "\\Nu",
+      "\\Xi",
+      "\\Omicron",
+      "\\Pi",
+      "\\Rho",
+      "\\Sigma",
+      "\\Tau",
+      "\\Upsilon",
+      "\\Phi",
+      "\\varGamma",
+      "\\varXi",
+      "\\varPhi",
+      "\\alpha",
+      "\\epsilon",
+      "\\iota",
+      "\\nu",
+      "\\rho",
+      "\\phi",
+      "\\varepsilon",
+      "\\varpi",
+      "\\digamma"
+    ]
+  }
+]

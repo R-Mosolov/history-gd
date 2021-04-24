@@ -1,0 +1,75 @@
+.formula {
+  display: flex;
+  flex-direction: row;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  background-color: floralwhite;
+  z-index: 10000;
+
+  // Global styles
+  &__title {
+    margin-top: 10px;
+    width: 100%;
+    text-align: center;
+  }
+
+  // Main sections
+  &__symbols {
+    padding-top: 20px;
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    flex-basis: 50%;
+    border: 1px solid black;
+    border-radius: 20px 20px 0 0;
+  }
+
+  &__dynamic-block {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 50%;
+
+    &_input {
+      padding-top: 20px;
+      padding-left: 20px;
+      padding-right: 20px;
+      flex-basis: 50%;
+      border: 1px solid black;
+      border-radius: 20px;
+
+      .input {
+        &__container {
+          display: flex;
+          flex-direction: column;
+        }
+
+        &__field {
+          min-height: 200px;
+          border-radius: 5px;
+        }
+      }
+    }
+
+    &_output {
+      padding-top: 20px;
+      padding-left: 20px;
+      flex-basis: 50%;
+      border: 1px solid black;
+      border-radius: 20px;
+    }
+  }
+
+  // Close icon
+  &__close {
+    top: 0;
+    right: 0;
+    position: absolute;
+
+    &_icon {
+      cursor: pointer;
+    }
+  }
+}
