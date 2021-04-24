@@ -82,7 +82,7 @@ Run following terminal commands from root directory:
 1. Type in 1st terminal window `npm run client` to render GUI
 1. Type in 2nd window terminal `npm run server` to run the server
 
-Finally, open a browser at: http://localhost:3000/
+Finally, open a browser at: http://localhost:3000/.
 
 ## How to Check Syntax Quality into Modules (using Prettier)
 
