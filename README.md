@@ -1,12 +1,31 @@
+# Table of Contents
+
+- [Table of Contents](#table-of-contents)
+- [About the SPA](#about-the-spa)
+- [The Test Access for Guests](#the-test-access-for-guests)
+- [The Prerequisites of Creation](#the-prerequisites-of-creation)
+- [The Current GUI](#the-current-gui)
+- [The List of Planned SPA Functionality](#the-list-of-planned-spa-functionality)
+- [The List of Planned Technological Stack](#the-list-of-planned-technological-stack)
+  - [Frontend](#frontend)
+  - [Backend](#backend)
+- [The Instructions](#the-instructions)
+  - [How to Run the SPA](#how-to-run-the-spa)
+  - [How to Check Code Style](#how-to-check-code-style)
+- [The Project Technical Task](#the-project-technical-task)
+- [History GD API](#history-gd-api)
+  - [Manuscripts Page](#manuscripts-page)
+  - [Auth Process](#auth-process)
+
 # About the SPA
 
-**«History of Genius Discovery»** (shortly _«History GD»_ or _«GitHub for Scientists»_) is the scientific portal that was created to help
+**«History of Genius Discovery»** (shortly _«History GD»_) is the scientific portal that was created to help
 scientists to keep own manuscripts (e.g., scientific articles,
 university manuals, and monographs).
 
 # The Test Access for Guests
 
-<p><b>Email</b>: M.V.Lomonosov@history-gd.ru</p>
+<p><b>Login</b>: M.V.Lomonosov@history-gd.ru</p>
 <p><b>Password</b>: 123456</p>
 
 # The Prerequisites of Creation
@@ -84,11 +103,11 @@ Run following terminal commands from root directory:
 
 Finally, open a browser at: http://localhost:3000/
 
-## How to Check Syntax Quality into Modules (using Prettier)
+## How to Check Code Style
 
 `npm run pretty`
 
-# The Project Technical Task and Timekeeping in Russian
+# The Project Technical Task
 
 More information about project's technical details, planned
 functionality, and planned pages of the SPA:
@@ -99,3 +118,22 @@ Also you can to learn statistic of work time that was oriented to
 this project:
 
 https://drive.google.com/open?id=1CIHTwmnrYNzT6RYXHrQ99lInUuDib980M8JNQ23s6y4
+
+# History GD API
+
+## Manuscripts Page
+
+| #   | Method |   Endpoint   |     Query      |                          Body                           |        Role         |
+| --- | :----: | :----------: | :------------: | :-----------------------------------------------------: | :-----------------: |
+| 1   |  GET   | /manuscripts |   collection   |                            –                            | Get all manuscripts |
+| 3   |  GET   | /manuscripts |       –        |                            –                            |  Get a manuscript   |
+| 2   |  POST  | /manuscripts |   collection   | userId, manuscriptId, title, author, creationDate, type |  Post a manuscript  |
+| 4   | UPDATE | /manuscripts | collection, id |                      title, author                      | Update a manuscript |
+| 5   | DELETE | /manuscripts | collection, id |                            –                            | Delete a manuscript |
+
+## Auth Process
+
+| #   | Method | Endpoint |      Query      | Body |           Role           |
+| --- | :----: | :------: | :-------------: | :--: | :----------------------: |
+| 1   |  POST  |  /auth   |      email      |  –   | Reset an user's password |
+| 2   |  POST  |  /auth   | email, password |  –   |   Authenticate an user   |
