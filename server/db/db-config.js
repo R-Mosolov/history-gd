@@ -11,6 +11,7 @@ const firebase = require('firebase/app');
 
 // Needed Firebase services
 require('firebase/firestore');
+require('firebase/storage');
 require('firebase/auth');
 
 const { env } = require('../.env.js');
@@ -32,9 +33,11 @@ firebase.initializeApp(firebaseConfig);
 
 // Connect main Google Firebase's services (Firestore, Authentication, Storage, etc.)
 const firestore = firebase.firestore();
+const storage = firebase.storage();
 const auth = firebase.auth();
 
 module.exports = {
   firestore,
+  storage,
   auth,
 };
