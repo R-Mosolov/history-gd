@@ -16,6 +16,7 @@
 - [History GD API](#history-gd-api)
   - [Manuscripts Page](#manuscripts-page)
   - [Auth Process](#auth-process)
+– [The Algorithms](#the-algorithms)
 
 # About the SPA
 
@@ -137,3 +138,9 @@ https://drive.google.com/open?id=1CIHTwmnrYNzT6RYXHrQ99lInUuDib980M8JNQ23s6y4
 | --- | :----: | :------: | :-------------: | :--: | :----------------------: |
 | 1   |  POST  |  /auth   |      email      |  –   | Reset an user's password |
 | 2   |  POST  |  /auth   | email, password |  –   |   Authenticate an user   |
+
+# The Algorithms
+
+## The Block Schema of Registration Process
+
+![The Block Schema of Registration Process](https://firebasestorage.googleapis.com/v0/b/history-gd-cfc68.appspot.com/o/software-docs%2FHistory%20GD.%20Registration%20Logic.png?alt=media&token=edf344be-47f9-46e6-98ca-95d55edec44b)
