@@ -19,11 +19,6 @@
     "express": "^4.17.1",
     "react-scripts": "^4.0.3"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run pretty"
-    }
-  },
   "devDependencies": {
     "husky": "^6.0.0"
   }
