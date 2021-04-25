@@ -14,7 +14,13 @@ import leftNavigation from '../../data/left-navigation.json';
 import './left-navigation.css';
 
 function LeftNavigation() {
-  function renderLeftNav() {
+  const additionalMenuTitles: string[] = [
+    'Руководства пользователя',
+    'Служба поддержки',
+    'Пользовательское соглашение',
+  ];
+
+  function renderMainLeftItems() {
     let itemsList = [];
     for (let item of leftNavigation) {
       itemsList.push(
@@ -43,32 +49,29 @@ function LeftNavigation() {
     return itemsList;
   }
 
+  function renderAdditionalLeftItems() {
+    return additionalMenuTitles.map((item) => {
+      return (
+        <Link style={{ color: 'rgba(0, 0, 0, 0.7)' }} to="/user-agreement">
+          <span
+            style={{
+              marginLeft: '22px',
+              textDecoration: 'underline',
+              cursor: 'pointer',
+            }}
+          >
+            {item}
+          </span>
+        </Link>
+      );
+    });
+  }
+
   return (
     <div className="left-nav col-lg-3">
       <div className="left-nav__container pt-5 pb-5 d-flex flex-column col-lg-3">
-        <ul className="list-unstyled">{renderLeftNav()}</ul>
-        <Link style={{ color: 'rgba(0, 0, 0, 0.7)' }} to="/user-agreement">
-          <span
-            style={{
-              marginLeft: '22px',
-              textDecoration: 'underline',
-              cursor: 'pointer',
-            }}
-          >
-            Руководства пользователя
-          </span>
-        </Link>
-        <Link style={{ color: 'rgba(0, 0, 0, 0.7)' }} to="/user-agreement">
-          <span
-            style={{
-              marginLeft: '22px',
-              textDecoration: 'underline',
-              cursor: 'pointer',
-            }}
-          >
-            Пользовательское соглашение
-          </span>
-        </Link>
+        <ul className="list-unstyled">{renderMainLeftItems()}</ul>
+        {[...renderAdditionalLeftItems()]}
       </div>
     </div>
   );

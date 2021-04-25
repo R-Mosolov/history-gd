@@ -1,6 +1,7 @@
 # Table of Contents
 
 - [Table of Contents](#table-of-contents)
+- [Terms and Definitions](#terms-and-definitions)
 - [About the SPA](#about-the-spa)
 - [The Test Access for Guests](#the-test-access-for-guests)
 - [The Prerequisites of Creation](#the-prerequisites-of-creation)
@@ -18,6 +19,15 @@
   - [Auth Process](#auth-process)
 - [The Algorithms](#the-algorithms)
   - [The Block Schema of Registration Process](#the-block-schema-of-registration-process)
+- [UI Components](#ui-components)
+  - [Description](#description)
+  - [The Table of Planned Custom UI Components](#the-table-of-planned-custom-ui-components)
+
+# Terms and Definitions
+
+– _SPA_ – the abbreviation from Single Page Application meaned one of a software type oriented for working in Internet browsers. In this specification file, can mean "project", "web application" also;
+
+– _UI/GUI_ – the abbreviation from (Graphical) User Interface. In this specification file, can mean "interface" also.
 
 # About the SPA
 
@@ -66,6 +76,7 @@ part of project's worked functionality on 04.05.2020 on the left.
 | 4   |       TypeScript       |        Adds strong types to variables         |
 | 5   |        Next.js         |    Makes the SPA more familiarity with SEO    |
 | 6   |        React.js        |        Main high-level library for JS         |
+| 7   |       Storybook        |     Saves custom UI components of the SPA     |
 | 7   |      Material UI       |     Adds templates of frontend components     |
 | 8   |      React Router      |         Adds URL paths between pages          |
 | 9   |         Redux          |       Manages all SPA states centrally        |
@@ -162,19 +173,19 @@ https://drive.google.com/open?id=1CIHTwmnrYNzT6RYXHrQ99lInUuDib980M8JNQ23s6y4
 
 Before accessing the following cases, we need to check an user:
 
-1.1. [Manuscripts] reading a manuscript's meta information (going on Manuscripts page);
+1.1. \[Manuscripts\] reading a manuscript's meta information (going on Manuscripts page);
 
-1.2. [Manuscripts] reading a manuscript's full information (going on Full Manuscript page);
+1.2. \[Manuscripts\] reading a manuscript's full information (going on Full Manuscript page);
 
-1.3. [Manuscripts] adding a new manuscript;
+1.3. \[Manuscripts\] adding a new manuscript;
 
-1.4. [Manuscripts] updating an manuscript;
+1.4. \[Manuscripts\] updating an manuscript;
 
-1.5. [Manuscripts] deleting a manuscript;
+1.5. \[Manuscripts\] deleting a manuscript;
 
-2.1-2.5. [Dairy] all CRUD operations with an user diaries;
+2.1-2.5. \[Dairy\] all CRUD operations with an user diaries;
 
-3.1-3.5. [Scientific Notes] all CRUD operations with an user scientific notes.
+3.1-3.5. \[Scientific Notes\] all CRUD operations with an user scientific notes.
 
 The maximum value of authentication token (special unique key of an user
 session) duration is **8 hours**. If an user (mostly, a scientist) go on
@@ -190,3 +201,34 @@ to minimize probability of scientific heritage's lost.
 ## The Block Schema of Registration Process
 
 ![The Block Schema of Registration Process](https://firebasestorage.googleapis.com/v0/b/history-gd-cfc68.appspot.com/o/software-docs%2FHistory%20GD.%20Registration%20Logic.png?alt=media&token=edf344be-47f9-46e6-98ca-95d55edec44b)
+
+# UI Components
+
+## Description
+
+The main library that presents custom components is Storybook settlemented by the following path:
+
+**root/client/src/components**
+
+## The Table of Planned Custom UI Components
+
+| #   |       Title       |     SPA Page     |
+| --- | :---------------: | :--------------: |
+| 1   |      Header       |        –         |
+| 2   |      Sidebar      |        –         |
+| 3   |     Logotype      |        –         |
+| 4   |     Full Name     |        –         |
+| 5   |      Button       |        –         |
+| 6   |       Text        |        –         |
+| 7   |       Field       |        –         |
+| 8   |      Button       |        –         |
+| 9   |       Modal       |        –         |
+| 10  |       Table       |        –         |
+| 11  |       Icon        |        –         |
+| 12  |   File Dropdown   |        –         |
+| 13  |    Pagination     |        –         |
+| 14  |  Greeting Banner  |       Main       |
+| 15  |    Type Banner    |   Manuscripts    |
+| 16  |       Tabs        |  Add Manuscript  |
+| 17  |   Editing Panel   |  Add Manuscript  |
+| 18  | Information Block | Handling Sources |
