@@ -6,8 +6,10 @@
   "scripts": {
     "install-global": "npm i",
     "install-client": "cd client && npm i",
+    "install-ui-component": "cd client/src/components/storybook && npm i",
     "install-server": "cd server/js && npm i",
     "client": "clear && cd client && npm run build && react-scripts start",
+    "ui-components": "clear && cd client/src/components/storybook && npm run storybook",
     "js-server": "clear && cd server/js && nodemon",
     "py-server": "clear && cd server/python && venv/bin/flask run --no-debugger",
     "pretty": "clear && npx prettier --write ."
