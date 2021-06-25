@@ -37,56 +37,56 @@
   {
     "name": "Исследовательские заметки",
     "link": "/manuscripts",
-    "done": false
+    "done": true
   },
   {
     "name": "Научная переписка",
     "link": "/manuscripts",
-    "done": false
+    "done": true
   },
   {
     "name": "Научное становление",
     "link": "/manuscripts",
-    "done": false
+    "done": true
   },
   {
     "name": "Рукописи коллег",
     "link": "/manuscripts",
-    "done": false
+    "done": true
   },
   {
     "name": "Научный самоанализ",
     "link": "/manuscripts",
-    "done": false
+    "done": true
   },
   {
     "name": "Контакты коллег",
     "link": "/manuscripts",
-    "done": false
+    "done": true
   },
   {
     "name": "Научный коллектив",
     "link": "/manuscripts",
-    "done": false
+    "done": true
   },
   {
     "name": "Мультимедийные факты",
     "link": "/manuscripts",
-    "done": false
+    "done": true
   },
   {
     "name": "Генератор отчётов о научно-исследовательской работе",
     "link": "/manuscripts",
-    "done": false
+    "done": true
   },
   {
     "name": "Генератор презентаций для докладов",
     "link": "/manuscripts",
-    "done": false
+    "done": true
   },
   {
     "name": "Генератор аудиомонографий",
     "link": "/manuscripts",
-    "done": false
+    "done": true
   }
 ]

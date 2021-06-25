@@ -648,7 +648,7 @@ export default function Editor() {
               <TextField
                 margin="dense"
                 id="editor-table-columns-count"
-                label="Кол-во колонок)"
+                label="Кол-во колонок"
                 type="number"
                 onChange={(evt) =>
                   setTableConfig({

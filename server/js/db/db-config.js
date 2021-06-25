@@ -14,7 +14,7 @@ require('firebase/firestore');
 require('firebase/storage');
 require('firebase/auth');
 
-const { env } = require('../.env.js');
+const env = require('../.env.js');
 
 // For Firebase JavaScript SDK v7.20.0 and later, `measurementId` is an optional field
 const firebaseConfig = {

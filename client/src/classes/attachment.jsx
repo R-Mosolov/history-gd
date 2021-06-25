@@ -103,8 +103,11 @@ PictureAttachment.setPictureTitle = function (title) {
 PictureAttachment.setPictureSrc = function (pictureSrc) {
   return (this.pictureSrc =
     pictureSrc ||
-    'https://media.wired.com/photos/5d09594a62bcb0c9752779d9/' +
-      'master/w_2560%2Cc_limit/Transpo_G70_TA-518126.jpg');
+    'https://firebasestorage.googleapis.com/v0/b/history-gd-cfc68.appspot.com/o/'
+    + 'manuscripts-content%2F%D0%9F%D1%80%D0%BE%D0%B8%D1%81%D1%85%D0%BE%D0%B6%D0%'
+    + 'B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B2%D0%B8%D0%B4%D0%BE%D0%B2%20%D0%A7.%20%D0'
+    + '%94%D0%B0%D1%80%D0%B2%D0%B8%D0%BD%D0%B0%20(v1.1).png?alt=media&token=92e4c3ff'
+    + '-7062-44f9-9321-105f3ea3795c');
 };
 PictureAttachment.setPictureHTMLStructure = function () {
   return this.setHTMLStructure(

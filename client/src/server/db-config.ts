@@ -14,7 +14,7 @@ import 'firebase/firestore';
 import 'firebase/auth';
 import 'firebase/storage';
 
-import env from '../.env';
+import { firebaseConfig as env } from '../.env';
 
 interface FirebaseTypes {
   [key: string]: string | undefined;
